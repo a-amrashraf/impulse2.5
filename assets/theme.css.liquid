@@ -13305,3 +13305,30 @@ label,.h5,
 
 /* Override to ensure visibility */
 .drawer .cart__remove { display: block !important; }
+
+/* Loading state for cart remove button */
+.cart__remove-btn.is-removing {
+  position: relative;
+  pointer-events: none;
+}
+.cart__remove-btn.is-removing .icon {
+  opacity: 0;
+}
+.cart__remove-btn.is-removing:after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 16px;
+  height: 16px;
+  margin-top: -8px; 
+  margin-left: -8px;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+

@@ -1707,7 +1707,8 @@ theme.recentlyViewed = {
              evt.preventDefault();
              var key = btn.dataset.id;
              
-             btn.classList.add('btn--loading');
+             // btn.classList.add('btn--loading');
+             btn.classList.add('is-removing');
              
              theme.cart.changeItem(key, 0)
                .then(() => {
