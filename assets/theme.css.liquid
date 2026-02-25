@@ -13196,15 +13196,16 @@ label,.h5,
   justify-content: center;
   align-items: center;
   background-color: var(--colorCartDot, #000); 
-  border: 2px solid var(--colorBody, #fff);    
+  border: 1px solid var(--colorBody, #fff);    
   color: #fff;
-  border-radius: 999px;
-  font-size: 9px;
+  border-radius: 50%;
+  font-size: 8px;
   font-weight: 700;
-  height: 16px;
-  min-width: 16px;
+  height: 13px;
+  width: 13px;
+  min-width: 0;
   line-height: 1;
-  padding: 0 4px;
+  padding: 0;
   position: absolute;
   text-align: center;
   white-space: nowrap; 
@@ -13215,20 +13216,21 @@ label,.h5,
 }
 
 [data-icon='cart'] .cart-link__bubble--visible {
-  right: -4px;
-  top: 0;
+  right: -2px;
+  top: 2px;
 }
 
 /* Specific styling for counts >= 10 */
 .cart-link__bubble--double-digit {
   width: auto;
-  min-width: 22px;
-  right: -8px !important;
-  padding: 0 5px;
+  min-width: 18px;
+  border-radius: 9px;
+  padding: 0 3px;
+  right: -6px !important;
 }
 
 [data-icon='cart'] .cart-link__bubble--double-digit {
-   right: -10px !important;
+   right: -8px !important;
 }
 
 /* Feature 2: Cart Product Delete Button */
