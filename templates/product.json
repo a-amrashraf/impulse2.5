@@ -149,7 +149,7 @@
         "judge_me_reviews_review_snippet_widget_KUkUiM"
       ],
       "custom_css": [
-        "p {font-family: \"MakroTrial-Regular\";}",
+        "p {font-family: \"poppins\";}",
         ".product__price {color: #f41212; font-size: calc(var(--typeBaseSize) + 2px); margin-right: 5px;}",
         ".product-block--header {margin-bottom: 0px;}",
         ".page-content--product {padding-bottom: 10px;}",
