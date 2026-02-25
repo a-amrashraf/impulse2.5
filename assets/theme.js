@@ -8387,6 +8387,8 @@ theme.recentlyViewed = {
         }
         
         modal.classList.add('is-open');
+        document.documentElement.style.overflow = 'hidden';
+        document.body.style.overflow = 'hidden';
       })
       .catch(error => {
         console.error('Error fetching product:', error);
@@ -8398,16 +8400,28 @@ theme.recentlyViewed = {
      var modal = document.getElementById('QuickAddModal');
      if(!modal) return;
      
+     // Function to close modal
+     function closeModal() {
+       modal.classList.remove('is-open');
+       document.documentElement.style.overflow = '';
+       document.body.style.overflow = '';
+     }
+     
      // Close button
      var closeBtn = modal.querySelector('.quick-add-modal__close');
-     closeBtn.addEventListener('click', function() {
-       modal.classList.remove('is-open');
-     });
+     closeBtn.addEventListener('click', closeModal);
      
      // Click outside to close
      modal.addEventListener('click', function(e) {
        if (e.target === modal) {
-         modal.classList.remove('is-open');
+         closeModal();
+       }
+     });
+
+     // Close on ESC
+     document.addEventListener('keydown', function(e) {
+       if (e.key === 'Escape' && modal.classList.contains('is-open')) {
+         closeModal();
        }
      });
 
@@ -8449,7 +8463,7 @@ theme.recentlyViewed = {
            }
            
            // Close Modal
-           modal.classList.remove('is-open');
+           closeModal();
 
            // Trigger cart update events
            document.dispatchEvent(new CustomEvent('ajaxProduct:added', {
