@@ -13256,3 +13256,49 @@ label,.h5,
   width: 18px;
 }
 
+
+/* Container to align quantity selector and remove button */
+.cart__item-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Adjust spacing as needed */
+}
+
+/* Base button styles */
+.cart__remove-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  color: inherit; /* Inherits text color */
+  cursor: pointer;
+}
+
+/* Icon sizing matching the reference theme */
+.cart__remove-btn .icon {
+  height: 22px;
+  width: 22px;
+}
+
+/* Smaller icon size specifically for the drawer */
+.drawer .cart__remove-btn .icon {
+  height: 18px;
+  width: 18px;
+}
+
+/* SVG specific styles */
+.icon-trash {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2px; /* Matches var(--iconWeight) */
+}
+
+
+/* Ensure cart remove container is visible in drawer */
+.drawer .cart__remove {
+  display: block;
+}
+
