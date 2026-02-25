@@ -4498,17 +4498,21 @@ svg.icon-cart circle{
   width:1px;
 }
 
-.js-drawer-open{
-  overflow:hidden !important;
+.js-drawer-open, .js-drawer-open.supports-touch.lock-scroll {
+  overflow: hidden !important;
+  height: 100%;
+  touch-action: none;
 }
 
 .js-drawer-open body {
   overflow: hidden !important;
-  height: 100vh;
+  height: 100%;
+  position: relative;
 }
 
 .drawer{
   overscroll-behavior: contain;
+  touch-action: none;
   -webkit-overflow-scrolling:touch;
   background-color:var(--colorDrawers);
   bottom:0;
@@ -4693,6 +4697,8 @@ svg.icon-cart circle{
 }
 
 .drawer__scrollable{
+  overscroll-behavior: contain;
+  touch-action: pan-y;
   -webkit-overflow-scrolling:touch;
   overflow:hidden;
   overflow-y:auto;
