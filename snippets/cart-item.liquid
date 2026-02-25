@@ -75,9 +75,12 @@
         </div>
 
         <div class="cart__remove">
-          <a href="{{ routes.cart_change_url }}?id={{ product.key }}&amp;quantity=0" class="text-link">
-            {{ 'cart.general.remove' | t }}
-          </a>
+          <button type="button" class="text-link cart__remove-btn js-qty__remove" aria-label="{{ 'cart.general.remove' | t }}" data-id="{{ product.key }}">
+            <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-trash" viewBox="0 0 24 24" style="width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2;">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 7h16M9 7V5h6v2M9 11v6M12 11v6M15 11v6M6 7l1 14h10l1-14"/>
+            </svg>
+            <span class="icon__fallback-text">{{ 'cart.general.remove' | t }}</span>
+          </button>
         </div>
       </div>
 

@@ -13180,3 +13180,64 @@ label,.h5,
   {% endunless %}
 }
 
+
+/* Feature 1: Cart Count Bubble */
+.cart-link {
+  display: block;
+  position: relative;
+}
+
+.cart-link__bubble {
+  display: none;
+}
+
+.cart-link__bubble--visible {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--colorCartDot, #000); /* Fallback to black if var missing */
+  border: 2px solid var(--colorBody, #fff);    /* Fallback to white if var missing */
+  color: #fff;
+  border-radius: 999px;
+  font-size: 9px;
+  font-weight: 700;
+  height: 16px;
+  min-width: 16px;
+  line-height: 1;
+  padding: 0 4px;
+  position: absolute;
+  text-align: center;
+  
+  /* Positioning specific to cart icon type */
+  top: 50%;
+  right: 0;
+}
+
+[data-icon='cart'] .cart-link__bubble--visible {
+  right: -4px;
+  top: 0;
+}
+
+/* Feature 2: Cart Product Delete Button */
+.cart__remove-btn {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 0; /* Align with quantity selectors */
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.cart__remove-btn .icon {
+  height: 22px;
+  width: 22px;
+}
+
+/* Specific sizing inside drawer if needed */
+.drawer .cart__remove-btn .icon {
+  height: 18px;
+  width: 18px;
+}
+

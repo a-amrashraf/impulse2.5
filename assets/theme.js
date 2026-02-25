@@ -1699,6 +1699,34 @@ theme.recentlyViewed = {
             theme.cart.updateNote(newNote);
           });
         }
+        
+        // Handle remove buttons
+        this.form.addEventListener('click', function(evt) {
+          var btn = evt.target.closest('.js-qty__remove');
+          if (btn) {
+             evt.preventDefault();
+             var key = btn.dataset.id;
+             
+             btn.classList.add('btn--loading');
+             
+             theme.cart.changeItem(key, 0)
+               .then(() => {
+                   document.dispatchEvent(new CustomEvent('cart:build'));
+                   
+                   // Update bubbles
+                    fetch(window.Shopify.routes.root + 'cart.js')
+                     .then(r => r.json())
+                     .then(cart => {
+                       var count = cart.item_count;
+                       document.querySelectorAll('.cart-link__bubble-num').forEach(el => el.innerText = count);
+                       document.querySelectorAll('.cart-link__bubble').forEach(el => {
+                         if(count > 0) el.classList.add('cart-link__bubble--visible');
+                         else el.classList.remove('cart-link__bubble--visible');
+                       });
+                     });
+               });
+          }
+        });
   
         // Dev-friendly way to build the cart
         document.addEventListener('cart:build', function() {
