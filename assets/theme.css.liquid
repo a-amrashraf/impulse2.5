@@ -13192,11 +13192,11 @@ label,.h5,
 }
 
 .cart-link__bubble--visible {
-  display: flex;
+  display: flex !important;
   justify-content: center;
   align-items: center;
-  background-color: var(--colorCartDot, #000); /* Fallback to black if var missing */
-  border: 2px solid var(--colorBody, #fff);    /* Fallback to white if var missing */
+  background-color: var(--colorCartDot, #000); 
+  border: 2px solid var(--colorBody, #fff);    
   color: #fff;
   border-radius: 999px;
   font-size: 9px;
@@ -13207,7 +13207,8 @@ label,.h5,
   padding: 0 4px;
   position: absolute;
   text-align: center;
-  
+  white-space: nowrap; 
+
   /* Positioning specific to cart icon type */
   top: 50%;
   right: 0;
@@ -13216,6 +13217,18 @@ label,.h5,
 [data-icon='cart'] .cart-link__bubble--visible {
   right: -4px;
   top: 0;
+}
+
+/* Specific styling for counts >= 10 */
+.cart-link__bubble--double-digit {
+  width: auto;
+  min-width: 22px;
+  right: -8px !important;
+  padding: 0 5px;
+}
+
+[data-icon='cart'] .cart-link__bubble--double-digit {
+   right: -10px !important;
 }
 
 /* Feature 2: Cart Product Delete Button */

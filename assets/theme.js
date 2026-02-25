@@ -1935,10 +1935,18 @@ theme.recentlyViewed = {
           if (count > 0) {
             bubbles.forEach(b => {
               b.classList.add('cart-link__bubble--visible');
+              
+              // Handle double/triple digits visual
+              if (count > 9) {
+                b.classList.add('cart-link__bubble--double-digit');
+              } else {
+                b.classList.remove('cart-link__bubble--double-digit');
+              }
             });
           } else {
             bubbles.forEach(b => {
               b.classList.remove('cart-link__bubble--visible');
+              b.classList.remove('cart-link__bubble--double-digit');
             });
           }
         }
