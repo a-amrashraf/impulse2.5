@@ -8296,6 +8296,185 @@ theme.recentlyViewed = {
     }
   });
 
+  theme.openQuickAddModal = function(handle) {
+    var modal = document.getElementById('QuickAddModal');
+    var image = document.getElementById('QuickAddImage');
+    var title = document.getElementById('QuickAddTitle');
+    var price = document.getElementById('QuickAddPrice');
+    var variantsContainer = document.getElementById('QuickAddVariants');
+    var variantIdInput = document.getElementById('QuickAddVariantId');
+    var message = document.getElementById('QuickAddMessage');
+    
+    // Clear previous data
+    image.src = '';
+    title.innerText = '';
+    price.innerText = '';
+    variantsContainer.innerHTML = '';
+    message.style.display = 'none';
+    message.innerText = '';
+    document.getElementById('QuickAddQty').value = 1;
+    
+    // Fetch product data
+    fetch(window.Shopify.routes.root + 'products/' + handle + '.js')
+      .then(response => response.json())
+      .then(product => {
+        // Set Image
+        if (product.featured_image) {
+          image.src = product.featured_image;
+        } else if (product.images.length > 0) {
+           image.src = product.images[0];
+        }
+        
+        // Set Title
+        title.innerText = product.title;
+        
+        // Set Price
+        price.innerHTML = theme.Currency.formatMoney(product.price, theme.settings.moneyFormat);
+        
+        // Set Variants
+        if (product.variants.length > 1) {
+          var select = document.createElement('select');
+          select.className = 'quick-add-modal__variant-select';
+          select.id = 'QuickAddVariantSelect';
+          
+          product.variants.forEach(variant => {
+            var option = document.createElement('option');
+            option.value = variant.id;
+            option.text = variant.title + ' - ' + theme.Currency.formatMoney(variant.price, theme.settings.moneyFormat);
+            if (!variant.available) {
+              option.disabled = true;
+              option.text += ' (Sold Out)';
+            }
+            select.appendChild(option);
+          });
+          
+          variantsContainer.appendChild(select);
+          
+          // Set initial variant ID
+          variantIdInput.value = select.value;
+          
+          // Update price on change
+          select.addEventListener('change', function() {
+            var selectedVariantId = parseInt(this.value);
+            var selectedVariant = product.variants.find(v => v.id === selectedVariantId);
+            if (selectedVariant) {
+               price.innerHTML = theme.Currency.formatMoney(selectedVariant.price, theme.settings.moneyFormat);
+               variantIdInput.value = selectedVariant.id;
+               
+               if (selectedVariant.featured_image) {
+                 image.src = selectedVariant.featured_image.src;
+               }
+            }
+          });
+          
+        } else {
+          // Single variant
+          var variant = product.variants[0];
+          variantIdInput.value = variant.id;
+          // Maybe show text if not "Default Title"
+          if (variant.title !== 'Default Title') {
+             var p = document.createElement('p');
+             p.innerText = variant.title;
+             variantsContainer.appendChild(p);
+          }
+        }
+        
+        modal.classList.add('is-open');
+      })
+      .catch(error => {
+        console.error('Error fetching product:', error);
+      });
+  };
+
+  // Close Modal Logic
+  document.addEventListener('DOMContentLoaded', function() {
+     var modal = document.getElementById('QuickAddModal');
+     if(!modal) return;
+     
+     // Close button
+     var closeBtn = modal.querySelector('.quick-add-modal__close');
+     closeBtn.addEventListener('click', function() {
+       modal.classList.remove('is-open');
+     });
+     
+     // Click outside to close
+     modal.addEventListener('click', function(e) {
+       if (e.target === modal) {
+         modal.classList.remove('is-open');
+       }
+     });
+
+     // Quantity Adjust
+     var qtyInput = document.getElementById('QuickAddQty');
+     modal.querySelector('.js-qty__adjust--minus').addEventListener('click', function() {
+       var val = parseInt(qtyInput.value);
+       if (val > 1) qtyInput.value = val - 1;
+     });
+     modal.querySelector('.js-qty__adjust--plus').addEventListener('click', function() {
+       var val = parseInt(qtyInput.value);
+       qtyInput.value = val + 1;
+     });
+     
+     // Add to Cart Logic
+     var form = document.getElementById('QuickAddForm');
+     form.addEventListener('submit', function(e) {
+       e.preventDefault();
+       var btn = form.querySelector('.add-to-cart-btn');
+       var message = document.getElementById('QuickAddMessage');
+       
+       btn.classList.add('btn--loading');
+       message.style.display = 'none';
+       
+       var formData = new FormData(form);
+       
+       fetch(window.Shopify.routes.root + 'cart/add.js', {
+          method: 'POST',
+          body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+           btn.classList.remove('btn--loading');
+           
+           if (data.status === 422) {
+             message.innerText = data.description;
+             message.style.display = 'block';
+             return;
+           }
+           
+           // Close Modal
+           modal.classList.remove('is-open');
+
+           // Trigger cart update events
+           document.dispatchEvent(new CustomEvent('ajaxProduct:added', {
+             detail: {
+               product: data,
+               addToCartBtn: btn
+             }
+           }));
+           
+           document.dispatchEvent(new CustomEvent('cart:build'));
+           
+           // Update bubbles
+           fetch(window.Shopify.routes.root + 'cart.js')
+             .then(r => r.json())
+             .then(cart => {
+               var count = cart.item_count;
+               document.querySelectorAll('.cart-link__bubble-num').forEach(el => el.innerText = count);
+               document.querySelectorAll('.cart-link__bubble').forEach(el => {
+                 if(count > 0) el.classList.add('cart-link__bubble--visible');
+                 else el.classList.remove('cart-link__bubble--visible');
+               });
+             });
+        })
+        .catch(error => {
+          console.error('Error adding to cart:', error);
+          btn.classList.remove('btn--loading');
+          message.innerText = 'Error adding product to cart.';
+          message.style.display = 'block';
+        });
+     });
+  });
+
   theme.initQuickAdd = function() {
     document.querySelectorAll('.grid-product__quick-add-btn').forEach(btn => {
       // Remove existing listeners to prevent duplicates if init is called multiple times
@@ -8351,17 +8530,11 @@ theme.recentlyViewed = {
             newBtn.classList.remove('btn--loading');
           });
         } else {
-          // Trigger Quick Shop modal
-          // Find the sibling quick shop button or container
+          // Open Custom Quick Add Modal
           var productContainer = form.closest('.grid-product');
-          if (productContainer) {
-            var quickShopBtn = productContainer.querySelector('.quick-product__btn');
-            if (quickShopBtn) {
-              quickShopBtn.click();
-            } else {
-              // Fallback: go to product page if no quick shop
-              window.location.href = form.action.replace('/cart/add', '/products/' + productContainer.dataset.productHandle);
-            }
+          var handle = productContainer.dataset.productHandle;
+          if (handle) {
+            theme.openQuickAddModal(handle);
           }
         }
       });
