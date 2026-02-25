@@ -8340,7 +8340,14 @@ theme.recentlyViewed = {
           product.variants.forEach(variant => {
             var option = document.createElement('option');
             option.value = variant.id;
-            option.text = variant.title + ' - ' + theme.Currency.formatMoney(variant.price, theme.settings.moneyFormat);
+            
+            // Format price and strip any HTML tags (like <sup>) for the option text
+            var priceFormatted = theme.Currency.formatMoney(variant.price, theme.settings.moneyFormat);
+            var div = document.createElement('div');
+            div.innerHTML = priceFormatted;
+            var priceText = div.textContent || div.innerText || '';
+
+            option.text = variant.title + ' - ' + priceText;
             if (!variant.available) {
               option.disabled = true;
               option.text += ' (Sold Out)';
@@ -8406,11 +8413,11 @@ theme.recentlyViewed = {
 
      // Quantity Adjust
      var qtyInput = document.getElementById('QuickAddQty');
-     modal.querySelector('.js-qty__adjust--minus').addEventListener('click', function() {
+     modal.querySelector('.quick-add__qty-adjust--minus').addEventListener('click', function() {
        var val = parseInt(qtyInput.value);
        if (val > 1) qtyInput.value = val - 1;
      });
-     modal.querySelector('.js-qty__adjust--plus').addEventListener('click', function() {
+     modal.querySelector('.quick-add__qty-adjust--plus').addEventListener('click', function() {
        var val = parseInt(qtyInput.value);
        qtyInput.value = val + 1;
      });
