@@ -4499,10 +4499,16 @@ svg.icon-cart circle{
 }
 
 .js-drawer-open{
-  overflow:hidden;
+  overflow:hidden !important;
+}
+
+.js-drawer-open body {
+  overflow: hidden !important;
+  height: 100vh;
 }
 
 .drawer{
+  overscroll-behavior: contain;
   -webkit-overflow-scrolling:touch;
   background-color:var(--colorDrawers);
   bottom:0;
