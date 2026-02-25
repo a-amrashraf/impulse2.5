@@ -8296,6 +8296,78 @@ theme.recentlyViewed = {
     }
   });
 
+  theme.initQuickAdd = function() {
+    document.querySelectorAll('.grid-product__quick-add-btn').forEach(btn => {
+      // Remove existing listeners to prevent duplicates if init is called multiple times
+      var newBtn = btn.cloneNode(true);
+      btn.parentNode.replaceChild(newBtn, btn);
+      
+      newBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        var form = newBtn.closest('form');
+        var hasOnlyDefault = form.dataset.hasOnlyDefault === 'true';
+
+        if (hasOnlyDefault) {
+          // Add loading state
+          newBtn.classList.add('btn--loading');
+          
+          var formData = new FormData(form);
+          
+          fetch(window.Shopify.routes.root + 'cart/add.js', {
+            method: 'POST',
+            body: formData
+          })
+          .then(response => {
+            return response.json();
+          })
+          .then(data => {
+             newBtn.classList.remove('btn--loading');
+             
+             // Trigger cart update events
+             document.dispatchEvent(new CustomEvent('ajaxProduct:added', {
+               detail: {
+                 product: data,
+                 addToCartBtn: newBtn // Pass button to event for potential handling
+               }
+             }));
+             
+             // Also dispatch generic cart update
+             document.dispatchEvent(new CustomEvent('cart:build'));
+             
+             // Manually update cart count bubbles
+             fetch(window.Shopify.routes.root + 'cart.js')
+               .then(r => r.json())
+               .then(cart => {
+                 var count = cart.item_count;
+                 document.querySelectorAll('.cart-link__bubble-num').forEach(el => el.innerText = count);
+                 document.querySelectorAll('.cart-link__bubble').forEach(el => {
+                   if(count > 0) el.classList.add('cart-link__bubble--visible');
+                   else el.classList.remove('cart-link__bubble--visible');
+                 });
+               });
+          })
+          .catch(error => {
+            console.error('Error adding to cart:', error);
+            newBtn.classList.remove('btn--loading');
+          });
+        } else {
+          // Trigger Quick Shop modal
+          // Find the sibling quick shop button or container
+          var productContainer = form.closest('.grid-product');
+          if (productContainer) {
+            var quickShopBtn = productContainer.querySelector('.quick-product__btn');
+            if (quickShopBtn) {
+              quickShopBtn.click();
+            } else {
+              // Fallback: go to product page if no quick shop
+              window.location.href = form.action.replace('/cart/add', '/products/' + productContainer.dataset.productHandle);
+            }
+          }
+        }
+      });
+    });
+  };
+
   /*============================================================================
     Things that require DOM to be ready
   ==============================================================================*/
@@ -8333,6 +8405,7 @@ theme.recentlyViewed = {
 
     theme.initGlobals();
     theme.initQuickShop();
+    theme.initQuickAdd();
     theme.rteInit();
 
     if (document.body.classList.contains('template-cart')) {

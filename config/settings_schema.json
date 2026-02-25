@@ -601,6 +601,33 @@
         "default": "Quick view"
       },
       {
+        "type": "header",
+        "content": "Quick Add Button"
+      },
+      {
+        "type": "image_picker",
+        "id": "add_to_cart_icon",
+        "label": "Custom Add to Cart Icon"
+      },
+      {
+         "type": "color",
+         "id": "add_to_cart_bg_color",
+         "label": "Button Background Color",
+         "default": "#1c1d1d" 
+      },
+      {
+        "type": "checkbox",
+        "id": "add_to_cart_bg_transparent",
+        "label": "Transparent Background",
+        "default": false
+      },
+      {
+         "type": "color",
+         "id": "add_to_cart_icon_color",
+         "label": "Button Icon Color",
+         "default": "#ffffff" 
+      },
+      {
         "type": "select",
         "id": "product_grid_image_size",
         "label": "t:settings_schema.product_tiles.settings.product_grid_image_size.label",
