@@ -1707,7 +1707,11 @@ theme.recentlyViewed = {
              evt.preventDefault();
              var key = btn.dataset.id;
              
-             btn.classList.add('btn--loading');
+
+             // Use opacity for visual feedback on remove buttons instead of btn--loading class
+             // btn.classList.add('btn--loading');
+             btn.style.opacity = '0.5';
+             btn.style.pointerEvents = 'none';
              
              theme.cart.changeItem(key, 0)
                .then(() => {
