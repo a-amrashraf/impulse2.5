@@ -73,6 +73,16 @@
     }
   {%- endif -%}
 </style>
+<style>
+.mobile-nav__item:after {border-bottom: 0px solid;}
+.collapsible-trigger {border: 0px;}
+ul.mobile-nav a[href*="on-sale"] {color: red !important;}
+.drawer__title {font-size: 25px;}
+@media only screen and (max-width: 768px) {.site-header {padding: 0 !important; border-bottom: 1.5px solid #ffffff; }}
+@media only screen and (min-width: 768px) {.site-header {padding: 0 !important; border-bottom: 1.5px solid #ffffff; }}
+.site-nav__link--icon .icon {height: 20px; width: 20px;}
+.drawer__title {font-size: 12px;}
+</style>
 
 <div data-section-id="{{ section.id }}" data-section-type="header">
 
@@ -209,7 +219,7 @@
       "type": "select",
       "id": "main_menu_alignment",
       "label": "t:sections.header.settings.main_menu_alignment.label",
-      "default": "left",
+      "default": "center-drawer",
       "options": [
         {
           "value": "left",
@@ -261,14 +271,14 @@
       "type": "checkbox",
       "id": "sticky_index",
       "label": "t:sections.header.settings.sticky_index.label",
-      "default": false
+      "default": true
     },
     {
       "type": "checkbox",
       "id": "sticky_collection",
       "label": "t:sections.header.settings.sticky_collection.label",
       "info": "t:sections.header.settings.sticky_collection.info",
-      "default": false
+      "default": true
     },
     {
       "type": "header",
@@ -311,7 +321,7 @@
       "type": "checkbox",
       "id": "show_currency_flags",
       "label": "t:sections.header.settings.show_currency_flags.label",
-      "default": true
+      "default": false
     }
   ],
   "blocks": [

@@ -1,5 +1,10 @@
 {% render 'scrolling-text', section: section %}
 
+<style>
+.scrolling-text--sections--19811384131815__scrolling_text_BmWKG3 span {font-size: 8px;}
+.scrolling-text {background-color: black; color: white;}
+@media only screen and (max-width: 768px) {.scrolling-text {padding: 0 !important; border-bottom: 1.5px solid #ffffff; }}
+</style>
 
 {% schema %}
 {
@@ -10,7 +15,7 @@
       "type": "text",
       "id": "text",
       "label": "t:sections.marquee.settings.text.label",
-      "default": "Free shipping and returns"
+      "default": "🚨 BUY 3 ITEMS — SAVE 20% + FREE SHIPPING 🚨"
     },
     {
       "type": "url",
@@ -21,8 +26,8 @@
       "type": "range",
       "id": "text_size",
       "label": "t:sections.marquee.settings.text_size.label",
-      "default": 70,
-      "min": 20,
+      "default": 14,
+      "min": 10,
       "max": 150,
       "step": 2,
       "unit": "px"
