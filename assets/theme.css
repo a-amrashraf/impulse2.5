@@ -13124,3 +13124,11 @@ label,.h5,
   padding-bottom: 15px;
 
 }
+
+/* Container to align quantity selector and remove button */
+.cart__item-actions { display: flex; align-items: center; gap: 10px; }
+.cart__remove-btn { display: inline-flex; align-items: center; justify-content: center; background: none; border: none; padding: 0; margin: 0; color: inherit; cursor: pointer; }
+.cart__remove-btn .icon { height: 22px; width: 22px; }
+.drawer .cart__remove-btn .icon { height: 18px; width: 18px; }
+.icon-trash { fill: none; stroke: currentColor; stroke-width: 2px; }
+.drawer .cart__remove { display: block !important; }
