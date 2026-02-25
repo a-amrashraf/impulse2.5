@@ -1,0 +1,111 @@
+<div class="page-width">
+  {% if section.settings.title != blank %}
+    <div class="section-header">
+      <h2 class="section-header__title">{{ section.settings.title }}</h2>
+    </div>
+  {% endif %}
+
+  <div class="collection-slider">
+    {% for block in section.blocks %}
+      {% assign collection = collections[block.settings.collection] %}
+      {% if collection %}
+        <a href="{{ collection.url }}" class="collection-item" {{ block.shopify_attributes }}>
+          {% if collection.image %}
+            <div class="collection-image" style="background-image:url('{{ collection.image | img_url: '800x' }}');"></div>
+          {% endif %}
+          <div class="collection-title">{{ collection.title }}</div>
+        </a>
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Collection Slider",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section title",
+      "default": "Shop by Collection"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection",
+      "name": "Collection",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Select collection"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection Slider",
+      "category": "Collections",
+      "blocks": [
+        { "type": "collection" },
+        { "type": "collection" },
+        { "type": "collection" }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+{% stylesheet %}
+.collection-slider {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  padding: 10px 0;
+}
+
+.collection-slider::-webkit-scrollbar {
+  display: none;
+}
+
+.collection-item {
+  flex: 0 0 75%;
+  scroll-snap-align: start;
+  text-align: center;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #f9f9f9;
+  text-decoration: none;
+  color: inherit;
+}
+
+.collection-image {
+  width: 100%;
+  aspect-ratio: 1/1;
+  background-size: cover;
+  background-position: center;
+}
+
+.collection-title {
+  padding: 8px 0;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+/* 🧠 Desktop fallback (grid view) */
+@media screen and (min-width: 768px) {
+  .collection-slider {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    overflow: visible;
+  }
+  .collection-item {
+    flex: none;
+  }
+}
+
+{% endstylesheet %}
