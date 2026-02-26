@@ -102,7 +102,7 @@
         "hover_menu": true,
         "mega_menu_images": true,
         "main_menu_alignment": "center-drawer",
-        "header_style": "normal",
+        "header_style": "sticky",
         "sticky_index": true,
         "sticky_collection": true,
         "toolbar_menu": "",

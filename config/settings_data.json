@@ -18,7 +18,7 @@
     "color_sale_tag": "#c1272d",
     "color_cart_dot": "#c1272d",
     "color_large_image_bg": "#0f0f0f",
-    "color_header": "rgba(0,0,0,0)",
+    "color_header": "#ffffff",
     "color_header_text": "#321004",
     "color_announcement": "#000000",
     "color_footer": "#0f0f0f",
@@ -296,9 +296,9 @@
     "custom_css": [
       "ul.mobile-nav li a {font-size: 14px; font-weight: 400;}",
       "#CartDrawer {background-color: #fff; color: #000;}",
-      ".cart__item-name, .drawer .js-qty__num {color: #000 !important;}",
+      ".cart__item-name,.drawer .js-qty__num {color: #000 !important;}",
       ".drawer .js-qty__adjust {fill: #000 !important; color: #000 !important;}",
-      "@media only screen and (max-width: 768px) {\n  .collection-filter {\n    flex-wrap: wrap; \n    justify-content: space-between; \n    position: static; \n    top: 17px; \n    z-index: 5; \n    font-size: 8px; \n    width: 100%; \n  }\n}"
+      "@media only screen and (max-width: 768px) {.collection-filter {flex-wrap: wrap; justify-content: space-between; position: static; top: 17px; z-index: 5; font-size: 8px; width: 100%; }}"
     ]
   }
 }
