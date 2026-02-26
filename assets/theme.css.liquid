@@ -8780,12 +8780,29 @@ html[dir=rtl] .social-sharing__title{
 }
   }
 
-.collection-filter .btn,.collection-filter select{
-    font-size:10px;
-    height:30px;
-    background-color: white;
-    color: black;
-  }
+.collection-filter .btn,
+.collection-filter select,
+.collection-filter__sort-container {
+    font-size: 14px;
+    height: 35px;
+    background-color: white !important;
+    color: black !important;
+    border-color: #e8e8e1;
+}
+
+/* Specific override for active state */
+.collection-filter .btn.btn--tertiary-active {
+    background-color: black !important;
+    color: white !important;
+    border-color: black !important;
+}
+
+#FilterDrawer,
+#FilterDrawer .drawer__inner,
+#FilterDrawer .drawer__fixed-header {
+    background-color: white !important;
+    color: black !important;
+}
 
 .collection-filter select{
     display:block;
@@ -8818,7 +8835,8 @@ html[dir=rtl] .social-sharing__title{
 }
 
 .collection-filter .btn:not(.btn--tertiary-active),.collection-filter__sort-container{
-  background:var(--colorBody);
+  background: white !important;
+  color: black !important;
 }
 
 .collection-filter__item--drawer{
@@ -13416,11 +13434,19 @@ label,.h5,
 }
 
 .collection-filter label.tag:not(.tag--active) {
-    background-color: white;
-    color: black;
+    background-color: white !important;
+    color: black !important;
+    border: 1px solid #e8e8e1;
 }
 
 .collection-filter label.tag.tag--active {
-    background-color: black;
-    color: white;
+    background-color: black !important;
+    color: white !important;
+    border-color: black !important;
+}
+
+/* Ensure sort dropdown text is visible */
+.collection-filter__sort-container select {
+    background-color: transparent !important;
+    color: inherit !important;
 }
