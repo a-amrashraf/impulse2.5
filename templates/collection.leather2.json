@@ -96,7 +96,7 @@
       ],
       "custom_css": [
         ".collection-item {flex: 0 0 40%; scroll-snap-align: start; text-align: center;}",
-        ".collection-slider {display: flex; gap: 2px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 0px; margin-bottom: -35px; width: 100vw; max-width: 100%; margin-left: 0px; margin-right: 0px;}",
+        ".collection-slider {display: flex; gap: 2px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 0px; margin-bottom: -35px; margin-left: 0px; margin-right: 0px;}",
         ".collection-title {position: relative; overflow: hidden;}"
       ],
       "name": "Collection Slider",
