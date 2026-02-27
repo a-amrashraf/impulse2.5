@@ -7315,18 +7315,31 @@ details[open]>.megamenu .appear-animation{
 .collapsible-trigger__icon--plus {
   height: 28px;
   width: 28px;
-  display: flex;
+  display: flex !important;
   align-items: center;
   justify-content: center;
   background-color: transparent;
   border: none;
+  position: absolute; /* Keep absolute positioning to respect 'right' alignment */
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .collapsible-trigger__icon--plus .icon {
   width: 20px !important;
   height: 20px !important;
-  position: static !important;
+  max-width: none !important; /* Ensure no max-width constraints */
+  max-height: none !important;
+  display: block !important;
+  position: static !important; /* Reset inner positioning */
   transform: none !important;
+}
+
+/* Ensure plus icon rotates correctly or indicates state if needed, though usually plus/minus switches */
+.collapsible-trigger.is-open .collapsible-trigger__icon--plus .icon-plus {
+  /* Optional: Transform to minus or rotate */
+   transform: rotate(45deg) !important; 
+   transition: transform 0.3s ease;
 }
 
 .collapsible-content{
