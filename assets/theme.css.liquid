@@ -7346,6 +7346,20 @@ details[open]>.megamenu .appear-animation{
    transition: transform 0.3s ease;
 }
 
+/* Force Poppins font on the entire Menu Drawer */
+#NavDrawer,
+#NavDrawer .mobile-nav__item,
+#NavDrawer .mobile-nav__link, 
+#NavDrawer .mobile-nav__sublist,
+#NavDrawer .mobile-nav__grandchildlist,
+#NavDrawer .mobile-nav__sublist-link,
+#NavDrawer .drawer__title,
+#NavDrawer a,
+#NavDrawer button,
+#NavDrawer span {
+  font-family: 'Poppins', sans-serif !important;
+}
+
 .collapsible-content{
   transition:opacity 0.3s cubic-bezier(.25,.46,.45,.94),height 0.3s cubic-bezier(.25,.46,.45,.94);
 }
