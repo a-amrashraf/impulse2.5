@@ -8801,6 +8801,10 @@ html[dir=rtl] .social-sharing__title{
     font-size:var(--collectionSortButtonFontSize,8px);
   }
 
+.collection-filter__item--drawer .btn{
+    height:38px;
+  }
+
 .collection-filter .btn{
       text-align:left;
       width:100%;
