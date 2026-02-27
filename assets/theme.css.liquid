@@ -8817,7 +8817,8 @@ html[dir=rtl] .social-sharing__title{
 
 .collection-filter{
     flex-wrap:wrap;
-    justify-content:space-between;
+  justify-content:center;
+  column-gap:8px;
     position:sticky;
     top:17px;
     z-index:5;
@@ -8918,7 +8919,7 @@ html[dir=rtl] .social-sharing__title{
 }
 
 .collection-filter__item--drawer{
-  flex:0 1 48%;
+  flex:0 1 calc(50% - 4px);
 }
 
 .collection-filter__item--count{
@@ -8927,7 +8928,7 @@ html[dir=rtl] .social-sharing__title{
 }
 
 .collection-filter__item--sort{
-  flex:0 1 48%;
+  flex:0 1 calc(50% - 4px);
 }
 
 @media only screen and (max-width:768px){
