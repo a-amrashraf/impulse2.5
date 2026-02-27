@@ -101,12 +101,12 @@
         " /* Optional: remove extra space from the whole card */.grid-product {margin-bottom: 4px !important; margin-top: 0px;}"
       ],
       "settings": {
-        "enable_sidebar": false,
-        "collapsed": false,
+        "enable_sidebar": true,
+        "collapsed": true,
         "filter_style": "sidebar",
         "enable_color_swatches": true,
         "enable_swatch_labels": true,
-        "enable_sort": false
+        "enable_sort": true
       }
     },
     "countdown": {
