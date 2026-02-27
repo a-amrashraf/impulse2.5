@@ -183,12 +183,12 @@
       ],
       "custom_css": [
         ".grid-product__image-mask {margin-bottom: 4px !important; margin-top: 0px;}",
-        " /* Remove bottom padding under product card */.grid-product__content,.grid-product__meta {padding-bottom: 4px !important; margin-bottom: 4px !important; margin-top: 0px;}",
-        " /* Optional: remove extra space from the whole card */.grid-product {margin-bottom: 4px !important; margin-top: 0px;}"
+        " /* Remove bottom padding under product card */.grid-product__content,.grid-product__meta {padding-bottom: 4px !important; margin-bottom: 5px !important; margin-top: -5px;}",
+        " /* Optional: remove extra space from the whole card */.grid-product {margin-bottom: 4px !important; margin-top: -4px;}"
       ],
       "settings": {
         "enable_sidebar": true,
-        "collapsed": true,
+        "collapsed": false,
         "filter_style": "drawer",
         "enable_color_swatches": true,
         "enable_swatch_labels": true,
