@@ -28,6 +28,9 @@
         --buttonRadius: 0;
     {% endif %}
 
+    --collectionFilterButtonFontSize: {{ settings.collection_filter_button_font_size | default: 16 | append: 'px' }};
+    --collectionSortButtonFontSize: {{ settings.collection_sort_button_font_size | default: 8 | append: 'px' }};
+
     --colorGridOverlayOpacity: {{ settings.collection_grid_opacity | divided_by: 100.0 }};
     --colorAnnouncement: {{ settings.color_announcement | default: "#1c1d1d" }};
     --colorAnnouncementText: {{ settings.color_announcement_text | default: "#fff" }};

@@ -501,6 +501,26 @@
         ]
       },
       {
+        "type": "range",
+        "id": "collection_filter_button_font_size",
+        "label": "Collection filter button font size",
+        "default": 16,
+        "min": 8,
+        "max": 40,
+        "step": 1,
+        "unit": "px"
+      },
+      {
+        "type": "range",
+        "id": "collection_sort_button_font_size",
+        "label": "Collection sort button font size",
+        "default": 8,
+        "min": 6,
+        "max": 30,
+        "step": 1,
+        "unit": "px"
+      },
+      {
         "type": "header",
         "content": "t:settings_schema.typography.settings.header_icons"
       },

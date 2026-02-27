@@ -8770,8 +8770,16 @@ html[dir=rtl] .social-sharing__title{
   }
 
 .collection-filter .btn,.collection-filter select{
-    font-size:16px;
     height:44px;
+  }
+
+.collection-filter .btn{
+    font-size:var(--collectionFilterButtonFontSize,16px);
+  }
+
+.collection-filter__item--sort select,
+.collection-filter__item--sort #SortBy{
+    font-size:var(--collectionSortButtonFontSize,8px);
   }
 
 .collection-filter select{
