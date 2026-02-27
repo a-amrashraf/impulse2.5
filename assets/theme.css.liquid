@@ -7335,10 +7335,14 @@ details[open]>.megamenu .appear-animation{
   transform: none !important;
 }
 
+.collapsible-trigger__icon--plus .icon path {
+  stroke: white !important;
+  fill: none !important;
+}
+
 /* Ensure plus icon rotates correctly or indicates state if needed, though usually plus/minus switches */
-.collapsible-trigger.is-open .collapsible-trigger__icon--plus .icon-plus {
-  /* Optional: Transform to minus or rotate */
-   transform: rotate(45deg) !important; 
+.collapsible-trigger.is-open .collapsible-trigger__icon--plus {
+   transform: translateY(-50%) rotate(45deg) !important;
    transition: transform 0.3s ease;
 }
 
