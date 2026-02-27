@@ -8802,7 +8802,11 @@ html[dir=rtl] .social-sharing__title{
   }
 
 .collection-filter__item--drawer .btn{
-    height:25px;
+  height:34px !important;
+  min-height:34px !important;
+  padding-top:0 !important;
+  padding-bottom:0 !important;
+  line-height:34px !important;
   }
 
 .collection-filter .btn{
