@@ -106,7 +106,7 @@
       "settings": {
         "enable_sidebar": true,
         "collapsed": true,
-        "filter_style": "sidebar",
+        "filter_style": "drawer",
         "enable_color_swatches": true,
         "enable_swatch_labels": true,
         "enable_sort": true
