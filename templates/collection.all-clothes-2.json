@@ -167,13 +167,18 @@
         "subcollections",
         "product_grid"
       ],
+      "custom_css": [
+        ".grid-product__image-mask {margin-bottom: 4px !important; margin-top: 0px;}",
+        " /* Remove bottom padding under product card */.grid-product__content,.grid-product__meta {padding-bottom: 4px !important; margin-bottom: 4px !important; margin-top: 0px;}",
+        " /* Optional: remove extra space from the whole card */.grid-product {margin-bottom: 4px !important; margin-top: 0px;}"
+      ],
       "settings": {
-        "enable_sidebar": false,
-        "collapsed": false,
+        "enable_sidebar": true,
+        "collapsed": true,
         "filter_style": "sidebar",
         "enable_color_swatches": true,
         "enable_swatch_labels": true,
-        "enable_sort": false
+        "enable_sort": true
       }
     },
     "countdown": {
