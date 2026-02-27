@@ -60,6 +60,9 @@
     },
     "collection-header": {
       "type": "collection-header",
+      "custom_css": [
+        ". {}"
+      ],
       "settings": {
         "enable": true,
         "collection_image_enable": true,
