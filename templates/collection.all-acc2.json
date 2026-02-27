@@ -47,7 +47,7 @@
       ],
       "custom_css": [
         ".collection-item {flex: 0 0 40%; scroll-snap-align: start; text-align: center;}",
-        ".collection-slider {display: flex; gap: 2px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 0px; margin-bottom: -50px; margin-left: 0px; margin-right: 0px;}",
+        ".collection-slider {display: flex; gap: 2px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 0px; margin-bottom: -35px; margin-left: 0px; margin-right: 0px;}",
         ".collection-title {position: relative; overflow: hidden;}"
       ],
       "name": "Collection Slider",
@@ -138,12 +138,12 @@
         " /* Optional: remove extra space from the whole card */.grid-product {margin-bottom: 4px !important; margin-top: 0px;}"
       ],
       "settings": {
-        "enable_sidebar": false,
-        "collapsed": false,
+        "enable_sidebar": true,
+        "collapsed": true,
         "filter_style": "sidebar",
         "enable_color_swatches": true,
         "enable_swatch_labels": true,
-        "enable_sort": false
+        "enable_sort": true
       }
     },
     "countdown": {
