@@ -84,7 +84,7 @@
                             aria-controls="Sublinklist-{{ child_list_handle }}-{{ grand_child_list_handle }}"{% if childlink.active or childlink.child_active %} aria-open="true"{% endif %}
                             class="mobile-nav__link--button collapsible-trigger{% if childlink.active or childlink.child_active %} is-open{% endif %}">
                               <span class="mobile-nav__faux-link"{% if childlink.active %} data-active="true"{% endif %}>{{ childlink.title | escape }}</span>
-                              <span class="collapsible-trigger__icon collapsible-trigger__icon--open" role="presentation">
+                              <span class="collapsible-trigger__icon collapsible-trigger__icon--open collapsible-trigger__icon--plus" role="presentation">
                                 <svg class="icon icon--wide icon-plus" width="20px" height="20px" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                   <path d="M10 4V16M4 10H16" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
                                 </svg>
@@ -103,7 +103,7 @@
                               aria-controls="Sublinklist-{{ child_list_handle }}-{{ grand_child_list_handle }}"
                               aria-labelledby="Sublabel-{{ grand_child_list_handle }}"
                               class="collapsible-trigger{% if childlink.active or childlink.child_active %} is-open{% endif %}">
-                              <span class="collapsible-trigger__icon collapsible-trigger__icon--open" role="presentation">
+                              <span class="collapsible-trigger__icon collapsible-trigger__icon--open collapsible-trigger__icon--plus" role="presentation">
                                 <svg class="icon icon--wide icon-plus" width="20px" height="20px" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                   <path d="M10 4V16M4 10H16" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
                                 </svg>
