@@ -8832,7 +8832,7 @@ html[dir=rtl] .social-sharing__title{
 .collection-filter select,
 .collection-filter__sort-container {
     font-size: 12px;
-    height: 30px;
+  height: 36px;
     background-color: white !important;
     color: black !important;
     border-color: #e8e8e1;
@@ -8857,16 +8857,30 @@ html[dir=rtl] .social-sharing__title{
     width:100%;
     text-align: center;
     text-align-last: center;
-    font-size: 7px;
-    padding: 0 2px;
-    line-height: 30px; /* Force vertical centering */
+    font-size: 12px;
+    padding: 0 20px;
+    line-height: 36px;
   }
 
 .collection-filter .btn{
     border:1px solid;
     border-color:var(--colorBorder);
     padding:0 20px;
+    min-height:36px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
   }
+
+.collection-filter__item--drawer,
+.collection-filter__item--sort {
+  min-width: 180px;
+}
+
+.collection-filter__sort-container {
+  text-align: center;
+}
 
 @media only screen and (max-width:768px){
 
@@ -8881,12 +8895,16 @@ html[dir=rtl] .social-sharing__title{
 .collection-filter select {
   width: 100%; /* Fill the 80% container */
 }
+
+.collection-filter .btn {
+  display: flex;
+}
     }
 
 .collection-filter .btn .icon{
-      margin-right:10px;
+      margin-right:8px;
       position:relative;
-      top:-2px;
+      top:0;
     }
 
 .collection-filter__item{
