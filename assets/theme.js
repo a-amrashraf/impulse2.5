@@ -2427,6 +2427,14 @@ theme.recentlyViewed = {
             this.close();
           }
         }.bind(this));
+
+        this._touchMoveHandler = this._touchMoveHandler || function(evt) {
+          if (!evt.target.closest('.drawer__scrollable')) {
+            evt.preventDefault();
+          }
+        }.bind(this);
+
+        this.drawer.addEventListener('touchmove', this._touchMoveHandler, { passive: false });
   
         theme.a11y.lockMobileScrolling(this.config.namespace, this.nodes.page);
       },
@@ -2434,6 +2442,10 @@ theme.recentlyViewed = {
       unbindEvents: function() {
         window.off('click' + this.config.namespace);
         window.off('keyup' + this.config.namespace);
+
+        if (this._touchMoveHandler) {
+          this.drawer.removeEventListener('touchmove', this._touchMoveHandler);
+        }
   
         theme.a11y.unlockMobileScrolling(this.config.namespace, this.nodes.page);
       }
