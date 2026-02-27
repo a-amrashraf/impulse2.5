@@ -46,7 +46,7 @@
           <div class="grid__item">
             <div class="grid grid--uniform">
               {%- for i in (1..product_limit) -%}
-                <div class="grid__item grid-product {{ gridView }}" data-aos="row-of-{{ per_row }}">
+                <div class="grid__item grid-product {{ gridView }}">
                   <div class="grid-product__content">
                     <a href="{{ product.url | within: collection }}" class="grid-product__link">
                       <div class="grid-product__image-mask">

@@ -97,7 +97,7 @@
   assign classes = classes | append: ' image-element'
 %}
 
-<image-element data-aos="{{ animation }}" data-aos-offset="150">
+<image-element {% if animation != 'none' %}data-aos="{{ animation }}" data-aos-offset="150"{% endif %}>
 
 {% if type == blank %}
   {% if widths != blank %}

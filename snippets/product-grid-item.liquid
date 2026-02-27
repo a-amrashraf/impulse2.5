@@ -96,6 +96,7 @@ Arguments
                 sizeVariable: sizeVariable,
                 fallback: fallback,
                 widths: '360, 540, 720, 900, 1080',
+                animation: 'none',
               -%}
             {%- else -%}
               {%- capture placeholder -%}product-{% cycle 1, 2, 3, 4, 5, 6 %}{%- endcapture -%}
@@ -119,6 +120,7 @@ Arguments
                 sizeVariable: sizeVariable,
                 fallback: fallback,
                 widths: '360, 540, 720, 900, 1080',
+                animation: 'none',
               -%}
             {%- else -%}
               {%- capture placeholder -%}product-{% cycle 1, 2, 3, 4, 5, 6 %}{%- endcapture -%}
@@ -142,6 +144,7 @@ Arguments
               sizeVariable: sizeVariable,
               fallback: fallback,
               widths: '360, 540, 720, 1000',
+              animation: 'none',
             -%}
           </div>
         {%- endif -%}
