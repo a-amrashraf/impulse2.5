@@ -8885,11 +8885,17 @@ html[dir=rtl] .social-sharing__title{
 
 @media only screen and (max-width:768px){
 
+.collection-filter__item--drawer,
+.collection-filter__item--sort {
+  min-width: 0;
+  flex: 0 1 calc(50% - 4px);
+}
+
 .collection-filter .btn,
 .collection-filter__sort-container {
       text-align:center;
-      width:80%;
-      margin: 0 auto;
+  width:100%;
+  margin: 0;
       display: block;
 }
 
