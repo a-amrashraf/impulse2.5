@@ -8817,10 +8817,17 @@ html[dir=rtl] .social-sharing__title{
 
 @media only screen and (max-width:768px){
 
-.collection-filter .btn{
-      text-align:left;
-      width:100%;
-  }
+.collection-filter .btn,
+.collection-filter__sort-container {
+      text-align:center;
+      width:80%;
+      margin: 0 auto;
+      display: block;
+}
+
+.collection-filter select {
+  width: 100%; /* Fill the 80% container */
+}
     }
 
 .collection-filter .btn .icon{
