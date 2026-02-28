@@ -8778,6 +8778,11 @@ html[dir=rtl] .social-sharing__title{
   font-size:12px;
   }
 
+.collection-filter__item--sort select,
+.collection-filter__item--sort #SortBy{
+  font-size:12px !important;
+}
+
 .collection-filter .btn{
     border:1px solid;
     border-color:var(--colorBorder);
