@@ -8797,6 +8797,19 @@ html[dir=rtl] .social-sharing__title{
   max-width:50%;
 }
 
+.collection-filter__item--sort .collection-filter__sort-container{
+  overflow:hidden;
+}
+
+.collection-filter__item--sort select,
+.collection-filter__item--sort #SortBy{
+  font-size:16px !important;
+  transform:scale(0.82);
+  transform-origin:center center;
+  width:122%;
+  margin-left:-11%;
+}
+
 .collection-filter .btn{
       text-align:left;
       width:100%;
