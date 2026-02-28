@@ -2431,12 +2431,43 @@ theme.recentlyViewed = {
           }
         }.bind(this));
 
+        this._touchStartY = 0;
+
+        this._touchStartHandler = this._touchStartHandler || function(evt) {
+          if (evt.touches && evt.touches.length) {
+            this._touchStartY = evt.touches[0].clientY;
+          }
+        }.bind(this);
+
         this._touchMoveHandler = this._touchMoveHandler || function(evt) {
-          if (!evt.target.closest('.drawer__scrollable')) {
+          var scrollable = evt.target.closest('.drawer__scrollable');
+
+          if (!scrollable) {
+            evt.preventDefault();
+            return;
+          }
+
+          var isScrollable = scrollable.scrollHeight > scrollable.clientHeight;
+          if (!isScrollable) {
+            evt.preventDefault();
+            return;
+          }
+
+          var currentY = this._touchStartY;
+          if (evt.touches && evt.touches.length) {
+            currentY = evt.touches[0].clientY;
+          }
+
+          var deltaY = currentY - this._touchStartY;
+          var atTop = scrollable.scrollTop <= 0;
+          var atBottom = Math.ceil(scrollable.scrollTop + scrollable.clientHeight) >= scrollable.scrollHeight;
+
+          if ((atTop && deltaY > 0) || (atBottom && deltaY < 0)) {
             evt.preventDefault();
           }
         }.bind(this);
 
+        this.drawer.addEventListener('touchstart', this._touchStartHandler, { passive: true });
         this.drawer.addEventListener('touchmove', this._touchMoveHandler, { passive: false });
   
         theme.a11y.lockMobileScrolling(this.config.namespace, this.nodes.page);
@@ -2448,6 +2479,10 @@ theme.recentlyViewed = {
 
         if (this._touchMoveHandler) {
           this.drawer.removeEventListener('touchmove', this._touchMoveHandler);
+        }
+
+        if (this._touchStartHandler) {
+          this.drawer.removeEventListener('touchstart', this._touchStartHandler);
         }
   
         theme.a11y.unlockMobileScrolling(this.config.namespace, this.nodes.page);
