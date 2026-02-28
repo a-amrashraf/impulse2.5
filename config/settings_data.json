@@ -117,6 +117,11 @@
         "type": "shopify://apps/essential-preorder/blocks/app-embed/bb7e7a06-2a82-4e7d-8984-c3918deb1c2a",
         "disabled": false,
         "settings": {}
+      },
+      "16605207545338212596": {
+        "type": "shopify://apps/aov-ai-bundle/blocks/aov-offer/0335d423-143c-4ad7-b224-99a1db74a9ee",
+        "disabled": false,
+        "settings": {}
       }
     }
   },
