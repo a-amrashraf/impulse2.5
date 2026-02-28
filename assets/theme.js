@@ -237,8 +237,11 @@ theme.recentlyViewed = {
     lockMobileScrolling: function(namespace, element) {
       var el = element ? element : document.documentElement;
       document.documentElement.classList.add('lock-scroll');
-      el.on('touchmove' + namespace, function() {
-        return true;
+      el.on('touchmove' + namespace, function(evt) {
+        if (evt && evt.cancelable) {
+          evt.preventDefault();
+        }
+        return false;
       });
     },
   
