@@ -8757,8 +8757,7 @@ html[dir=rtl] .social-sharing__title{
 
 .collection-filter{
     flex-wrap:wrap;
-  justify-content:center;
-  column-gap:8px;
+    justify-content:space-between;
     position:sticky;
     top:17px;
     z-index:5;
@@ -8788,28 +8787,8 @@ html[dir=rtl] .social-sharing__title{
 
 .collection-filter__item--drawer,
 .collection-filter__item--sort{
-  min-width:0;
-  flex:0 1 calc(50% - 4px);
-}
-
-.collection-filter .btn{
-    font-size:var(--collectionFilterButtonFontSize,16px);
-  }
-
-.collection-filter__item--sort select,
-.collection-filter__item--sort #SortBy{
-    font-size:var(--collectionSortButtonFontSize,8px);
-  }
-
-.collection-filter__item--drawer .js-drawer-open-collection-filters.btn.btn--tertiary,
-.collection-filter__item--drawer .js-drawer-open-collection-filters.btn.btn--tertiary.btn--tertiary-active{
-  height:24px !important;
-  min-height:24px !important;
-  padding:0 12px !important;
-  line-height:1 !important;
-  display:flex !important;
-  align-items:center !important;
-  justify-content:center;
+  flex:0 1 50%;
+  max-width:50%;
 }
 
 .collection-filter .btn{
