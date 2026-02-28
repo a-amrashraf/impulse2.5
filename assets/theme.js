@@ -2362,6 +2362,11 @@ theme.recentlyViewed = {
         }.bind(this));
   
         document.documentElement.classList.add(this.config.openClass);
+
+        if (this.config.id === 'CartDrawer') {
+          this.lockPageScroll();
+        }
+
         this.isOpen = true;
   
         theme.a11y.trapFocus({
@@ -2398,6 +2403,10 @@ theme.recentlyViewed = {
   
         document.documentElement.classList.remove(this.config.openClass);
         document.documentElement.classList.add(this.config.closingClass);
+
+        if (this.config.id === 'CartDrawer') {
+          this.unlockPageScroll();
+        }
   
         window.setTimeout(function() {
           document.documentElement.classList.remove(this.config.closingClass);
@@ -2486,6 +2495,28 @@ theme.recentlyViewed = {
         }
   
         theme.a11y.unlockMobileScrolling(this.config.namespace, this.nodes.page);
+        },
+
+        lockPageScroll: function() {
+          this.pageScrollPosition = window.pageYOffset || document.documentElement.scrollTop || 0;
+
+          document.body.style.position = 'fixed';
+          document.body.style.top = '-' + this.pageScrollPosition + 'px';
+          document.body.style.left = '0';
+          document.body.style.right = '0';
+          document.body.style.width = '100%';
+        },
+
+        unlockPageScroll: function() {
+          var scrollPosition = this.pageScrollPosition || 0;
+
+          document.body.style.position = '';
+          document.body.style.top = '';
+          document.body.style.left = '';
+          document.body.style.right = '';
+          document.body.style.width = '';
+
+          window.scrollTo(0, scrollPosition);
       }
     });
   
