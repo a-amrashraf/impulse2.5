@@ -139,11 +139,11 @@
       ],
       "settings": {
         "enable_sidebar": true,
-        "collapsed": true,
-        "filter_style": "sidebar",
+        "collapsed": false,
+        "filter_style": "drawer",
         "enable_color_swatches": true,
         "enable_swatch_labels": true,
-        "enable_sort": true
+        "enable_sort": false
       }
     },
     "countdown": {
