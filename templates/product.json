@@ -75,6 +75,10 @@
             "show_gift_card_recipient": false
           }
         },
+        "aov_ai_bundle_mix_match_offer_inline_gCW6JA": {
+          "type": "shopify://apps/aov-ai-bundle/blocks/mix-match-offer-inline/0335d423-143c-4ad7-b224-99a1db74a9ee",
+          "settings": {}
+        },
         "description": {
           "type": "description",
           "disabled": true,
@@ -140,6 +144,7 @@
         "sales_point",
         "inventory_status",
         "buy_buttons",
+        "aov_ai_bundle_mix_match_offer_inline_gCW6JA",
         "description",
         "tab_8DVABm",
         "tab",
