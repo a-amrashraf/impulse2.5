@@ -1,0 +1,37 @@
+{%- if recommendations.performed and recommendations.products_count > 0 -%}
+  <div class="drawer__upsell appear-animation appear-delay-3">
+    <div class="h3 drawer__upsell-title">
+      {{ 'cart.general.upsell_heading' | t | default: 'You might also like' }}
+    </div>
+    {%- for product in recommendations.products -%}
+      <div class="drawer__upsell-item">
+        <div class="drawer__upsell-image">
+          <a href="{{ product.url }}">
+            <img src="{{ product.featured_image | img_url: '100x' }}" alt="{{ product.title | escape }}" loading="lazy">
+          </a>
+        </div>
+        <div class="drawer__upsell-content">
+          <a href="{{ product.url }}" class="drawer__upsell-name">{{ product.title }}</a>
+          <div class="drawer__upsell-price">{{ product.price | money }}</div>
+          <button type="button" class="btn btn--small btn--full ajax-add-to-cart" data-id="{{ product.selected_or_first_available_variant.id }}">
+            {{ 'products.product.add_to_cart' | t }}
+          </button>
+        </div>
+      </div>
+    {%- endfor -%}
+  </div>
+{%- endif -%}
+
+{% schema %}
+  {
+    "name": "Cart Recommendations",
+    "settings": [
+      {
+        "type": "text",
+        "id": "product_recommendations_heading",
+        "label": "Heading",
+        "default": "You might also like"
+      }
+    ]
+  }
+{% endschema %}
