@@ -24,7 +24,33 @@
             </div>
           {% endif %}
 
-          <div id="CartDrawerRecommendations"></div>
+          {%- for block in section.blocks -%}
+            {%- case block.type -%}
+              {%- when 'upsell' -%}
+                {%- assign product = all_products[block.settings.product] -%}
+                {%- if product != blank -%}
+                  <div class="drawer__upsell appear-animation appear-delay-3" {{ block.shopify_attributes }}>
+                    {%- if block.settings.title != blank -%}
+                      <div class="h3 drawer__upsell-title">{{ block.settings.title }}</div>
+                    {%- endif -%}
+                    <div class="drawer__upsell-item">
+                      <div class="drawer__upsell-image">
+                        <a href="{{ product.url }}">
+                          <img src="{{ product.featured_image | img_url: '100x' }}" alt="{{ product.title | escape }}" loading="lazy">
+                        </a>
+                      </div>
+                      <div class="drawer__upsell-content">
+                        <a href="{{ product.url }}" class="drawer__upsell-name">{{ product.title }}</a>
+                        <div class="drawer__upsell-price">{{ product.price | money }}</div>
+                        <button type="button" class="btn btn--small btn--full ajax-add-to-cart" data-id="{{ product.selected_or_first_available_variant.id }}">
+                          {{ 'products.product.add_to_cart' | t }}
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                {%- endif -%}
+            {%- endcase -%}
+          {%- endfor -%}
         </div>
 
         <div class="drawer__footer appear-animation appear-delay-4">
@@ -96,55 +122,6 @@
     // If not, we might need custom JS. 
     // Usually theme.js attaches to '.btn--add-to-cart' or form submit.
     
-    // Add dynamic recommendations logic
-    const container = document.getElementById('CartDrawerRecommendations');
-    
-    function loadRecommendations(productId) {
-      if (!productId) {
-        container.innerHTML = '';
-        return;
-      }
-      
-      const url = `${window.Shopify.routes.root}recommendations/products?section_id=cart-drawer-recommendations&product_id=${productId}&limit=4`;
-      
-      fetch(url)
-        .then(response => response.text())
-        .then(text => {
-          const html = document.createElement('div');
-          html.innerHTML = text;
-          const recommendations = html.querySelector('.drawer__upsell');
-          
-          if (recommendations && recommendations.innerHTML.trim().length) {
-            container.innerHTML = recommendations.outerHTML;
-          } else {
-            container.innerHTML = '';
-          }
-        })
-        .catch(e => {
-          console.error(e);
-        });
-    }
-
-    // Listen for cart updates
-    document.addEventListener('cart:updated', function(evt) {
-      const cart = evt.detail.cart;
-      if (cart.items.length > 0) {
-        const firstItem = cart.items[0];
-        loadRecommendations(firstItem.product_id);
-      } else {
-        container.innerHTML = '';
-      }
-    });
-
-    // Initial load check if cart has items
-    fetch(window.Shopify.routes.root + 'cart.js')
-      .then(res => res.json())
-      .then(cart => {
-        if (cart.items.length > 0) {
-          loadRecommendations(cart.items[0].product_id);
-        }
-      });
-      
     document.querySelector('#CartDrawer').addEventListener('click', function(e) {
       if (e.target.matches('.ajax-add-to-cart')) {
         e.preventDefault();
@@ -165,15 +142,10 @@
         })
         .then(data => {
           // Trigger cart update event that the theme listens to
+          // Dispatch standard event
           document.dispatchEvent(new CustomEvent('cart:build'));
-          
-          // Refresh recommendations
-          fetch(window.Shopify.routes.root + 'cart.js')
-            .then(res => res.json())
-            .then(cart => {
-               document.dispatchEvent(new CustomEvent('cart:updated', { detail: { cart: cart } }));
-            });
-
+          // Or if theme uses specific trigger
+          // theme.cart.getCart(); // hypothetical
            btn.classList.remove('btn--loading');
            btn.innerText = 'Added';
         })
