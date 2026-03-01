@@ -194,7 +194,6 @@
       "settings": {
         "title": "",
         "divider": true,
-        "full_width": true,
         "per_row": 4,
         "enable_gutter": false
       }
@@ -568,7 +567,6 @@
       "settings": {
         "title": "Shop by category",
         "divider": false,
-        "full_width": false,
         "per_row": 4,
         "enable_gutter": true
       }
@@ -615,7 +613,6 @@
       "settings": {
         "title": "",
         "divider": false,
-        "full_width": false,
         "per_row": 4,
         "enable_gutter": false
       }
