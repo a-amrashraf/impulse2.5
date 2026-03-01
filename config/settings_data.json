@@ -117,6 +117,40 @@
         "type": "shopify://apps/essential-preorder/blocks/app-embed/bb7e7a06-2a82-4e7d-8984-c3918deb1c2a",
         "disabled": false,
         "settings": {}
+      },
+      "16605207545338212596": {
+        "type": "shopify://apps/aov-ai-bundle/blocks/aov-offer/0335d423-143c-4ad7-b224-99a1db74a9ee",
+        "disabled": false,
+        "settings": {}
+      },
+      "3300017149626794902": {
+        "type": "shopify://apps/xboost-bundle/blocks/core_script/8707ef23-ba0e-4d63-a83a-1460e9bac021",
+        "disabled": false,
+        "settings": {
+          "customScript": "",
+          "showExampleQb": false,
+          "showExampleAddon": false,
+          "showExampleBxgy": false,
+          "showExampleFB": false,
+          "showExampleFBT": false,
+          "showExampleRec": false,
+          "showExampleMM": true
+        }
+      },
+      "10597026053260177897": {
+        "type": "shopify://apps/wb-frequently-bought-together/blocks/app-embed/5f9bd783-09d5-43d2-bb37-85281ca56a6b",
+        "disabled": false,
+        "settings": {}
+      },
+      "12147612498419570842": {
+        "type": "shopify://apps/zapio-upsell/blocks/zapio-widget/019b220e-8c46-7b31-a4a6-4d6d4848207b",
+        "disabled": false,
+        "settings": {}
+      },
+      "12108174171315376258": {
+        "type": "shopify://apps/aov-ai-cart-drawer/blocks/avada-embed/938869e1-3feb-48fa-ab79-27fdfe609836",
+        "disabled": false,
+        "settings": {}
       }
     }
   },

@@ -75,6 +75,19 @@
             "show_gift_card_recipient": false
           }
         },
+        "xboost_bundle_volume_discount_Xdhimz": {
+          "type": "shopify://apps/xboost-bundle/blocks/volume_discount/8707ef23-ba0e-4d63-a83a-1460e9bac021",
+          "settings": {
+            "product": "",
+            "showExample": true,
+            "marginY": 16
+          }
+        },
+        "aov_ai_bundle_offer_inline_rfwDyz": {
+          "type": "shopify://apps/aov-ai-bundle/blocks/offer-inline/0335d423-143c-4ad7-b224-99a1db74a9ee",
+          "disabled": true,
+          "settings": {}
+        },
         "description": {
           "type": "description",
           "disabled": true,
@@ -82,6 +95,11 @@
             "is_tab": false,
             "force_open": false
           }
+        },
+        "aov_ai_bundle_mix_match_offer_inline_cHHmEq": {
+          "type": "shopify://apps/aov-ai-bundle/blocks/mix-match-offer-inline/0335d423-143c-4ad7-b224-99a1db74a9ee",
+          "disabled": true,
+          "settings": {}
         },
         "tab_8DVABm": {
           "type": "tab",
@@ -140,7 +158,10 @@
         "sales_point",
         "inventory_status",
         "buy_buttons",
+        "xboost_bundle_volume_discount_Xdhimz",
+        "aov_ai_bundle_offer_inline_rfwDyz",
         "description",
+        "aov_ai_bundle_mix_match_offer_inline_cHHmEq",
         "tab_8DVABm",
         "tab",
         "tab_JTXMXc",
