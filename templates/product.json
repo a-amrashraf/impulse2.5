@@ -77,6 +77,7 @@
         },
         "aov_ai_bundle_offer_inline_rfwDyz": {
           "type": "shopify://apps/aov-ai-bundle/blocks/offer-inline/0335d423-143c-4ad7-b224-99a1db74a9ee",
+          "disabled": true,
           "settings": {}
         },
         "description": {
@@ -89,6 +90,7 @@
         },
         "aov_ai_bundle_mix_match_offer_inline_cHHmEq": {
           "type": "shopify://apps/aov-ai-bundle/blocks/mix-match-offer-inline/0335d423-143c-4ad7-b224-99a1db74a9ee",
+          "disabled": true,
           "settings": {}
         },
         "tab_8DVABm": {
