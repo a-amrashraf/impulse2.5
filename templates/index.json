@@ -615,7 +615,7 @@
       "settings": {
         "title": "",
         "divider": false,
-        "full_width": false,
+        "full_width": true,
         "per_row": 4,
         "enable_gutter": false
       }
