@@ -111,6 +111,10 @@
             "page": "exchange-refund-policy"
           }
         },
+        "zapio_upsell_zapio_widget_block_fbt_K6a7qh": {
+          "type": "shopify://apps/zapio-upsell/blocks/zapio-widget-block-fbt/019b220e-8c46-7b31-a4a6-4d6d4848207b",
+          "settings": {}
+        },
         "share": {
           "type": "share",
           "disabled": true,
@@ -118,10 +122,6 @@
         },
         "judge_me_reviews_review_snippet_widget_KUkUiM": {
           "type": "shopify://apps/judge-me-reviews/blocks/review_snippet_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
-          "settings": {}
-        },
-        "zapio_upsell_zapio_widget_block_fbt_K6a7qh": {
-          "type": "shopify://apps/zapio-upsell/blocks/zapio-widget-block-fbt/019b220e-8c46-7b31-a4a6-4d6d4848207b",
           "settings": {}
         }
       },
@@ -140,9 +140,9 @@
         "tab",
         "tab_JTXMXc",
         "tab_rYUaej",
+        "zapio_upsell_zapio_widget_block_fbt_K6a7qh",
         "share",
-        "judge_me_reviews_review_snippet_widget_KUkUiM",
-        "zapio_upsell_zapio_widget_block_fbt_K6a7qh"
+        "judge_me_reviews_review_snippet_widget_KUkUiM"
       ],
       "custom_css": [
         "p {font-family: \"poppins\";}",
