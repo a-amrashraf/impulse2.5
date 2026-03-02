@@ -79,24 +79,6 @@
     "checkout_logo_position": "left",
     "checkout_logo_size": "small",
     "checkout_sidebar_background_color": "#fafafa",
-    "sections": {
-      "cart-drawer": {
-        "type": "cart-drawer",
-        "blocks": {
-          "upsell_XbH7TF": {
-            "type": "upsell",
-            "settings": {
-              "title": "You might also like",
-              "product": "acid-hoodie-bronze"
-            }
-          }
-        },
-        "block_order": [
-          "upsell_XbH7TF"
-        ],
-        "settings": {}
-      }
-    },
     "content_for_index": [],
     "blocks": {
       "1232542678405107163": {
@@ -141,20 +123,6 @@
         "disabled": false,
         "settings": {}
       },
-      "3300017149626794902": {
-        "type": "shopify://apps/xboost-bundle/blocks/core_script/8707ef23-ba0e-4d63-a83a-1460e9bac021",
-        "disabled": false,
-        "settings": {
-          "customScript": "",
-          "showExampleQb": false,
-          "showExampleAddon": false,
-          "showExampleBxgy": false,
-          "showExampleFB": false,
-          "showExampleFBT": false,
-          "showExampleRec": false,
-          "showExampleMM": true
-        }
-      },
       "10597026053260177897": {
         "type": "shopify://apps/wb-frequently-bought-together/blocks/app-embed/5f9bd783-09d5-43d2-bb37-85281ca56a6b",
         "disabled": false,
@@ -169,6 +137,20 @@
         "type": "shopify://apps/aov-ai-cart-drawer/blocks/avada-embed/938869e1-3feb-48fa-ab79-27fdfe609836",
         "disabled": false,
         "settings": {}
+      },
+      "3300017149626794902": {
+        "type": "shopify://apps/xboost-bundle/blocks/core_script/8707ef23-ba0e-4d63-a83a-1460e9bac021",
+        "disabled": true,
+        "settings": {
+          "customScript": "",
+          "showExampleQb": false,
+          "showExampleAddon": false,
+          "showExampleBxgy": false,
+          "showExampleFB": false,
+          "showExampleFBT": false,
+          "showExampleRec": false,
+          "showExampleMM": true
+        }
       }
     }
   },
