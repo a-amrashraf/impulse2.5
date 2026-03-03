@@ -46,12 +46,6 @@
             "collection": "cross-bag"
           }
         },
-        "collection_G9VH4G": {
-          "type": "collection",
-          "settings": {
-            "collection": "raw-bag"
-          }
-        },
         "collection_DnEMFR": {
           "type": "collection",
           "settings": {
@@ -63,7 +57,6 @@
         "collection_fwzba7",
         "collection_ANJ97N",
         "collection_gj8aYt",
-        "collection_G9VH4G",
         "collection_DnEMFR"
       ],
       "custom_css": [
