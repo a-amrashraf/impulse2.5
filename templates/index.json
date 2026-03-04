@@ -36,7 +36,7 @@
             "title": "NEW ARRIVAL",
             "title_size": 80,
             "subheading": "BAGUETTE BAG",
-            "link": "shopify://collections/baguette-bag",
+            "link": "shopify://products/bundlesuite-byob-bundle",
             "link_text": "SHOP NOW",
             "link_2": "",
             "link_text_2": "",
@@ -52,7 +52,6 @@
       "block_order": [
         "image_PyANit"
       ],
-      "disabled": true,
       "name": "t:sections.slideshow.presets.hero_optional_slideshow.name",
       "settings": {
         "section_height": "650px",
