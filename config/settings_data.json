@@ -147,7 +147,7 @@
           "custom_section_class": "",
           "custom_section_class_for_InPage": "",
           "volume_discount_widget_selector": "",
-          "what_happens_on_add_to_cart": "stay_on_page",
+          "what_happens_on_add_to_cart": "redirect_to_cart",
           "custom_loader_gif": "",
           "show_loader": false,
           "loader_size": 50,

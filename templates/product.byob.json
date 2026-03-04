@@ -182,7 +182,7 @@
             "colourH": "#0066cc",
             "customcss": "",
             "customjs": "",
-            "add_to_cart_behaviour": "ajax"
+            "add_to_cart_behaviour": "native"
           }
         }
       },
