@@ -171,6 +171,24 @@
     },
     "175959590277a57a8e": {
       "type": "apps",
+      "blocks": {
+        "bundlesuite_advanced_combo_gJVWge": {
+          "type": "shopify://apps/bundlesuite/blocks/advanced_combo/ec3fca7a-00ff-426d-ac7c-5f640fb4c8a4",
+          "settings": {
+            "bundle_title": "Bundle of",
+            "out_of_stock_message": "This selected combination is currently unavailable",
+            "hide_out_of_stock": false,
+            "heading_size": 18,
+            "colourH": "#0066cc",
+            "customcss": "",
+            "customjs": "",
+            "add_to_cart_behaviour": "native"
+          }
+        }
+      },
+      "block_order": [
+        "bundlesuite_advanced_combo_gJVWge"
+      ],
       "settings": {
         "full_width": false,
         "space_around": false
