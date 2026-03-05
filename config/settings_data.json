@@ -151,7 +151,7 @@
           "custom_loader_gif": "",
           "show_loader": false,
           "loader_size": 50,
-          "customcss": "",
+          "customcss": "@media only screen and (max-width: 768px) {\n  .discount-stepper.small {\n    overflow: visible !important;\n    white-space: normal !important;\n    display: block !important;\n    animation: none !important;\n    transform: none !important;\n  }",
           "customjs": ""
         }
       }
