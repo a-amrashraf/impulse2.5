@@ -145,7 +145,7 @@
             "hide_out_of_stock": true,
             "heading_size": 18,
             "colourH": "#0066cc",
-            "customcss": ".side-cart-container {\n  position: fixed !important;\n  bottom: 0 !important;\n  left: 0;\n  width: 100%;\n  \n  animation: none !important;\n  transition: none !important;\n  transform: none !important;\n}\n.side-cart-container * {\n  animation: none !important;\n  transition: none !important;\n}",
+            "customcss": "",
             "customjs": "",
             "add_to_cart_behaviour": "native"
           }
