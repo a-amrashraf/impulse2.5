@@ -151,7 +151,7 @@
           "custom_loader_gif": "",
           "show_loader": false,
           "loader_size": 50,
-          "customcss": "",
+          "customcss": "@media only screen and (max-width: 768px) {\n  /* Force the sticky cart to stay fixed at the bottom */\n  .side-cart-container.bottom-cart {\n    position: fixed !important;\n    bottom: 0 !important;\n    top: auto !important;\n    transform: none !important; /* Stop position animations */\n    transition: none !important; /* Stop transition animations */\n    z-index: 2147483647 !important; /* Highest possible z-index */\n    opacity: 1 !important;\n    visibility: visible !important;\n    display: block !important;\n  }\n}",
           "customjs": ""
         }
       }
