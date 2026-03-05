@@ -151,7 +151,7 @@
           "custom_loader_gif": "",
           "show_loader": false,
           "loader_size": 50,
-          "customcss": ".side-cart-container {\n  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), \n              opacity 0.3s ease !important;\n  will-change: transform !important;\n}\n\n.side-cart-container.bottom-cart {\n  /* Remove the animation/transition blockers */\n  /* Keep only the positioning/styles you need */\n  position: absolute;\n  bottom: 0;\n  /* Add any other styles for the footer state */\n  \n  /* Smooth transition properties - REPLACE your current ones with these */\n  animation: fadeInUp 0.4s ease !important;\n  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), \n              opacity 0.3s ease !important;\n  transform: translateY(0) !important;\n  will-change: transform, opacity !important;\n}\n\n/* Add a subtle fade animation */\n@keyframes fadeInUp {\n  from {\n    opacity: 0.7;\n    transform: translateY(20px);\n  }\n  to {\n    opacity: 1;\n    transform: translateY(0);\n  }\n}\n.discount-info-container-header {\n    display: none !important;\n}",
+          "customcss": ".side-cart-container.bottom-cart {\n  animation: none !important;  \n \n  transform: none !important;\n  will-change: auto !important; \n}\n.discount-info-container-header {\n    display: none !important;\n}",
           "customjs": ""
         }
       }
