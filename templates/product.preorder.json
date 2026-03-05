@@ -145,7 +145,7 @@
             "hide_out_of_stock": true,
             "heading_size": 18,
             "colourH": "#0066cc",
-            "customcss": "@media (max-width: 768px) {\n  .discount-stepper.small {\n    width: 60%;\n    margin: 0 auto;\n  }\n}",
+            "customcss": "",
             "customjs": "",
             "add_to_cart_behaviour": "native"
           }
