@@ -151,7 +151,7 @@
           "custom_loader_gif": "",
           "show_loader": false,
           "loader_size": 50,
-          "customcss": ".side-cart-container.bottom-cart {\n  animation: none !important;  \n \n  transform: none !important;\n  will-change: auto !important; \n}\n.discount-info-container-header {\n    display: none !important;\n}",
+          "customcss": ".side-cart-container.bottom-cart {\n  animation: none !important;  \n  transition: none !important;    \n  transform: none !important;\n  will-change: auto !important; \n}\n.discount-info-container-header {\n    display: none !important;\n}",
           "customjs": ""
         }
       }
