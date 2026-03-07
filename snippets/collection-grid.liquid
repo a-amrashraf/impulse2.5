@@ -82,10 +82,10 @@ Snippet Arguments
 .collection-filter__item--drawer button,
 .collection-filter__sort-container {
   width: 100% !important;
-  height: auto !important;
+  height: 100% !important; /* Ensure full height fill */
   display: flex !important;
   align-items: center !important;
-  justify-content: center !important;
+  justify-content: space-between !important; /* Text left, Icon right */
   background: transparent !important;
   border: none !important;
   font-weight: 700 !important;
@@ -93,7 +93,7 @@ Snippet Arguments
   font-size: 13px !important;
   letter-spacing: 0.1em !important;
   cursor: pointer !important;
-  padding: 0 !important;
+  padding: 0 20px !important; /* Add padding from edges */
   color: #000 !important;
   box-shadow: none !important;
 }
@@ -118,7 +118,7 @@ Snippet Arguments
 
 /* Icon Styling */
 .collection-filter svg {
-  margin-left: 8px !important;
+  margin-left: 0 !important; /* Reset margin since we use space-between */
   width: 14px !important;
   height: 14px !important;
   fill: currentColor !important;
@@ -146,7 +146,7 @@ Snippet Arguments
 
     <div class="collection-filter__item collection-filter__item--sort">
         <div class="collection-filter__sort-container">
-          <span style="display: flex; align-items: center; justify-content: center; width: 100%;">
+          <span style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
             {{ 'collections.sorting.title' | t | upcase }}
             <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-plus" viewBox="0 0 64 64"><path d="M32 9v46m23-23H9" stroke-width="4" stroke="currentColor" fill="none"/></svg>
           </span>
