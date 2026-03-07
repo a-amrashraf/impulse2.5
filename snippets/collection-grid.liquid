@@ -48,8 +48,9 @@ Snippet Arguments
   align-items: stretch !important; /* Ensure full height */
   background-color: #fff !important;
   padding: 0 !important; /* Reset padding */
-  position: relative !important;
-  z-index: 10 !important;
+  /* Reverting position to inherit from theme to fix sticky header issues */
+  /* position: relative !important; */
+  /* z-index: 10 !important; */
 }
 
 /* Force items to take 50% width each */
@@ -88,6 +89,7 @@ Snippet Arguments
   justify-content: space-between !important; /* Text left, Icon right */
   background: transparent !important;
   border: none !important;
+  font-family: var(--typeBasePrimary), var(--typeBaseFallback), sans-serif !important; /* Force Theme Font */
   font-weight: 700 !important;
   text-transform: uppercase !important;
   font-size: 13px !important;
