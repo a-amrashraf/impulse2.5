@@ -154,6 +154,11 @@
           "customcss": ".side-cart-container.bottom-cart {\n  animation: none !important;  \n  transition: none !important;    \n  transform: none !important;\n  will-change: auto !important; \n}\n.discount-info-container-header {\n    display: none !important;\n}",
           "customjs": ""
         }
+      },
+      "7147999719060634790": {
+        "type": "shopify://apps/gsc-countdown-timer/blocks/countdown-bar/58dc5b1b-43d2-4209-b1f3-52aff31643ed",
+        "disabled": false,
+        "settings": {}
       }
     }
   },
