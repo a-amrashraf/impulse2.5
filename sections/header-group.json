@@ -20,7 +20,7 @@
       ],
       "name": "t:sections.marquee.presets.scrolling_text.name",
       "settings": {
-        "text": "🚨 BUY 3 ITEMS — SAVE 20% + FREE SHIPPING 🚨",
+        "text": "FREE SHIPPING ON ALL ORDERS",
         "link": "",
         "text_size": 10,
         "text_spacing": true,
