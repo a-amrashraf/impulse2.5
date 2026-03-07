@@ -101,9 +101,9 @@ Snippet Arguments
 }
 
 .collection-filter svg {
-  margin-right: 8px;
-  width: 18px;
-  height: 18px;
+  margin-left: 8px; /* Changed to left margin */
+  width: 14px; /* Slightly smaller for plus icon usually looks better, but kept near original size */
+  height: 14px;
   fill: currentColor;
 }
 </style>
@@ -116,16 +116,16 @@ Snippet Arguments
         class="js-drawer-open-collection-filters btn btn--tertiary{% unless current_filter_size == 0 %} btn--tertiary-active{% endunless %}"
         aria-controls="FilterDrawer"
         style="padding: 0; border: none; background: transparent;">
-          <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-filter" viewBox="0 0 64 64"><path d="M48 42h10m-10 0a5 5 0 1 1-5-5 5 5 0 0 1 5 5ZM7 42h31M16 22H6m10 0a5 5 0 1 1 5 5 5 5 0 0 1-5-5Zm41 0H26"/></svg>
           {{ 'collections.filters.title_tags' | t | upcase }}
+          <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-filter" viewBox="0 0 64 64"><path d="M48 42h10m-10 0a5 5 0 1 1-5-5 5 5 0 0 1 5 5ZM7 42h31M16 22H6m10 0a5 5 0 1 1 5 5 5 5 0 0 1-5-5Zm41 0H26"/></svg>
       </button>
     </div>
 
     <div class="collection-filter__item collection-filter__item--sort">
         <div class="collection-filter__sort-container">
           <span style="display: flex; align-items: center;">
-            <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-sort" viewBox="0 0 64 64"><path d="M19 24h26M19 40h16M19 16h34m-34 40h10" stroke-width="4" stroke="#000" fill="none"/></svg>
             {{ 'collections.sorting.title' | t | upcase }}
+            <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-plus" viewBox="0 0 64 64"><path d="M32 9v46m23-23H9" stroke-width="4" stroke="currentColor" fill="none"/></svg>
           </span>
           {%- assign sort_by = sort_by | default: default_sort_by -%}
           <label for="SortBy" class="hidden-label">{{ 'collections.sorting.title' | t }}</label>
