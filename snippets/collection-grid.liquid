@@ -33,37 +33,108 @@ Snippet Arguments
   endfor
 %}
 
+
+<style>
+.collection-filter {
+  display: flex;
+  width: 100%;
+  border-top: 1px solid #e8e8e1;
+  border-bottom: 1px solid #e8e8e1;
+  margin-bottom: 20px;
+  align-items: center;
+  background-color: #fff;
+}
+
+.collection-filter__item--drawer,
+.collection-filter__item--sort {
+  flex: 1;
+  text-align: center;
+  margin: 0; 
+  padding: 15px 0;
+  position: relative;
+}
+
+/* Divider */
+.collection-filter__item--drawer::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 15%;
+  height: 70%;
+  width: 1px;
+  background-color: #e8e8e1;
+}
+
+.collection-filter__item--drawer button,
+.collection-filter__sort-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  padding: 0;
+  color: #000;
+}
+
+.collection-filter__item--count {
+  display: none;
+}
+
+/* Sort Select Overlay */
+.collection-filter__sort-container select {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 2;
+  appearance: none;
+}
+
+.collection-filter svg {
+  margin-right: 8px;
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+}
+</style>
+
 <div class="collection-grid__wrapper">
   <div class="collection-filter">
     <div class="collection-filter__item collection-filter__item--drawer">
       <button
         type="button"
         class="js-drawer-open-collection-filters btn btn--tertiary{% unless current_filter_size == 0 %} btn--tertiary-active{% endunless %}"
-        aria-controls="FilterDrawer">
-          <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-filter" viewBox="0 0 64 64"><title>icon-filter</title><path d="M48 42h10m-10 0a5 5 0 1 1-5-5 5 5 0 0 1 5 5ZM7 42h31M16 22H6m10 0a5 5 0 1 1 5 5 5 5 0 0 1-5-5Zm41 0H26"/></svg>
-          {{ 'collections.filters.title_tags' | t }}
-          {%- if current_filter_size > 0 -%}
-              ({{ current_filter_size }})
-          {%- endif -%}
+        aria-controls="FilterDrawer"
+        style="padding: 0; border: none; background: transparent;">
+          <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-filter" viewBox="0 0 64 64"><path d="M48 42h10m-10 0a5 5 0 1 1-5-5 5 5 0 0 1 5 5ZM7 42h31M16 22H6m10 0a5 5 0 1 1 5 5 5 5 0 0 1-5-5Zm41 0H26"/></svg>
+          {{ 'collections.filters.title_tags' | t | upcase }}
       </button>
-    </div>
-
-    <div class="collection-filter__item collection-filter__item--count small--hide">
-      {%- if enable_collection_count -%}
-        {{ count_label | t: count: count }}
-      {%- endif -%}
     </div>
 
     <div class="collection-filter__item collection-filter__item--sort">
         <div class="collection-filter__sort-container">
-        {%- assign sort_by = sort_by | default: default_sort_by -%}
-        <label for="SortBy" class="hidden-label">{{ 'collections.sorting.title' | t }}</label>
-        <select name="SortBy" id="SortBy" data-default-sortby="{{ default_sort_by }}">
-          <option value="title-ascending"{% if sort_by == default_sort_by %} selected="selected"{% endif %}>{{ 'collections.sorting.title' | t }}</option>
-          {%- for option in sort_options -%}
-          <option value="{{ option.value }}"{% if option.value == sort_by %} selected="selected"{% endif %}>{{ option.name }}</option>
-          {%- endfor -%}
-        </select>
+          <span style="display: flex; align-items: center;">
+            <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-sort" viewBox="0 0 64 64"><path d="M19 24h26M19 40h16M19 16h34m-34 40h10" stroke-width="4" stroke="#000" fill="none"/></svg>
+            {{ 'collections.sorting.title' | t | upcase }}
+          </span>
+          {%- assign sort_by = sort_by | default: default_sort_by -%}
+          <label for="SortBy" class="hidden-label">{{ 'collections.sorting.title' | t }}</label>
+          <select name="SortBy" id="SortBy" data-default-sortby="{{ default_sort_by }}">
+            <option value="title-ascending"{% if sort_by == default_sort_by %} selected="selected"{% endif %}>{{ 'collections.sorting.title' | t }}</option>
+            {%- for option in sort_options -%}
+            <option value="{{ option.value }}"{% if option.value == sort_by %} selected="selected"{% endif %}>{{ option.name }}</option>
+            {%- endfor -%}
+          </select>
         </div>
     </div>
   </div>
