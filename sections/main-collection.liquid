@@ -11,6 +11,12 @@
     padding-top: {{ section.settings.padding_top }}px;
     padding-bottom: {{ section.settings.padding_bottom }}px;
   }
+  @media screen and (max-width: 768px) {
+    #CollectionSection-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+    }
+  }
 {%- endstyle -%}
 
 <div
@@ -188,6 +194,26 @@
       "id": "padding_bottom",
       "label": "Bottom padding",
       "default": 40,
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Top padding (Mobile)",
+      "default": 20,
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Bottom padding (Mobile)",
+      "default": 20,
       "min": 0,
       "max": 100,
       "step": 2,
