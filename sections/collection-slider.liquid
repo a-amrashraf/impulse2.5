@@ -196,9 +196,13 @@
 {% endschema %}
 
 {% stylesheet %}
-/* Main container for the category bar */
 .category-bar-wrapper {
   width: 100%;
+  box-sizing: border-box; /* Ensures padding is calculated with width */
+  padding-left: var(--padding-h, 20px);
+  padding-right: var(--padding-h, 20px);
+  padding-top: var(--padding-top, 20px);
+  padding-bottom: var(--padding-bottom, 20px);
 }
 
 .category-bar {
@@ -206,10 +210,7 @@
   flex-wrap: nowrap;
   overflow-x: auto;
   gap: var(--gap, 24px);
-  padding-top: var(--padding-top, 20px);
-  padding-bottom: var(--padding-bottom, 20px);
-  padding-left: var(--padding-h, 20px);
-  padding-right: var(--padding-h, 20px);
+  padding: 0;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* IE 10+ */
@@ -287,10 +288,12 @@
 
 /* Mobile optimizations */
 @media screen and (max-width: 768px) {
-  .category-bar {
-    gap: var(--gap, 16px);
+  .category-bar-wrapper {
     padding-left: var(--padding-h, 16px);
     padding-right: var(--padding-h, 16px);
+  }
+  .category-bar {
+    gap: var(--gap, 16px);
   }
   .category-item {
      width: 85px;
