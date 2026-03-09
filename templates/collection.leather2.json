@@ -272,7 +272,7 @@
         "enable_swatch_labels": true,
         "enable_sort": true,
         "padding_top": 14,
-        "padding_bottom": 40
+        "padding_bottom": 20
       }
     },
     "countdown": {
