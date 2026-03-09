@@ -97,7 +97,7 @@
       ],
       "name": "Collection Navigation",
       "settings": {
-        "title": "Shop by Collection",
+        "title": "",
         "gap_value": 20,
         "padding_vertical": 0,
         "padding_horizontal": 28
