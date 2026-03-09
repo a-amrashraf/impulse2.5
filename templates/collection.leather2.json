@@ -99,8 +99,8 @@
       "settings": {
         "title": "Shop by Collection",
         "gap_value": 20,
-        "padding_vertical": 20,
-        "padding_horizontal": 20
+        "padding_vertical": 0,
+        "padding_horizontal": 28
       }
     },
     "collection_slider_mobile_LWDNrK": {
