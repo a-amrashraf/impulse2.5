@@ -101,9 +101,9 @@
         "image_shape": "circle",
         "image_ratio": "square",
         "gap_value": 20,
-        "padding_top": 20,
-        "padding_bottom": 20,
-        "padding_horizontal": 28
+        "padding_top": 10,
+        "padding_bottom": 10,
+        "padding_horizontal": 20
       }
     },
     "collection_slider_mobile_LWDNrK": {
