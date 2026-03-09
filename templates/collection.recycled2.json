@@ -161,7 +161,7 @@
         " /* Optional: remove extra space from the whole card */.grid-product {margin-bottom: 7px !important; margin-top: -4px;}"
       ],
       "settings": {
-        "enable_sidebar": true,
+        "enable_sidebar": false,
         "collapsed": false,
         "filter_style": "drawer",
         "enable_color_swatches": true,
