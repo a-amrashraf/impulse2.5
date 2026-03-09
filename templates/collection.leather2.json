@@ -172,6 +172,7 @@
         "collection_DnEMFR",
         "collection_BMdhYE"
       ],
+      "disabled": true,
       "custom_css": [],
       "name": "Collection Slider",
       "settings": {
