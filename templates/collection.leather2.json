@@ -25,6 +25,73 @@
         "parallax_direction": "top"
       }
     },
+    "collection_slider_ddKWri": {
+      "type": "collection-slider",
+      "blocks": {
+        "collection_DMVxWD": {
+          "type": "collection",
+          "settings": {
+            "collection": "scrunch-bag"
+          }
+        },
+        "collection_RUhfck": {
+          "type": "collection",
+          "settings": {
+            "collection": "hobo-bag"
+          }
+        },
+        "collection_Hmycmc": {
+          "type": "collection",
+          "settings": {
+            "collection": "halo-bag"
+          }
+        },
+        "collection_ggyCtV": {
+          "type": "collection",
+          "settings": {
+            "collection": "croco-bag"
+          }
+        },
+        "collection_cRwFje": {
+          "type": "collection",
+          "settings": {
+            "collection": "baguette-bag"
+          }
+        },
+        "collection_rFz7LR": {
+          "type": "collection",
+          "settings": {
+            "collection": "dragon-bag"
+          }
+        },
+        "collection_UXenQT": {
+          "type": "collection",
+          "settings": {
+            "collection": "vernis-bag"
+          }
+        },
+        "collection_bjVALb": {
+          "type": "collection",
+          "settings": {
+            "collection": "switch-bag"
+          }
+        }
+      },
+      "block_order": [
+        "collection_DMVxWD",
+        "collection_RUhfck",
+        "collection_Hmycmc",
+        "collection_ggyCtV",
+        "collection_cRwFje",
+        "collection_rFz7LR",
+        "collection_UXenQT",
+        "collection_bjVALb"
+      ],
+      "name": "Collection Navigation",
+      "settings": {
+        "title": "Shop by Collection"
+      }
+    },
     "collection_slider_mobile_LWDNrK": {
       "type": "collection-slider-mobile",
       "blocks": {
@@ -259,6 +326,7 @@
   },
   "order": [
     "collection-header",
+    "collection_slider_ddKWri",
     "collection_slider_mobile_LWDNrK",
     "promo-grid",
     "main-collection",
