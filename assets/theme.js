@@ -238,6 +238,9 @@ theme.recentlyViewed = {
       var el = element ? element : document.documentElement;
       document.documentElement.classList.add('lock-scroll');
       el.on('touchmove' + namespace, function(evt) {
+        if (evt.target.closest('.drawer')) {
+          return true;
+        }
         if (evt && evt.cancelable) {
           evt.preventDefault();
         }
