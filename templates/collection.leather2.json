@@ -100,7 +100,7 @@
         "title": "",
         "image_shape": "circle",
         "image_ratio": "square",
-        "gap_value": 20,
+        "gap_value": 10,
         "padding_top": 10,
         "padding_bottom": 10,
         "padding_horizontal": 20
