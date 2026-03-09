@@ -39,49 +39,49 @@
           "type": "collection",
           "settings": {
             "collection": "hobo-bag",
-            "custom_title": ""
+            "custom_title": "Hobo"
           }
         },
         "collection_Hmycmc": {
           "type": "collection",
           "settings": {
             "collection": "halo-bag",
-            "custom_title": ""
+            "custom_title": "Halo"
           }
         },
         "collection_ggyCtV": {
           "type": "collection",
           "settings": {
             "collection": "croco-bag",
-            "custom_title": ""
+            "custom_title": "Croco"
           }
         },
         "collection_cRwFje": {
           "type": "collection",
           "settings": {
             "collection": "baguette-bag",
-            "custom_title": ""
+            "custom_title": "Baguette"
           }
         },
         "collection_rFz7LR": {
           "type": "collection",
           "settings": {
             "collection": "dragon-bag",
-            "custom_title": ""
+            "custom_title": "Dragon"
           }
         },
         "collection_UXenQT": {
           "type": "collection",
           "settings": {
             "collection": "vernis-bag",
-            "custom_title": ""
+            "custom_title": "Vernis"
           }
         },
         "collection_bjVALb": {
           "type": "collection",
           "settings": {
             "collection": "switch-bag",
-            "custom_title": ""
+            "custom_title": "Switch"
           }
         }
       },
