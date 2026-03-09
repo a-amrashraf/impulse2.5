@@ -1,4 +1,8 @@
-<div class="page-width">
+{%- assign gap_value = section.settings.gap_value -%}
+{%- assign padding_v = section.settings.padding_vertical -%}
+{%- assign padding_h = section.settings.padding_horizontal -%}
+
+<div class="category-bar-wrapper" style="--gap: {{ gap_value }}px; --padding-v: {{ padding_v }}px; --padding-h: {{ padding_h }}px;">
   {% if section.settings.title != blank %}
     <div class="section-header text-center">
       <h2 class="section-header__title">{{ section.settings.title }}</h2>
@@ -8,10 +12,15 @@
   <div class="category-bar">
     {% for block in section.blocks %}
       {%- assign collection = collections[block.settings.collection] -%}
-      {%- if collection != blank -%}
-        <a href="{{ collection.url }}" class="category-item" {{ block.shopify_attributes }}>
+      {%- assign item_image = block.settings.custom_image -%}
+      {%- assign item_title = block.settings.custom_title -%}
+      
+      {%- if collection != blank or item_image != blank -%}
+        <a href="{{ collection.url | default: '#' }}" class="category-item" {{ block.shopify_attributes }}>
           <div class="category-image-wrapper">
-             {%- if collection.image -%}
+             {%- if item_image != blank -%}
+               <img src="{{ item_image | img_url: '300x' }}" alt="{{ item_title | default: collection.title | escape }}" loading="lazy">
+             {%- elsif collection.image -%}
                <img src="{{ collection.image | img_url: '300x' }}" alt="{{ collection.title | escape }}" loading="lazy">
              {%- elsif collection.products.first and collection.products.first.featured_image -%}
                <img src="{{ collection.products.first.featured_image | img_url: '300x' }}" alt="{{ collection.title | escape }}" loading="lazy">
@@ -19,7 +28,7 @@
                 {{ 'collection-1' | placeholder_svg_tag: 'placeholder-svg' }}
              {%- endif -%}
           </div>
-          <span class="category-title">{{ collection.title }}</span>
+          <span class="category-title">{{ item_title | default: collection.title }}</span>
         </a>
       {%- endif -%}
     {% endfor %}
@@ -35,6 +44,40 @@
       "id": "title",
       "label": "Section title",
       "default": "Shop by Collection"
+    },
+    {
+      "type": "header",
+      "content": "Spacing Settings"
+    },
+    {
+      "type": "range",
+      "id": "gap_value",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Space between items",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "padding_vertical",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Vertical Padding",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_horizontal",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Horizontal Padding",
+      "default": 20
     }
   ],
   "blocks": [
@@ -46,6 +89,18 @@
           "type": "collection",
           "id": "collection",
           "label": "Select collection"
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_image",
+          "label": "Custom Image (Optional)",
+          "info": "Overrides the collection default image"
+        },
+        {
+          "type": "text",
+          "id": "custom_title",
+          "label": "Custom Label (Optional)",
+          "info": "Overrides the collection title"
         }
       ]
     }
@@ -68,16 +123,21 @@
 
 {% stylesheet %}
 /* Main container for the category bar */
+.category-bar-wrapper {
+  width: 100%;
+}
+
 .category-bar {
   display: flex;
   flex-wrap: nowrap;
   overflow-x: auto;
-  gap: 24px;
-  padding: 20px 0;
+  gap: var(--gap, 24px);
+  padding: var(--padding-v, 20px) var(--padding-h, 20px);
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* IE 10+ */
   justify-content: flex-start; /* Default align left for scrolling */
+  width: 100%;
 }
 
 /* Center on desktop if content fits */
