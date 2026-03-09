@@ -1,12 +1,49 @@
 {%- assign gap_value = section.settings.gap_value -%}
-{%- assign padding_v = section.settings.padding_vertical -%}
+{%- assign padding_top = section.settings.padding_top -%}
+{%- assign padding_bottom = section.settings.padding_bottom -%}
 {%- assign padding_h = section.settings.padding_horizontal -%}
 
-<div class="category-bar-wrapper" style="--gap: {{ gap_value }}px; --padding-v: {{ padding_v }}px; --padding-h: {{ padding_h }}px;">
+{%- comment -%} Determine border radius based on settings {%- endcomment -%}
+{%- assign border_radius = "0px" -%}
+{%- if section.settings.image_shape == "circle" -%}
+  {%- assign border_radius = "50%" -%}
+{%- elsif section.settings.image_shape == "rounded" -%}
+  {%- assign border_radius = "12px" -%}
+{%- endif -%}
+
+{%- comment -%} Determine aspect ratio {%- endcomment -%}
+{%- assign image_ratio = "1/1" -%}
+{%- assign image_height_desktop = "70px" -%}
+{%- assign image_width_desktop = "70px" -%}
+{%- assign image_height_mobile = "60px" -%}
+{%- assign image_width_mobile = "60px" -%}
+
+{%- if section.settings.image_ratio == "portrait" -%}
+  {%- assign image_ratio = "3/4" -%}
+  {%- assign image_height_desktop = "93px" -%}
+  {%- assign image_height_mobile = "80px" -%}
+{%- elsif section.settings.image_ratio == "landscape" -%}
+  {%- assign image_ratio = "4/3" -%}
+  {%- assign image_width_desktop = "93px" -%}
+  {%- assign image_width_mobile = "80px" -%}
+{%- endif -%}
+
+<div class="category-bar-wrapper" style="
+  --gap: {{ gap_value }}px; 
+  --padding-top: {{ padding_top }}px; 
+  --padding-bottom: {{ padding_bottom }}px;
+  --padding-h: {{ padding_h }}px;
+  --border-radius: {{ border_radius }};
+  --image-height-d: {{ image_height_desktop }};
+  --image-width-d: {{ image_width_desktop }};
+  --image-height-m: {{ image_height_mobile }};
+  --image-width-m: {{ image_width_mobile }};
+  --image-object-fit: {% if section.settings.image_shape == 'circle' %}cover{% else %}contain{% endif %};
+">
   {% if section.settings.title != blank %}
-    <div class="section-header text-center">
-      <h2 class="section-header__title">{{ section.settings.title }}</h2>
-    </div>
+  <div class="section-header text-center">
+    <h2 class="section-header__title">{{ section.settings.title }}</h2>
+  </div>
   {% endif %}
 
   <div class="category-bar">
@@ -47,6 +84,33 @@
     },
     {
       "type": "header",
+      "content": "Image Settings"
+    },
+    {
+      "type": "select",
+      "id": "image_shape",
+      "label": "Image Shape",
+      "default": "square",
+      "options": [
+        { "value": "square", "label": "Square" },
+        { "value": "rounded", "label": "Rounded Corners" },
+        { "value": "circle", "label": "Circle" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "Image Size (Ratio)",
+      "default": "square",
+      "info": "Controls the aspect ratio of the image container",
+      "options": [
+        { "value": "square", "label": "Normal (1:1)" },
+        { "value": "portrait", "label": "Portrait (3:4)" },
+        { "value": "landscape", "label": "Landscape (4:3)" }
+      ]
+    },
+    {
+      "type": "header",
       "content": "Spacing Settings"
     },
     {
@@ -61,12 +125,22 @@
     },
     {
       "type": "range",
-      "id": "padding_vertical",
+      "id": "padding_top",
       "min": 0,
       "max": 100,
       "step": 2,
       "unit": "px",
-      "label": "Vertical Padding",
+      "label": "Top Padding",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Bottom Padding",
       "default": 20
     },
     {
@@ -132,7 +206,10 @@
   flex-wrap: nowrap;
   overflow-x: auto;
   gap: var(--gap, 24px);
-  padding: var(--padding-v, 20px) var(--padding-h, 20px);
+  padding-top: var(--padding-top, 20px);
+  padding-bottom: var(--padding-bottom, 20px);
+  padding-left: var(--padding-h, 20px);
+  padding-right: var(--padding-h, 20px);
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* IE 10+ */
@@ -173,21 +250,21 @@
 
 /* Image wrapper to constrain size */
 .category-image-wrapper {
-  height: 70px; /* Approx 60-80px as requested */
-  width: 70px;
+  height: var(--image-height-d, 70px);
+  width: var(--image-width-d, 70px);
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 12px;
+  border-radius: var(--border-radius, 0px);
+  overflow: hidden; /* Ensure image clips to border radius */
 }
 
 /* Ensure images maintain aspect ratio */
 .category-image-wrapper img {
-  max-height: 100%;
-  max-width: 100%;
-  width: auto;
-  height: auto;
-  object-fit: contain; 
+  width: 100%;
+  height: 100%;
+  object-fit: var(--image-object-fit, contain); 
   display: block;
 }
 
@@ -219,8 +296,8 @@
      width: 85px;
   }
   .category-image-wrapper {
-    height: 60px;
-    width: 60px;
+    height: var(--image-height-m, 60px);
+    width: var(--image-width-m, 60px);
     margin-bottom: 8px;
   }
   .category-title {
