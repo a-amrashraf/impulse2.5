@@ -101,8 +101,8 @@
         "image_shape": "circle",
         "image_ratio": "square",
         "gap_value": 16,
-        "padding_top": 10,
-        "padding_bottom": 10,
+        "padding_top": 6,
+        "padding_bottom": 6,
         "padding_horizontal": 10
       }
     },
