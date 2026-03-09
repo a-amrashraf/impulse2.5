@@ -6,7 +6,15 @@
   endfor
 -%}
 
+{%- style -%}
+  #CollectionSection-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+{%- endstyle -%}
+
 <div
+  id="CollectionSection-{{ section.id }}"
   class="collection-content"
   data-section-id="{{ section.id }}"
   data-section-type="collection-grid"
@@ -160,6 +168,30 @@
       "id": "enable_sort",
       "label": "t:sections.main-collection.settings.enable_sort.label",
       "default": true
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "default": 40,
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "default": 40,
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px"
     }
   ],
   "blocks": [
