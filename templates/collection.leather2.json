@@ -272,7 +272,9 @@
         "enable_swatch_labels": true,
         "enable_sort": true,
         "padding_top": 14,
-        "padding_bottom": 20
+        "padding_bottom": 20,
+        "padding_top_mobile": 8,
+        "padding_bottom_mobile": 16
       }
     },
     "countdown": {
