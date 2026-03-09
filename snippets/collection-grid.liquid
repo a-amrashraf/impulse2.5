@@ -133,8 +133,15 @@ Snippet Arguments
 }
 </style>
 
+
+{%- if collection.filters.size > 0 and enable_sidebar -%}
+  {%- assign show_filters = true -%}
+{%- endif -%}
+
 <div class="collection-grid__wrapper">
+  {%- if show_filters or enable_sort -%}
   <div class="collection-filter">
+    {%- if show_filters -%}
     <div class="collection-filter__item collection-filter__item--drawer">
       <button
         type="button"
@@ -145,7 +152,9 @@ Snippet Arguments
           <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-filter" viewBox="0 0 64 64"><path d="M48 42h10m-10 0a5 5 0 1 1-5-5 5 5 0 0 1 5 5ZM7 42h31M16 22H6m10 0a5 5 0 1 1 5 5 5 5 0 0 1-5-5Zm41 0H26"/></svg>
       </button>
     </div>
+    {%- endif -%}
 
+    {%- if enable_sort -%}
     <div class="collection-filter__item collection-filter__item--sort">
         <div class="collection-filter__sort-container">
           <span style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
@@ -162,7 +171,9 @@ Snippet Arguments
           </select>
         </div>
     </div>
+    {%- endif -%}
   </div>
+  {%- endif -%}
 
   <div class="grid grid--uniform{% if mobile_flush_grid %} small--grid--flush{% endif %}"{% unless enable_collection_count %} data-scroll-to{% endunless %}>
     {%- for item in items -%}
