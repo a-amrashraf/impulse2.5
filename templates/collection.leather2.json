@@ -31,49 +31,57 @@
         "collection_DMVxWD": {
           "type": "collection",
           "settings": {
-            "collection": "scrunch-bag"
+            "collection": "scrunch-bag",
+            "custom_title": ""
           }
         },
         "collection_RUhfck": {
           "type": "collection",
           "settings": {
-            "collection": "hobo-bag"
+            "collection": "hobo-bag",
+            "custom_title": ""
           }
         },
         "collection_Hmycmc": {
           "type": "collection",
           "settings": {
-            "collection": "halo-bag"
+            "collection": "halo-bag",
+            "custom_title": ""
           }
         },
         "collection_ggyCtV": {
           "type": "collection",
           "settings": {
-            "collection": "croco-bag"
+            "collection": "croco-bag",
+            "custom_title": ""
           }
         },
         "collection_cRwFje": {
           "type": "collection",
           "settings": {
-            "collection": "baguette-bag"
+            "collection": "baguette-bag",
+            "custom_title": ""
           }
         },
         "collection_rFz7LR": {
           "type": "collection",
           "settings": {
-            "collection": "dragon-bag"
+            "collection": "dragon-bag",
+            "custom_title": ""
           }
         },
         "collection_UXenQT": {
           "type": "collection",
           "settings": {
-            "collection": "vernis-bag"
+            "collection": "vernis-bag",
+            "custom_title": ""
           }
         },
         "collection_bjVALb": {
           "type": "collection",
           "settings": {
-            "collection": "switch-bag"
+            "collection": "switch-bag",
+            "custom_title": ""
           }
         }
       },
@@ -89,7 +97,10 @@
       ],
       "name": "Collection Navigation",
       "settings": {
-        "title": "Shop by Collection"
+        "title": "Shop by Collection",
+        "gap_value": 20,
+        "padding_vertical": 20,
+        "padding_horizontal": 20
       }
     },
     "collection_slider_mobile_LWDNrK": {
