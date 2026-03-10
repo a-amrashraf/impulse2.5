@@ -115,7 +115,7 @@
       "settings": {
         "title": "",
         "collection": "leather-line",
-        "show_only_main_sibling": false,
+        "show_only_main_sibling": true,
         "enable_sidebar": true,
         "collapsed": true,
         "filter_style": "drawer",
