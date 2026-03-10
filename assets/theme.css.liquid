@@ -1832,7 +1832,7 @@ img{
 }
 
 .image-element{
-  opacity:0;
+  opacity:1 !important;
 }
 
 .image-element[loading=eager]{
@@ -8846,8 +8846,11 @@ html[dir=rtl] .social-sharing__title{
 }
 
 #FilterDrawer,
+.filter-drawer-wrapper,
 #FilterDrawer .drawer__inner,
-#FilterDrawer .drawer__fixed-header {
+.filter-drawer-wrapper .drawer__inner,
+#FilterDrawer .drawer__fixed-header,
+.filter-drawer-wrapper .drawer__fixed-header {
     background-color: white !important;
     color: black !important;
 }
