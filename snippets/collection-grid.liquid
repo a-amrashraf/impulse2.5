@@ -145,8 +145,8 @@ Snippet Arguments
     <div class="collection-filter__item collection-filter__item--drawer">
       <button
         type="button"
-        class="js-drawer-open-collection-filters btn btn--tertiary{% unless current_filter_size == 0 %} btn--tertiary-active{% endunless %}"
-        aria-controls="FilterDrawer"
+        class="js-drawer-open-collection-filters-{{ section.id }} btn btn--tertiary{% unless current_filter_size == 0 %} btn--tertiary-active{% endunless %}"
+        aria-controls="FilterDrawer-{{ section.id }}"
         style="padding: 0; border: none; background: transparent;">
           {{ 'collections.filters.title_tags' | t | upcase }}
           <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-filter" viewBox="0 0 64 64"><path d="M48 42h10m-10 0a5 5 0 1 1-5-5 5 5 0 0 1 5 5ZM7 42h31M16 22H6m10 0a5 5 0 1 1 5 5 5 5 0 0 1-5-5Zm41 0H26"/></svg>

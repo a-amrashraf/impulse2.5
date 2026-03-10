@@ -6397,9 +6397,13 @@ theme.recentlyViewed = {
         }
   
         this.onUnload();
-  
+        
+        var sectionId = this.container.closest('.collection-content').getAttribute('data-section-id');
+        var drawerId = 'FilterDrawer-' + sectionId;
+        var drawerName = 'collection-filters-' + sectionId;
+
         drawerStyle = this.container.dataset.style === 'drawer';
-        theme.FilterDrawer = new theme.Drawers('FilterDrawer', 'collection-filters', true);
+        theme.FilterDrawer = new theme.Drawers(drawerId, drawerName, true);
       },
   
       forceReload: function() {
