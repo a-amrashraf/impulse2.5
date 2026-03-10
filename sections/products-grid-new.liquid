@@ -1,4 +1,8 @@
 {%- liquid
+  if section.settings.collection != blank 
+    assign collection = collections[section.settings.collection]
+  endif 
+
   assign current_filter_size = 0
 
   for filter in collection.filters
@@ -127,6 +131,16 @@
 {
   "name": "Products Grid New",
   "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
     {
       "type": "checkbox",
       "id": "show_only_main_sibling",
