@@ -262,6 +262,7 @@
         "subcollections",
         "product_grid"
       ],
+      "disabled": true,
       "custom_css": [
         ".grid-product__image-mask {margin-bottom: 4px !important; margin-top: 0px;}",
         " /* Remove bottom padding under product card */.grid-product__content,.grid-product__meta {padding-bottom: 4px !important; margin-bottom: 6px !important; margin-top: -5px;}",
@@ -344,6 +345,20 @@
         "blog_image_size": "wide",
         "divider": false
       }
+    },
+    "products_grid_new_3Rk6kH": {
+      "type": "products-grid-new",
+      "name": "Products Grid new",
+      "settings": {
+        "title": "Featured collection",
+        "home_featured_products": "leather-line",
+        "per_row": 5,
+        "rows": 5,
+        "mobile_scrollable": true,
+        "view_all": true,
+        "divider": false,
+        "show_only_main_sibling": true
+      }
     }
   },
   "order": [
@@ -353,6 +368,7 @@
     "promo-grid",
     "main-collection",
     "countdown",
-    "blog-posts"
+    "blog-posts",
+    "products_grid_new_3Rk6kH"
   ]
 }
