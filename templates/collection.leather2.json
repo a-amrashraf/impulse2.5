@@ -114,13 +114,19 @@
       "name": "Products Grid new",
       "settings": {
         "title": "Featured collection",
-        "home_featured_products": "leather-line",
-        "per_row": 5,
-        "rows": 5,
-        "mobile_scrollable": true,
-        "view_all": true,
+        "collection": "leather-line",
+        "show_only_main_sibling": true,
+        "enable_sidebar": true,
+        "collapsed": true,
+        "filter_style": "drawer",
+        "enable_color_swatches": false,
+        "enable_swatch_labels": true,
+        "enable_sort": true,
         "divider": false,
-        "show_only_main_sibling": true
+        "padding_top": 40,
+        "padding_bottom": 40,
+        "padding_top_mobile": 20,
+        "padding_bottom_mobile": 20
       }
     },
     "collection_slider_mobile_LWDNrK": {
