@@ -1,6 +1,9 @@
 {%- liquid
   if section.settings.collection != blank 
-    assign collection = collections[section.settings.collection]
+    assign selected_collection = collections[section.settings.collection]
+    if collection.handle != selected_collection.handle
+       assign collection = selected_collection
+    endif
   endif 
 
   assign current_filter_size = 0
