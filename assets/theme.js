@@ -2314,7 +2314,7 @@ theme.recentlyViewed = {
         page: document.querySelector('#MainContent')
       };
   
-      this.drawer = document.querySelector('#' + id);
+      this.drawer = document.getElementById(id);
       this.isOpen = false;
   
       if (!this.drawer) {
@@ -6485,7 +6485,7 @@ theme.recentlyViewed = {
         sections: [
           {
             sectionId: this.sectionId,
-            nodeId: 'CollectionAjaxContent',
+            nodeId: 'CollectionAjaxContent-' + this.sectionId,
           },
         ],
         onReplace: this.onReplaceAjaxContent.bind(this),
