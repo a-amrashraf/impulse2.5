@@ -103,7 +103,7 @@
         "image_ratio": "square",
         "image_size_desktop": 70,
         "image_size_mobile": 60,
-        "gap_value": 16,
+        "gap_value": 0,
         "padding_top": 6,
         "padding_bottom": 6,
         "padding_horizontal": 10
