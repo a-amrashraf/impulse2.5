@@ -6743,7 +6743,7 @@ theme.recentlyViewed = {
           }
         }.bind(this));
       },
-  
+
       updateScroll: function(animate) {
         var scrollToElement = document.querySelector('[data-scroll-to]');
         var scrollTo = scrollToElement && scrollToElement.offsetTop;
