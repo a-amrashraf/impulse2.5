@@ -111,6 +111,11 @@
     },
     "products_grid_new_3Rk6kH": {
       "type": "products-grid-new",
+      "custom_css": [
+        ".grid-product__image-mask {margin-bottom: 4px !important; margin-top: 0px;}",
+        " /* Remove bottom padding under product card */.grid-product__content,.grid-product__meta {padding-bottom: 4px !important; margin-bottom: 6px !important; margin-top: -5px;}",
+        " /* Optional: remove extra space from the whole card */.grid-product {margin-bottom: 7px !important; margin-top: -4px;}"
+      ],
       "name": "Products Grid new",
       "settings": {
         "title": "",
@@ -128,7 +133,7 @@
         "mobile_flush_grid": false,
         "divider": false,
         "padding_top": 10,
-        "padding_bottom": 40,
+        "padding_bottom": 20,
         "padding_top_mobile": 20,
         "padding_bottom_mobile": 20
       }
