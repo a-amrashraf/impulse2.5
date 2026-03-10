@@ -9,7 +9,7 @@
 {%- assign animation_row = 1 -%}
 
 {%- if enable_sidebar -%}
-<div id="CollectionSidebar" data-style="{{ filter_style }}">
+<div id="CollectionSidebar-{{ section.id }}" class="collection-sidebar-wrapper" data-style="{{ filter_style }}">
 
     {%- if filter_style == 'sidebar' -%}
     <div class="collection-sidebar small--hide">

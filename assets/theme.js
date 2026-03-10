@@ -6382,7 +6382,7 @@ theme.recentlyViewed = {
   theme.CollectionSidebar = (function() {
     var drawerStyle = false;
     var selectors = {
-      sidebar: '#CollectionSidebar',
+      sidebar: '.collection-sidebar-wrapper',
     };
   
     function CollectionSidebar(container) {
