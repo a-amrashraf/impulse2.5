@@ -258,11 +258,15 @@ Arguments
               assign swatch_trigger = 'products.general.color_swatch_trigger' | t | downcase
               assign swatch_file_extension = 'png'
               assign color_count = 0
+              assign swatch_style_inline = 'max-width: 80%; margin-left: auto; margin-right: auto; margin-top: -8px;'
+              if settings.swatch_overflow_style == 'slider'
+                assign swatch_style_inline = swatch_style_inline | append: ' flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start;'
+              endif
             -%}
         
             {% comment %} Check for sibling metafield first {% endcomment %}
             {%- if product.metafields.custom.siblings.value != blank -%}
-              <div class="grid-product__colors grid-product__colors--{{ product.id }}">
+              <div class="grid-product__colors grid-product__colors--{{ product.id }}" style="{{ swatch_style_inline }}">
                 {%- for sibling in product.metafields.custom.siblings.value -%}
                   {%- liquid
                     assign color_name = ''
@@ -307,7 +311,7 @@ Arguments
               {%- if is_color -%}
                 {%- assign option_index = forloop.index0 -%}
                 {%- assign values = '' -%}
-                <div class="grid-product__colors grid-product__colors--{{ product.id }}">
+                <div class="grid-product__colors grid-product__colors--{{ product.id }}" style="{{ swatch_style_inline }}">
                   {%- for variant in product.variants -%}
                     {%- assign value = variant.options[option_index] %}
                     {%- unless values contains value -%}
@@ -353,11 +357,15 @@ Arguments
       assign swatch_trigger = 'products.general.color_swatch_trigger' | t | downcase
       assign swatch_file_extension = 'png'
       assign color_count = 0
+      assign swatch_style_inline = 'max-width: 80%; margin-left: auto; margin-right: auto; margin-top: -8px;'
+      if settings.swatch_overflow_style == 'slider'
+        assign swatch_style_inline = swatch_style_inline | append: ' flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start;'
+      endif
     -%}
 
     {% comment %} Check for sibling metafield first {% endcomment %}
     {%- if product.metafields.custom.color_siblings.value != blank -%}
-      <div class="grid-product__colors grid-product__colors--{{ product.id }}">
+      <div class="grid-product__colors grid-product__colors--{{ product.id }}" style="{{ swatch_style_inline }}">
         {%- for sibling in product.metafields.custom.color_siblings.value -%}
           {%- liquid
             assign color_name = ''
@@ -402,7 +410,7 @@ Arguments
         {%- if is_color -%}
           {%- assign option_index = forloop.index0 -%}
           {%- assign values = '' -%}
-          <div class="grid-product__colors grid-product__colors--{{ product.id }}">
+          <div class="grid-product__colors grid-product__colors--{{ product.id }}" style="{{ swatch_style_inline }}">
             {%- for variant in product.variants -%}
               {%- assign value = variant.options[option_index] %}
               {%- unless values contains value -%}
