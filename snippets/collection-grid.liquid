@@ -162,8 +162,8 @@ Snippet Arguments
             <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-plus" viewBox="0 0 64 64"><path d="M32 9v46m23-23H9" stroke-width="4" stroke="currentColor" fill="none"/></svg>
           </span>
           {%- assign sort_by = sort_by | default: default_sort_by -%}
-          <label for="SortBy" class="hidden-label">{{ 'collections.sorting.title' | t }}</label>
-          <select name="SortBy" id="SortBy" data-default-sortby="{{ default_sort_by }}">
+          <label for="SortBy-{{ section.id }}" class="hidden-label">{{ 'collections.sorting.title' | t }}</label>
+          <select name="SortBy" id="SortBy-{{ section.id }}" class="sort-by" data-default-sortby="{{ default_sort_by }}">
             <option value="title-ascending"{% if sort_by == default_sort_by %} selected="selected"{% endif %}>{{ 'collections.sorting.title' | t }}</option>
             {%- for option in sort_options -%}
             <option value="{{ option.value }}"{% if option.value == sort_by %} selected="selected"{% endif %}>{{ option.name }}</option>

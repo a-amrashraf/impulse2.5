@@ -6451,14 +6451,14 @@ theme.recentlyViewed = {
     var isAnimating = false;
   
     var selectors = {
-      sortSelect: '#SortBy',
+      sortSelect: '.sort-by',
   
       colorSwatchImage: '.grid-product__color-image',
       colorSwatch: '.color-swatch--with-image',
   
       collectionGrid: '.collection-grid__wrapper',
       trigger: '.collapsible-trigger',
-      sidebar: '#CollectionSidebar',
+      sidebar: '.collection-sidebar-wrapper',
       filterSidebar: '.collapsible-content--sidebar',
       activeTagList: '.tag-list--active-tags',
       tags: '.tag-list input',
@@ -6510,7 +6510,7 @@ theme.recentlyViewed = {
       },
   
       initSort: function() {
-        this.sortSelect = document.querySelector(selectors.sortSelect);
+        this.sortSelect = this.container.querySelector(selectors.sortSelect);
   
         if (this.sortSelect) {
           this.defaultSort = this.getDefaultSortValue();
@@ -6560,7 +6560,7 @@ theme.recentlyViewed = {
         Collection filters
       ====================*/
       initFilters: function() {
-        var tags = document.querySelectorAll(selectors.tags);
+        var tags = this.container.querySelectorAll(selectors.tags);
   
         if (!tags.length) {
           return;
@@ -6575,17 +6575,17 @@ theme.recentlyViewed = {
           window.on('resize', theme.utils.debounce(500, this.setFilterStickyPosition));
         }
   
-        document.querySelectorAll(selectors.activeTags).forEach(tag => {
+        this.container.querySelectorAll(selectors.activeTags).forEach(tag => {
           tag.addEventListener('click', this.tagClick.bind(this));
         });
   
-        document.querySelectorAll(selectors.tagsForm).forEach(form => {
+        this.container.querySelectorAll(selectors.tagsForm).forEach(form => {
           form.addEventListener('input', this.onFormSubmit.bind(this));
         });
       },
   
       initPriceRange: function() {
-        const priceRangeEls = document.querySelectorAll(selectors.priceRange);
+        const priceRangeEls = this.container.querySelectorAll(selectors.priceRange);
         priceRangeEls.forEach((el) => new theme.PriceRange(el, {
           // onChange passes in formData
           onChange: this.renderFromFormData.bind(this),
@@ -6654,7 +6654,7 @@ theme.recentlyViewed = {
   
       fetchOpenCollasibleFilters: function() {
         return Array.from(
-          document.querySelectorAll(
+          this.container.querySelectorAll(
             `${selectors.sidebar} ${selectors.trigger}.${classes.isOpen}`,
           ),
         ).map(trigger => trigger.dataset.collapsibleId);
@@ -6674,7 +6674,7 @@ theme.recentlyViewed = {
             parent.remove();
           } else {
             // Append new tag in both drawer and sidebar
-            document.querySelectorAll(selectors.activeTagList).forEach(list => {
+            this.container.querySelectorAll(selectors.activeTagList).forEach(list => {
               const newTag = document.createElement('li');
               const newTagLink = document.createElement('a');
               newTag.classList.add('tag', 'tag--remove');
@@ -6766,12 +6766,15 @@ theme.recentlyViewed = {
   
       setFilterStickyPosition: function() {
         var headerHeight = document.querySelector('.site-header').offsetHeight;
-        document.querySelector(selectors.filters).style.top = headerHeight + 10 + 'px';
+        var filterEl = this.container.querySelector(selectors.filters);
+        if (filterEl) {
+          filterEl.style.top = headerHeight + 10 + 'px';
+        }
   
         // Also update top position of sticky sidebar
-        var stickySidebar = document.querySelector('.grid__item--sidebar');
+        var stickySidebar = this.container.querySelector('.grid__item--sidebar');
         if (stickySidebar) {
-          stickySidebar.style.top = headerHeight + 10 + 'px';
+           stickySidebar.style.top = headerHeight + 10 + 'px';
         }
       },
   
@@ -6780,7 +6783,7 @@ theme.recentlyViewed = {
       },
   
       startLoading: function() {
-        document.querySelector(selectors.collectionGrid).classList.add('unload');
+        this.container.querySelector(selectors.collectionGrid).classList.add('unload');
       },
     });
   
