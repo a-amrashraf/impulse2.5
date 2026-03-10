@@ -6386,11 +6386,18 @@ theme.recentlyViewed = {
     };
   
     function CollectionSidebar(container) {
-      this.container = container.querySelector(selectors.sidebar);
+      this.sectionContainer = container;
+      this.container = this.sectionContainer.querySelector(selectors.sidebar);
     }
   
     CollectionSidebar.prototype = Object.assign({}, CollectionSidebar.prototype, {
       init: function() {
+        // Refresh container reference from the main section container
+        // This is crucial after AJAX reloads, as the old sidebar wrapper is destroyed
+        if (this.sectionContainer) {
+            this.container = this.sectionContainer.querySelector(selectors.sidebar);
+        }
+
         // Do not load when no sidebar exists
         if(!this.container) {
           return;
