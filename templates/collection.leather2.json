@@ -124,18 +124,18 @@
         "enable_sidebar": true,
         "collapsed": true,
         "filter_style": "drawer",
-        "enable_color_swatches": false,
+        "enable_color_swatches": true,
         "enable_swatch_labels": true,
         "enable_sort": true,
         "enable_collection_count": true,
         "per_row": 4,
         "rows_per_page": 7,
-        "mobile_flush_grid": false,
+        "mobile_flush_grid": true,
         "divider": false,
         "padding_top": 10,
         "padding_bottom": 20,
-        "padding_top_mobile": 20,
-        "padding_bottom_mobile": 20
+        "padding_top_mobile": 8,
+        "padding_bottom_mobile": 16
       }
     },
     "collection_slider_mobile_LWDNrK": {
