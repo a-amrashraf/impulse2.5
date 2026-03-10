@@ -707,22 +707,6 @@
             "label": "t:settings_schema.product_tiles.settings.swatch_style.options.square.label"
           }
         ]
-      },
-      {
-        "type": "select",
-        "id": "swatch_overflow_style",
-        "label": "Swatch Overflow Style",
-        "default": "newline",
-        "options": [
-          {
-            "value": "newline",
-            "label": "Create New Line"
-          },
-          {
-            "value": "slider",
-            "label": "Slider"
-          }
-        ]
       }
     ]
   },

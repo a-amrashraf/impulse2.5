@@ -258,10 +258,6 @@ Arguments
               assign swatch_trigger = 'products.general.color_swatch_trigger' | t | downcase
               assign swatch_file_extension = 'png'
               assign color_count = 0
-              assign swatch_style_inline = 'max-width: 80%; margin-left: auto; margin-right: auto; margin-top: -8px;'
-              if settings.swatch_overflow_style == 'slider'
-                assign swatch_style_inline = swatch_style_inline | append: ' flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start;'
-              endif
             -%}
         
             {% comment %} Check for sibling metafield first {% endcomment %}
@@ -357,9 +353,12 @@ Arguments
       assign swatch_trigger = 'products.general.color_swatch_trigger' | t | downcase
       assign swatch_file_extension = 'png'
       assign color_count = 0
-      assign swatch_style_inline = 'max-width: 80%; margin-left: auto; margin-right: auto; margin-top: -8px;'
-      if settings.swatch_overflow_style == 'slider'
-        assign swatch_style_inline = swatch_style_inline | append: ' flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start;'
+      assign swatch_style_inline = ''
+      if swatch_overflow_style
+        assign swatch_style_inline = 'max-width: 80%; margin-left: auto; margin-right: auto; margin-top: -8px;'
+        if swatch_overflow_style == 'slider'
+          assign swatch_style_inline = swatch_style_inline | append: ' flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start;'
+        endif
       endif
     -%}
 

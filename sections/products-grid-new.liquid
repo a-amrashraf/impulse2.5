@@ -74,7 +74,8 @@
                 per_row: section.settings.per_row,
                 mobile_flush_grid: section.settings.mobile_flush_grid,
                 quick_shop_enable: settings.quick_shop_enable,
-                show_only_main_sibling: section.settings.show_only_main_sibling
+                show_only_main_sibling: section.settings.show_only_main_sibling,
+                swatch_overflow_style: section.settings.swatch_overflow_style
               %}
               {%- if paginate.pages > 1 -%}
                 {%- render 'pagination', paginate: paginate -%}
@@ -231,6 +232,22 @@
       "id": "divider",
       "label": "Show section divider",
       "default": false
+    },
+    {
+       "type": "select",
+       "id": "swatch_overflow_style",
+       "label": "Swatch Overflow Style",
+       "default": "newline",
+       "options": [
+         {
+           "value": "newline",
+           "label": "Create New Line"
+         },
+         {
+           "value": "slider",
+           "label": "Slider"
+         }
+       ]
     },
     {
       "type": "header",
