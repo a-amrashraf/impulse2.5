@@ -178,11 +178,27 @@ Snippet Arguments
   <div class="grid grid--uniform{% if mobile_flush_grid %} small--grid--flush{% endif %}"{% unless enable_collection_count %} data-scroll-to{% endunless %}>
     {%- for item in items -%}
       {%- if item.object_type == 'product' -%}
-        {%- render 'product-grid-item',
-          product: item,
-          per_row: per_row,
-          quick_shop_enable: quick_shop_enable
+        {%- liquid
+          assign show_product = true
+          
+          if show_only_main_sibling and item.metafields.custom.color_siblings.value != blank
+             assign main_product = item.metafields.custom.color_siblings.value | first 
+             if item.id == main_product.id
+                assign show_product = true
+             else
+                assign show_product = false
+             endif
+          endif
         -%}
+
+        {%- if show_product -%}
+          {%- render 'product-grid-item',
+            product: item,
+            per_row: per_row,
+            quick_shop_enable: quick_shop_enable
+          -%}
+        {%- endif -%}
+
       {%- else -%}
         {%- render 'search-grid-item',
           item: item,
@@ -236,3 +252,11 @@ html[dir="rtl"] .collection-filter__item--count {
 }
 {% endstyle %}
 {%- endunless -%}
+
+{%- if show_only_main_sibling -%}
+  {% comment %}
+    Fix to prevent multiple products being counted if filtered out
+    This requires a JS fix or Liquid pagination workaround if using standard pagination
+    But for visual hiding, this styles are not needed as we use conditional rendering
+  {% endcomment %}
+{%- endif -%}
