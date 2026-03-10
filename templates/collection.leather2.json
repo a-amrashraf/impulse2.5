@@ -122,7 +122,7 @@
         "collection": "leather-line",
         "show_only_main_sibling": true,
         "enable_sidebar": true,
-        "collapsed": true,
+        "collapsed": false,
         "filter_style": "drawer",
         "enable_color_swatches": true,
         "enable_swatch_labels": true,
