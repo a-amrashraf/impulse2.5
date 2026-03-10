@@ -133,20 +133,22 @@ Arguments
           {%- for media in product.media offset: 1 limit: 1 -%}
             {%- assign second_image = media.preview_image -%}
           {%- endfor -%}
-          <div class="grid-product__secondary-image small--hide">
-            {%- capture image_classes -%}
-              image-style--{{ image_style }}
-            {%- endcapture -%}
-            {%- render 'image-element',
-              img: second_image,
-              classes: image_classes,
-              sizes: sizes,
-              sizeVariable: sizeVariable,
-              fallback: fallback,
-              widths: '360, 540, 720, 1000',
-              animation: 'none',
-            -%}
-          </div>
+          {%- if second_image != blank -%}
+            <div class="grid-product__secondary-image small--hide">
+              {%- capture image_classes -%}
+                image-style--{{ image_style }}
+              {%- endcapture -%}
+              {%- render 'image-element',
+                img: second_image,
+                classes: image_classes,
+                sizes: sizes,
+                sizeVariable: sizeVariable,
+                fallback: fallback,
+                widths: '360, 540, 720, 1000',
+                animation: 'none',
+              -%}
+            </div>
+          {%- endif -%}
         {%- endif -%}
 
         {%- if settings.enable_swatches -%}
@@ -189,10 +191,10 @@ Arguments
         {%- endif -%}
 
         {%- if product.available -%}
-          <form method="post" action="{{ routes.cart_add_url }}" class="grid-product__quick-add" data-product-id="{{ product.id }}" data-has-only-default="{{ product.has_only_default_variant }}">
+          <form method="post" action="{{ routes.cart_add_url }}" class="grid-product__quick-add js-ajax-cart-form" data-product-id="{{ product.id }}" data-has-only-default="{{ product.has_only_default_variant }}">
             <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
             <input type="hidden" name="quantity" value="1">
-            <button type="submit" class="grid-product__quick-add-btn" aria-label="{{ 'products.product.add_to_cart' | t }}">
+            <button type="submit" class="grid-product__quick-add-btn js-ajax-add-to-cart" aria-label="{{ 'products.product.add_to_cart' | t }}">
               {%- if settings.add_to_cart_icon != blank -%}
                 <img src="{{ settings.add_to_cart_icon | img_url: '40x40' }}" alt="Add to cart" class="icon icon-cart-custom" loading="lazy">
               {%- else -%}

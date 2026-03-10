@@ -182,12 +182,13 @@ Snippet Arguments
           assign show_product = true
           
           if show_only_main_sibling and item.metafields.custom.color_siblings.value != blank
-             assign main_product = item.metafields.custom.color_siblings.value | first 
-             if item.id == main_product.id
-                assign show_product = true
-             else
+            assign siblings = item.metafields.custom.color_siblings.value
+            if siblings.size > 0
+              assign main_product = siblings | first 
+              if item.handle != main_product.handle
                 assign show_product = false
-             endif
+              endif
+            endif
           endif
         -%}
 
