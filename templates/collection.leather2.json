@@ -109,6 +109,20 @@
         "padding_horizontal": 10
       }
     },
+    "products_grid_new_3Rk6kH": {
+      "type": "products-grid-new",
+      "name": "Products Grid new",
+      "settings": {
+        "title": "Featured collection",
+        "home_featured_products": "leather-line",
+        "per_row": 5,
+        "rows": 5,
+        "mobile_scrollable": true,
+        "view_all": true,
+        "divider": false,
+        "show_only_main_sibling": true
+      }
+    },
     "collection_slider_mobile_LWDNrK": {
       "type": "collection-slider-mobile",
       "blocks": {
@@ -345,30 +359,16 @@
         "blog_image_size": "wide",
         "divider": false
       }
-    },
-    "products_grid_new_3Rk6kH": {
-      "type": "products-grid-new",
-      "name": "Products Grid new",
-      "settings": {
-        "title": "Featured collection",
-        "home_featured_products": "leather-line",
-        "per_row": 5,
-        "rows": 5,
-        "mobile_scrollable": true,
-        "view_all": true,
-        "divider": false,
-        "show_only_main_sibling": true
-      }
     }
   },
   "order": [
     "collection-header",
     "collection_slider_ddKWri",
+    "products_grid_new_3Rk6kH",
     "collection_slider_mobile_LWDNrK",
     "promo-grid",
     "main-collection",
     "countdown",
-    "blog-posts",
-    "products_grid_new_3Rk6kH"
+    "blog-posts"
   ]
 }
