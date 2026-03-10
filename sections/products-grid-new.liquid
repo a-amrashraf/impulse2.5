@@ -29,6 +29,24 @@
       padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
     }
   }
+
+  {%- if section.settings.swatch_overflow_style != 'newline' -%}
+    #CollectionSection-{{ section.id }} .grid-product__colors {
+      max-width: 80%;
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: -8px;
+      padding-bottom: 5px;
+    }
+  {%- endif -%}
+
+  {%- if section.settings.swatch_overflow_style == 'slider' -%}
+    #CollectionSection-{{ section.id }} .grid-product__colors {
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      justify-content: flex-start;
+    }
+  {%- endif -%}
 {%- endstyle -%}
 
 <div
@@ -74,8 +92,7 @@
                 per_row: section.settings.per_row,
                 mobile_flush_grid: section.settings.mobile_flush_grid,
                 quick_shop_enable: settings.quick_shop_enable,
-                show_only_main_sibling: section.settings.show_only_main_sibling,
-                swatch_overflow_style: section.settings.swatch_overflow_style
+                show_only_main_sibling: section.settings.show_only_main_sibling
               %}
               {%- if paginate.pages > 1 -%}
                 {%- render 'pagination', paginate: paginate -%}
