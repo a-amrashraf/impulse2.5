@@ -29,14 +29,19 @@ document.addEventListener('DOMContentLoaded', function() {
               // Re-init Impulse theme specific features
               if (window.theme) {
                  if(theme.initQuickShop) theme.initQuickShop();
-                 if(theme.reinitSection) theme.reinitSection(newCard.closest('[data-section-id]'));
+                 if(theme.initQuickAdd) theme.initQuickAdd();
+                 
+                 // Re-init currency converter if it exists
+                 if(theme.currencySwitcher) theme.currencySwitcher.init();
+                 
+                 // Refresh Animate On Scroll (AOS) to show hidden elements
+                 if (window.AOS) {
+                    // refreshHard is more thorough for new DOM elements
+                    AOS.refreshHard(); 
+                 }
+                 
                  // Trigger resize for lazyload images (lazysizes)
                  window.dispatchEvent(new Event('resize'));
-                 
-                 // Re-init Ajax Cart listeners for the new form
-                 // Impulse usually attaches to 'form[action^="/cart/add"]' automatically if using theme.initQuickShop, 
-                 // but sometimes needs explicit re-init if using a separate module.
-                 // We can try to manually init if available or simply rely on the form classes we added.
               }
             }
           })
