@@ -378,6 +378,42 @@ Arguments
             
             assign sibling_meta_color = sibling.metafields.custom.color_swatch.value
             assign sibling_shopify_color = sibling.metafields.shopify['color-pattern'].value
+
+            assign bg_style = ''
+            
+            if sibling_shopify_color != blank
+              if sibling_shopify_color.color != blank
+                 assign bg_style = 'background-color: ' | append: sibling_shopify_color.color | append: ';'
+              elsif sibling_shopify_color.image != blank
+                 assign bg_img = sibling_shopify_color.image | img_url: '100x'
+                 assign bg_style = 'background-image: url(' | append: bg_img | append: '); background-color: transparent;'
+              elsif sibling_shopify_color contains '#'
+                assign bg_style = 'background-color: ' | append: sibling_shopify_color | append: ';'
+              endif
+            endif
+            
+            if bg_style == '' and sibling_meta_color != blank
+               if sibling_meta_color contains '#'
+                  assign bg_style = 'background-color: ' | append: sibling_meta_color | append: ';'
+               else
+                  assign bg_img = sibling_meta_color | img_url: '100x'
+                  if bg_img == blank
+                     assign bg_img = sibling_meta_color
+                  endif
+                  assign bg_style = 'background-image: url(' | append: bg_img | append: '); background-color: transparent;'
+               endif
+            endif
+            
+            if bg_style == ''
+               assign bg_style = 'background-color: ' | append: color_swatch_fallback | append: ';'
+               if images[color_file_name] != blank
+                  assign bg_img = color_image
+                  assign bg_style = 'background-image: url(' | append: bg_img | append: ');'
+               elsif sibling.featured_media != blank
+                  assign bg_img = sibling.featured_media.preview_image | img_url: '100x', crop: 'center'
+                  assign bg_style = 'background-image: url(' | append: bg_img | append: ');'
+               endif
+            endif
           -%}
 
           <div 
@@ -385,7 +421,7 @@ Arguments
             data-sibling-url="{{ sibling.url | within: collection }}"
             data-sibling-image="{{ sibling_image_url }}"
             aria-label="{{ sibling.title }} - {{ color_name }}"
-            style="{% if sibling_shopify_color != blank %}{% if sibling_shopify_color.type == 'image' %}background-image: url({{ sibling_shopify_color.image | image_url: width: 100 }}); background-color: transparent;{% else %}background-color: {{ sibling_shopify_color.color }};{% endif %}{% elsif sibling_meta_color != blank and sibling_meta_color contains '#' %}background-color: {{ sibling_meta_color }};{% elsif sibling_meta_color != blank %}background-image: url({{ sibling_meta_color | image_url: width: 100 }}); background-color: transparent;{% else %}background-color: {{ color_swatch_fallback }};{% if images[color_file_name] != blank %}  background-image: url({{ color_image }});{% elsif sibling.featured_media != blank %} background-image: url({{ sibling.featured_media.preview_image | img_url: '100x', crop: 'center' }});{% endif %}{% endif %}">
+            style="{{ bg_style }}">
           </div>
         {%- endfor -%}
       </div>
@@ -419,6 +455,42 @@ Arguments
                   
                   assign variant_meta_color = variant.metafields.custom.color_swatch.value
                   assign variant_shopify_color = variant.metafields.shopify['color-pattern'].value
+
+                  assign bg_style = ''
+            
+                  if variant_shopify_color != blank
+                    if variant_shopify_color.color != blank
+                      assign bg_style = 'background-color: ' | append: variant_shopify_color.color | append: ';'
+                    elsif variant_shopify_color.image != blank
+                      assign bg_img = variant_shopify_color.image | img_url: '100x'
+                      assign bg_style = 'background-image: url(' | append: bg_img | append: '); background-color: transparent;'
+                    elsif variant_shopify_color contains '#'
+                      assign bg_style = 'background-color: ' | append: variant_shopify_color | append: ';'
+                    endif
+                  endif
+                  
+                  if bg_style == '' and variant_meta_color != blank
+                    if variant_meta_color contains '#'
+                        assign bg_style = 'background-color: ' | append: variant_meta_color | append: ';'
+                    else
+                        assign bg_img = variant_meta_color | img_url: '100x'
+                        if bg_img == blank
+                           assign bg_img = variant_meta_color
+                        endif
+                        assign bg_style = 'background-image: url(' | append: bg_img | append: '); background-color: transparent;'
+                    endif
+                  endif
+                  
+                  if bg_style == ''
+                    assign bg_style = 'background-color: ' | append: color_swatch_fallback | append: ';'
+                    if images[color_file_name] != blank
+                        assign bg_img = color_image
+                        assign bg_style = 'background-image: url(' | append: bg_img | append: ');'
+                    elsif variant.image != blank
+                        assign bg_img = variant.image | img_url: '100x', crop: 'center'
+                        assign bg_style = 'background-image: url(' | append: bg_img | append: ');'
+                    endif
+                  endif
                 -%}
 
                 <a
@@ -429,7 +501,7 @@ Arguments
                     data-variant-image="{{ variant.image | img_url: '400x' }}"
                   {% endif %}
                   aria-label="{{ product.title }} - {{ value }}"
-                  style="{% if variant_shopify_color != blank %}{% if variant_shopify_color.type == 'image' %}background-image: url({{ variant_shopify_color.image | image_url: width: 100 }}); background-color: transparent;{% else %}background-color: {{ variant_shopify_color.color }};{% endif %}{% elsif variant_meta_color != blank and variant_meta_color contains '#' %}background-color: {{ variant_meta_color }};{% elsif variant_meta_color != blank %}background-image: url({{ variant_meta_color | image_url: width: 100 }}); background-color: transparent;{% else %}background-color: {{ color_swatch_fallback }};{% if images[color_file_name] != blank %}  background-image: url({{ color_image }});{% elsif variant.image != blank %} background-image: url({{ variant.image | img_url: '100x', crop: 'center' }});{% endif %}{% endif %}">
+                  style="{{ bg_style }}">
                   <span class="visually-hidden">{{ value }}</span>
                 </a>
               {%- endunless -%}
