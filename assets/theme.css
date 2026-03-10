@@ -1832,7 +1832,7 @@ img{
 }
 
 .image-element{
-  opacity:0;
+  opacity:1;
 }
 
 .image-element[loading=eager]{
