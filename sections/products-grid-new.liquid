@@ -102,11 +102,15 @@
 {% endstyle %}
 {%- endif -%}
 
-{%- if section.settings.filter_style == 'drawer' -%}
+{%- if section.settings.filter_style == 'drawer' or section.settings.enable_sidebar == false -%}
+  {% comment %} 
+    Render drawer markup even if sidebar is disabled, 
+    so mobile filter drawer still works if button is present 
+  {% endcomment %}
   {%- render 'collection-grid-filters',
     collection: collection,
-    enable_sidebar: section.settings.enable_sidebar,
-    filter_style: section.settings.filter_style,
+    enable_sidebar: true,
+    filter_style: 'drawer',
     collapsed: section.settings.collapsed,
     enable_color_swatches: section.settings.enable_color_swatches,
     enable_swatch_labels: section.settings.enable_swatch_labels
