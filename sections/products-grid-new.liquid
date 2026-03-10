@@ -8,6 +8,8 @@
   for filter in collection.filters
     assign current_filter_size = current_filter_size | plus: filter.active_values.size
   endfor
+
+  assign paginate_by = section.settings.per_row | times: section.settings.rows_per_page
 -%}
 
 {%- if section.settings.divider -%}<div class="section--divider"></div>{%- endif -%}
@@ -41,24 +43,14 @@
 
       <div class="grid">
         <div class="grid__item medium-up--one-fifth grid__item--sidebar">
-          {%- comment -%}
-            Render the filter component inside the sidebar column.
-            The snippet internally handles whether to show the sidebar content or just the drawer markup.
-            If style is 'drawer', this column is visually hidden by CSS but the content (drawer markup) remains.
-            However, 'overflow: hidden' on the column might clip the fixed drawer. To fix this, we ensure
-            the filter snippet is rendered, but for drawer mode we might want to move it out or ensure it's not clipped.
-            Actually, drawers are usually appended to body by JS. If not, fixed positioning works.
-          {%- endcomment -%}
-          {%- if section.settings.filter_style == 'sidebar' and section.settings.enable_sidebar -%}
-            {%- render 'collection-grid-filters',
-              collection: collection,
-              enable_sidebar: section.settings.enable_sidebar,
-              filter_style: section.settings.filter_style,
-              collapsed: section.settings.collapsed,
-              enable_color_swatches: section.settings.enable_color_swatches,
-              enable_swatch_labels: section.settings.enable_swatch_labels
-            -%}
-          {%- endif -%}
+          {%- render 'collection-grid-filters',
+            collection: collection,
+            enable_sidebar: section.settings.enable_sidebar,
+            filter_style: section.settings.filter_style,
+            collapsed: section.settings.collapsed,
+            enable_color_swatches: section.settings.enable_color_swatches,
+            enable_swatch_labels: section.settings.enable_swatch_labels
+          -%}
         </div>
         <div class="grid__item medium-up--four-fifths grid__item--content">
           {%- liquid
@@ -88,20 +80,6 @@
         </div>
       </div>
     </div>
-    
-    {%- comment -%}
-      Render drawer markup inside the Ajax container so it updates on filter changes.
-    {%- endcomment -%}
-    {%- if section.settings.filter_style == 'drawer' or section.settings.enable_sidebar == false -%}
-      {%- render 'collection-grid-filters',
-        collection: collection,
-        enable_sidebar: true,
-        filter_style: 'drawer',
-        collapsed: section.settings.collapsed,
-        enable_color_swatches: section.settings.enable_color_swatches,
-        enable_swatch_labels: section.settings.enable_swatch_labels
-      -%}
-    {%- endif -%}
   </div>
 
 {%- if section.settings.enable_sidebar == false or section.settings.filter_style == 'drawer' or collection.filters.size == 0 -%}
@@ -113,6 +91,8 @@
   .collection-content .grid__item--content { width: 100%; }
   .grid__item--sidebar { position: static; overflow: hidden; }
 {% endstyle %}
+{%- endif -%}
+
 </div>
 
 <script type="application/ld+json">
