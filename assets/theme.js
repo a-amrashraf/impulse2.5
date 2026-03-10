@@ -1435,12 +1435,34 @@ theme.recentlyViewed = {
   
     AjaxRenderer.prototype = Object.assign({}, AjaxRenderer.prototype, {
       renderPage: function (basePath, newParams, updateURLHash = true) {
+        let cleanBasePath = basePath;
+        if(basePath.indexOf('?') > -1) {
+            cleanBasePath = basePath.split('?')[0];
+        }
+
         const currentParams = new URLSearchParams(window.location.search);
-        const updatedParams = this.getUpdatedParams(currentParams, newParams)
+        
+        // If basePath is different from current location (e.g. customized collection grid url),
+        // we use params directly from newParams (filter data) + preserved params
+        var updatedParams;
+        if(cleanBasePath !== window.location.pathname) {
+             const basePathParams = new URLSearchParams(basePath.split('?')[1] || '');
+             // Use our custom merging logic
+             // We need to merge base path params with new params (from filter form)
+             // getUpdatedParams usually works with current page params.
+             
+             updatedParams = new URLSearchParams(newParams);
+             // Also preserve sort_by if not in newParams but in basePath?
+             // usually newParams (formData) contains sort_by if the form does.
+        } else {
+             updatedParams = this.getUpdatedParams(currentParams, newParams);
+        }
   
         const sectionRenders = this.sections.map(section => {
   
-          const url = `${basePath}?section_id=${section.sectionId}&${updatedParams.toString()}`;
+          // Use a separator based on whether the cleanBasePath (URL w/o params) 
+          // query parameters are already in updatedParams
+          const url = `${cleanBasePath}?section_id=${section.sectionId}&${updatedParams.toString()}`;
           const cachedSectionUrl = cachedSection => cachedSection.url === url;
   
           return this.cachedSections.some(cachedSectionUrl)
@@ -1448,7 +1470,10 @@ theme.recentlyViewed = {
             : this.renderSectionFromFetch(url, section);
         });
   
-        if (updateURLHash) this.updateURLHash(updatedParams);
+        // Only update URL hash if we are on the same page (collection page)
+        if (updateURLHash && cleanBasePath === window.location.pathname) {
+            this.updateURLHash(updatedParams);
+        }
   
         return Promise.all(sectionRenders);
       },
@@ -6488,6 +6513,11 @@ theme.recentlyViewed = {
       this.namespace = '.collection-' + this.sectionId;
       this.sidebar = new theme.CollectionSidebar(container);
       this.context = container.getAttribute('data-context');
+      
+      // Support for sections that are not the main collection template
+      // We read the collection URL from the container if available (added to products-grid-new)
+      this.collectionUrl = container.getAttribute('data-collection-url');
+
       this.ajaxRenderer = new theme.AjaxRenderer({
         sections: [
           {
@@ -6726,8 +6756,10 @@ theme.recentlyViewed = {
       },
   
       renderCollectionPage: function(searchParams, updateURLHash = true) {
+        var url = this.collectionUrl || window.location.pathname;
+
         this.ajaxRenderer
-          .renderPage(window.location.pathname, searchParams, updateURLHash)
+          .renderPage(url, searchParams, updateURLHash)
           .then(() => {
             theme.sections.reinit('collection-grid');
             this.updateScroll(false);

@@ -32,6 +32,7 @@
   class="collection-content"
   data-section-id="{{ section.id }}"
   data-section-type="collection-grid"
+  {% if collection %}data-collection-url="{{ collection.url }}"{% endif %}
 >
   <div id="CollectionAjaxContent-{{ section.id }}">
     <div class="page-width">
