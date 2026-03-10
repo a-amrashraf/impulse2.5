@@ -6402,8 +6402,16 @@ theme.recentlyViewed = {
         var drawerId = 'FilterDrawer-' + sectionId;
         var drawerName = 'collection-filters-' + sectionId;
 
-        drawerStyle = this.container.dataset.style === 'drawer';
-        theme.FilterDrawer = new theme.Drawers(drawerId, drawerName, true);
+        this.drawerStyle = this.container.dataset.style === 'drawer';
+        this.drawer = new theme.Drawers(drawerId, drawerName, true);
+        
+        // Use a unique namespace for this section's drawer
+        window.theme = window.theme || {};
+        window.theme.FilterDrawers = window.theme.FilterDrawers || {};
+        window.theme.FilterDrawers[sectionId] = this.drawer;
+
+        // Legacy support if there is only one, but don't rely on it for multi-section
+        theme.FilterDrawer = this.drawer; 
       },
   
       forceReload: function() {
@@ -6411,27 +6419,27 @@ theme.recentlyViewed = {
       },
   
       onSelect: function() {
-        if (theme.FilterDrawer) {
-          if (!drawerStyle) {
-            theme.FilterDrawer.close();
+        if (this.drawer) {
+          if (!this.drawerStyle) {
+            this.drawer.close();
             return;
           }
   
-          if (drawerStyle || theme.config.bpSmall) {
-            theme.FilterDrawer.open();
+          if (this.drawerStyle || theme.config.bpSmall) {
+            this.drawer.open();
           }
         }
       },
   
       onDeselect: function() {
-        if (theme.FilterDrawer) {
-          theme.FilterDrawer.close();
+        if (this.drawer) {
+          this.drawer.close();
         }
       },
   
       onUnload: function() {
-        if (theme.FilterDrawer) {
-          theme.FilterDrawer.close();
+        if (this.drawer) {
+          this.drawer.close();
         }
       }
     });
@@ -6587,8 +6595,9 @@ theme.recentlyViewed = {
       tagClick: function(evt) {
         var el = evt.currentTarget;
   
-        if (theme.FilterDrawer) {
-          theme.FilterDrawer.close();
+        // Close potentially open drawer for this section
+        if (this.sidebar && this.sidebar.drawer) {
+          this.sidebar.drawer.close();
         }
   
         // Do not ajax-load collection links
@@ -6616,8 +6625,9 @@ theme.recentlyViewed = {
       onFormSubmit: function(evt) {
         var el = evt.target;
   
-        if (theme.FilterDrawer) {
-          theme.FilterDrawer.close();
+        // Close potentially open drawer for this section
+        if (this.sidebar && this.sidebar.drawer) {
+          this.sidebar.drawer.close();
         }
   
         // Do not ajax-load collection links
