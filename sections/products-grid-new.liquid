@@ -13,6 +13,7 @@
   endfor
 
   assign paginate_by = section.settings.per_row | times: section.settings.rows_per_page
+  assign collapsed_state = section.settings.collapsed
 -%}
 
 {%- if section.settings.divider -%}<div class="section--divider"></div>{%- endif -%}
@@ -51,7 +52,7 @@
             collection: collection,
             enable_sidebar: section.settings.enable_sidebar,
             filter_style: section.settings.filter_style,
-            collapsed: section.settings.collapsed,
+            collapsed: collapsed_state,
             enable_color_swatches: section.settings.enable_color_swatches,
             enable_swatch_labels: section.settings.enable_swatch_labels
           -%}
