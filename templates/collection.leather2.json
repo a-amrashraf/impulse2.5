@@ -132,6 +132,7 @@
         "rows_per_page": 7,
         "mobile_flush_grid": true,
         "divider": false,
+        "swatch_overflow_style": "newline",
         "padding_top": 10,
         "padding_bottom": 20,
         "padding_top_mobile": 8,
