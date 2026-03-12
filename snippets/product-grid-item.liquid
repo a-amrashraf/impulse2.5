@@ -441,15 +441,26 @@ Arguments
                   Handle Metaobject (properties: .color, .image) or Simple Color Value 
                endcomment
               if sibling_color_data.color != blank
+                 comment
+                    Extract hex or rgb from the metaobject color property if it's an object
+                 endcomment
                  assign bg_style = 'background-color: ' | append: sibling_color_data.color | append: ';'
+              elsif sibling_color_data.value != blank
+                 comment
+                    Direct value access if it is a simple string wrapped in an object
+                 endcomment
+                 assign bg_style = 'background-color: ' | append: sibling_color_data.value | append: ';'
+              elsif sibling_color_data contains '#' or sibling_color_data contains 'rgb' or sibling_color_data contains 'hsl'
+                 comment
+                    Simple string value (Hex/RGB/HSL)
+                 endcomment
+                assign bg_style = 'background-color: ' | append: sibling_color_data | append: ';'
               elsif sibling_color_data.image != blank
                  assign bg_img = sibling_color_data.image | img_url: '100x'
                  assign bg_style = 'background-image: url(' | append: bg_img | append: '); background-color: transparent;'
-              elsif sibling_color_data contains '#' or sibling_color_data contains 'rgb' or sibling_color_data contains 'hsl'
-                assign bg_style = 'background-color: ' | append: sibling_color_data | append: ';'
               else
                  comment 
-                   If it's an image object (if user selected image type directly)
+                   If it's an image object (if user selected image type directly) OR a color name that needs to be handled
                  endcomment
                  assign bg_img = sibling_color_data | img_url: '100x'
                  if bg_img
@@ -459,13 +470,21 @@ Arguments
             endif
 
             if bg_style == ''
-               assign bg_style = 'background-color: ' | append: color_swatch_fallback | append: ';'
+               comment
+                  Fallback: Use the color name to create a background color (e.g. "red", "blue")
+                  This works for standard CSS colors even if no hex is provided.
+               endcomment
+               assign color_cleanup = color_name | downcase | replace: ' ', ''
+               assign bg_style = 'background-color: ' | append: color_cleanup | append: ';'
+
                if images[color_file_name] != blank
                   assign bg_img = color_image
                   assign bg_style = 'background-image: url(' | append: bg_img | append: ');'
                elsif sibling.featured_media != blank
-                  assign bg_img = sibling.featured_media.preview_image | img_url: '100x', crop: 'center'
-                  assign bg_style = 'background-image: url(' | append: bg_img | append: ');'
+                  comment 
+                     REMOVED: Fallback to product image. 
+                     If no color found, we stay with the CSS color name or transparent.
+                  endcomment
                endif
             endif
           -%}
