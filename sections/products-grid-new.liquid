@@ -34,7 +34,7 @@
     max-width: 80%;
     margin-left: auto;
     margin-right: auto;
-    margin-top: -8px;
+    margin-top: {{ section.settings.swatch_vertical_offset }}px;
     padding-bottom: 5px;
   }
 
@@ -263,6 +263,16 @@
            "label": "Slider"
          }
        ]
+    },
+    {
+      "type": "range",
+      "id": "swatch_vertical_offset",
+      "label": "Swatch Vertical Offset",
+      "min": -20,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": -8
     },
     {
       "type": "header",
