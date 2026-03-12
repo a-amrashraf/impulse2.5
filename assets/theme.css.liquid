@@ -9566,7 +9566,7 @@ html[dir=rtl] .grid-product__content{
   }
 
 .grid-product--fading-in {
-  animation:fade-in 0.5s cubic-bezier(0.26, 0.54, 0.32, 1) 0s forwards;
+  animation:fade-in 0.5s cubic-bezier(0.26, 0.54, 0.32, 1) 0s;
 }
 
 [data-center-text=true] .grid-product__meta{
@@ -9758,11 +9758,7 @@ html[dir=rtl] .grid-product__content{
   display:flex;
   flex-wrap:wrap;
   line-height:15px;
-  {%- if settings.swatch_vertical_offset -%}
-    margin-top: {{ settings.swatch_vertical_offset }}px;
-  {%- else -%}
-    margin-top: -5px;
-  {%- endif -%}
+  margin-top: {{ settings.swatch_vertical_offset | default: -5 }}px;
 }
 
 @media only screen and (min-width:769px){
