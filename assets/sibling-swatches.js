@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const newCard = div.querySelector('.grid-product');
 
             if(newCard) {
+              newCard.classList.add('grid-product--fading-in');
               card.replaceWith(newCard);
               // Re-init swatches for the new card
               initSiblingSwatches(); 
