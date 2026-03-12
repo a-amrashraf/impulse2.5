@@ -9758,7 +9758,11 @@ html[dir=rtl] .grid-product__content{
   display:flex;
   flex-wrap:wrap;
   line-height:15px;
-  margin-top:-5px;
+  {%- if settings.swatch_vertical_offset -%}
+    margin-top: {{ settings.swatch_vertical_offset }}px;
+  {%- else -%}
+    margin-top: -5px;
+  {%- endif -%}
 }
 
 @media only screen and (min-width:769px){

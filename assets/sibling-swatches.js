@@ -1,5 +1,8 @@
 document.addEventListener('DOMContentLoaded', function() {
   function initSiblingSwatches() {
+    // Select all sibling swatches. We check if they maintain listeners or not.
+    // However, if we replace the element, the old listener is gone with the element.
+    // The new element doesn't have the listener or the 'init-done' class.
     const swatches = document.querySelectorAll('.sibling-swatch:not(.init-done)');
 
     swatches.forEach(swatch => {
@@ -10,8 +13,12 @@ document.addEventListener('DOMContentLoaded', function() {
         e.stopPropagation();
 
         const card = this.closest('.grid-product');
+        // Prevent multiple clicks/fetches
+        if (card.classList.contains('loading')) return;
+        
         const fetchUrl = this.dataset.siblingUrl + '?view=card';
         
+        card.classList.add('loading');
         card.style.opacity = '0.5';
 
         fetch(fetchUrl)
@@ -22,7 +29,9 @@ document.addEventListener('DOMContentLoaded', function() {
             const newCard = div.querySelector('.grid-product');
 
             if(newCard) {
+              // Add fade-in animation class
               newCard.classList.add('grid-product--fading-in');
+              
               card.replaceWith(newCard);
               // Re-init swatches for the new card
               initSiblingSwatches(); 

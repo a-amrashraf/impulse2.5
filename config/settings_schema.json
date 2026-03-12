@@ -693,6 +693,16 @@
         "label": "t:settings_schema.product_tiles.settings.enable_swatches.label"
       },
       {
+        "type": "range",
+        "id": "swatch_vertical_offset",
+        "label": "Swatch Vertical Offset",
+        "min": -20,
+        "max": 20,
+        "step": 1,
+        "unit": "px",
+        "default": 0
+      },
+      {
         "type": "select",
         "id": "swatch_style",
         "label": "t:settings_schema.product_tiles.settings.swatch_style.label",
