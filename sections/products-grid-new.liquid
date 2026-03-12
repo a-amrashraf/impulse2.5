@@ -35,7 +35,7 @@
     margin-left: auto;
     margin-right: auto;
     margin-top: {{ section.settings.swatch_vertical_offset }}px;
-    padding-bottom: 5px;
+    padding-bottom: {{ section.settings.swatch_bottom_padding }}px;
   }
 
   {%- if section.settings.swatch_overflow_style == 'slider' -%}
@@ -273,6 +273,16 @@
       "step": 1,
       "unit": "px",
       "default": -8
+    },
+    {
+      "type": "range",
+      "id": "swatch_bottom_padding",
+      "label": "Swatch Bottom Padding",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 5
     },
     {
       "type": "header",
