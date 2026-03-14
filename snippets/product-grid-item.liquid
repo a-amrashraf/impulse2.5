@@ -389,8 +389,9 @@ Arguments
       </a>
     </div>
   </div>
-  {%- if settings.enable_swatches and type == blank -%}
-    {%- liquid
+      {#- New logic to only show this block if requested (default false) -#}
+      {%- if settings.enable_swatches and type == blank and show_bottom_swatches -%}
+        {%- liquid
       assign swatch_trigger = 'products.general.color_swatch_trigger' | t | downcase
       assign swatch_file_extension = 'png'
       assign color_count = 0
