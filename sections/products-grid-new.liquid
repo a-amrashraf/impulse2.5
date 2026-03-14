@@ -90,7 +90,6 @@
                 per_row: section.settings.per_row,
                 mobile_flush_grid: section.settings.mobile_flush_grid,
                 quick_shop_enable: settings.quick_shop_enable,
-                show_only_main_sibling: section.settings.show_only_main_sibling,
                 show_bottom_swatches: true
               %}
               {%- if paginate.pages > 1 -%}
@@ -152,13 +151,6 @@
       "label": "Collection"
     },
     {
-      "type": "checkbox",
-      "id": "show_only_main_sibling",
-      "label": "Show only main sibling product",
-      "info": "Hides products that are not the first item in their 'custom.color_siblings' metafield list.",
-      "default": false
-    },
-    {
       "type": "header",
       "content": "t:sections.main-collection.settings.header_filtering_and_sorting"
     },
@@ -173,13 +165,13 @@
       "type": "checkbox",
       "id": "collapsed",
       "label": "t:sections.main-collection.settings.collapsed.label",
-      "default": true
+      "default": false
     },
     {
       "type": "select",
       "id": "filter_style",
       "label": "t:sections.main-collection.settings.filter_style.label",
-      "default": "sidebar",
+      "default": "drawer",
       "options": [
         {
           "value": "sidebar",
@@ -195,6 +187,7 @@
       "type": "checkbox",
       "id": "enable_color_swatches",
       "label": "t:sections.main-collection.settings.enable_color_swatches.label",
+      "default": true,
       "info": "t:sections.main-collection.settings.enable_color_swatches.info"
     },
     {
@@ -241,7 +234,7 @@
       "type": "checkbox",
       "id": "mobile_flush_grid",
       "label": "t:sections.main-collection.blocks.products.settings.mobile_flush_grid.label",
-      "default": false
+      "default": true
     },
     {
       "type": "checkbox",
@@ -273,7 +266,7 @@
       "max": 20,
       "step": 1,
       "unit": "px",
-      "default": -8
+      "default": -12
     },
     {
       "type": "range",
@@ -283,7 +276,7 @@
       "max": 50,
       "step": 1,
       "unit": "px",
-      "default": 5
+      "default": 10
     },
     {
       "type": "header",
@@ -293,7 +286,7 @@
       "type": "range",
       "id": "padding_top",
       "label": "Top padding",
-      "default": 40,
+      "default": 10,
       "min": 0,
       "max": 100,
       "step": 2,
@@ -303,7 +296,7 @@
       "type": "range",
       "id": "padding_bottom",
       "label": "Bottom padding",
-      "default": 40,
+      "default": 20,
       "min": 0,
       "max": 100,
       "step": 2,
@@ -313,7 +306,7 @@
       "type": "range",
       "id": "padding_top_mobile",
       "label": "Top padding (Mobile)",
-      "default": 20,
+      "default": 8,
       "min": 0,
       "max": 100,
       "step": 2,
@@ -323,9 +316,12 @@
       "type": "range",
       "id": "padding_bottom_mobile",
       "label": "Bottom padding (Mobile)",
-      "default": 20,
+      "default": 16,
       "min": 0,
       "max": 100,
+      "step": 2,
+      "unit": "px"
+    },
       "step": 2,
       "unit": "px"
     }
