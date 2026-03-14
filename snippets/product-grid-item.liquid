@@ -397,105 +397,52 @@ Arguments
     {%- if product.metafields.custom.color_siblings.value != blank -%}
       <div class="grid-product__colors grid-product__colors--{{ product.id }}">
         {%- for sibling in product.metafields.custom.color_siblings.value -%}
-          {%- liquid
-            assign color_name = ''
-            for option in sibling.options_with_values
-              assign option_down = option.name | downcase
-              if option_down contains 'color' or option_down contains 'colour'
-                assign color_name = option.values[0]
-                break
-              endif
-            endfor
-
-            assign color_file_name = color_name | handle | append: '.' | append: swatch_file_extension
-            assign color_image = color_file_name | file_img_url: '50x50' | prepend: 'https:' | split: '?' | first
-            assign color_swatch_fallback = color_name | split: ' ' | last | handle
-            assign color_count = color_count | plus: 1
-            
-            assign sibling_image_url = sibling.featured_media.preview_image | img_url: '600x'
-            
-            comment
-               Attempt to find color data in various common metafield locations
-               - custom.color_swatch (User defined)
-               - shopify.color-pattern (Standard)
-               - custom.color_pattern (Common custom)
-               - custom.color (Simple custom)
-            endcomment
-            
-            assign sibling_color_data = blank
-            
-            if sibling.metafields.shopify['color-pattern'].value != blank
-               assign sibling_color_data = sibling.metafields.shopify['color-pattern'].value
-            elsif sibling.metafields.custom['shopify--color-pattern'].value != blank
-               assign sibling_color_data = sibling.metafields.custom['shopify--color-pattern'].value
-            elsif sibling.metafields.custom.color_pattern.value != blank
-               assign sibling_color_data = sibling.metafields.custom.color_pattern.value
-            elsif sibling.metafields.custom.color.value != blank
-               assign sibling_color_data = sibling.metafields.custom.color.value
-            endif
-
-            assign bg_style = ''
-            
-            if sibling_color_data != blank
-               comment 
-                  Handle Metaobject (properties: .color, .image) or Simple Color Value 
-               endcomment
-              if sibling_color_data.color != blank
-                 comment
-                    Extract hex or rgb from the metaobject color property if it's an object
-                 endcomment
-                 assign bg_style = 'background-color: ' | append: sibling_color_data.color | append: ';'
-              elsif sibling_color_data.value != blank
-                 comment
-                    Direct value access if it is a simple string wrapped in an object
-                 endcomment
-                 assign bg_style = 'background-color: ' | append: sibling_color_data.value | append: ';'
-              elsif sibling_color_data contains '#' or sibling_color_data contains 'rgb' or sibling_color_data contains 'hsl'
-                 comment
-                    Simple string value (Hex/RGB/HSL)
-                 endcomment
-                assign bg_style = 'background-color: ' | append: sibling_color_data | append: ';'
-              elsif sibling_color_data.image != blank
-                 assign bg_img = sibling_color_data.image | img_url: '100x'
-                 assign bg_style = 'background-image: url(' | append: bg_img | append: '); background-color: transparent;'
-              else
-                 comment 
-                   If it's an image object (if user selected image type directly) OR a color name that needs to be handled
-                 endcomment
-                 assign bg_img = sibling_color_data | img_url: '100x'
-                 if bg_img
+          {%- comment -%}
+            New Sibling Logic: Check custom.color which is a List of Metaobjects
+          {%- endcomment -%}
+          {%- assign sibling_colors = sibling.metafields.custom.color.value -%}
+          
+          {%- if sibling_colors != blank -%}
+            {%- for color_metaobject in sibling_colors -%}
+               {%- liquid
+                 assign bg_style = ''
+                 if color_metaobject.color != blank
+                     assign bg_style = 'background-color: ' | append: color_metaobject.color | append: ';'
+                 else
+                    assign bg_img = sibling.featured_media.preview_image | img_url: '100x'
                     assign bg_style = 'background-image: url(' | append: bg_img | append: '); background-color: transparent;'
                  endif
-              endif
-            endif
-
-            if bg_style == ''
-               comment
-                  Fallback: Use the color name to create a background color (e.g. "red", "blue")
-                  This works for standard CSS colors even if no hex is provided.
-               endcomment
-               assign color_cleanup = color_name | downcase | replace: ' ', ''
-               assign bg_style = 'background-color: ' | append: color_cleanup | append: ';'
-
-               if images[color_file_name] != blank
-                  assign bg_img = color_image
-                  assign bg_style = 'background-image: url(' | append: bg_img | append: ');'
-               elsif sibling.featured_media != blank
-                  comment 
-                     REMOVED: Fallback to product image. 
-                     If no color found, we stay with the CSS color name or transparent.
-                  endcomment
-               endif
-            endif
-          -%}
-
-          <div 
-            class="color-swatch color-swatch--small color-swatch--{{ color_name | handle }} sibling-swatch"
-            data-sibling-url="{{ sibling.url | within: collection }}"
-            data-sibling-image="{{ sibling_image_url }}"
-            aria-label="{{ sibling.title }} - {{ color_name }}"
-            style="{{ bg_style }}">
-          </div>
+                 
+                 assign color_count = color_count | plus: 1
+                 assign sibling_image_url = sibling.featured_media.preview_image | img_url: '600x'
+                 assign color_name = color_metaobject.name | default: sibling.title
+               -%}
+               <a href="{{ sibling.url | within: collection }}" 
+                  class="color-swatch color-swatch--small sibling-swatch"
+                  data-sibling-url="{{ sibling.url | within: collection }}"
+                  data-sibling-image="{{ sibling_image_url }}"
+                  aria-label="{{ sibling.title }} - {{ color_name }}"
+                  style="{{ bg_style }}">
+               </a>
+            {%- endfor -%}
+          {%- else -%}
+            {%- comment -%}
+              Fallback if no colors data found: Use product image
+            {%- endcomment -%}
+             {%- liquid
+               assign bg_img = sibling.featured_media.preview_image | img_url: '100x'
+               assign bg_style = 'background-image: url(' | append: bg_img | append: '); background-color: transparent;'
+               assign sibling_image_url = sibling.featured_media.preview_image | img_url: '600x'
+               assign color_count = color_count | plus: 1
+             -%}
+             <a href="{{ sibling.url | within: collection }}"
+                class="color-swatch color-swatch--small sibling-swatch"
+                data-sibling-url="{{ sibling.url | within: collection }}"
+                data-sibling-image="{{ sibling_image_url }}"
+                aria-label="{{ sibling.title }}"
+                style="{{ bg_style }}">
+             </a>
+          {%- endif -%}
         {%- endfor -%}
       </div>
 
