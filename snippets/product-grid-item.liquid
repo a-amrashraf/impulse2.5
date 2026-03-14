@@ -389,7 +389,6 @@ Arguments
       </a>
     </div>
   </div>
-      {#- New logic to only show this block if requested (default false) -#}
       {%- if settings.enable_swatches and type == blank and show_bottom_swatches -%}
         {%- liquid
       assign swatch_trigger = 'products.general.color_swatch_trigger' | t | downcase
