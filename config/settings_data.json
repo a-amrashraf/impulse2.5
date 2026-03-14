@@ -9,7 +9,6 @@
  */
 {
   "current": {
-    "disable_animations": true,
     "color_body_bg": "#ffffff",
     "color_body_text": "#0f0f0f",
     "color_price": "#0f0f0f",

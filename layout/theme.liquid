@@ -28,16 +28,6 @@
   {%- render 'font-face' -%}
   {{ 'theme.css' | asset_url | stylesheet_tag: preload: true }}
   {%- render 'css-variables' -%}
-  
-  {%- if settings.disable_animations -%}
-    <style>
-      [data-aos] {
-        opacity: 1 !important;
-        transform: none !important;
-        visibility: visible !important;
-      }
-    </style>
-  {%- endif -%}
 
   <script>
     document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
@@ -83,8 +73,7 @@
       predictiveSearchPrice: {{ settings.predictive_search_show_price | json }},
       quickView: {{ settings.quick_shop_enable }},
       themeName: 'Impulse',
-      themeVersion: "8.0.0",
-      disableAnimations: {{ settings.disable_animations | json }}
+      themeVersion: "8.0.0"
     };
   </script>
 

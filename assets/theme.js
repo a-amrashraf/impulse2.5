@@ -8443,15 +8443,12 @@ theme.recentlyViewed = {
   ==============================================================================*/
   theme.config.hasSessionStorage = theme.isStorageSupported('session');
   theme.config.hasLocalStorage = theme.isStorageSupported('local');
-
-  if (!theme.settings.disableAnimations) {
-    AOS.init({
-      easing: 'ease-out-quad',
-      once: true,
-      offset: 60,
-      disableMutationObserver: true
-    });
-  }
+  AOS.init({
+    easing: 'ease-out-quad',
+    once: true,
+    offset: 60,
+    disableMutationObserver: true
+  });
 
   if (theme.config.hasLocalStorage) {
     theme.recentlyViewed.localStorage = window.localStorage.getItem('theme-recent');
