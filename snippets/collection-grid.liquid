@@ -178,29 +178,12 @@ Snippet Arguments
   <div class="grid grid--uniform{% if mobile_flush_grid %} small--grid--flush{% endif %}"{% unless enable_collection_count %} data-scroll-to{% endunless %}>
     {%- for item in items -%}
       {%- if item.object_type == 'product' -%}
-        {%- liquid
-          assign show_product = true
-          
-          if show_only_main_sibling and item.metafields.custom.color_siblings.value != blank
-            assign siblings = item.metafields.custom.color_siblings.value
-            if siblings.size > 0
-              assign main_product = siblings | first 
-              if item.handle != main_product.handle
-                assign show_product = false
-              endif
-            endif
-          endif
-        -%}
-
-        {%- if show_product -%}
           {%- render 'product-grid-item',
             product: item,
             per_row: per_row,
             quick_shop_enable: quick_shop_enable,
             show_bottom_swatches: show_bottom_swatches
           -%}
-        {%- endif -%}
-
       {%- else -%}
         {%- render 'search-grid-item',
           item: item,
