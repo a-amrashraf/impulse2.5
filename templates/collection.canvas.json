@@ -28,6 +28,12 @@
     "collection_slider_mobile_LWDNrK": {
       "type": "collection-slider-mobile",
       "blocks": {
+        "collection_6WeahR": {
+          "type": "collection",
+          "settings": {
+            "collection": "shopper-bag"
+          }
+        },
         "collection_fwzba7": {
           "type": "collection",
           "settings": {
@@ -54,6 +60,7 @@
         }
       },
       "block_order": [
+        "collection_6WeahR",
         "collection_fwzba7",
         "collection_ANJ97N",
         "collection_gj8aYt",
@@ -157,7 +164,11 @@
         "filter_style": "drawer",
         "enable_color_swatches": true,
         "enable_swatch_labels": true,
-        "enable_sort": false
+        "enable_sort": false,
+        "padding_top": 40,
+        "padding_bottom": 40,
+        "padding_top_mobile": 20,
+        "padding_bottom_mobile": 20
       }
     },
     "countdown": {
