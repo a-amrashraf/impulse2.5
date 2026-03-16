@@ -130,9 +130,38 @@ Arguments
         {%- endif -%}
 
         {%- if settings.product_hover_image and product.media.size > 1 -%}
-          {%- for media in product.media offset: 1 limit: 1 -%}
-            {%- assign second_image = media.preview_image -%}
-          {%- endfor -%}
+          {%- liquid
+             assign second_image = blank
+             assign current_media_index = 0
+             assign found_current = false
+             
+             for media in product.media
+               if media.id == product.featured_media.id
+                 assign current_media_index = forloop.index
+                 assign found_current = true
+                 break
+               endif
+             endfor
+
+             if found_current
+               comment
+                 Start looking from the next image
+               endcomment
+               for media in product.media offset: current_media_index
+                  if media.media_type == 'image'
+                    assign second_image = media.preview_image
+                    break
+                  endif
+               endfor
+             else
+               comment
+                 Fallback if featured media not found in list (weird case)
+                 Just grab the second image overall
+               endcomment
+               assign second_image = product.media[1].preview_image
+             endif
+          -%}
+          
           {%- if second_image != blank -%}
             <div class="grid-product__secondary-image">
               {%- capture image_classes -%}
