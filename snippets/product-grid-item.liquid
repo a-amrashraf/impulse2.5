@@ -153,13 +153,32 @@ Arguments
                We access index 1 by using `current_pos` (which is 1).
              endcomment
              
-             if product.media[next_pos] != blank and product.media[next_pos].media_type == 'image'
-                 assign second_image = product.media[next_pos].preview_image
-             elsif product.media[1] != blank and product.media[1].media_type == 'image'
-                 comment
-                   Fallback to standard second image if next image doesn't exist/isn't image
-                 endcomment
-                 assign second_image = product.media[1].preview_image
+             assign candidate_media = product.media[next_pos]
+             assign current_variant_id = product.selected_or_first_available_variant.id
+             if product.selected_variant
+                assign current_variant_id = product.selected_variant.id
+             endif
+             
+             # Check if the candidate media belongs to a DIFFERENT variant (start of new group)
+             assign is_different_variant = false
+             if candidate_media.variants.size > 0
+                assign variant_match = false
+                for v in candidate_media.variants
+                    if v.id == current_variant_id
+                        assign variant_match = true
+                        break
+                    endif
+                endfor
+                if variant_match == false
+                    assign is_different_variant = true
+                endif
+             endif
+
+             if candidate_media != blank and candidate_media.media_type == 'image' and is_different_variant == false
+                 assign second_image = candidate_media.preview_image
+             elsif product.media[1] != blank and product.media[1].media_type == 'image' and product.media[1].variants.size == 0
+                 # Fallback only if generic
+                 # assign second_image = product.media[1].preview_image
              endif
           -%}
           
