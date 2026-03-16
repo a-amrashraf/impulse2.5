@@ -65,8 +65,7 @@ document.addEventListener('DOMContentLoaded', function() {
                let preloadPromise = Promise.resolve();
  
                if (newImg) {
-                   // Calculate optimal width based on device to ensure crispness but fast load
-                   // Impulse usually has 360, 540, 720 etc.
+                   // Calculate optimal width based on device
                    let targetWidth = '540';
                    if (window.innerWidth >= 768) {
                        targetWidth = '720'; 
@@ -75,34 +74,33 @@ document.addEventListener('DOMContentLoaded', function() {
                    let src = newImg.getAttribute('data-src');
                    if (src && src.includes('{width}')) {
                        src = src.replace('{width}', targetWidth);
-                   } else if (!src) { // Fallback if no data-src
+                   } else if (!src) {
                        src = newImg.src;
                    }
                    
                    if (src) {
                        preloadPromise = new Promise(resolve => {
-                           // We set the src on the element itself, so when it is inserted, it's ready.
-                           // We also handle the lazyload classes manually to prevent flickering.
+                           // Create a detached image to force download into cache
+                           const tempImg = new Image();
                            
-                           const onImageLoad = () => {
+                           tempImg.onload = () => {
+                               // Once loaded, apply to the real element
+                               newImg.src = src;
+                               newImg.srcset = src; // Override srcset to ensure it uses the cached version
                                newImg.classList.remove('lazyload');
                                newImg.classList.add('lazyloaded');
                                newImg.style.opacity = '1';
-                               newImg.style.transition = 'none'; // Prevent fade-in animation
+                               newImg.style.transition = 'none';
+                               newImg.setAttribute('data-src', src);
                                resolve();
                            };
-
-                           newImg.onload = onImageLoad;
-                           newImg.onerror = resolve;
-
-                           newImg.src = src;
-                           // Clear specific srcset to force our chosen src, or set it to match
-                           newImg.srcset = src; 
                            
-                           // If already complete (cached)
-                           if (newImg.complete && newImg.naturalWidth > 0) {
-                               onImageLoad();
-                           }
+                           tempImg.onerror = () => {
+                               console.log('Image preload failed, swapping anyway');
+                               resolve(); 
+                           };
+                           
+                           tempImg.src = src;
                        });
                    }
                }
