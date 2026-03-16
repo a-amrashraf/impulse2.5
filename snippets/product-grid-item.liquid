@@ -518,11 +518,7 @@ Arguments
 
                 <a
                   href="{{ variant.url | within: collection }}"
-                  class="color-swatch color-swatch--small color-swatch--{{ value | handle }}{% if variant.image %} color-swatch--with-image{% endif %}"
-                  {% if variant.image %}
-                    data-variant-id="{{ variant.id }}"
-                    data-variant-image="{{ variant.image | img_url: '400x' }}"
-                  {% endif %}
+                  class="color-swatch color-swatch--small color-swatch--{{ value | handle }}"
                   aria-label="{{ product.title }} - {{ value }}"
                   style="{{ bg_style }}">
                   <span class="visually-hidden">{{ value }}</span>
