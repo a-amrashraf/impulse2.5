@@ -138,7 +138,10 @@ Arguments
           {%- liquid
              assign second_image = blank
              
-             assign main_variant_ids = ""
+             # Only try to find a second image if this is an AJAX request (swatch clicked)
+             # Otherwise, stick to main image only for initial load
+             if is_ajax
+
              for v in main_media.variants
                 assign main_variant_ids = main_variant_ids | append: v.id | append: ","
              endfor
@@ -182,6 +185,7 @@ Arguments
                     break
                  endif
              endfor
+             endif
           -%}
           
           {%- if second_image != blank -%}
