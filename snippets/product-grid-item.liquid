@@ -135,8 +135,13 @@ Arguments
              assign current_media_index = 0
              assign found_current = false
              
+             assign current_media_id = product.featured_media.id
+             if product.selected_variant.featured_media
+                assign current_media_id = product.selected_variant.featured_media.id
+             endif
+
              for media in product.media
-               if media.id == product.featured_media.id
+               if media.id == current_media_id
                  assign current_media_index = forloop.index
                  assign found_current = true
                  break
@@ -156,9 +161,21 @@ Arguments
              else
                comment
                  Fallback if featured media not found in list (weird case)
-                 Just grab the second image overall
+                 Try to match by Alt tag first before defaulting
                endcomment
-               assign second_image = product.media[1].preview_image
+               
+               if product.featured_media.alt != blank
+                 for media in product.media offset: 1
+                    if media.alt == product.featured_media.alt and media.media_type == 'image'
+                      assign second_image = media.preview_image
+                      break
+                    endif
+                 endfor
+               endif
+               
+               if second_image == blank
+                  assign second_image = product.media[1].preview_image
+               endif
              endif
           -%}
           
