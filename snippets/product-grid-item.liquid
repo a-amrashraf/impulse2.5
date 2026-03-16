@@ -131,21 +131,30 @@ Arguments
 
         {%- if settings.product_hover_image and product.media.size > 1 -%}
           {%- liquid
-             assign second_image = product.media[1].preview_image
+             assign second_image = blank
              
              if product.selected_variant.featured_media
-               assign current_media_pos = product.selected_variant.featured_media.position
+                assign current_pos = product.selected_variant.featured_media.position
              else
-               assign current_media_pos = product.featured_media.position
+                assign current_pos = product.featured_media.position
              endif
 
-             assign next_idx = current_media_pos
+             assign next_pos = current_pos
              
              comment
-                Use the image at [current_pos] (next one 0-indexed) if it exists
+               Media array is 0-indexed. Position is 1-indexed.
+               So media[current_pos] gets the item *after* the one at current_pos.
+               e.g. Item 1 (Pos 1) is at index 0. We want Item 2 (Pos 2, Index 1).
+               We access index 1 by using `current_pos` (which is 1).
              endcomment
-             if product.media[next_idx] != blank and product.media[next_idx].media_type == 'image'
-                 assign second_image = product.media[next_idx].preview_image
+             
+             if product.media[next_pos] != blank and product.media[next_pos].media_type == 'image'
+                 assign second_image = product.media[next_pos].preview_image
+             elsif product.media[1] != blank and product.media[1].media_type == 'image'
+                 comment
+                   Fallback to standard second image if next image doesn't exist/isn't image
+                 endcomment
+                 assign second_image = product.media[1].preview_image
              endif
           -%}
           
