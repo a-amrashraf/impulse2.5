@@ -16,14 +16,31 @@ document.addEventListener('DOMContentLoaded', function() {
         // Prevent multiple clicks/fetches
         if (card.classList.contains('loading')) return;
         
+        let loader = card.querySelector('.grid-product__loading-bar');
+        if (!loader) {
+           loader = document.createElement('div');
+           loader.className = 'grid-product__loading-bar';
+           const content = card.querySelector('.grid-product__content');
+           if(content) content.appendChild(loader);
+        }
+
+        // Reset width to trigger animation
+        loader.style.width = '0%';
+        loader.style.opacity = '1';
+        
+        card.classList.add('loading');
+        // card.style.opacity = '0.5';
+
+        // Animate to 50% while waiting
+        requestAnimationFrame(() => {
+           loader.style.width = '50%';
+        });
+        
         let separator = '?';
         if (this.dataset.siblingUrl.includes('?')) {
           separator = '&';
         }
         const fetchUrl = this.dataset.siblingUrl + separator + 'view=card&t=' + new Date().getTime();
-        
-        card.classList.add('loading');
-        card.style.opacity = '0.5';
 
         fetch(fetchUrl)
           .then(response => response.text())
@@ -33,47 +50,40 @@ document.addEventListener('DOMContentLoaded', function() {
             const newCard = div.querySelector('.grid-product');
 
             if(newCard) {
-              // Add fade-in animation class
-              newCard.classList.add('grid-product--fading-in');
+              // Finish loader
+              loader.style.width = '100%';
               
-              card.replaceWith(newCard);
-              // Re-init swatches for the new card
-              initSiblingSwatches(); 
-              
-              // Handle hover image preloading/fallback
-              const swatch = this; // The clicked swatch
-              if (swatch.dataset.siblingHoverImage) {
-                 const hoverImg = newCard.querySelector('.grid-product__secondary-image img');
-                 if (hoverImg) {
-                    // Force the secondary image to match the one we calculated in Liquid
-                    // This acts as a safety layer against JS caching or race conditions
-                    hoverImg.src = swatch.dataset.siblingHoverImage;
-                    hoverImg.srcset = swatch.dataset.siblingHoverImage;
-                 }
-              }
+              setTimeout(() => {
+                  card.replaceWith(newCard);
+                  newCard.classList.remove('loading');
+                  
+                  // Re-init logic
+                  initSiblingSwatches(); 
+                  
+                  // Force hover image
+                  const swatch = this; 
+                  if (swatch.dataset.siblingHoverImage) {
+                     const hoverImg = newCard.querySelector('.grid-product__secondary-image img');
+                     if (hoverImg) {
+                        hoverImg.src = swatch.dataset.siblingHoverImage;
+                        hoverImg.srcset = swatch.dataset.siblingHoverImage;
+                     }
+                  }
 
-              // Re-init Impulse theme specific features
-              if (window.theme) {
-                 if(theme.initQuickShop) theme.initQuickShop();
-                 if(theme.initQuickAdd) theme.initQuickAdd();
-                 
-                 // Re-init currency converter if it exists
-                 if(theme.currencySwitcher) theme.currencySwitcher.init();
-                 
-                 // Refresh Animate On Scroll (AOS) to show hidden elements
-                 if (window.AOS) {
-                    // refreshHard is more thorough for new DOM elements
-                    AOS.refreshHard(); 
-                 }
-                 
-                 // Trigger resize for lazyload images (lazysizes)
-                 window.dispatchEvent(new Event('resize'));
-              }
+                  if (window.theme) {
+                     if(theme.initQuickShop) theme.initQuickShop();
+                     if(theme.initQuickAdd) theme.initQuickAdd();
+                     if(theme.currencySwitcher) theme.currencySwitcher.init();
+                     if (window.AOS) AOS.refreshHard(); 
+                     window.dispatchEvent(new Event('resize'));
+                  }
+              }, 300); // Wait for bar to fill
             }
           })
           .catch(err => {
             console.error('Error loading sibling:', err);
-            card.style.opacity = '1';
+            card.classList.remove('loading');
+            if(loader) loader.style.width = '0%';
           });
       });
     });
