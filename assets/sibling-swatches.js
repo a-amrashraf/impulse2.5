@@ -16,7 +16,11 @@ document.addEventListener('DOMContentLoaded', function() {
         // Prevent multiple clicks/fetches
         if (card.classList.contains('loading')) return;
         
-        const fetchUrl = this.dataset.siblingUrl + '?view=card&t=' + new Date().getTime();
+        let separator = '?';
+        if (this.dataset.siblingUrl.includes('?')) {
+          separator = '&';
+        }
+        const fetchUrl = this.dataset.siblingUrl + separator + 'view=card&t=' + new Date().getTime();
         
         card.classList.add('loading');
         card.style.opacity = '0.5';
