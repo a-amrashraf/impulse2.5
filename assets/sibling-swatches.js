@@ -20,21 +20,28 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!loader) {
            loader = document.createElement('div');
            loader.className = 'grid-product__loading-bar';
-           const content = card.querySelector('.grid-product__content');
-           if(content) content.appendChild(loader);
+           // Explicitly target the image mask
+           const mask = card.querySelector('.grid-product__image-mask');
+           if(mask) {
+             mask.appendChild(loader);
+           } else {
+             // Fallback
+             card.appendChild(loader);
+           }
         }
 
-        // Reset width to trigger animation
+        // Force reset
+        loader.style.transition = 'none';
         loader.style.width = '0%';
-        loader.style.opacity = '1';
+        void loader.offsetWidth; // Trigger reflow
+        
+        // Start animation
+        requestAnimationFrame(() => {
+            loader.style.transition = 'width 2s cubic-bezier(0.1, 0.4, 0.2, 1)';
+            loader.style.width = '70%'; 
+        });
         
         card.classList.add('loading');
-        // card.style.opacity = '0.5';
-
-        // Animate to 50% while waiting
-        requestAnimationFrame(() => {
-           loader.style.width = '50%';
-        });
         
         let separator = '?';
         if (this.dataset.siblingUrl.includes('?')) {
@@ -50,9 +57,11 @@ document.addEventListener('DOMContentLoaded', function() {
             const newCard = div.querySelector('.grid-product');
 
             if(newCard) {
-              // Finish loader
+              // Finish loader to 100% fast
+              loader.style.transition = 'width 0.2s ease-out';
               loader.style.width = '100%';
               
+              // Wait for 100% visual completion
               setTimeout(() => {
                   card.replaceWith(newCard);
                   newCard.classList.remove('loading');
@@ -77,7 +86,7 @@ document.addEventListener('DOMContentLoaded', function() {
                      if (window.AOS) AOS.refreshHard(); 
                      window.dispatchEvent(new Event('resize'));
                   }
-              }, 300); // Wait for bar to fill
+              }, 250); 
             }
           })
           .catch(err => {
