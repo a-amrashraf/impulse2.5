@@ -16,37 +16,45 @@ document.addEventListener('DOMContentLoaded', function() {
         // Prevent multiple clicks/fetches
         if (card.classList.contains('loading')) return;
         
+        // Create or find loader
         let loader = card.querySelector('.grid-product__loading-bar');
         if (!loader) {
            loader = document.createElement('div');
            loader.className = 'grid-product__loading-bar';
-           // Explicitly target the image mask
-           const mask = card.querySelector('.grid-product__image-mask');
+           // Find the image container
+           const mask = card.querySelector('.grid-product__image-mask') || card.querySelector('.grid__item-image-wrapper');
            if(mask) {
              mask.appendChild(loader);
+             // Ensure mask is relatively positioned so loader absolute pos works
+             if(getComputedStyle(mask).position === 'static') {
+                mask.style.position = 'relative';
+             }
            } else {
-             // Fallback
              card.appendChild(loader);
            }
         }
 
-        // Force reset
+        // Reset state instantly
         loader.style.transition = 'none';
         loader.style.width = '0%';
-        void loader.offsetWidth; // Trigger reflow
+        loader.style.opacity = '1';
         
-        // Start animation
-        requestAnimationFrame(() => {
-            loader.style.transition = 'width 2s cubic-bezier(0.1, 0.4, 0.2, 1)';
-            loader.style.width = '70%'; 
-        });
+        // Force reflow
+        void loader.offsetWidth;
         
         card.classList.add('loading');
+        
+        // Start animation with slight delay to ensure reset took effect
+        setTimeout(() => {
+            loader.style.transition = 'width 0.5s ease-out';
+            loader.style.width = '60%'; 
+        }, 10);
         
         let separator = '?';
         if (this.dataset.siblingUrl.includes('?')) {
           separator = '&';
         }
+        // Force unique timestamp to avoid heavy caching of the HTML response, but images are cached
         const fetchUrl = this.dataset.siblingUrl + separator + 'view=card&t=' + new Date().getTime();
 
         fetch(fetchUrl)
@@ -57,11 +65,11 @@ document.addEventListener('DOMContentLoaded', function() {
             const newCard = div.querySelector('.grid-product');
 
             if(newCard) {
-              // Finish loader to 100% fast
+              // Complete the bar
               loader.style.transition = 'width 0.2s ease-out';
               loader.style.width = '100%';
               
-              // Wait for 100% visual completion
+              // Wait for completion
               setTimeout(() => {
                   card.replaceWith(newCard);
                   newCard.classList.remove('loading');
@@ -86,7 +94,7 @@ document.addEventListener('DOMContentLoaded', function() {
                      if (window.AOS) AOS.refreshHard(); 
                      window.dispatchEvent(new Event('resize'));
                   }
-              }, 250); 
+              }, 250); // Match transition time
             }
           })
           .catch(err => {

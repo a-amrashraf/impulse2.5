@@ -9440,17 +9440,13 @@ html[dir=rtl] .grid-product__content{
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 0%;
+  width: 0; 
   height: 4px;
   background-color: #000;
-  z-index: 50;
-  transition: width 0.3s ease-out;
-  display: block;
+  z-index: 100;
+  opacity: 1;
   pointer-events: none;
-}
-
-.grid-product.loading .grid-product__loading-bar {
-  width: 90%;
+  display: block;
 }
 
 .grid-product__secondary-image img{
