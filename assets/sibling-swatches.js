@@ -16,25 +16,21 @@ document.addEventListener('DOMContentLoaded', function() {
         // Prevent multiple clicks/fetches
         if (card.classList.contains('loading')) return;
         
-        // Create or find loader
+        // Create or find loader with INLINE styles - appended to CARD to avoid overflow clipping
         let loader = card.querySelector('.grid-product__loading-bar');
         if (!loader) {
            loader = document.createElement('div');
            loader.className = 'grid-product__loading-bar';
-           // Find the image container
-           const mask = card.querySelector('.grid-product__image-mask') || card.querySelector('.grid__item-image-wrapper');
-           if(mask) {
-             mask.appendChild(loader);
-             // Ensure mask is relatively positioned so loader absolute pos works
-             if(getComputedStyle(mask).position === 'static') {
-                mask.style.position = 'relative';
-             }
-           } else {
-             card.appendChild(loader);
+           // High z-index, centered
+           loader.style.cssText = 'position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 0; height: 4px; background-color: #000; z-index: 2147483647; display: block; pointer-events: none; opacity: 1; box-shadow: 0 0 2px rgba(255,255,255,0.5);';
+           
+           card.appendChild(loader);
+           if(getComputedStyle(card).position === 'static') {
+              card.style.position = 'relative'; 
            }
         }
 
-        // Reset state instantly
+        // Reset state
         loader.style.transition = 'none';
         loader.style.width = '0%';
         loader.style.opacity = '1';
@@ -44,17 +40,16 @@ document.addEventListener('DOMContentLoaded', function() {
         
         card.classList.add('loading');
         
-        // Start animation with slight delay to ensure reset took effect
-        setTimeout(() => {
-            loader.style.transition = 'width 0.5s ease-out';
+        // Start animation
+        requestAnimationFrame(() => {
+            loader.style.transition = 'width 2.5s cubic-bezier(0.1, 0.4, 0.2, 1)';
             loader.style.width = '60%'; 
-        }, 10);
+        });
         
         let separator = '?';
         if (this.dataset.siblingUrl.includes('?')) {
           separator = '&';
         }
-        // Force unique timestamp to avoid heavy caching of the HTML response, but images are cached
         const fetchUrl = this.dataset.siblingUrl + separator + 'view=card&t=' + new Date().getTime();
 
         fetch(fetchUrl)
@@ -65,19 +60,15 @@ document.addEventListener('DOMContentLoaded', function() {
             const newCard = div.querySelector('.grid-product');
 
             if(newCard) {
-              // Complete the bar
+              // Finish loader rapidly
               loader.style.transition = 'width 0.2s ease-out';
               loader.style.width = '100%';
               
-              // Wait for completion
               setTimeout(() => {
                   card.replaceWith(newCard);
                   newCard.classList.remove('loading');
-                  
-                  // Re-init logic
                   initSiblingSwatches(); 
                   
-                  // Force hover image
                   const swatch = this; 
                   if (swatch.dataset.siblingHoverImage) {
                      const hoverImg = newCard.querySelector('.grid-product__secondary-image img');
@@ -94,13 +85,13 @@ document.addEventListener('DOMContentLoaded', function() {
                      if (window.AOS) AOS.refreshHard(); 
                      window.dispatchEvent(new Event('resize'));
                   }
-              }, 250); // Match transition time
+              }, 250);
             }
           })
           .catch(err => {
             console.error('Error loading sibling:', err);
             card.classList.remove('loading');
-            if(loader) loader.style.width = '0%';
+            loader.style.width = '0%';
           });
       });
     });
