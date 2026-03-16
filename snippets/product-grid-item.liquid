@@ -78,11 +78,11 @@ Arguments
       endif
 
       # Prioritize selected variant media if available
+      assign main_media = product.featured_media
       if product.selected_variant.featured_media
-         assign preview_image = product.selected_variant.featured_media.preview_image
-      else
-         assign preview_image = product.featured_media.preview_image
+         assign main_media = product.selected_variant.featured_media
       endif
+      assign preview_image = main_media.preview_image
     -%}
 
     <div class="grid__item-image-wrapper">
@@ -138,40 +138,41 @@ Arguments
           {%- liquid
              assign second_image = blank
              
-             if product.selected_variant.featured_media
-                assign current_pos = product.selected_variant.featured_media.position
-             else
-                assign current_pos = product.featured_media.position
-             endif
-
+             assign current_pos = main_media.position
              assign next_pos = current_pos
              
-             comment
-               Media array is 0-indexed. Position is 1-indexed.
-               So media[current_pos] gets the item *after* the one at current_pos.
-               e.g. Item 1 (Pos 1) is at index 0. We want Item 2 (Pos 2, Index 1).
-               We access index 1 by using `current_pos` (which is 1).
-             endcomment
-             
              assign candidate_media = product.media[next_pos]
-             assign current_variant_id = product.selected_or_first_available_variant.id
-             if product.selected_variant
-                assign current_variant_id = product.selected_variant.id
-             endif
              
-             # Check if the candidate media belongs to a DIFFERENT variant (start of new group)
              assign is_different_variant = false
-             if candidate_media.variants.size > 0
+             
+             # If the main image is tied to specific variants, ensure the next image belongs to AT LEAST ONE of those same variants.
+             if main_media.variants.size > 0 and candidate_media.variants.size > 0
                 assign variant_match = false
-                for v in candidate_media.variants
-                    if v.id == current_variant_id
-                        assign variant_match = true
+                for v in main_media.variants
+                    for cv in candidate_media.variants
+                        if v.id == cv.id
+                            assign variant_match = true
+                            break
+                        endif
+                    endfor
+                    if variant_match
                         break
                     endif
                 endfor
+                
                 if variant_match == false
                     assign is_different_variant = true
                 endif
+             endif
+
+             # Also check if main image is generic (0 variants) but next image is specific (has variants) -> usually means different group?
+             # But generic images (lifestyle) often precede specific ones. Let's strict it:
+             # If next image has variants, main image MUST share at least one, unless main image has NONE.
+             if main_media.variants.size == 0 and candidate_media.variants.size > 0
+                 # Decide policy: Generic main -> Specific hover?
+                 # Usually safest to allow if no specific logic forbids it.
+                 # But if we want strict color separation: Generic main matches everything.
+                 assign is_different_variant = false
              endif
 
              if candidate_media != blank and candidate_media.media_type == 'image' and is_different_variant == false
