@@ -54,7 +54,7 @@
     "add_to_cart_bg_transparent": true,
     "product_grid_image_size": "portrait",
     "product_grid_image_fill": true,
-    "product_hover_image": false,
+    "product_hover_image": true,
     "enable_swatches": true,
     "collection_grid_shape": "portrait",
     "collection_grid_image": "collection",
