@@ -67,6 +67,13 @@ Snippet Arguments
   justify-content: center !important;
 }
 
+/* Force items to take 100% width if only child */
+.collection-filter__item--drawer:only-child,
+.collection-filter__item--sort:only-child {
+  flex: 1 1 100% !important;
+  max-width: 100% !important;
+}
+
 /* Divider */
 .collection-filter__item--drawer::after {
   content: '';
@@ -134,7 +141,7 @@ Snippet Arguments
 </style>
 
 
-{%- if collection.filters.size > 0 and enable_sidebar -%}
+{%- if enable_sidebar -%}
   {%- assign show_filters = true -%}
 {%- endif -%}
 
