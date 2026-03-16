@@ -134,7 +134,7 @@ Arguments
             {%- assign second_image = media.preview_image -%}
           {%- endfor -%}
           {%- if second_image != blank -%}
-            <div class="grid-product__secondary-image small--hide">
+            <div class="grid-product__secondary-image">
               {%- capture image_classes -%}
                 image-style--{{ image_style }}
               {%- endcapture -%}
