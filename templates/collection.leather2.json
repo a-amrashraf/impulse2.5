@@ -119,7 +119,7 @@
       "name": "Products Grid new",
       "settings": {
         "title": "",
-        "collection": "leather-line",
+        "collection": "leather-line-test",
         "enable_sidebar": true,
         "collapsed": false,
         "filter_style": "drawer",
