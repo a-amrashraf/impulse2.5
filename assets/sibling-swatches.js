@@ -65,25 +65,50 @@ document.addEventListener('DOMContentLoaded', function() {
                let preloadPromise = Promise.resolve();
  
                if (newImg) {
+                   // Calculate optimal width based on device to ensure crispness but fast load
+                   // Impulse usually has 360, 540, 720 etc.
+                   let targetWidth = '540';
+                   if (window.innerWidth >= 768) {
+                       targetWidth = '720'; 
+                   }
+                   
                    let src = newImg.getAttribute('data-src');
                    if (src && src.includes('{width}')) {
-                       src = src.replace('{width}', '540'); // Predict reasonable width
-                   } else if (!src) {
+                       src = src.replace('{width}', targetWidth);
+                   } else if (!src) { // Fallback if no data-src
                        src = newImg.src;
                    }
- 
+                   
                    if (src) {
                        preloadPromise = new Promise(resolve => {
-                           const img = new Image();
-                           img.onload = resolve;
-                           img.onerror = resolve;
-                           img.src = src;
+                           // We set the src on the element itself, so when it is inserted, it's ready.
+                           // We also handle the lazyload classes manually to prevent flickering.
+                           
+                           const onImageLoad = () => {
+                               newImg.classList.remove('lazyload');
+                               newImg.classList.add('lazyloaded');
+                               newImg.style.opacity = '1';
+                               newImg.style.transition = 'none'; // Prevent fade-in animation
+                               resolve();
+                           };
+
+                           newImg.onload = onImageLoad;
+                           newImg.onerror = resolve;
+
+                           newImg.src = src;
+                           // Clear specific srcset to force our chosen src, or set it to match
+                           newImg.srcset = src; 
+                           
+                           // If already complete (cached)
+                           if (newImg.complete && newImg.naturalWidth > 0) {
+                               onImageLoad();
+                           }
                        });
                    }
                }
                
                // Timeout to prevent hanging if image load fails
-               const timeoutPromise = new Promise(resolve => setTimeout(resolve, 2000));
+               const timeoutPromise = new Promise(resolve => setTimeout(resolve, 3000));
 
                Promise.race([preloadPromise, timeoutPromise]).then(() => {
                   // Finish loader to 80% (which appears as full loading of our smaller bar)
