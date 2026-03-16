@@ -20,11 +20,12 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!loader) {
            loader = document.createElement('div');
            loader.className = 'grid-product__loading-bar';
-           // Attach to the main content wrapper to ensure visibility above everything
-           const content = card.querySelector('.grid-product__content');
-           if(content) {
-             content.appendChild(loader);
+           // Explicitly target the image mask
+           const mask = card.querySelector('.grid-product__image-mask');
+           if(mask) {
+             mask.appendChild(loader);
            } else {
+             // Fallback
              card.appendChild(loader);
            }
         }
