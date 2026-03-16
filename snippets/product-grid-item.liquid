@@ -138,49 +138,50 @@ Arguments
           {%- liquid
              assign second_image = blank
              
-             assign current_pos = main_media.position
-             assign next_pos = current_pos
+             assign main_variant_ids = ""
+             for v in main_media.variants
+                assign main_variant_ids = main_variant_ids | append: v.id | append: ","
+             endfor
              
-             assign candidate_media = product.media[next_pos]
+             assign start_index = main_media.position
              
-             assign is_different_variant = false
-             
-             # If the main image is tied to specific variants, ensure the next image belongs to AT LEAST ONE of those same variants.
-             if main_media.variants.size > 0 and candidate_media.variants.size > 0
-                assign variant_match = false
-                for v in main_media.variants
-                    for cv in candidate_media.variants
-                        if v.id == cv.id
-                            assign variant_match = true
-                            break
-                        endif
-                    endfor
-                    if variant_match
-                        break
-                    endif
-                endfor
-                
-                if variant_match == false
-                    assign is_different_variant = true
-                endif
-             endif
-
-             # Also check if main image is generic (0 variants) but next image is specific (has variants) -> usually means different group?
-             # But generic images (lifestyle) often precede specific ones. Let's strict it:
-             # If next image has variants, main image MUST share at least one, unless main image has NONE.
-             if main_media.variants.size == 0 and candidate_media.variants.size > 0
-                 # Decide policy: Generic main -> Specific hover?
-                 # Usually safest to allow if no specific logic forbids it.
-                 # But if we want strict color separation: Generic main matches everything.
-                 assign is_different_variant = false
-             endif
-
-             if candidate_media != blank and candidate_media.media_type == 'image' and is_different_variant == false
-                 assign second_image = candidate_media.preview_image
-             elsif product.media[1] != blank and product.media[1].media_type == 'image' and product.media[1].variants.size == 0
-                 # Fallback only if generic
-                 # assign second_image = product.media[1].preview_image
-             endif
+             for media in product.media offset: start_index
+                 if media.media_type != 'image'
+                    continue
+                 endif
+                 
+                 assign is_match = false
+                 
+                 if main_variant_ids != ""
+                     # Main image is tied to variants. Find next image sharing a variant.
+                     if media.variants.size > 0
+                        for v in media.variants
+                           assign v_id = v.id | append: ","
+                           if main_variant_ids contains v_id
+                               assign is_match = true
+                               break
+                           endif
+                        endfor
+                     else
+                        # Candidate is generic. If main is specific, maybe generic is okay? 
+                        # Or strictly require specific? Let's check user intent.
+                        # Usually "Red Front" -> "Red Back" (Specific -> Specific).
+                        # "Red Front" -> "Dimensions" (Specific -> Generic) is often acceptable.
+                        assign is_match = true
+                     endif
+                 else
+                     # Main image is generic. 
+                     # Only accept generic next image to avoid showing "Blue" backing for "Generic" front.
+                     if media.variants.size == 0
+                        assign is_match = true
+                     endif
+                 endif
+                 
+                 if is_match
+                    assign second_image = media.preview_image
+                    break
+                 endif
+             endfor
           -%}
           
           {%- if second_image != blank -%}
