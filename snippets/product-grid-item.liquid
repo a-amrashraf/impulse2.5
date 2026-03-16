@@ -131,51 +131,21 @@ Arguments
 
         {%- if settings.product_hover_image and product.media.size > 1 -%}
           {%- liquid
-             assign second_image = blank
-             assign current_media_index = 0
-             assign found_current = false
+             assign second_image = product.media[1].preview_image
              
-             assign current_media_id = product.featured_media.id
              if product.selected_variant.featured_media
-                assign current_media_id = product.selected_variant.featured_media.id
+               assign current_media_pos = product.selected_variant.featured_media.position
+             else
+               assign current_media_pos = product.featured_media.position
              endif
 
-             for media in product.media
-               if media.id == current_media_id
-                 assign current_media_index = forloop.index
-                 assign found_current = true
-                 break
-               endif
-             endfor
-
-             if found_current
-               comment
-                 Start looking from the next image
-               endcomment
-               for media in product.media offset: current_media_index
-                  if media.media_type == 'image'
-                    assign second_image = media.preview_image
-                    break
-                  endif
-               endfor
-             else
-               comment
-                 Fallback if featured media not found in list (weird case)
-                 Try to match by Alt tag first before defaulting
-               endcomment
-               
-               if product.featured_media.alt != blank
-                 for media in product.media offset: 1
-                    if media.alt == product.featured_media.alt and media.media_type == 'image'
-                      assign second_image = media.preview_image
-                      break
-                    endif
-                 endfor
-               endif
-               
-               if second_image == blank
-                  assign second_image = product.media[1].preview_image
-               endif
+             assign next_idx = current_media_pos
+             
+             comment
+                Use the image at [current_pos] (next one 0-indexed) if it exists
+             endcomment
+             if product.media[next_idx] != blank and product.media[next_idx].media_type == 'image'
+                 assign second_image = product.media[next_idx].preview_image
              endif
           -%}
           
