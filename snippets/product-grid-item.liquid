@@ -462,12 +462,19 @@ Arguments
                  
                  assign color_count = color_count | plus: 1
                  assign sibling_image_url = sibling.featured_media.preview_image | img_url: '600x'
+                 
+                 comment
+                    Get the hovered/second image from the sibling product
+                 endcomment
+                 assign sibling_hover_image_url = sibling.media[1].preview_image | img_url: '600x'
+                 
                  assign color_name = color_metaobject.name | default: sibling.title
                -%}
                <a href="{{ sibling.url | within: collection }}" 
                   class="color-swatch color-swatch--small sibling-swatch {{ sold_out_class }} {{ active_class }}"
                   data-sibling-url="{{ sibling.url | within: collection }}"
                   data-sibling-image="{{ sibling_image_url }}"
+                  data-sibling-hover-image="{{ sibling_hover_image_url }}"
                   aria-label="{{ sibling.title }} - {{ color_name }}"
                   style="{{ bg_style }}">
                </a>
@@ -480,12 +487,19 @@ Arguments
                assign bg_img = sibling.featured_media.preview_image | img_url: '100x'
                assign bg_style = 'background-image: url(' | append: bg_img | append: '); background-color: transparent;'
                assign sibling_image_url = sibling.featured_media.preview_image | img_url: '600x'
+               
+               comment
+                  Get the hovered/second image from the sibling product
+               endcomment
+               assign sibling_hover_image_url = sibling.media[1].preview_image | img_url: '600x'
+               
                assign color_count = color_count | plus: 1
              -%}
              <a href="{{ sibling.url | within: collection }}"
                 class="color-swatch color-swatch--small sibling-swatch {{ sold_out_class }} {{ active_class }}"
                 data-sibling-url="{{ sibling.url | within: collection }}"
                 data-sibling-image="{{ sibling_image_url }}"
+                data-sibling-hover-image="{{ sibling_hover_image_url }}"
                 aria-label="{{ sibling.title }}"
                 style="{{ bg_style }}">
              </a>
@@ -579,6 +593,19 @@ Arguments
                        assign active_class = 'is-active'
                     endif
                   endif
+                  
+                  assign sibling_hover_image_url = ''
+                  if variant.featured_media
+                     assign pos = variant.featured_media.position
+                     assign next_idx = pos
+                     if product.media[next_idx]
+                        assign sibling_hover_image_url = product.media[next_idx].preview_image | img_url: '600x'
+                     endif
+                  endif
+                  
+                  if sibling_hover_image_url == blank and product.media[1]
+                     assign sibling_hover_image_url = product.media[1].preview_image | img_url: '600x'
+                  endif
                 -%}
 
                 <a
@@ -586,6 +613,7 @@ Arguments
                   class="sibling-swatch color-swatch color-swatch--small color-swatch--{{ value | handle }} {{ sold_out_class }} {{ active_class }}"
                   data-sibling-url="{{ variant.url | within: collection }}"
                   data-sibling-image="{{ variant.image | img_url: '600x' }}"
+                  data-sibling-hover-image="{{ sibling_hover_image_url }}"
                   aria-label="{{ product.title }} - {{ value }}"
                   style="{{ bg_style }}">
                   <span class="visually-hidden">{{ value }}</span>

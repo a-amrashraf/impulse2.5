@@ -40,6 +40,18 @@ document.addEventListener('DOMContentLoaded', function() {
               // Re-init swatches for the new card
               initSiblingSwatches(); 
               
+              // Handle hover image preloading/fallback
+              const swatch = this; // The clicked swatch
+              if (swatch.dataset.siblingHoverImage) {
+                 const hoverImg = newCard.querySelector('.grid-product__secondary-image img');
+                 if (hoverImg) {
+                    // Force the secondary image to match the one we calculated in Liquid
+                    // This acts as a safety layer against JS caching or race conditions
+                    hoverImg.src = swatch.dataset.siblingHoverImage;
+                    hoverImg.srcset = swatch.dataset.siblingHoverImage;
+                 }
+              }
+
               // Re-init Impulse theme specific features
               if (window.theme) {
                  if(theme.initQuickShop) theme.initQuickShop();
