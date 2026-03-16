@@ -77,7 +77,12 @@ Arguments
         assign imageRatio = 'square'
       endif
 
-      assign preview_image = product.featured_media.preview_image
+      # Prioritize selected variant media if available
+      if product.selected_variant.featured_media
+         assign preview_image = product.selected_variant.featured_media.preview_image
+      else
+         assign preview_image = product.featured_media.preview_image
+      endif
     -%}
 
     <div class="grid__item-image-wrapper">
