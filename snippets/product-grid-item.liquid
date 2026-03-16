@@ -399,11 +399,30 @@ Arguments
     {% comment %} Check for sibling metafield first {% endcomment %}
     {%- if product.metafields.custom.color_siblings.value != blank -%}
       <div class="grid-product__colors grid-product__colors--{{ product.id }}">
-        {%- for sibling in product.metafields.custom.color_siblings.value -%}
+        
+        {%- assign siblings_sorted = product.metafields.custom.color_siblings.value | sort: 'title' -%}
+        {%- assign sibling_count = siblings_sorted.size -%}
+        {%- assign loop_limit = sibling_count -%}
+        
+        {%- if limit_swatches -%}
+          {%- assign loop_limit = 5 -%}
+        {%- endif -%}
+
+        {%- for sibling in siblings_sorted limit: loop_limit -%}
           {%- comment -%}
             New Sibling Logic: Check custom.color which is a List of Metaobjects
           {%- endcomment -%}
           {%- assign sibling_colors = sibling.metafields.custom.color.value -%}
+          
+          {%- assign sold_out_class = '' -%}
+          {%- if show_out_of_stock_swatches and sibling.available == false -%}
+            {%- assign sold_out_class = 'color-swatch--sold-out' -%}
+          {%- endif -%}
+
+          {%- assign active_class = '' -%}
+          {%- if sibling.handle == product.handle -%}
+            {%- assign active_class = 'is-active' -%}
+          {%- endif -%}
           
           {%- if sibling_colors != blank -%}
             {%- for color_metaobject in sibling_colors -%}
@@ -421,7 +440,7 @@ Arguments
                  assign color_name = color_metaobject.name | default: sibling.title
                -%}
                <a href="{{ sibling.url | within: collection }}" 
-                  class="color-swatch color-swatch--small sibling-swatch"
+                  class="color-swatch color-swatch--small sibling-swatch {{ sold_out_class }} {{ active_class }}"
                   data-sibling-url="{{ sibling.url | within: collection }}"
                   data-sibling-image="{{ sibling_image_url }}"
                   aria-label="{{ sibling.title }} - {{ color_name }}"
@@ -439,7 +458,7 @@ Arguments
                assign color_count = color_count | plus: 1
              -%}
              <a href="{{ sibling.url | within: collection }}"
-                class="color-swatch color-swatch--small sibling-swatch"
+                class="color-swatch color-swatch--small sibling-swatch {{ sold_out_class }} {{ active_class }}"
                 data-sibling-url="{{ sibling.url | within: collection }}"
                 data-sibling-image="{{ sibling_image_url }}"
                 aria-label="{{ sibling.title }}"
@@ -447,6 +466,12 @@ Arguments
              </a>
           {%- endif -%}
         {%- endfor -%}
+
+        {%- if limit_swatches and sibling_count > 5 -%}
+          <a href="{{ product.url | within: collection }}" class="color-swatch__more-link" style="font-size: 11px; line-height: 15px; vertical-align: top; display: inline-block; margin-left: 2px; color: var(--colorTextBody);">
+            +{{ sibling_count | minus: 5 }}
+          </a>
+        {%- endif -%}
       </div>
 
     {%- else -%}

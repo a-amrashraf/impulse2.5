@@ -90,7 +90,9 @@
                 per_row: section.settings.per_row,
                 mobile_flush_grid: section.settings.mobile_flush_grid,
                 quick_shop_enable: settings.quick_shop_enable,
-                show_bottom_swatches: true
+                show_bottom_swatches: true,
+                limit_swatches: section.settings.limit_swatches,
+                show_out_of_stock_swatches: section.settings.show_out_of_stock_swatches
               %}
               {%- if paginate.pages > 1 -%}
                 {%- render 'pagination', paginate: paginate -%}
@@ -194,6 +196,18 @@
       "type": "checkbox",
       "id": "enable_swatch_labels",
       "label": "t:common.enable_swatch_labels.label",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "limit_swatches",
+      "label": "Limit swatches to 5",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_out_of_stock_swatches",
+      "label": "Show out of stock style on swatches",
       "default": true
     },
     {

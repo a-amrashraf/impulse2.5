@@ -9905,8 +9905,34 @@ html[dir=rtl] .grid-product__content{
       top:-1px;
   }
 
-.tag:focus-within .color-swatch,.tag:not(.tag--active) label:hover .color-swatch:hover,a.color-swatch:hover{
+.tag:focus-within .color-swatch,.tag:not(.tag--active) label:hover .color-swatch:hover,a.color-swatch:hover,a.color-swatch.is-active{
   box-shadow:0 0 0 1px var(--colorTextBody);
+}
+
+.color-swatch--sold-out {
+  opacity: 0.5;
+  position: relative;
+}
+
+.color-swatch--sold-out:after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 140%;
+  height: 1px;
+  background: var(--colorTextBody);
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.color-swatch__more-link {
+  font-size: 11px;
+  line-height: 19px; /* Match swatch height */
+  vertical-align: top;
+  display: inline-block;
+  margin-left: 4px;
+  color: var(--colorTextBody);
+  text-decoration: none;
 }
 
 .tag--active .color-swatch{
