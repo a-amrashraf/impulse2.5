@@ -13209,3 +13209,6 @@ label,.h5,
 
 
 #FilterDrawer, .filter-drawer-wrapper, #FilterDrawer .drawer__inner, .filter-drawer-wrapper .drawer__inner, #FilterDrawer .drawer__fixed-header, .filter-drawer-wrapper .drawer__fixed-header { background-color: white !important; color: black !important; }
+
+/* Force hide pbioh-hidden elements */
+.pbioh-hidden { display: none !important; visibility: hidden !important; opacity: 0 !important; pointer-events: none !important; }
