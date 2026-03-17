@@ -154,53 +154,57 @@ Arguments
           {%- liquid
              assign second_image = blank
              
-             # Only try to find a second image if this is an AJAX request (swatch clicked)
-             # Otherwise, stick to main image only for initial load
+             # Only calculate second image if this is an AJAX swap request
              if is_ajax
-
-             for v in main_media.variants
-                assign main_variant_ids = main_variant_ids | append: v.id | append: ","
-             endfor
-             
-             assign start_index = main_media.position
-             
-             for media in product.media offset: start_index
-                 if media.media_type != 'image'
-                    continue
+                 assign main_variant_ids_list = ""
+     
+                 # Get variant IDs from the main media
+                 if main_media.variants.size > 0
+                    for v in main_media.variants
+                        assign main_variant_ids_list = main_variant_ids_list | append: v.id | append: ","
+                    endfor
                  endif
+     
+                 assign start_index = main_media.position
                  
-                 assign is_match = false
-                 
-                 if main_variant_ids != ""
-                     # Main image is tied to variants. Find next image sharing a variant.
-                     if media.variants.size > 0
-                        for v in media.variants
-                           assign v_id = v.id | append: ","
-                           if main_variant_ids contains v_id
-                               assign is_match = true
-                               break
-                           endif
-                        endfor
+                 for media in product.media offset: start_index
+                     if media.media_type != 'image'
+                        continue
+                     endif
+                     
+                     assign is_match = false
+                     
+                     if main_variant_ids_list != ""
+                         # Main image is Specific (Red).
+                         if media.variants.size > 0
+                             # Candidate is Specific. Check for match.
+                             for v in media.variants
+                                 assign v_id = v.id | append: ","
+                                 if main_variant_ids_list contains v_id
+                                     assign is_match = true
+                                     break
+                                 endif
+                             endfor
+                         else
+                             # Candidate is Generic (No variants). 
+                             # We allow Generic images to be the hover image for Specific images
+                             # (e.g., Red Front -> Lifestyle Shot)
+                             assign is_match = true
+                         endif
                      else
-                        # Candidate is generic. If main is specific, maybe generic is okay? 
-                        # Or strictly require specific? Let's check user intent.
-                        # Usually "Red Front" -> "Red Back" (Specific -> Specific).
-                        # "Red Front" -> "Dimensions" (Specific -> Generic) is often acceptable.
-                        assign is_match = true
+                         # Main image is Generic (No variants).
+                         if media.variants.size == 0
+                             # Only pair with another Generic image.
+                             # (Don't transition from Generic -> Blue Back)
+                             assign is_match = true
+                         endif
                      endif
-                 else
-                     # Main image is generic. 
-                     # Only accept generic next image to avoid showing "Blue" backing for "Generic" front.
-                     if media.variants.size == 0
-                        assign is_match = true
+                     
+                     if is_match
+                        assign second_image = media.preview_image
+                        break
                      endif
-                 endif
-                 
-                 if is_match
-                    assign second_image = media.preview_image
-                    break
-                 endif
-             endfor
+                 endfor
              endif
           -%}
           
