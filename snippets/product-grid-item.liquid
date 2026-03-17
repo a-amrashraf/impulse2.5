@@ -46,7 +46,7 @@ Arguments
   endif
 -%}
 
-<div class="grid__item grid-product {{ gridView }} {% if quick_shop_enable %} grid-product__has-quick-shop{% endif %}" data-product-handle="{{ product.handle }}" data-product-id="{{ product.id }}">
+<div class="grid__item grid-product product-card {{ gridView }} {% if quick_shop_enable %} grid-product__has-quick-shop{% endif %}" data-product-handle="{{ product.handle }}" data-product-id="{{ product.id }}">
   <div class="grid-product__content">
     {%- if has_custom_label -%}
       <div class="grid-product__tag grid-product__tag--custom">
@@ -79,19 +79,37 @@ Arguments
 
       # Prioritize selected variant media if available
       assign main_media = product.featured_media
-      if product.selected_variant.featured_media
-         assign main_media = product.selected_variant.featured_media
+      
+      if product.selected_or_first_available_variant.featured_media
+         assign main_media = product.selected_or_first_available_variant.featured_media
+      elsif product.selected_or_first_available_variant
+         # If selected variant has no specific media assigned, try to find one in the gallery
+         assign v_id = product.selected_or_first_available_variant.id
+         for media in product.media
+            if media.variants.size > 0
+                for v in media.variants
+                    if v.id == v_id
+                        assign main_media = media
+                        break
+                    endif
+                endfor
+            endif
+            if main_media.id != product.featured_media.id
+                break
+            endif
+         endfor
       endif
+      
       assign preview_image = main_media.preview_image
     -%}
 
-    <div class="grid__item-image-wrapper">
+    <div class="grid__item-image-wrapper" data-original="{{ preview_image | img_url: '600x' }}">
       <div class="grid-product__image-mask">
         {%- if fixed_aspect_ratio -%}
           <div
             class="grid__image-ratio grid__image-ratio--{% if image_style == 'circle' %}square{% else %}{{ settings.product_grid_image_size }}{% endif %}">
             {%- capture image_classes -%}
-              {% unless settings.product_grid_image_fill %} grid__image-contain{% endunless %} image-style--{{ image_style }}
+              product-image {% unless settings.product_grid_image_fill %} grid__image-contain{% endunless %} image-style--{{ image_style }}
             {%- endcapture -%}
             {%- if preview_image != blank -%}
               {%- render 'image-element',
@@ -116,7 +134,7 @@ Arguments
           >
             {%- if preview_image != blank -%}
               {%- capture image_classes -%}
-                grid-product__image image-style--{{ image_style }}
+                grid-product__image product-image image-style--{{ image_style }}
               {%- endcapture -%}
               {%- render 'image-element',
                 img: preview_image,
@@ -379,8 +397,9 @@ Arguments
                   -%}
         
                   <div 
-                    class="color-swatch color-swatch--small color-swatch--{{ color_name | handle }} sibling-swatch"
+                    class="color-swatch color-swatch--small color-swatch--{{ color_name | handle }} sibling-swatch swatch"
                     data-sibling-url="{{ sibling.url | within: collection }}"
+                    data-image="{{ sibling.featured_media.preview_image | img_url: '600x' }}"
                     data-sibling-image="{{ sibling_image_url }}"
                     aria-label="{{ sibling.title }} - {{ color_name }}"
                     style="{{ bg_style }}">
@@ -417,9 +436,10 @@ Arguments
                       -%}
 
                       <span
-                        class="color-swatch color-swatch--small color-swatch--{{ value | handle }}{% if variant.image %} color-swatch--with-image{% endif %}"
+                        class="color-swatch color-swatch--small swatch color-swatch--{{ value | handle }}{% if variant.image %} color-swatch--with-image{% endif %}"
                         {% if variant.image %}
                           data-variant-id="{{ variant.id }}"
+                          data-image="{{ variant.image | img_url: '600x' }}"
                           data-variant-image="{{ variant.image | img_url: '400x' }}"
                         {% endif %}
                         aria-label="{{ product.title }} - {{ value }}"
@@ -501,8 +521,9 @@ Arguments
                  assign color_name = color_metaobject.name | default: sibling.title
                -%}
                <a href="{{ sibling.url | within: collection }}" 
-                  class="color-swatch color-swatch--small sibling-swatch {{ sold_out_class }} {{ active_class }}"
+                  class="color-swatch color-swatch--small sibling-swatch swatch {{ sold_out_class }} {{ active_class }}"
                   data-sibling-url="{{ sibling.url | within: collection }}"
+                  data-image="{{ sibling_image_url }}"
                   data-sibling-image="{{ sibling_image_url }}"
                   data-sibling-hover-image="{{ sibling_hover_image_url }}"
                   aria-label="{{ sibling.title }} - {{ color_name }}"
@@ -526,8 +547,9 @@ Arguments
                assign color_count = color_count | plus: 1
              -%}
              <a href="{{ sibling.url | within: collection }}"
-                class="color-swatch color-swatch--small sibling-swatch {{ sold_out_class }} {{ active_class }}"
+                class="color-swatch color-swatch--small sibling-swatch swatch {{ sold_out_class }} {{ active_class }}"
                 data-sibling-url="{{ sibling.url | within: collection }}"
+                data-image="{{ sibling_image_url }}"
                 data-sibling-image="{{ sibling_image_url }}"
                 data-sibling-hover-image="{{ sibling_hover_image_url }}"
                 aria-label="{{ sibling.title }}"

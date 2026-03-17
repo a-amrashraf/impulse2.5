@@ -1,8 +1,62 @@
 document.addEventListener('DOMContentLoaded', function() {
+  
+  /**
+   * Initializes hover effects for all swatches within product cards.
+   * Scoped to each card to prevent global selector issues.
+   */
+  function initSwatchHover(scope) {
+     const container = scope && scope.querySelectorAll ? scope : document;
+     const cards = container.querySelectorAll('.product-card:not(.hover-init-done)');
+     
+     cards.forEach(card => {
+        card.classList.add('hover-init-done');
+        
+        // 1. Get Image Elements
+        const imageWrapper = card.querySelector('.grid__item-image-wrapper');
+        // Retrieve the actual image (try .product-image first, fallback to standard classes)
+        const image = card.querySelector('.product-image') || card.querySelector('.grid-product__image') || card.querySelector('img');
+        
+        if (!imageWrapper || !image) return;
+
+        // 2. Get Swatches
+        const swatches = card.querySelectorAll('.swatch');
+        if (swatches.length === 0) return;
+
+        // 3. Handle Active State on Load
+        // If a swatch is active (e.g. selected variant/sibling), set that image immediately.
+        const activeSwatch = card.querySelector('.swatch.is-active, .swatch.active');
+        if (activeSwatch && activeSwatch.dataset.image) {
+             const newSrc = activeSwatch.dataset.image;
+             image.src = newSrc;
+             image.srcset = newSrc;
+        }
+
+        // 4. Attach Event Listeners
+        swatches.forEach(swatch => {
+             swatch.addEventListener('mouseenter', function() {
+                 const newSrc = this.dataset.image;
+                 if (newSrc) {
+                     image.src = newSrc;
+                     image.srcset = newSrc; 
+                 }
+             });
+             
+             swatch.addEventListener('mouseleave', function() {
+                 // Restore from data-original on the wrapper
+                 const originalSrc = imageWrapper.dataset.original;
+                 if (originalSrc) {
+                     image.src = originalSrc;
+                     image.srcset = originalSrc;
+                 }
+             });
+        });
+     });
+  }
+
+  /**
+   * Initializes Sibling Swatch AJAX Logic (Click to Swap)
+   */
   function initSiblingSwatches() {
-    // Select all sibling swatches. We check if they maintain listeners or not.
-    // However, if we replace the element, the old listener is gone with the element.
-    // The new element doesn't have the listener or the 'init-done' class.
     const swatches = document.querySelectorAll('.sibling-swatch:not(.init-done)');
 
     swatches.forEach(swatch => {
@@ -12,11 +66,10 @@ document.addEventListener('DOMContentLoaded', function() {
         e.preventDefault();
         e.stopPropagation();
 
-        const card = this.closest('.grid-product');
-        // Prevent multiple clicks/fetches
-        if (card.classList.contains('loading')) return;
+        const card = this.closest('.product-card, .grid-product');
+        if (!card || card.classList.contains('loading')) return;
         
-        // Inject keyframes globally if not present
+        // Inject Spinner Styles if missing
         if (!document.getElementById('sibling-swatch-spinner-style')) {
            const style = document.createElement('style');
            style.id = 'sibling-swatch-spinner-style';
@@ -44,31 +97,28 @@ document.addEventListener('DOMContentLoaded', function() {
            document.head.appendChild(style);
         }
 
-        // Create or find spinner
+        // Create Spinner
         let spinner = card.querySelector('.grid-product__spinner');
         if (!spinner) {
            spinner = document.createElement('div');
            spinner.className = 'grid-product__spinner';
-           
-           // Find image wrapper specifically to center over image, not whole card (which includes swatches)
            const imageWrapper = card.querySelector('.grid__item-image-wrapper') || card.querySelector('.grid-product__image-mask') || card;
            imageWrapper.appendChild(spinner);
-           
            if(getComputedStyle(imageWrapper).position === 'static') {
               imageWrapper.style.position = 'relative'; 
            }
         }
         
-        // Start Loading State
+        // Set Loading State
         card.classList.add('loading');
         card.style.opacity = '0.6';
         card.style.pointerEvents = 'none';
         card.style.transition = 'opacity 0.2s';
         
-        // Remove old loader bar if it exists
         const oldBar = card.querySelector('.grid-product__loading-bar');
         if(oldBar) oldBar.remove();
 
+        // Build Fetch URL
         let separator = '?';
         if (this.dataset.siblingUrl.includes('?')) {
           separator = '&';
@@ -80,19 +130,16 @@ document.addEventListener('DOMContentLoaded', function() {
           .then(html => {
             const div = document.createElement('div');
             div.innerHTML = html;
-            const newCard = div.querySelector('.grid-product');
+            const newCard = div.querySelector('.product-card') || div.querySelector('.grid-product');
 
             if(newCard) {
-               // Preload image to prevent white flash
-               const newImg = newCard.querySelector('.grid-product__image') || newCard.querySelector('img');
+               // Image Preloading Logic
+               const newImg = newCard.querySelector('.product-image') || newCard.querySelector('.grid-product__image') || newCard.querySelector('img');
                let preloadPromise = Promise.resolve();
  
                if (newImg) {
-                   // Calculate optimal width based on device
                    let targetWidth = '540';
-                   if (window.innerWidth >= 768) {
-                       targetWidth = '720'; 
-                   }
+                   if (window.innerWidth >= 768) targetWidth = '720'; 
                    
                    let src = newImg.getAttribute('data-src');
                    if (src && src.includes('{width}')) {
@@ -103,13 +150,10 @@ document.addEventListener('DOMContentLoaded', function() {
                    
                    if (src) {
                        preloadPromise = new Promise(resolve => {
-                           // Create a detached image to force download into cache
                            const tempImg = new Image();
-                           
                            tempImg.onload = () => {
-                               // Once loaded, apply to the real element
                                newImg.src = src;
-                               newImg.srcset = src; // Override srcset to ensure it uses the cached version
+                               newImg.srcset = src;
                                newImg.classList.remove('lazyload');
                                newImg.classList.add('lazyloaded');
                                newImg.style.opacity = '1';
@@ -117,39 +161,27 @@ document.addEventListener('DOMContentLoaded', function() {
                                newImg.setAttribute('data-src', src);
                                resolve();
                            };
-                           
-                           tempImg.onerror = () => {
-                               console.log('Image preload failed, swapping anyway');
-                               resolve(); 
-                           };
-                           
+                           tempImg.onerror = () => { resolve(); };
                            tempImg.src = src;
                        });
                    }
                }
                
-               // Timeout to prevent hanging if image load fails
+               // Timeout Check
                const timeoutPromise = new Promise(resolve => setTimeout(resolve, 3000));
 
                Promise.race([preloadPromise, timeoutPromise]).then(() => {
-                  
-                  // SWAP NOW
+                  // Replace Card
                   card.replaceWith(newCard);
                   newCard.classList.remove('loading');
                   newCard.style.opacity = '1';
                   newCard.style.pointerEvents = 'auto';
                   
+                  // Re-initialize scripts
                   initSiblingSwatches(); 
-                  
-                  const swatch = this; 
-                  if (swatch.dataset.siblingHoverImage) {
-                     const hoverImg = newCard.querySelector('.grid-product__secondary-image img');
-                     if (hoverImg) {
-                        hoverImg.src = swatch.dataset.siblingHoverImage;
-                        hoverImg.srcset = swatch.dataset.siblingHoverImage;
-                     }
-                  }
+                  initSwatchHover(); // Re-run hover logic for the new card
 
+                  // Re-trigger theme scripts if available
                   if (window.theme) {
                      if(theme.initQuickShop) theme.initQuickShop();
                      if(theme.initQuickAdd) theme.initQuickAdd();
@@ -171,10 +203,13 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
+  // Initialize on Load
   initSiblingSwatches();
+  initSwatchHover();
   
-  // Re-run safely if sections are reloaded in customizer
+  // Initialize on Customizer Load
   document.addEventListener('shopify:section:load', function() {
     initSiblingSwatches();
+    initSwatchHover();
   });
 });
