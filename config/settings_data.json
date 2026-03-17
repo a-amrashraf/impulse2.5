@@ -103,11 +103,6 @@
           "position": "right"
         }
       },
-      "17433512874017181462": {
-        "type": "shopify://apps/sb-product-image-hover-effect/blocks/change-image-onhover/b034e4b7-6270-41c0-8990-91db36b7a4b5",
-        "disabled": false,
-        "settings": {}
-      },
       "8853274458742905975": {
         "type": "shopify://apps/hitsy-progress-bar/blocks/hitsy/0e2f6173-7277-4c61-a4df-2e70602cd303",
         "disabled": false,
@@ -158,6 +153,11 @@
       "7147999719060634790": {
         "type": "shopify://apps/gsc-countdown-timer/blocks/countdown-bar/58dc5b1b-43d2-4209-b1f3-52aff31643ed",
         "disabled": false,
+        "settings": {}
+      },
+      "17433512874017181462": {
+        "type": "shopify://apps/sb-product-image-hover-effect/blocks/change-image-onhover/b034e4b7-6270-41c0-8990-91db36b7a4b5",
+        "disabled": true,
         "settings": {}
       }
     }
