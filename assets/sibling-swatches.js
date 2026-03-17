@@ -16,36 +16,57 @@ document.addEventListener('DOMContentLoaded', function() {
         // Prevent multiple clicks/fetches
         if (card.classList.contains('loading')) return;
         
-        // Create or find loader with INLINE styles - appended to CARD to avoid overflow clipping
-        let loader = card.querySelector('.grid-product__loading-bar');
-        if (!loader) {
-           loader = document.createElement('div');
-           loader.className = 'grid-product__loading-bar';
-           // High z-index, centered, max-width 80% (20% smaller than card)
-           loader.style.cssText = 'position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 0; max-width: 80%; height: 4px; background-color: #000; z-index: 2147483647; display: block; pointer-events: none; opacity: 1; box-shadow: 0 0 2px rgba(255,255,255,0.5);';
-           
-           card.appendChild(loader);
-           if(getComputedStyle(card).position === 'static') {
-              card.style.position = 'relative'; 
-           }
+        // Inject keyframes globally if not present
+        if (!document.getElementById('sibling-swatch-spinner-style')) {
+           const style = document.createElement('style');
+           style.id = 'sibling-swatch-spinner-style';
+           style.innerHTML = `
+             @keyframes sibling-spin {
+                0% { transform: translate(-50%, -50%) rotate(0deg); }
+                100% { transform: translate(-50%, -50%) rotate(360deg); }
+             }
+             .grid-product__spinner {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                width: 30px;
+                height: 30px;
+                border: 2px solid rgba(0,0,0,0.1);
+                border-top: 2px solid #000;
+                border-radius: 50%;
+                animation: sibling-spin 0.8s linear infinite;
+                z-index: 20;
+                transform: translate(-50%, -50%);
+             }
+           `;
+           document.head.appendChild(style);
         }
 
-        // Reset state
-        loader.style.transition = 'none';
-        loader.style.width = '0%';
-        loader.style.opacity = '1';
+        // Create or find spinner
+        let spinner = card.querySelector('.grid-product__spinner');
+        if (!spinner) {
+           spinner = document.createElement('div');
+           spinner.className = 'grid-product__spinner';
+           
+           // Find image wrapper specifically to center over image, not whole card (which includes swatches)
+           const imageWrapper = card.querySelector('.grid__item-image-wrapper') || card.querySelector('.grid-product__image-mask') || card;
+           imageWrapper.appendChild(spinner);
+           
+           if(getComputedStyle(imageWrapper).position === 'static') {
+              imageWrapper.style.position = 'relative'; 
+           }
+        }
         
-        // Force reflow
-        void loader.offsetWidth;
-        
+        // Start Loading State
         card.classList.add('loading');
+        card.style.opacity = '0.6';
+        card.style.pointerEvents = 'none';
+        card.style.transition = 'opacity 0.2s';
         
-        // Start animation
-        requestAnimationFrame(() => {
-            loader.style.transition = 'width 2.5s cubic-bezier(0.1, 0.4, 0.2, 1)';
-            loader.style.width = '50%'; 
-        });
-        
+        // Remove old loader bar if it exists
+        const oldBar = card.querySelector('.grid-product__loading-bar');
+        if(oldBar) oldBar.remove();
+
         let separator = '?';
         if (this.dataset.siblingUrl.includes('?')) {
           separator = '&';
@@ -109,39 +130,40 @@ document.addEventListener('DOMContentLoaded', function() {
                const timeoutPromise = new Promise(resolve => setTimeout(resolve, 3000));
 
                Promise.race([preloadPromise, timeoutPromise]).then(() => {
-                  // Finish loader to 80% (which appears as full loading of our smaller bar)
-                  loader.style.transition = 'width 0.2s ease-out';
-                  loader.style.width = '80%';
                   
-                  setTimeout(() => {
-                      card.replaceWith(newCard);
-                      newCard.classList.remove('loading');
-                      initSiblingSwatches(); 
-                      
-                      const swatch = this; 
-                      if (swatch.dataset.siblingHoverImage) {
-                         const hoverImg = newCard.querySelector('.grid-product__secondary-image img');
-                         if (hoverImg) {
-                            hoverImg.src = swatch.dataset.siblingHoverImage;
-                            hoverImg.srcset = swatch.dataset.siblingHoverImage;
-                         }
-                      }
-    
-                      if (window.theme) {
-                         if(theme.initQuickShop) theme.initQuickShop();
-                         if(theme.initQuickAdd) theme.initQuickAdd();
-                         if(theme.currencySwitcher) theme.currencySwitcher.init();
-                         if (window.AOS) AOS.refreshHard(); 
-                         window.dispatchEvent(new Event('resize'));
-                      }
-                  }, 250);
+                  // SWAP NOW
+                  card.replaceWith(newCard);
+                  newCard.classList.remove('loading');
+                  newCard.style.opacity = '1';
+                  newCard.style.pointerEvents = 'auto';
+                  
+                  initSiblingSwatches(); 
+                  
+                  const swatch = this; 
+                  if (swatch.dataset.siblingHoverImage) {
+                     const hoverImg = newCard.querySelector('.grid-product__secondary-image img');
+                     if (hoverImg) {
+                        hoverImg.src = swatch.dataset.siblingHoverImage;
+                        hoverImg.srcset = swatch.dataset.siblingHoverImage;
+                     }
+                  }
+
+                  if (window.theme) {
+                     if(theme.initQuickShop) theme.initQuickShop();
+                     if(theme.initQuickAdd) theme.initQuickAdd();
+                     if(theme.currencySwitcher) theme.currencySwitcher.init();
+                     if (window.AOS) AOS.refreshHard(); 
+                     window.dispatchEvent(new Event('resize'));
+                  }
                });
             }
           })
           .catch(err => {
             console.error('Error loading sibling:', err);
             card.classList.remove('loading');
-            loader.style.width = '0%';
+            card.style.opacity = '1';
+            card.style.pointerEvents = 'auto';
+            if(spinner) spinner.remove();
           });
       });
     });
