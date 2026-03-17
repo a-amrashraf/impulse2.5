@@ -25,7 +25,7 @@ function initSiblingSwatches() {
               100% { transform: translate(-50%, -50%) rotate(360deg); }
            }
            .grid-product__spinner {
-              position: fixed;
+              position: absolute;
               top: 50%;
               left: 50%;
               width: 60px;
@@ -34,21 +34,28 @@ function initSiblingSwatches() {
               border-top: 5px solid currentColor;
               border-radius: 50%;
               animation: sibling-spin 0.6s linear infinite;
-              z-index: 99999;
-              transform: translate(-50%, -50%);
+              z-index: 20;
+              margin-left: -30px;
+              margin-top: -30px;
               color: var(--colorTextBody, #000);
-              pointer-events: none;
            }
          `;
          document.head.appendChild(style);
       }
 
-      // Add Spinner (Global)
-      let spinner = document.querySelector('.grid-product__spinner');
+      // Add Spinner
+      let spinner = card.querySelector('.grid-product__spinner');
       if (!spinner) {
          spinner = document.createElement('div');
          spinner.className = 'grid-product__spinner';
-         document.body.appendChild(spinner);
+         // Try to append to image wrapper for better positioning
+         const imageWrapper = card.querySelector('.grid-product__image-mask') || card.querySelector('.grid__item-image-wrapper') || card;
+         
+         // Ensure relative positioning for spinner
+         if(getComputedStyle(imageWrapper).position === 'static') {
+            imageWrapper.style.position = 'relative'; 
+         }
+         imageWrapper.appendChild(spinner);
       }
       
       card.classList.add('loading');
@@ -116,15 +123,13 @@ function initSiblingSwatches() {
           card.classList.remove('loading');
           card.style.opacity = '1';
           card.style.pointerEvents = 'auto';
-          const existingSpinner = document.querySelector('.grid-product__spinner');
-          if(existingSpinner) existingSpinner.remove();
         })
         .catch(err => {
           console.error('Sibling Swatch Error:', err);
           card.classList.remove('loading');
           card.style.opacity = '1';
           card.style.pointerEvents = 'auto';
-          const existingSpinner = document.querySelector('.grid-product__spinner');
+          const existingSpinner = card.querySelector('.grid-product__spinner');
           if(existingSpinner) existingSpinner.remove();
         });
     });
