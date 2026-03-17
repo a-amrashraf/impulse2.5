@@ -167,15 +167,6 @@ function initSiblingSwatches() {
           const existingSpinner = card.querySelector('.grid-product__spinner');
           if(existingSpinner) existingSpinner.remove();
         });
-        })
-        .catch(err => {
-          console.error('Sibling Swatch Error:', err);
-          card.classList.remove('sibling-loading');
-          card.style.opacity = '1';
-          card.style.pointerEvents = 'auto';
-          const existingSpinner = card.querySelector('.grid-product__spinner');
-          if(existingSpinner) existingSpinner.remove();
-        });
     });
   });
 }
