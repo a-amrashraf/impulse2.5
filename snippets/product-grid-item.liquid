@@ -80,30 +80,30 @@ Arguments
       # Prioritize selected variant media if available
       assign main_media = product.featured_media
       
-      if is_ajax
-          if product.selected_or_first_available_variant.featured_media
-             assign main_media = product.selected_or_first_available_variant.featured_media
-          elsif product.selected_or_first_available_variant
-             # If selected variant has no specific media assigned, try to find one in the gallery
-             assign v_id = product.selected_or_first_available_variant.id
-             for media in product.media
-                if media.variants.size > 0
-                    for v in media.variants
-                        if v.id == v_id
-                            assign main_media = media
-                            break
-                        endif
-                    endfor
-                endif
-                if main_media.id != product.featured_media.id
-                    break
-                endif
-             endfor
-          endif
-      endif
-      
-      assign preview_image = main_media.preview_image
-    -%}
+     {% assign main_media = product.selected_or_first_available_variant.featured_media %}
+
+{% if main_media == blank and product.selected_or_first_available_variant %}
+  {% assign v_id = product.selected_or_first_available_variant.id %}
+
+  {% for media in product.media %}
+    {% if media.variants.size > 0 %}
+      {% for v in media.variants %}
+        {% if v.id == v_id %}
+          {% assign main_media = media %}
+          {% break %}
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+
+    {% if main_media != blank %}
+      {% break %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
+{% if main_media == blank %}
+  {% assign main_media = product.featured_media %}
+{% endif %}
 
     <div class="grid__item-image-wrapper" data-original="{{ preview_image | img_url: '600x' }}">
       <div class="grid-product__image-mask">
