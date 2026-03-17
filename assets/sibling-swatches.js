@@ -79,10 +79,12 @@ function initSiblingSwatches() {
           const newCard = div.querySelector('.grid-product');
 
           if(newCard) {
-             // --- AGGRESSIVE CLEANUP: Remove PBIOH elements before injection ---
+             // 1. CLEANUP: Remove PBIOH elements
              newCard.querySelectorAll('.pbioh-hidden, .pbioh-second, [class*="pbioh"], .lazyload.pbioh-hidden').forEach(el => el.remove());
 
-             // Pre-process images to avoid lazyload fade-in
+             // 2. IMAGE PRELOADING LOGIC
+             // We want to force load the main image before swapping content to avoid white flash.
+             // We also want to bypass lazyloading for this initial display.
              const images = newCard.querySelectorAll('img');
              const cardWidth = card.offsetWidth || 540;
              let bestWidth = '540';
@@ -90,40 +92,81 @@ function initSiblingSwatches() {
              if (cardWidth > 720) bestWidth = '900';
              if (cardWidth > 900) bestWidth = '1080';
 
+             const imagePromises = [];
+
              images.forEach(img => {
-                // Determine source
                 let srcTemplate = img.getAttribute('data-src');
                 if (srcTemplate) {
                    const finalSrc = srcTemplate.replace('{width}', bestWidth);
+                   // Prepare the DOM element for instant display
                    img.setAttribute('src', finalSrc);
                    img.classList.remove('lazyload');
                    img.classList.add('lazyloaded');
                    img.style.opacity = '1';
                    img.style.transition = 'none';
+
+                   // Create a promise that resolves when the image is naturally loaded
+                   const p = new Promise((resolve) => {
+                       const tempImg = new Image();
+                       tempImg.onload = resolve;
+                       tempImg.onerror = resolve; // Continue even if error
+                       tempImg.src = finalSrc;
+                   });
+                   imagePromises.push(p);
                 }
              });
 
-             // 1. Replace the innerHTML of the card
-             card.innerHTML = newCard.innerHTML;
+             // Wait for images to load (with a 2s timeout just in case)
+             const timeout = new Promise(resolve => setTimeout(resolve, 2000));
              
-             // 2. Update the card wrapper attributes (crucial specifically for data-product-id)
-             if (newCard.className) card.className = newCard.className;
-             if (newCard.getAttribute('data-product-id')) card.setAttribute('data-product-id', newCard.getAttribute('data-product-id'));
-             if (newCard.getAttribute('data-product-handle')) card.setAttribute('data-product-handle', newCard.getAttribute('data-product-handle'));
-             
-             // 3. Re-initialize swatches
-             initSiblingSwatches();
-             
-             // 4. Important: Trigger lazysizes check if available
-             if (window.lazySizes) {
-               window.lazySizes.loader.checkElems();
-             }
+             Promise.race([Promise.all(imagePromises), timeout]).then(() => {
+                 // 3. SWAP CONTENT
+                 card.innerHTML = newCard.innerHTML;
+                 
+                 // 4. UPDATE ATTRIBUTES
+                 if (newCard.className) card.className = newCard.className;
+                 if (newCard.getAttribute('data-product-id')) card.setAttribute('data-product-id', newCard.getAttribute('data-product-id'));
+                 if (newCard.getAttribute('data-product-handle')) card.setAttribute('data-product-handle', newCard.getAttribute('data-product-handle'));
+                 
+                 // 5. RE-INITIALIZE SWATCHES
+                 initSiblingSwatches();
+                 
+                 // 6. RE-INITIALIZE "ADD TO CART" (AJAX CART)
+                 if (window.theme && window.theme.initQuickAdd) {
+                     // We need to re-init just this button or all. 
+                     // Since initQuickAdd replaces elements, it's safe to run globally.
+                     window.theme.initQuickAdd();
+                 }
+                 
+                 // 7. TRIGGER LAZYSIZES
+                 if (window.lazySizes) {
+                   window.lazySizes.loader.checkElems();
+                 }
+
+                 // 8. FINAL CLEANUP
+                 card.classList.remove('sibling-loading');
+                 card.style.opacity = '1';
+                 card.style.pointerEvents = 'auto';
+                 const existingSpinner = card.querySelector('.grid-product__spinner');
+                 if(existingSpinner) existingSpinner.remove();
+             });
+          } else {
+             // Fallback if no card found
+             card.classList.remove('sibling-loading');
+             card.style.opacity = '1';
+             card.style.pointerEvents = 'auto';
+             const existingSpinner = card.querySelector('.grid-product__spinner');
+             if(existingSpinner) existingSpinner.remove();
           }
-          
-          // Cleanup loading state
+        })
+        .catch(err => {
+          console.error('Sibling Swatch Error:', err);
           card.classList.remove('sibling-loading');
           card.style.opacity = '1';
           card.style.pointerEvents = 'auto';
+          const existingSpinner = card.querySelector('.grid-product__spinner');
+          if(existingSpinner) existingSpinner.remove();
+        });
         })
         .catch(err => {
           console.error('Sibling Swatch Error:', err);
