@@ -13,7 +13,7 @@ function initSiblingSwatches() {
       e.stopPropagation();
 
       const card = this.closest('.grid-product');
-      if (!card || card.classList.contains('loading')) return;
+      if (!card || card.classList.contains('sibling-loading')) return;
       
       // Inject Spinner Styles if not present
       if (!document.getElementById('sibling-swatch-spinner-style')) {
@@ -35,8 +35,9 @@ function initSiblingSwatches() {
               border-radius: 50%;
               animation: sibling-spin 0.6s linear infinite;
               z-index: 20;
-              margin-left: -30px;
-              margin-top: -30px;
+              margin: 0;
+              transform-origin: center;
+              transform: translate(-50%, -50%);
               color: var(--colorTextBody, #000);
            }
          `;
@@ -58,7 +59,7 @@ function initSiblingSwatches() {
          imageWrapper.appendChild(spinner);
       }
       
-      card.classList.add('loading');
+      card.classList.add('sibling-loading');
       card.style.opacity = '0.6';
       card.style.pointerEvents = 'none';
       card.style.transition = 'opacity 0.2s';
@@ -120,13 +121,13 @@ function initSiblingSwatches() {
           }
           
           // Cleanup loading state
-          card.classList.remove('loading');
+          card.classList.remove('sibling-loading');
           card.style.opacity = '1';
           card.style.pointerEvents = 'auto';
         })
         .catch(err => {
           console.error('Sibling Swatch Error:', err);
-          card.classList.remove('loading');
+          card.classList.remove('sibling-loading');
           card.style.opacity = '1';
           card.style.pointerEvents = 'auto';
           const existingSpinner = card.querySelector('.grid-product__spinner');
