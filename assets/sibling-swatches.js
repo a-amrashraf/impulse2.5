@@ -133,23 +133,47 @@ document.addEventListener('DOMContentLoaded', function() {
             const newCard = div.querySelector('.product-card') || div.querySelector('.grid-product');
 
             if(newCard) {
-               // Update Secondary Image Immediately (Before Preload/Insert)
-               // This prevents a flash of the wrong secondary image if Liquid rendered the default one
-               // Also disable lazy loading so it doesn't revert to the wrong image
+               // --- CRITICAL FIX START ---
+               // Do NOT blind-overwrite the secondary image with dataset.siblingHoverImage which might be wrong.
+               // Instead, trust the server-rendered secondary image if it exists, disable lazy-load on it, and preload it.
+               
                const hoverImg = newCard.querySelector('.grid-product__secondary-image img');
-               if (hoverImg && this.dataset.siblingHoverImage) {
-                   const newHoverSrc = this.dataset.siblingHoverImage;
-                   hoverImg.src = newHoverSrc;
-                   hoverImg.srcset = newHoverSrc;
-                   hoverImg.setAttribute('data-src', newHoverSrc);
-                   hoverImg.setAttribute('data-srcset', newHoverSrc);
-                   hoverImg.classList.remove('lazyload');
-                   hoverImg.classList.add('lazyloaded');
-                   hoverImg.style.opacity = '1';
-                   hoverImg.style.transition = 'none';
-               }
+               let secondaryPromises = []; // To track secondary image preload
 
-               // Image Preloading Logic
+               if (hoverImg) {
+                   // If server rendered a secondary image, respect it.
+                   // Disable lazy load to prevent flicker/reversion
+                   let hoverSrc = hoverImg.getAttribute('data-src') || hoverImg.src; // Prefer data-src (high res)
+                   if (hoverSrc && hoverSrc.includes('{width}')) {
+                        // Replace width if needed, or just let lazysizes handle it? 
+                        // Better to force a specific size for immediate display
+                        let targetWidth = (window.innerWidth >= 768) ? '720' : '540';
+                        hoverSrc = hoverSrc.replace('{width}', targetWidth);
+                   }
+                   
+                   if (hoverSrc) {
+                       // Update the img tag immediately so it's ready upon insertion
+                       hoverImg.src = hoverSrc;
+                       hoverImg.srcset = hoverSrc;
+                       hoverImg.setAttribute('data-src', hoverSrc); // Sync attributes
+                       hoverImg.setAttribute('data-srcset', hoverSrc);
+                       hoverImg.classList.remove('lazyload');
+                       hoverImg.classList.add('lazyloaded');
+                       hoverImg.style.opacity = '1';
+                       hoverImg.style.transition = 'none';
+
+                       // Preload separately
+                       secondaryPromises.push(new Promise(resolve => {
+                           const tempHover = new Image();
+                           tempHover.onload = resolve;
+                           tempHover.onerror = resolve;
+                           tempHover.src = hoverSrc;
+                       }));
+                   }
+               }
+               // --- CRITICAL FIX END ---
+
+               // Image Preloading Logic (Main Image)
                const newImg = newCard.querySelector('.product-image') || newCard.querySelector('.grid-product__image') || newCard.querySelector('img');
                let preloadPromise = Promise.resolve();
  
@@ -182,17 +206,12 @@ document.addEventListener('DOMContentLoaded', function() {
                            tempImg.src = src;
                        });
                    }
-
-                   // Also preload the secondary hover image to avoid flash
-                   if (this.dataset.siblingHoverImage) {
-                       const tempHover = new Image();
-                       tempHover.src = this.dataset.siblingHoverImage;
-                   }
                }
                
                // Timeout Check
                const timeoutPromise = new Promise(resolve => setTimeout(resolve, 3000));
-
+               
+               // Wait for Main Image to load (Secondary is good-to-have but prioritized less)
                Promise.race([preloadPromise, timeoutPromise]).then(() => {
                   // Replace Card
                   card.replaceWith(newCard);
