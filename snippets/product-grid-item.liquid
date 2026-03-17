@@ -248,9 +248,11 @@ Arguments
                   -%}
 
                   {%- if variant.image -%}
+                    {% comment %}
                     <div
                       class="grid-product__color-image grid-product__color-image--{{ variant.id }} small--hide">
                     </div>
+                    {% endcomment %}
                   {%- endif -%}
                 {%- endunless -%}
               {%- endfor -%}

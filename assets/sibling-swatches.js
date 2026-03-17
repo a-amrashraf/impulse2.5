@@ -16,7 +16,14 @@ document.addEventListener('DOMContentLoaded', function() {
         // Retrieve the actual image (try .product-image first, fallback to standard classes)
         const image = card.querySelector('.product-image') || card.querySelector('.grid-product__image') || card.querySelector('img');
         
+        // Validate Image Wrapper
         if (!imageWrapper || !image) return;
+
+        // Ensure data-original is correct on load
+        if (!imageWrapper.dataset.original) {
+             // If not set by Liquid, set it now from current src
+             imageWrapper.dataset.original = image.currentSrc || image.src;
+        }
 
         // 2. Get Swatches
         const swatches = card.querySelectorAll('.swatch');
@@ -27,8 +34,11 @@ document.addEventListener('DOMContentLoaded', function() {
         const activeSwatch = card.querySelector('.swatch.is-active, .swatch.active');
         if (activeSwatch && activeSwatch.dataset.image) {
              const newSrc = activeSwatch.dataset.image;
-             image.src = newSrc;
-             image.srcset = newSrc;
+             // Only update if different to avoid reloading
+             if (image.src !== newSrc && !image.src.includes(newSrc)) {
+                 image.src = newSrc;
+                 image.srcset = newSrc;
+             }
         }
 
         // 4. Attach Event Listeners
@@ -69,7 +79,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const card = this.closest('.product-card, .grid-product');
         if (!card || card.classList.contains('loading')) return;
         
-        // Inject Spinner Styles if missing
+        // Inject Spinner Styles
         if (!document.getElementById('sibling-swatch-spinner-style')) {
            const style = document.createElement('style');
            style.id = 'sibling-swatch-spinner-style';
@@ -133,50 +143,16 @@ document.addEventListener('DOMContentLoaded', function() {
             const newCard = div.querySelector('.product-card') || div.querySelector('.grid-product');
 
             if(newCard) {
-               // --- CRITICAL FIX START ---
-               // Do NOT blind-overwrite the secondary image with dataset.siblingHoverImage which might be wrong.
-               // Instead, trust the server-rendered secondary image if it exists, disable lazy-load on it, and preload it.
-               
-               const hoverImg = newCard.querySelector('.grid-product__secondary-image img');
-               let secondaryPromises = []; // To track secondary image preload
+               // --- CLEANUP ---
+               newCard.querySelectorAll('.grid-product__color-image').forEach(el => el.remove());
 
-               if (hoverImg) {
-                   // If server rendered a secondary image, respect it.
-                   // Disable lazy load to prevent flicker/reversion
-                   let hoverSrc = hoverImg.getAttribute('data-src') || hoverImg.src; // Prefer data-src (high res)
-                   if (hoverSrc && hoverSrc.includes('{width}')) {
-                        // Replace width if needed, or just let lazysizes handle it? 
-                        // Better to force a specific size for immediate display
-                        let targetWidth = (window.innerWidth >= 768) ? '720' : '540';
-                        hoverSrc = hoverSrc.replace('{width}', targetWidth);
-                   }
-                   
-                   if (hoverSrc) {
-                       // Update the img tag immediately so it's ready upon insertion
-                       hoverImg.src = hoverSrc;
-                       hoverImg.srcset = hoverSrc;
-                       hoverImg.setAttribute('data-src', hoverSrc); // Sync attributes
-                       hoverImg.setAttribute('data-srcset', hoverSrc);
-                       hoverImg.classList.remove('lazyload');
-                       hoverImg.classList.add('lazyloaded');
-                       hoverImg.style.opacity = '1';
-                       hoverImg.style.transition = 'none';
-
-                       // Preload separately
-                       secondaryPromises.push(new Promise(resolve => {
-                           const tempHover = new Image();
-                           tempHover.onload = resolve;
-                           tempHover.onerror = resolve;
-                           tempHover.src = hoverSrc;
-                       }));
-                   }
-               }
-               // --- CRITICAL FIX END ---
-
-               // Image Preloading Logic (Main Image)
+               // --- PRELOAD SETUP ---
                const newImg = newCard.querySelector('.product-image') || newCard.querySelector('.grid-product__image') || newCard.querySelector('img');
-               let preloadPromise = Promise.resolve();
- 
+               const hoverImg = newCard.querySelector('.grid-product__secondary-image img');
+               
+               let mainImagePromise = Promise.resolve();
+               
+               // 1. Prepare Main Image
                if (newImg) {
                    let targetWidth = '540';
                    if (window.innerWidth >= 768) targetWidth = '720'; 
@@ -189,41 +165,72 @@ document.addEventListener('DOMContentLoaded', function() {
                    }
                    
                    if (src) {
-                       preloadPromise = new Promise(resolve => {
-                           // Eagerly preload main image
+                       // Force src immediately
+                       newImg.src = src;
+                       newImg.srcset = src;
+                       newImg.setAttribute('data-src', src);
+                       
+                       // Remove lazyload classes to prevent theme JS from hiding it
+                       newImg.classList.remove('lazyload');
+                       newImg.classList.add('lazyloaded');
+                       
+                       // Create promise
+                       mainImagePromise = new Promise(resolve => {
                            const tempImg = new Image();
-                           tempImg.onload = () => {
-                               newImg.src = src;
-                               newImg.srcset = src;
-                               newImg.classList.remove('lazyload');
-                               newImg.classList.add('lazyloaded');
-                               newImg.style.opacity = '1';
-                               newImg.style.transition = 'none';
-                               newImg.setAttribute('data-src', src);
-                               resolve();
-                           };
-                           tempImg.onerror = () => { resolve(); };
+                           tempImg.onload = () => resolve();
+                           tempImg.onerror = () => resolve(); // Proceed even if error
                            tempImg.src = src;
                        });
                    }
                }
                
-               // Timeout Check
-               const timeoutPromise = new Promise(resolve => setTimeout(resolve, 3000));
+               // 2. Prepare Hover Image (if exists)
+               if (hoverImg) {
+                   let hoverSrc = hoverImg.getAttribute('data-src') || hoverImg.src;
+                   if (hoverSrc && hoverSrc.includes('{width}')) {
+                        let targetWidth = (window.innerWidth >= 768) ? '720' : '540';
+                        hoverSrc = hoverSrc.replace('{width}', targetWidth);
+                   }
+                   if (hoverSrc) {
+                       hoverImg.src = hoverSrc;
+                       hoverImg.srcset = hoverSrc;
+                       hoverImg.setAttribute('data-src', hoverSrc);
+                       hoverImg.classList.remove('lazyload');
+                       hoverImg.classList.add('lazyloaded');
+                       // Preload in background (no promise wait needed for this one to show card)
+                       const tempHover = new Image();
+                       tempHover.src = hoverSrc;
+                   }
+               }
+
+               // 3. Wait for Main Image & Swap
+               // Use a longer timeout just in case, but usually image loads fast from cache
+               const timeoutPromise = new Promise(resolve => setTimeout(resolve, 4000));
                
-               // Wait for Main Image to load (Secondary is good-to-have but prioritized less)
-               Promise.race([preloadPromise, timeoutPromise]).then(() => {
-                  // Replace Card
-                  card.replaceWith(newCard);
-                  newCard.classList.remove('loading');
-                  newCard.style.opacity = '1';
-                  newCard.style.pointerEvents = 'auto';
+               Promise.race([mainImagePromise, timeoutPromise]).then(() => {
                   
+                  // Hide new card initially to prevent layout thrashing/white flash
+                  newCard.style.opacity = '0';
+                  
+                  // Swap
+                  card.replaceWith(newCard);
+                  
+                  // Force Reflow
+                  void newCard.offsetWidth;
+                  
+                  // Reveal
+                  requestAnimationFrame(() => {
+                      newCard.classList.remove('loading');
+                      newCard.style.transition = 'opacity 0.3s ease';
+                      newCard.style.opacity = '1';
+                      newCard.style.pointerEvents = 'auto';
+                  });
+
                   // Re-initialize scripts
                   initSiblingSwatches(); 
-                  initSwatchHover(); // Re-run hover logic for the new card
+                  initSwatchHover(); 
 
-                  // Re-trigger theme scripts if available
+                  // Re-trigger theme scripts
                   if (window.theme) {
                      if(theme.initQuickShop) theme.initQuickShop();
                      if(theme.initQuickAdd) theme.initQuickAdd();
