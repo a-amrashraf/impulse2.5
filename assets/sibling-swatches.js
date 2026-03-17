@@ -1,69 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
   
   /**
-   * Initializes hover effects for all swatches within product cards.
-   * Scoped to each card to prevent global selector issues.
-   */
-  function initSwatchHover(scope) {
-     const container = scope && scope.querySelectorAll ? scope : document;
-     const cards = container.querySelectorAll('.product-card:not(.hover-init-done)');
-     
-     cards.forEach(card => {
-        card.classList.add('hover-init-done');
-        
-        // 1. Get Image Elements
-        const imageWrapper = card.querySelector('.grid__item-image-wrapper');
-        // Retrieve the actual image (try .product-image first, fallback to standard classes)
-        const image = card.querySelector('.product-image') || card.querySelector('.grid-product__image') || card.querySelector('img');
-        
-        // Validate Image Wrapper
-        if (!imageWrapper || !image) return;
-
-        // Ensure data-original is correct on load
-        if (!imageWrapper.dataset.original) {
-             // If not set by Liquid, set it now from current src
-             imageWrapper.dataset.original = image.currentSrc || image.src;
-        }
-
-        // 2. Get Swatches
-        const swatches = card.querySelectorAll('.swatch');
-        if (swatches.length === 0) return;
-
-        // 3. Handle Active State on Load
-        // If a swatch is active (e.g. selected variant/sibling), set that image immediately.
-        const activeSwatch = card.querySelector('.swatch.is-active, .swatch.active');
-        if (activeSwatch && activeSwatch.dataset.image) {
-             const newSrc = activeSwatch.dataset.image;
-             // Only update if different to avoid reloading
-             if (image.src !== newSrc && !image.src.includes(newSrc)) {
-                 image.src = newSrc;
-                 image.srcset = newSrc;
-             }
-        }
-
-        // 4. Attach Event Listeners
-        swatches.forEach(swatch => {
-             swatch.addEventListener('mouseenter', function() {
-                 const newSrc = this.dataset.image;
-                 if (newSrc) {
-                     image.src = newSrc;
-                     image.srcset = newSrc; 
-                 }
-             });
-             
-             swatch.addEventListener('mouseleave', function() {
-                 // Restore from data-original on the wrapper
-                 const originalSrc = imageWrapper.dataset.original;
-                 if (originalSrc) {
-                     image.src = originalSrc;
-                     image.srcset = originalSrc;
-                 }
-             });
-        });
-     });
-  }
-
-  /**
    * Initializes Sibling Swatch AJAX Logic (Click to Swap)
    */
   function initSiblingSwatches() {
@@ -197,19 +134,18 @@ document.addEventListener('DOMContentLoaded', function() {
                        hoverImg.setAttribute('data-src', hoverSrc);
                        hoverImg.classList.remove('lazyload');
                        hoverImg.classList.add('lazyloaded');
-                       // Preload in background (no promise wait needed for this one to show card)
+                       // Preload in background
                        const tempHover = new Image();
                        tempHover.src = hoverSrc;
                    }
                }
 
                // 3. Wait for Main Image & Swap
-               // Use a longer timeout just in case, but usually image loads fast from cache
                const timeoutPromise = new Promise(resolve => setTimeout(resolve, 4000));
                
                Promise.race([mainImagePromise, timeoutPromise]).then(() => {
                   
-                  // Hide new card initially to prevent layout thrashing/white flash
+                  // Hide new card initially
                   newCard.style.opacity = '0';
                   
                   // Swap
@@ -228,7 +164,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
                   // Re-initialize scripts
                   initSiblingSwatches(); 
-                  initSwatchHover(); 
 
                   // Re-trigger theme scripts
                   if (window.theme) {
@@ -254,11 +189,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Initialize on Load
   initSiblingSwatches();
-  initSwatchHover();
   
   // Initialize on Customizer Load
   document.addEventListener('shopify:section:load', function() {
     initSiblingSwatches();
-    initSwatchHover();
   });
 });

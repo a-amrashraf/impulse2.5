@@ -156,53 +156,52 @@ Arguments
           {%- liquid
              assign second_image = blank
              
-             # Only try to find a second image if this is an AJAX request (swatch clicked)
-             # Otherwise, stick to main image only for initial load
              if is_ajax
-
-             for v in main_media.variants
-                assign main_variant_ids = main_variant_ids | append: v.id | append: ","
-             endfor
-             
-             assign start_index = main_media.position
-             
-             for media in product.media offset: start_index
-                 if media.media_type != 'image'
-                    continue
-                 endif
+                 # AJAX Request: Find strictly matched variant image
+                 for v in main_media.variants
+                    assign main_variant_ids = main_variant_ids | append: v.id | append: ","
+                 endfor
                  
-                 assign is_match = false
+                 assign start_index = main_media.position
                  
-                 if main_variant_ids != ""
-                     # Main image is tied to variants. Find next image sharing a variant.
-                     if media.variants.size > 0
-                        for v in media.variants
-                           assign v_id = v.id | append: ","
-                           if main_variant_ids contains v_id
-                               assign is_match = true
-                               break
-                           endif
-                        endfor
+                 for media in product.media offset: start_index
+                     if media.media_type != 'image'
+                        continue
+                     endif
+                     
+                     assign is_match = false
+                     
+                     if main_variant_ids != ""
+                         # Main image is tied to variants. Find next image sharing a variant.
+                         if media.variants.size > 0
+                            for v in media.variants
+                               assign v_id = v.id | append: ","
+                               if main_variant_ids contains v_id
+                                   assign is_match = true
+                                   break
+                               endif
+                            endfor
+                         else
+                            # Candidate is generic. Match.
+                            assign is_match = true
+                         endif
                      else
-                        # Candidate is generic. If main is specific, maybe generic is okay? 
-                        # Or strictly require specific? Let's check user intent.
-                        # Usually "Red Front" -> "Red Back" (Specific -> Specific).
-                        # "Red Front" -> "Dimensions" (Specific -> Generic) is often acceptable.
-                        assign is_match = true
+                         # Main image is generic. Match only generic.
+                         if media.variants.size == 0
+                            assign is_match = true
+                         endif
                      endif
-                 else
-                     # Main image is generic. 
-                     # Only accept generic next image to avoid showing "Blue" backing for "Generic" front.
-                     if media.variants.size == 0
-                        assign is_match = true
+                     
+                     if is_match
+                        assign second_image = media.preview_image
+                        break
                      endif
+                 endfor
+             else
+                 # Initial Load: Standard Behavior (Use 2nd media item)
+                 if product.media[1].media_type == 'image'
+                    assign second_image = product.media[1].preview_image
                  endif
-                 
-                 if is_match
-                    assign second_image = media.preview_image
-                    break
-                 endif
-             endfor
              endif
           -%}
           
