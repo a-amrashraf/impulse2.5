@@ -29,14 +29,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 position: absolute;
                 top: 50%;
                 left: 50%;
-                width: 30px;
-                height: 30px;
-                border: 2px solid rgba(0,0,0,0.1);
-                border-top: 2px solid #000;
+                width: 40px;
+                height: 40px;
+                background-color: rgba(255, 255, 255, 0.5);
+                border: 4px solid rgba(0,0,0,0.1);
+                border-top: 4px solid #000;
                 border-radius: 50%;
-                animation: sibling-spin 0.8s linear infinite;
+                animation: sibling-spin 0.6s linear infinite;
                 z-index: 20;
                 transform: translate(-50%, -50%);
+                box-shadow: 0 0 5px rgba(0,0,0,0.2);
              }
            `;
            document.head.appendChild(style);
