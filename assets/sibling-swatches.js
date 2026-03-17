@@ -78,6 +78,30 @@ function initSiblingSwatches() {
           const newCard = div.querySelector('.grid-product');
 
           if(newCard) {
+             // --- AGGRESSIVE CLEANUP: Remove PBIOH elements before injection ---
+             newCard.querySelectorAll('.pbioh-hidden, .pbioh-second, [class*="pbioh"], .lazyload.pbioh-hidden').forEach(el => el.remove());
+
+             // Pre-process images to avoid lazyload fade-in
+             const images = newCard.querySelectorAll('img');
+             const cardWidth = card.offsetWidth || 540;
+             let bestWidth = '540';
+             if (cardWidth > 540) bestWidth = '720';
+             if (cardWidth > 720) bestWidth = '900';
+             if (cardWidth > 900) bestWidth = '1080';
+
+             images.forEach(img => {
+                // Determine source
+                let srcTemplate = img.getAttribute('data-src');
+                if (srcTemplate) {
+                   const finalSrc = srcTemplate.replace('{width}', bestWidth);
+                   img.setAttribute('src', finalSrc);
+                   img.classList.remove('lazyload');
+                   img.classList.add('lazyloaded');
+                   img.style.opacity = '1';
+                   img.style.transition = 'none';
+                }
+             });
+
              // 1. Replace the innerHTML of the card
              card.innerHTML = newCard.innerHTML;
              
