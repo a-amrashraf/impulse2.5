@@ -133,6 +133,22 @@ document.addEventListener('DOMContentLoaded', function() {
             const newCard = div.querySelector('.product-card') || div.querySelector('.grid-product');
 
             if(newCard) {
+               // Update Secondary Image Immediately (Before Preload/Insert)
+               // This prevents a flash of the wrong secondary image if Liquid rendered the default one
+               // Also disable lazy loading so it doesn't revert to the wrong image
+               const hoverImg = newCard.querySelector('.grid-product__secondary-image img');
+               if (hoverImg && this.dataset.siblingHoverImage) {
+                   const newHoverSrc = this.dataset.siblingHoverImage;
+                   hoverImg.src = newHoverSrc;
+                   hoverImg.srcset = newHoverSrc;
+                   hoverImg.setAttribute('data-src', newHoverSrc);
+                   hoverImg.setAttribute('data-srcset', newHoverSrc);
+                   hoverImg.classList.remove('lazyload');
+                   hoverImg.classList.add('lazyloaded');
+                   hoverImg.style.opacity = '1';
+                   hoverImg.style.transition = 'none';
+               }
+
                // Image Preloading Logic
                const newImg = newCard.querySelector('.product-image') || newCard.querySelector('.grid-product__image') || newCard.querySelector('img');
                let preloadPromise = Promise.resolve();
@@ -150,6 +166,7 @@ document.addEventListener('DOMContentLoaded', function() {
                    
                    if (src) {
                        preloadPromise = new Promise(resolve => {
+                           // Eagerly preload main image
                            const tempImg = new Image();
                            tempImg.onload = () => {
                                newImg.src = src;
@@ -164,6 +181,12 @@ document.addEventListener('DOMContentLoaded', function() {
                            tempImg.onerror = () => { resolve(); };
                            tempImg.src = src;
                        });
+                   }
+
+                   // Also preload the secondary hover image to avoid flash
+                   if (this.dataset.siblingHoverImage) {
+                       const tempHover = new Image();
+                       tempHover.src = this.dataset.siblingHoverImage;
                    }
                }
                
