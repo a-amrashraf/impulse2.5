@@ -5693,6 +5693,8 @@ theme.recentlyViewed = {
     }
   
     colorSwatchHovering() {
+      // Swatch hover disabled to fix image swapping issues
+      /*
       this.swatches.forEach(swatch => {
         swatch.addEventListener('mouseenter', function() {
           this.setActiveColorImage(swatch);
@@ -5707,6 +5709,7 @@ theme.recentlyViewed = {
           this.removeActiveColorImage(swatch);
         }.bind(this));
       });
+      */
     }
   
     setActiveColorImage(swatch) {
@@ -6101,6 +6104,8 @@ theme.recentlyViewed = {
     }
   
     _colorSwatchHovering() {
+      // Swatch hover disabled to fix image swapping issues
+      /*
       this.colorSwatches.forEach(swatch => {
         swatch.addEventListener('mouseenter', function() {
           this._setActiveColorImage(swatch);
@@ -6115,6 +6120,7 @@ theme.recentlyViewed = {
           this._removeActiveColorImage(swatch);
         }.bind(this));
       });
+      */
     }
   
     _setActiveColorImage(swatch) {
@@ -6573,6 +6579,8 @@ theme.recentlyViewed = {
       },
   
       colorSwatchHovering: function() {
+        // Swatch hover disabled to fix image swapping issues
+        /*
         var colorImages = this.container.querySelectorAll(selectors.colorSwatchImage);
         if (!colorImages.length) {
           return;
@@ -6591,6 +6599,7 @@ theme.recentlyViewed = {
             this.container.querySelector('.grid-product__color-image--' + id).classList.remove('is-active');
           });
         });
+        */
       },
   
       /*====================
