@@ -25,37 +25,30 @@ function initSiblingSwatches() {
               100% { transform: translate(-50%, -50%) rotate(360deg); }
            }
            .grid-product__spinner {
-              position: absolute;
+              position: fixed;
               top: 50%;
               left: 50%;
-              width: 30px;
-              height: 30px;
-              border: 3px solid rgba(0,0,0,0.1);
-              border-top: 3px solid currentColor;
+              width: 60px;
+              height: 60px;
+              border: 5px solid rgba(0,0,0,0.1);
+              border-top: 5px solid currentColor;
               border-radius: 50%;
               animation: sibling-spin 0.6s linear infinite;
-              z-index: 20;
-              margin-left: -15px;
-              margin-top: -15px;
+              z-index: 99999;
+              transform: translate(-50%, -50%);
               color: var(--colorTextBody, #000);
+              pointer-events: none;
            }
          `;
          document.head.appendChild(style);
       }
 
-      // Add Spinner
-      let spinner = card.querySelector('.grid-product__spinner');
+      // Add Spinner (Global)
+      let spinner = document.querySelector('.grid-product__spinner');
       if (!spinner) {
          spinner = document.createElement('div');
          spinner.className = 'grid-product__spinner';
-         // Try to append to image wrapper for better positioning
-         const imageWrapper = card.querySelector('.grid-product__image-mask') || card.querySelector('.grid__item-image-wrapper') || card;
-         
-         // Ensure relative positioning for spinner
-         if(getComputedStyle(imageWrapper).position === 'static') {
-            imageWrapper.style.position = 'relative'; 
-         }
-         imageWrapper.appendChild(spinner);
+         document.body.appendChild(spinner);
       }
       
       card.classList.add('loading');
@@ -123,13 +116,15 @@ function initSiblingSwatches() {
           card.classList.remove('loading');
           card.style.opacity = '1';
           card.style.pointerEvents = 'auto';
+          const existingSpinner = document.querySelector('.grid-product__spinner');
+          if(existingSpinner) existingSpinner.remove();
         })
         .catch(err => {
           console.error('Sibling Swatch Error:', err);
           card.classList.remove('loading');
           card.style.opacity = '1';
           card.style.pointerEvents = 'auto';
-          const existingSpinner = card.querySelector('.grid-product__spinner');
+          const existingSpinner = document.querySelector('.grid-product__spinner');
           if(existingSpinner) existingSpinner.remove();
         });
     });
