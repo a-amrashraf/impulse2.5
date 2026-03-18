@@ -4,42 +4,44 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function initTouchHover() { 
-  // Prevent duplicate listeners
-  if (window.touchHoverInitialized) return;
-  window.touchHoverInitialized = true;
+  // Global touchstart listener (Event Delegation with Capture)
+  // Check for existing listener to avoid duplicates if calling init multiple times
+  if (window._touchHoverActive) return;
+  window._touchHoverActive = true;
 
-  // Global touchstart listener (Event Delegation)
   document.addEventListener('touchstart', function(e) {
     const card = e.target.closest('.grid-product');
     if (!card) return;
 
-    // 1. Clear any stuck states from other cards immediately
-    // This handles edge cases where a previous touchcancel might have been missed
-    const stuckCards = document.querySelectorAll('.is-touch-hover');
-    stuckCards.forEach(c => c.classList.remove('is-touch-hover'));
+    // 1. Clear any OTHER open cards immediately to prevent multiple active states
+    document.querySelectorAll('.is-touch-hover').forEach(el => {
+      if (el !== card) el.classList.remove('is-touch-hover');
+    });
 
-    // 2. Set strict delay to distinguish tap vs scroll (150ms)
-    // If user flicks fast, 'touchend' fires before this timer, canceling the effect.
+    // 2. Set delay to distinguish tap from scroll (and prevent accidental triggers)
+    // 50ms is very fast but enough to filter micro-touches
     const timer = setTimeout(() => {
       card.classList.add('is-touch-hover');
-    }, 150);
+    }, 50);
 
     // 3. Define cleanup (Reset state on release)
     const clearHover = () => {
-      clearTimeout(timer); // Cancel the show if it hasn't happened yet (fast scroll)
-      card.classList.remove('is-touch-hover'); // Hide image if it was shown
+      clearTimeout(timer);
+      // Optional: Add small delay before hiding to make it feel less abrupt
+      setTimeout(() => {
+        card.classList.remove('is-touch-hover');
+      }, 50);
       
-      // Remove temporary listeners to keep DOM clean
       card.removeEventListener('touchend', clearHover);
-      card.removeEventListener('touchcancel', clearHover);
+      // We explicitly DO NOT listen to touchcancel here, 
+      // because we want the image to stay visible if the browser takes over for scrolling.
     };
 
-    // 4. Attach cleanup to this specific interaction
-    // 'touchcancel' is crucial for detecting when the browser takes over (e.g. big scroll)
+    // 4. Attach cleanup
+    // We only listen for touchend to hide it when the user lets go (even after scroll if browser supports it)
     card.addEventListener('touchend', clearHover, { passive: true });
-    card.addEventListener('touchcancel', clearHover, { passive: true });
-
-  }, { passive: true });
+    
+  }, { passive: true, capture: true }); // Capture ensures we see it even if other scripts stop propagation
 }
 
 function initSiblingSwatches() {
