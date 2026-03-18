@@ -91,6 +91,13 @@
         appImg.style.pointerEvents = '';
         appImg.style.display = '';
       }
+      var mainImg = card.querySelector('.product-image.image-element');
+      if (mainImg) {
+        mainImg.style.opacity = '';
+        mainImg.style.zIndex = '';
+        mainImg.style.pointerEvents = '';
+        mainImg.style.display = '';
+      }
     }
 
     function clearAllCards(exceptCard) {
@@ -123,6 +130,14 @@
         appImg.style.zIndex = '0';
         appImg.style.pointerEvents = 'none';
         appImg.style.display = 'none';
+      }
+      // Fade out main product image
+      var mainImg = card.querySelector('.product-image.image-element');
+      if (mainImg) {
+        mainImg.style.opacity = '0';
+        mainImg.style.zIndex = '0';
+        mainImg.style.pointerEvents = 'none';
+        mainImg.style.display = '';
       }
     }
 
