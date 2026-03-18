@@ -11,7 +11,7 @@
     var SECONDARY_IMAGE_SELECTOR = '.grid-product__secondary-image img';
     var ACTIVE_CLASSES = ['show-second', 'active', 'is-touch-hover'];
     var ACTIVE_SELECTOR = '.show-second, .active, .is-touch-hover';
-    var IGNORED_SELECTOR = '.sibling-swatch, .swatch, .grid-product__quick-add, .grid-product__quick-add-btn, .quick-product__btn, .js-ajax-add-to-cart';
+    var IGNORED_SELECTOR = '.sibling-swatch, .swatch, .grid-product__quick-add, .grid-product__quick-add-btn, .quick-product__btn, .js-ajax-add-to-cart, .swatch-option, .swatch__item, .swatch__input, .swatch__label';
 
     var isMobileTouch = (
       'ontouchstart' in window ||
@@ -35,7 +35,12 @@
     }
 
     function isIgnoredTarget(el) {
-      return !!(el && el.closest && el.closest(IGNORED_SELECTOR));
+      // Only ignore if the target IS or IS INSIDE a swatch/quick add element.
+      if (!el || !el.closest) return false;
+      var ignored = el.closest(IGNORED_SELECTOR);
+      // If the ignored element is inside a product card, but not the main link/image, ignore preview logic.
+      if (ignored) return true;
+      return false;
     }
 
     function resolveEventTarget(event) {
@@ -103,20 +108,20 @@
       var target = resolveEventTarget(event);
       if (!target || !target.closest) return;
 
-      var card = target.closest(CARD_SELECTOR);
+      // Do not interfere with swatches/quick add controls.
+      if (isIgnoredTarget(target)) return;
 
+      var card = target.closest(CARD_SELECTOR);
       // Outside any card: reset state.
       if (!card) {
         clearAllCards();
         return;
       }
 
-      // Do not interfere with swatches/quick add controls.
-      if (isIgnoredTarget(target)) return;
-
-      // We only intercept taps related to the product link area.
-      var link = target.closest(LINK_SELECTOR) || card.querySelector(LINK_SELECTOR);
-      if (!link) {
+      // Only trigger preview for taps on main product image or link.
+      var link = target.closest(LINK_SELECTOR);
+      var mainImage = target.closest('.grid-product__image') || card.querySelector('.grid-product__image');
+      if (!link && !mainImage) {
         clearAllCards(card);
         return;
       }
@@ -184,8 +189,10 @@
       var card = target.closest(CARD_SELECTOR);
       if (!card) return;
 
-      var link = target.closest(LINK_SELECTOR) || card.querySelector(LINK_SELECTOR);
-      if (!link) return;
+      // Only trigger preview for taps on main product image or link.
+      var link = target.closest(LINK_SELECTOR);
+      var mainImage = target.closest('.grid-product__image') || card.querySelector('.grid-product__image');
+      if (!link && !mainImage) return;
       if (!preloadSecondaryImage(card)) return;
 
       if (!isCardActive(card)) {
@@ -199,7 +206,7 @@
       event.preventDefault();
       clearCardState(card);
       lastTouchHandledAt = Date.now();
-      if (link.href) {
+      if (link && link.href) {
         window.location.assign(link.href);
       }
     }, { passive: false, capture: true });
