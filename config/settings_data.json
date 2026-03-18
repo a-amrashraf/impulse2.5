@@ -123,11 +123,6 @@
         "disabled": false,
         "settings": {}
       },
-      "3869478966488610803": {
-        "type": "shopify://apps/bisell-upsell/blocks/app-embed/0be6eb92-28a2-4372-b8a6-4a6094b3c651",
-        "disabled": false,
-        "settings": {}
-      },
       "3347912604202854125": {
         "type": "shopify://apps/bundlesuite/blocks/cart_included/ec3fca7a-00ff-426d-ac7c-5f640fb4c8a4",
         "disabled": false,
@@ -157,7 +152,7 @@
       },
       "17433512874017181462": {
         "type": "shopify://apps/sb-product-image-hover-effect/blocks/change-image-onhover/b034e4b7-6270-41c0-8990-91db36b7a4b5",
-        "disabled": true,
+        "disabled": false,
         "settings": {}
       }
     }
