@@ -5,43 +5,37 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function initTouchHover() { 
   // Global touchstart listener (Event Delegation with Capture)
-  // Check for existing listener to avoid duplicates if calling init multiple times
   if (window._touchHoverActive) return;
   window._touchHoverActive = true;
 
   document.addEventListener('touchstart', function(e) {
+    // IGNORE SWATCHES: If touching a swatch, do nothing (let click handler work)
+    if (e.target.closest('.sibling-swatch')) return;
+
     const card = e.target.closest('.grid-product');
     if (!card) return;
 
-    // 1. Clear any OTHER open cards immediately to prevent multiple active states
+    // 1. Clear any OTHER open cards
     document.querySelectorAll('.is-touch-hover').forEach(el => {
       if (el !== card) el.classList.remove('is-touch-hover');
     });
 
-    // 2. Set delay to distinguish tap from scroll (and prevent accidental triggers)
-    // 50ms is very fast but enough to filter micro-touches
-    const timer = setTimeout(() => {
-      card.classList.add('is-touch-hover');
-    }, 50);
+    // 2. IMMEDIATE triggering for responsiveness
+    card.classList.add('is-touch-hover');
 
     // 3. Define cleanup (Reset state on release)
     const clearHover = () => {
-      clearTimeout(timer);
-      // Optional: Add small delay before hiding to make it feel less abrupt
       setTimeout(() => {
         card.classList.remove('is-touch-hover');
-      }, 50);
+      }, 250); 
       
       card.removeEventListener('touchend', clearHover);
-      // We explicitly DO NOT listen to touchcancel here, 
-      // because we want the image to stay visible if the browser takes over for scrolling.
     };
 
     // 4. Attach cleanup
-    // We only listen for touchend to hide it when the user lets go (even after scroll if browser supports it)
     card.addEventListener('touchend', clearHover, { passive: true });
     
-  }, { passive: true, capture: true }); // Capture ensures we see it even if other scripts stop propagation
+  }, { passive: true, capture: true }); 
 }
 
 function initSiblingSwatches() {
@@ -53,6 +47,8 @@ function initSiblingSwatches() {
   swatches.forEach(swatch => {
     swatch.classList.add('init-done');
     
+              
+    swatch.addEventListener('touchstart', function(e) { e.stopPropagation(); }, {passive: true});
     swatch.addEventListener('click', function(e) {
       e.preventDefault();
       e.stopPropagation();
