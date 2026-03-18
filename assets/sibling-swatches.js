@@ -8,22 +8,37 @@ function initTouchHover() {
   if (window.touchHoverInitialized) return;
   window.touchHoverInitialized = true;
 
-  // Use event delegation for dynamic content support
+  // Global touchstart listener (Event Delegation)
   document.addEventListener('touchstart', function(e) {
-    // Check if we touched inside a product card
     const card = e.target.closest('.grid-product');
-    
-    // Clear hover effect from other cards
-    document.querySelectorAll('.is-touch-hover').forEach(el => {
-      if (!card || el !== card) {
-        el.classList.remove('is-touch-hover');
-      }
-    });
+    if (!card) return;
 
-    // Apply hover effect to the touched card
-    if (card) {
+    // 1. Clear any stuck states from other cards immediately
+    // This handles edge cases where a previous touchcancel might have been missed
+    const stuckCards = document.querySelectorAll('.is-touch-hover');
+    stuckCards.forEach(c => c.classList.remove('is-touch-hover'));
+
+    // 2. Set strict delay to distinguish tap vs scroll (150ms)
+    // If user flicks fast, 'touchend' fires before this timer, canceling the effect.
+    const timer = setTimeout(() => {
       card.classList.add('is-touch-hover');
-    }
+    }, 150);
+
+    // 3. Define cleanup (Reset state on release)
+    const clearHover = () => {
+      clearTimeout(timer); // Cancel the show if it hasn't happened yet (fast scroll)
+      card.classList.remove('is-touch-hover'); // Hide image if it was shown
+      
+      // Remove temporary listeners to keep DOM clean
+      card.removeEventListener('touchend', clearHover);
+      card.removeEventListener('touchcancel', clearHover);
+    };
+
+    // 4. Attach cleanup to this specific interaction
+    // 'touchcancel' is crucial for detecting when the browser takes over (e.g. big scroll)
+    card.addEventListener('touchend', clearHover, { passive: true });
+    card.addEventListener('touchcancel', clearHover, { passive: true });
+
   }, { passive: true });
 }
 
