@@ -13319,3 +13319,9 @@ label,.h5,
 .grid-product .aos-animate[data-aos=image-fade-in] .grid-product__secondary-image {
   animation: none !important;
 }
+
+/* Remove homepage pop-in effect caused by AOS image fade */
+.template-index .aos-animate[data-aos=image-fade-in] .image-element {
+  animation: none !important;
+  transform: none !important;
+}

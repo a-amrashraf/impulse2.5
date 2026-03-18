@@ -6,7 +6,11 @@
     if (window._productCardTouchPreviewInit) return;
     window._productCardTouchPreviewInit = true;
 
-    var isMobileTouch = window.matchMedia && window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+    var isMobileTouch = (
+      'ontouchstart' in window ||
+      (navigator.maxTouchPoints && navigator.maxTouchPoints > 0) ||
+      (window.matchMedia && window.matchMedia('(hover: none) and (pointer: coarse)').matches)
+    );
     if (!isMobileTouch) return;
 
     var activeCard = null;
@@ -76,7 +80,8 @@
       clearActiveCard();
     }, { passive: true });
 
-    // If user taps another card area (non-link), make only that card active.
+    // Preload second image on touch start, but do NOT activate here.
+    // Activation must happen on first link tap to preserve first-tap preview behavior.
     document.addEventListener('touchstart', function(event) {
       var target = event.target;
       if (!target || !target.closest) return;
@@ -84,8 +89,7 @@
 
       var card = target.closest('.grid-product');
       if (!card) return;
-      if (!preloadSecondaryImage(card)) return;
-      setCardActive(card);
+      preloadSecondaryImage(card);
     }, { passive: true, capture: true });
   }
 
