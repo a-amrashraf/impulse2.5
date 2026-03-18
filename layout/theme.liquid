@@ -117,8 +117,11 @@
     </div>
   </div>
 
-  {%- liquid
-    render 'video-modal'
+
+  <!-- Added Mobile Hover Logic -->
+  <script src="{{ 'mobile-hover.js' | asset_url }}" defer="defer"></script>
+
+  {%- render 'video-modal'
     render 'photoswipe-template'
     render 'tool-tip'
   -%}

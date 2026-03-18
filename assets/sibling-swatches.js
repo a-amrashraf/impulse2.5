@@ -4,56 +4,8 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function initTouchHover() { 
-  // Global touchstart listener (Event Delegation with Capture)
-  if (window._touchHoverActive) return;
-  window._touchHoverActive = true;
-
-  document.addEventListener('touchstart', function(e) {
-    // IGNORE SWATCHES: If touching a swatch, do nothing (let click handler work)
-    if (e.target.closest('.sibling-swatch')) return;
-
-    const card = e.target.closest('.grid-product');
-    if (!card) return;
-
-    // 1. Clear any OTHER open cards
-    document.querySelectorAll('.is-touch-hover').forEach(el => {
-      if (el !== card) el.classList.remove('is-touch-hover');
-    });
-
-    // 2. IMMEDIATE triggering for responsiveness
-    // Force image loading if lazy (crucial for mobile networks)
-    const secondImgWrapper = card.querySelector('.grid-product__secondary-image');
-    if (secondImgWrapper) {
-      const img = secondImgWrapper.querySelector('img');
-      if (img) {
-         // Fix for Impulse Theme / Shopify Image Tag
-         if(img.loading === 'lazy') img.loading = 'eager';
-         
-         // If using srcset, we need to ensure browser picks one immediately
-         if (img.srcset && img.sizes === 'auto') {
-             img.sizes = '50vw'; // Give hint to browser
-         }
-         
-         // Force repaint/check
-         img.style.opacity = '1'; 
-      }
-    }
-    
-    card.classList.add('is-touch-hover');
-
-    // 3. Define cleanup (Reset state on release)
-    const clearHover = () => {
-      setTimeout(() => {
-        card.classList.remove('is-touch-hover');
-      }, 250); 
-      
-      card.removeEventListener('touchend', clearHover);
-    };
-
-    // 4. Attach cleanup
-    card.addEventListener('touchend', clearHover, { passive: true });
-    
-  }, { passive: true, capture: true }); 
+  // Disable old implementation to avoid conflicts with new mobile-hover.js
+  return;
 }
 
 function initSiblingSwatches() {
