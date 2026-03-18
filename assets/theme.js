@@ -43,6 +43,14 @@ theme.recentlyViewed = {
 (function(){
   'use strict';
 
+// Delete all elements with class 'pbioh-hidden pbioh-second lazyload' from the DOM on page load for a permanent fix.
+document.addEventListener('DOMContentLoaded', function() {
+  var appImgs = document.querySelectorAll('.pbioh-hidden.pbioh-second.lazyload');
+  appImgs.forEach(function(img) {
+    img.parentNode && img.parentNode.removeChild(img);
+  });
+});
+
   theme.delegate = {
     on: function(event, callback, options){
       if( !this.namespaces ) // save the namespaces on the DOM element itself
