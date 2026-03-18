@@ -22,6 +22,13 @@
 
     document.documentElement.classList.add('mobile-touch-preview-ready');
 
+    var allowNextClickCard = null;
+    var allowNextClickUntil = 0;
+    var touchStartX = 0;
+    var touchStartY = 0;
+    var touchMoved = false;
+    var TOUCH_MOVE_THRESHOLD = 10;
+
     function isPlainPrimaryClick(event) {
       // Keep analytics and modified-click behavior intact.
       var isPrimary = (event.button == null || event.button === 0);
@@ -41,7 +48,9 @@
 
     function clearCardState(card) {
       if (!card) return;
-      card.classList.remove.apply(card.classList, ACTIVE_CLASSES);
+      for (var i = 0; i < ACTIVE_CLASSES.length; i++) {
+        card.classList.remove(ACTIVE_CLASSES[i]);
+      }
       card.removeAttribute('data-touch-preview-active');
     }
 
@@ -55,7 +64,9 @@
 
     function activateCard(card) {
       clearAllCards(card);
-      card.classList.add.apply(card.classList, ACTIVE_CLASSES);
+      for (var i = 0; i < ACTIVE_CLASSES.length; i++) {
+        card.classList.add(ACTIVE_CLASSES[i]);
+      }
       card.setAttribute('data-touch-preview-active', '1');
     }
 
@@ -91,6 +102,13 @@
         return;
       }
 
+      // If touchend already marked this as a "second tap navigate", allow native click.
+      if (allowNextClickCard === card && Date.now() < allowNextClickUntil) {
+        allowNextClickCard = null;
+        allowNextClickUntil = 0;
+        return;
+      }
+
       // No second image: keep native navigation.
       if (!preloadSecondaryImage(card)) {
         clearAllCards(card);
@@ -119,11 +137,56 @@
       if (!target || !target.closest) return;
       if (isIgnoredTarget(target)) return;
 
+      if (event.touches && event.touches.length) {
+        touchStartX = event.touches[0].clientX;
+        touchStartY = event.touches[0].clientY;
+        touchMoved = false;
+      }
+
       var card = target.closest(CARD_SELECTOR);
       if (!card) return;
 
       preloadSecondaryImage(card);
     }, { passive: true, capture: true });
+
+    document.addEventListener('touchmove', function(event) {
+      if (!event.touches || !event.touches.length) return;
+
+      var dx = Math.abs(event.touches[0].clientX - touchStartX);
+      var dy = Math.abs(event.touches[0].clientY - touchStartY);
+      if (dx > TOUCH_MOVE_THRESHOLD || dy > TOUCH_MOVE_THRESHOLD) {
+        touchMoved = true;
+      }
+    }, { passive: true, capture: true });
+
+    // Fallback for browsers/devices with inconsistent click timing:
+    // - first tap on link: preview and block navigation
+    // - second tap on same card: mark next click to navigate
+    document.addEventListener('touchend', function(event) {
+      if (touchMoved) return;
+
+      var target = event.target;
+      if (!target || !target.closest) return;
+      if (isIgnoredTarget(target)) return;
+
+      var card = target.closest(CARD_SELECTOR);
+      if (!card) return;
+
+      var link = target.closest(LINK_SELECTOR) || card.querySelector(LINK_SELECTOR);
+      if (!link) return;
+      if (!preloadSecondaryImage(card)) return;
+
+      if (!isCardActive(card)) {
+        event.preventDefault();
+        activateCard(card);
+        return;
+      }
+
+      // Second tap: allow navigation by bypassing first-tap prevent logic once.
+      clearCardState(card);
+      allowNextClickCard = card;
+      allowNextClickUntil = Date.now() + 600;
+    }, { passive: false, capture: true });
   }
 
   if (document.readyState === 'loading') {
