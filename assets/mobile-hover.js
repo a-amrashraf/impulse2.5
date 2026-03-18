@@ -6,7 +6,11 @@
     if (window._productCardTouchPreviewInit) return;
     window._productCardTouchPreviewInit = true;
 
+    var CARD_SELECTOR = '.grid-product';
+    var LINK_SELECTOR = '.grid-product__link[href]';
+    var SECONDARY_IMAGE_SELECTOR = '.grid-product__secondary-image img';
     var ACTIVE_CLASSES = ['show-second', 'active', 'is-touch-hover'];
+    var ACTIVE_SELECTOR = '.show-second, .active, .is-touch-hover';
     var IGNORED_SELECTOR = '.sibling-swatch, .swatch, .grid-product__quick-add, .grid-product__quick-add-btn, .quick-product__btn, .js-ajax-add-to-cart';
 
     var isMobileTouch = (
@@ -18,23 +22,10 @@
 
     document.documentElement.classList.add('mobile-touch-preview-ready');
 
-    var activeCard = null;
-    var touchStartX = 0;
-    var touchStartY = 0;
-    var touchMoved = false;
-    var TOUCH_MOVE_THRESHOLD = 10;
-
     function isPlainPrimaryClick(event) {
-      // Mobile synthetic clicks may have undefined button in some browsers.
-      // Allow undefined/null and only reject explicit non-left clicks.
+      // Keep analytics and modified-click behavior intact.
       var isPrimary = (event.button == null || event.button === 0);
       return isPrimary && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey;
-    }
-
-    function pruneStaleActiveCard() {
-      if (activeCard && !document.contains(activeCard)) {
-        activeCard = null;
-      }
     }
 
     function isIgnoredTarget(el) {
@@ -42,29 +33,34 @@
     }
 
     function preloadSecondaryImage(card) {
-      var second = card.querySelector('.grid-product__secondary-image img');
+      var second = card.querySelector(SECONDARY_IMAGE_SELECTOR);
       if (!second) return false;
       if (second.loading === 'lazy') second.loading = 'eager';
       return true;
     }
 
-    function setCardActive(card) {
+    function clearCardState(card) {
       if (!card) return;
-      pruneStaleActiveCard();
-
-      if (activeCard && activeCard !== card) {
-        activeCard.classList.remove.apply(activeCard.classList, ACTIVE_CLASSES);
-      }
-
-      card.classList.add.apply(card.classList, ACTIVE_CLASSES);
-      activeCard = card;
+      card.classList.remove.apply(card.classList, ACTIVE_CLASSES);
+      card.removeAttribute('data-touch-preview-active');
     }
 
-    function clearActiveCard() {
-      pruneStaleActiveCard();
-      if (!activeCard) return;
-      activeCard.classList.remove.apply(activeCard.classList, ACTIVE_CLASSES);
-      activeCard = null;
+    function clearAllCards(exceptCard) {
+      var activeNodes = document.querySelectorAll(CARD_SELECTOR + ACTIVE_SELECTOR);
+      for (var i = 0; i < activeNodes.length; i++) {
+        if (exceptCard && activeNodes[i] === exceptCard) continue;
+        clearCardState(activeNodes[i]);
+      }
+    }
+
+    function activateCard(card) {
+      clearAllCards(card);
+      card.classList.add.apply(card.classList, ACTIVE_CLASSES);
+      card.setAttribute('data-touch-preview-active', '1');
+    }
+
+    function isCardActive(card) {
+      return card && card.getAttribute('data-touch-preview-active') === '1';
     }
 
     // Single delegated click handler:
@@ -77,98 +73,57 @@
       var target = event.target;
       if (!target || !target.closest) return;
 
-      pruneStaleActiveCard();
+      var card = target.closest(CARD_SELECTOR);
 
-      var card = target.closest('.grid-product');
-
-      // Tap outside product cards: reset any preview state.
+      // Outside any card: reset state.
       if (!card) {
-        clearActiveCard();
+        clearAllCards();
         return;
       }
 
-      // Ignore controls that should keep their own behavior.
+      // Do not interfere with swatches/quick add controls.
       if (isIgnoredTarget(target)) return;
 
-      // Intercept card taps for preview/navigation flow.
-      // Some themes use overlay links where the tapped DOM node is not always a child of the link.
-      var link = target.closest('.grid-product__link') || card.querySelector('.grid-product__link[href]');
-      if (!link) return;
+      // We only intercept taps related to the product link area.
+      var link = target.closest(LINK_SELECTOR) || card.querySelector(LINK_SELECTOR);
+      if (!link) {
+        clearAllCards(card);
+        return;
+      }
 
-      // If no secondary image exists, keep normal navigation.
+      // No second image: keep native navigation.
       if (!preloadSecondaryImage(card)) {
-        if (activeCard && activeCard !== card) {
-          clearActiveCard();
-        }
+        clearAllCards(card);
         return;
       }
 
-      // First tap on a non-active card: preview only.
-      if (activeCard !== card) {
+      // First tap on this card = preview only.
+      if (!isCardActive(card)) {
         event.preventDefault();
-        setCardActive(card);
+        activateCard(card);
         return;
       }
 
-      // Second tap on same active card: allow normal navigation.
-      clearActiveCard();
+      // Second tap on same active card = allow navigation.
+      clearCardState(card);
     }, true);
 
-    // Reset on scroll to avoid stuck states.
+    // Reset on scroll to avoid stuck previews.
     window.addEventListener('scroll', function() {
-      clearActiveCard();
+      clearAllCards();
     }, { passive: true });
 
-    // Preload second image on touch start, but do NOT activate here.
-    // Activation must happen on first link tap to preserve first-tap preview behavior.
+    // Preload second image as early as possible on touch start.
     document.addEventListener('touchstart', function(event) {
       var target = event.target;
       if (!target || !target.closest) return;
       if (isIgnoredTarget(target)) return;
 
-      if (event.touches && event.touches.length) {
-        touchStartX = event.touches[0].clientX;
-        touchStartY = event.touches[0].clientY;
-        touchMoved = false;
-      }
-
-      var card = target.closest('.grid-product');
+      var card = target.closest(CARD_SELECTOR);
       if (!card) return;
+
       preloadSecondaryImage(card);
     }, { passive: true, capture: true });
-
-    document.addEventListener('touchmove', function(event) {
-      if (!event.touches || !event.touches.length) return;
-
-      var dx = Math.abs(event.touches[0].clientX - touchStartX);
-      var dy = Math.abs(event.touches[0].clientY - touchStartY);
-      if (dx > TOUCH_MOVE_THRESHOLD || dy > TOUCH_MOVE_THRESHOLD) {
-        touchMoved = true;
-      }
-    }, { passive: true, capture: true });
-
-    // Fallback: enforce first-tap preview on touch devices even when click timing is inconsistent.
-    document.addEventListener('touchend', function(event) {
-      if (touchMoved) return;
-
-      var target = event.target;
-      if (!target || !target.closest) return;
-      if (isIgnoredTarget(target)) return;
-
-      var card = target.closest('.grid-product');
-      if (!card) return;
-
-      var link = target.closest('.grid-product__link') || card.querySelector('.grid-product__link[href]');
-      if (!link) return;
-      if (!preloadSecondaryImage(card)) return;
-
-      // First tap preview: prevent immediate navigation.
-      if (activeCard !== card) {
-        event.preventDefault();
-        setCardActive(card);
-      }
-      // Second tap: do nothing here; click handler allows navigation.
-    }, { passive: false, capture: true });
   }
 
   if (document.readyState === 'loading') {
