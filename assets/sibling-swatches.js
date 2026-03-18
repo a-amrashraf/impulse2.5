@@ -26,12 +26,16 @@ function initTouchHover() {
     if (secondImgWrapper) {
       const img = secondImgWrapper.querySelector('img');
       if (img) {
+         // Fix for Impulse Theme / Shopify Image Tag
          if(img.loading === 'lazy') img.loading = 'eager';
-         if(img.getAttribute('data-src')) { // Handle lazysizes
-            img.setAttribute('src', img.getAttribute('data-src').replace('{width}', '540'));
-            img.classList.remove('lazyload');
-            img.classList.add('lazyloaded');
+         
+         // If using srcset, we need to ensure browser picks one immediately
+         if (img.srcset && img.sizes === 'auto') {
+             img.sizes = '50vw'; // Give hint to browser
          }
+         
+         // Force repaint/check
+         img.style.opacity = '1'; 
       }
     }
     
