@@ -18,9 +18,14 @@
       (navigator.maxTouchPoints && navigator.maxTouchPoints > 0) ||
       (window.matchMedia && window.matchMedia('(hover: none) and (pointer: coarse)').matches)
     );
-    if (!isMobileTouch) return;
+    console.log('[mobile-hover] isMobileTouch:', isMobileTouch);
+    if (!isMobileTouch) {
+      console.log('[mobile-hover] Not mobile touch, exiting.');
+      return;
+    }
 
     document.documentElement.classList.add('mobile-touch-preview-ready');
+    console.log('[mobile-hover] Script initialized, mobile-touch-preview-ready set.');
 
     var touchStartX = 0;
     var touchStartY = 0;
@@ -109,11 +114,15 @@
       if (!target || !target.closest) return;
 
       // Do not interfere with swatches/quick add controls.
-      if (isIgnoredTarget(target)) return;
+      if (isIgnoredTarget(target)) {
+        console.log('[mobile-hover] Click ignored: swatch/quick add control.');
+        return;
+      }
 
       var card = target.closest(CARD_SELECTOR);
       // Outside any card: reset state.
       if (!card) {
+        console.log('[mobile-hover] Click outside card, clearing all cards.');
         clearAllCards();
         return;
       }
@@ -122,24 +131,28 @@
       var link = target.closest(LINK_SELECTOR);
       var mainImage = target.closest('.grid-product__image') || card.querySelector('.grid-product__image');
       if (!link && !mainImage) {
+        console.log('[mobile-hover] Click not on main image/link, clearing card.');
         clearAllCards(card);
         return;
       }
 
       // No second image: keep native navigation.
       if (!preloadSecondaryImage(card)) {
+        console.log('[mobile-hover] No secondary image, clearing card.');
         clearAllCards(card);
         return;
       }
 
       // First tap on this card = preview only.
       if (!isCardActive(card)) {
+        console.log('[mobile-hover] First tap, activating preview for card:', card);
         event.preventDefault();
         activateCard(card);
         return;
       }
 
       // Second tap on same active card = allow navigation.
+      console.log('[mobile-hover] Second tap, clearing card state.');
       clearCardState(card);
     }, true);
 
@@ -180,22 +193,38 @@
     // - first tap on link: preview and block navigation
     // - second tap on same card: mark next click to navigate
     document.addEventListener('touchend', function(event) {
-      if (touchMoved) return;
+      if (touchMoved) {
+        console.log('[mobile-hover] Touch moved, not a tap.');
+        return;
+      }
 
       var target = resolveEventTarget(event);
       if (!target || !target.closest) return;
-      if (isIgnoredTarget(target)) return;
+      if (isIgnoredTarget(target)) {
+        console.log('[mobile-hover] Touchend ignored: swatch/quick add control.');
+        return;
+      }
 
       var card = target.closest(CARD_SELECTOR);
-      if (!card) return;
+      if (!card) {
+        console.log('[mobile-hover] Touchend not on card.');
+        return;
+      }
 
       // Only trigger preview for taps on main product image or link.
       var link = target.closest(LINK_SELECTOR);
       var mainImage = target.closest('.grid-product__image') || card.querySelector('.grid-product__image');
-      if (!link && !mainImage) return;
-      if (!preloadSecondaryImage(card)) return;
+      if (!link && !mainImage) {
+        console.log('[mobile-hover] Touchend not on main image/link.');
+        return;
+      }
+      if (!preloadSecondaryImage(card)) {
+        console.log('[mobile-hover] Touchend: no secondary image.');
+        return;
+      }
 
       if (!isCardActive(card)) {
+        console.log('[mobile-hover] Touchend: first tap, activating preview for card:', card);
         event.preventDefault();
         activateCard(card);
         lastTouchHandledAt = Date.now();
@@ -203,6 +232,7 @@
       }
 
       // Second tap: navigate directly for maximum device reliability.
+      console.log('[mobile-hover] Touchend: second tap, navigating.');
       event.preventDefault();
       clearCardState(card);
       lastTouchHandledAt = Date.now();
