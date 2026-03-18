@@ -13,14 +13,10 @@
     var ACTIVE_SELECTOR = '.show-second, .active, .is-touch-hover';
     var IGNORED_SELECTOR = '.sibling-swatch, .swatch, .grid-product__quick-add, .grid-product__quick-add-btn, .quick-product__btn, .js-ajax-add-to-cart, .swatch-option, .swatch__item, .swatch__input, .swatch__label';
 
-    var isMobileTouch = (
-      'ontouchstart' in window ||
-      (navigator.maxTouchPoints && navigator.maxTouchPoints > 0) ||
-      (window.matchMedia && window.matchMedia('(hover: none) and (pointer: coarse)').matches)
-    );
-    console.log('[mobile-hover] isMobileTouch:', isMobileTouch);
-    if (!isMobileTouch) {
-      console.log('[mobile-hover] Not mobile touch, exiting.');
+    var isTouchOnly = window.matchMedia && window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+    console.log('[mobile-hover] isTouchOnly:', isTouchOnly);
+    if (!isTouchOnly) {
+      console.log('[mobile-hover] Device supports hover or fine pointer, exiting.');
       return;
     }
 
