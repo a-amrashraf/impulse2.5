@@ -13229,6 +13229,13 @@ label,.h5,
 .grid-product__secondary-image {
   transition: opacity 0.2s ease-in-out;
   pointer-events: none; /* Ensure clicks pass through to the link */
+  
+  /* Ensure it covers the area */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
 }
 .grid-product {
   -webkit-touch-callout: none; /* Prevent context menu on long press */

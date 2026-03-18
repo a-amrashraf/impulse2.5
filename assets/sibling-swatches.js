@@ -21,6 +21,20 @@ function initTouchHover() {
     });
 
     // 2. IMMEDIATE triggering for responsiveness
+    // Force image loading if lazy (crucial for mobile networks)
+    const secondImgWrapper = card.querySelector('.grid-product__secondary-image');
+    if (secondImgWrapper) {
+      const img = secondImgWrapper.querySelector('img');
+      if (img) {
+         if(img.loading === 'lazy') img.loading = 'eager';
+         if(img.getAttribute('data-src')) { // Handle lazysizes
+            img.setAttribute('src', img.getAttribute('data-src').replace('{width}', '540'));
+            img.classList.remove('lazyload');
+            img.classList.add('lazyloaded');
+         }
+      }
+    }
+    
     card.classList.add('is-touch-hover');
 
     // 3. Define cleanup (Reset state on release)
