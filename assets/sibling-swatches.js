@@ -3,33 +3,35 @@ document.addEventListener('DOMContentLoaded', function() {
   initTouchHover();
 });
 
-function initTouchHover() {
-  const cards = document.querySelectorAll('.grid-product:not(.touch-init-done)');
-  cards.forEach(card => {
-    card.classList.add('touch-init-done');
+function initTouchHover() { 
+  // Prevent duplicate listeners
+  if (window.touchHoverInitialized) return;
+  window.touchHoverInitialized = true;
+
+  // Use event delegation for dynamic content support
+  document.addEventListener('touchstart', function(e) {
+    // Check if we touched inside a product card
+    const card = e.target.closest('.grid-product');
     
-    // Add touch start listener to show secondary image
-    card.addEventListener('touchstart', function() {
-      // Remove class from all other cards first (optional, but cleaner)
-      document.querySelectorAll('.is-touch-hover').forEach(el => el.classList.remove('is-touch-hover'));
-      this.classList.add('is-touch-hover');
-    }, { passive: true });
-    
-    // Add touch end/cancel listeners to hide secondary image
-    const endHandler = function() {
-      this.classList.remove('is-touch-hover');
-    };
-    
-    card.addEventListener('touchend', endHandler, { passive: true });
-    card.addEventListener('touchcancel', endHandler, { passive: true });
-  });
+    // Clear hover effect from other cards
+    document.querySelectorAll('.is-touch-hover').forEach(el => {
+      if (!card || el !== card) {
+        el.classList.remove('is-touch-hover');
+      }
+    });
+
+    // Apply hover effect to the touched card
+    if (card) {
+      card.classList.add('is-touch-hover');
+    }
+  }, { passive: true });
 }
 
 function initSiblingSwatches() {
   const swatches = document.querySelectorAll('.sibling-swatch:not(.init-done)');
   
-  // Re-run touch init for new elements (e.g. infinite scroll)
-  initTouchHover();
+  // We don't need to re-run initTouchHover here because it uses
+  // event delegation on the document, so it handles new elements automatically.
 
   swatches.forEach(swatch => {
     swatch.classList.add('init-done');

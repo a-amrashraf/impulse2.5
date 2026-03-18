@@ -13226,4 +13226,4 @@ label,.h5,
 }
 
 /* Force touch hover display */
-.is-touch-hover .grid-product__secondary-image { opacity: 1 !important; visibility: visible !important; }
+.is-touch-hover .grid-product__secondary-image { opacity: 1 !important; visibility: visible !important; display: block !important; z-index: 2 !important; }
