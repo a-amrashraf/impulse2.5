@@ -75,6 +75,22 @@
         card.classList.remove(ACTIVE_CLASSES[i]);
       }
       card.removeAttribute('data-touch-preview-active');
+
+      // Reset enforced styles
+      var secondary = card.querySelector('.grid-product__secondary-image');
+      if (secondary) {
+        secondary.style.opacity = '';
+        secondary.style.zIndex = '';
+        secondary.style.pointerEvents = '';
+        secondary.style.display = '';
+      }
+      var appImg = card.querySelector('.pbioh-hidden.pbioh-second.lazyload');
+      if (appImg) {
+        appImg.style.opacity = '';
+        appImg.style.zIndex = '';
+        appImg.style.pointerEvents = '';
+        appImg.style.display = '';
+      }
     }
 
     function clearAllCards(exceptCard) {
@@ -91,6 +107,23 @@
         card.classList.add(ACTIVE_CLASSES[i]);
       }
       card.setAttribute('data-touch-preview-active', '1');
+
+      // Enforce secondary image visibility and topmost layer
+      var secondary = card.querySelector('.grid-product__secondary-image');
+      if (secondary) {
+        secondary.style.opacity = '1';
+        secondary.style.zIndex = '99';
+        secondary.style.pointerEvents = 'auto';
+        secondary.style.display = '';
+      }
+      // Hide app-injected image
+      var appImg = card.querySelector('.pbioh-hidden.pbioh-second.lazyload');
+      if (appImg) {
+        appImg.style.opacity = '0';
+        appImg.style.zIndex = '0';
+        appImg.style.pointerEvents = 'none';
+        appImg.style.display = 'none';
+      }
     }
 
     function isCardActive(card) {
