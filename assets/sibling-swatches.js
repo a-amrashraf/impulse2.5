@@ -18,21 +18,19 @@ function initTouchHover() {
       if (el !== card) el.classList.remove('is-touch-hover');
     });
 
-    // 2. Set delay to distinguish tap from scroll (and prevent accidental triggers)
-    // 50ms is very fast but enough to filter micro-touches
-    const timer = setTimeout(() => {
-      card.classList.add('is-touch-hover');
-    }, 50);
+    // 2. IMMEDIATE triggering for responsiveness (removed start delay)
+    // This ensures even a quick swipe or scroll initiation shows the image
+    card.classList.add('is-touch-hover');
 
     // 3. Define cleanup (Reset state on release)
     const clearHover = () => {
-      clearTimeout(timer);
-      // Optional: Add small delay before hiding to make it feel less abrupt
+      // Add noticeable delay before hiding so user sees the effect even on quick taps
       setTimeout(() => {
         card.classList.remove('is-touch-hover');
-      }, 50);
+      }, 250); 
       
       card.removeEventListener('touchend', clearHover);
+    };
       // We explicitly DO NOT listen to touchcancel here, 
       // because we want the image to stay visible if the browser takes over for scrolling.
     };
