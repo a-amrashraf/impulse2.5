@@ -76,27 +76,32 @@
       }
       card.removeAttribute('data-touch-preview-active');
 
-      // Reset enforced styles
-      var secondary = card.querySelector('.grid-product__secondary-image');
-      if (secondary) {
-        secondary.style.opacity = '';
-        secondary.style.zIndex = '';
-        secondary.style.pointerEvents = '';
-        secondary.style.display = '';
-      }
-      var appImg = card.querySelector('.pbioh-hidden.pbioh-second.lazyload');
-      if (appImg) {
-        appImg.style.opacity = '';
-        appImg.style.zIndex = '';
-        appImg.style.pointerEvents = '';
-        appImg.style.display = '';
-      }
-      var mainImg = card.querySelector('.product-image.image-element');
-      if (mainImg) {
-        mainImg.style.opacity = '';
-        mainImg.style.zIndex = '';
-        mainImg.style.pointerEvents = '';
-        mainImg.style.display = '';
+      // Reset enforced styles using global function
+      if (window.resetProductCardPreview) {
+        window.resetProductCardPreview(card);
+      } else {
+        // fallback: remove styles manually
+        var secondary = card.querySelector('.grid-product__secondary-image');
+        if (secondary) {
+          secondary.style.opacity = '';
+          secondary.style.zIndex = '';
+          secondary.style.pointerEvents = '';
+          secondary.style.display = '';
+        }
+        var appImgs = card.querySelectorAll('.pbioh-hidden.pbioh-second.lazyload');
+        appImgs.forEach(function(img) {
+          img.style.opacity = '';
+          img.style.zIndex = '';
+          img.style.pointerEvents = '';
+          img.style.display = '';
+        });
+        var mainImg = card.querySelector('.product-image.image-element');
+        if (mainImg) {
+          mainImg.style.opacity = '';
+          mainImg.style.zIndex = '';
+          mainImg.style.pointerEvents = '';
+          mainImg.style.display = '';
+        }
       }
     }
 
@@ -115,29 +120,9 @@
       }
       card.setAttribute('data-touch-preview-active', '1');
 
-      // Enforce secondary image visibility and topmost layer
-      var secondary = card.querySelector('.grid-product__secondary-image');
-      if (secondary) {
-        secondary.style.opacity = '1';
-        secondary.style.zIndex = '99';
-        secondary.style.pointerEvents = 'auto';
-        secondary.style.display = '';
-      }
-      // Hide app-injected image
-      var appImg = card.querySelector('.pbioh-hidden.pbioh-second.lazyload');
-      if (appImg) {
-        appImg.style.opacity = '0';
-        appImg.style.zIndex = '0';
-        appImg.style.pointerEvents = 'none';
-        appImg.style.display = 'none';
-      }
-      // Fade out main product image
-      var mainImg = card.querySelector('.product-image.image-element');
-      if (mainImg) {
-        mainImg.style.opacity = '0';
-        mainImg.style.zIndex = '0';
-        mainImg.style.pointerEvents = 'none';
-        mainImg.style.display = '';
+      // Enforce image stacking using global function
+      if (window.enforceProductCardPreview) {
+        window.enforceProductCardPreview(card);
       }
     }
 
