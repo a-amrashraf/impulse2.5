@@ -13248,6 +13248,15 @@ label,.h5,
   pointer-events: none !important;
 }
 
+.grid-product.show-second .grid-product__secondary-image,
+.grid-product.active .grid-product__secondary-image {
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: block !important;
+  z-index: 3 !important;
+  pointer-events: none !important;
+}
+
 .grid-product__content.is-touch-hover .grid-product__secondary-image {
   opacity: 1 !important;
   visibility: visible !important;
@@ -13287,4 +13296,26 @@ label,.h5,
 .grid-product__secondary-image,
 .grid-product__secondary-image img {
   transition: opacity 0.2s ease-in-out !important;
+}
+
+/* Compatibility with app-like class naming */
+.secondary-image {
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.show-second .secondary-image,
+.active .secondary-image {
+  opacity: 1;
+}
+
+.grid-product .aos-animate[data-aos=image-fade-in] .image-element,
+.grid-product .aos-animate[data-aos=image-fade-in] .grid-product__image,
+.grid-product .aos-animate[data-aos=image-fade-in] .grid-product__secondary-image {
+  animation: none !important;
 }

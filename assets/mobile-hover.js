@@ -1,179 +1,48 @@
-// Mobile Touch Hover Logic for Product Cards
-// Shows the second image while the finger is down or swiping over a card.
+// Product card touch preview behavior:
+// - Desktop keeps native CSS hover
+// - Mobile uses first tap = preview, second tap = navigate
 (function() {
-  function initMobileTouchHover() {
-    if (window._mobileTouchHoverInited) return;
-    window._mobileTouchHoverInited = true;
+  function initProductCardTouchPreview() {
+    if (window._productCardTouchPreviewInit) return;
+    window._productCardTouchPreviewInit = true;
 
-    var HOLD_DELAY_MS = 0;
-    var MOVE_THRESHOLD_PX = 10;
-    var HIDE_DELAY_MS = 300;
-    var PREVIEW_WINDOW_MS = 1400;
-    var coarseTouch = window.matchMedia && window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+    var isMobileTouch = window.matchMedia && window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+    if (!isMobileTouch) return;
 
     var activeCard = null;
-    var startX = 0;
-    var startY = 0;
-    var moved = false;
-    var hoverTimer = null;
-    var lastPointerStartAt = 0;
 
-    function toElement(target) {
-      if (!target) return null;
-      if (target.nodeType === 1) return target;
-      return target.parentElement || null;
-    }
-
-    function isExcludedTarget(target) {
-      if (!target || !target.closest) return false;
-      return !!target.closest('.sibling-swatch, .swatch, .grid-product__quick-add, .grid-product__quick-add-btn, .quick-product__btn');
-    }
-
-    function clearOtherActiveCards(exceptCard) {
-      var openCards = document.querySelectorAll('.is-touch-hover');
-      for (var i = 0; i < openCards.length; i++) {
-        if (openCards[i] !== exceptCard) {
-          openCards[i].classList.remove('is-touch-hover');
-          var openContent = openCards[i].querySelector('.grid-product__content');
-          if (openContent) {
-            openContent.classList.remove('is-touch-hover');
-          }
-        }
-      }
+    function isIgnoredTarget(el) {
+      return !!(el && el.closest && el.closest('.sibling-swatch, .swatch, .grid-product__quick-add, .grid-product__quick-add-btn, .quick-product__btn, .js-ajax-add-to-cart'));
     }
 
     function preloadSecondaryImage(card) {
-      var secondaryWrapper = card.querySelector('.grid-product__secondary-image');
-      if (!secondaryWrapper) return false;
-
-      var img = secondaryWrapper.querySelector('img');
-      if (img) {
-        if (img.loading === 'lazy') img.loading = 'eager';
-
-        // If browser delayed src assignment, forcing src from currentSrc can kick paint.
-        if (!img.getAttribute('src') && img.currentSrc) {
-          img.setAttribute('src', img.currentSrc);
-        }
-      }
-
+      var second = card.querySelector('.grid-product__secondary-image img');
+      if (!second) return false;
+      if (second.loading === 'lazy') second.loading = 'eager';
       return true;
     }
 
-    function showHover(card) {
-      clearOtherActiveCards(card);
-      card.classList.add('is-touch-hover');
-      var content = card.querySelector('.grid-product__content');
-      if (content) {
-        content.classList.add('is-touch-hover');
-      }
-    }
-
-    function onStart(target, clientX, clientY) {
-      target = toElement(target);
-      if (!target) return;
-      if (isExcludedTarget(target)) return;
-
-      var card = target.closest('.grid-product');
+    function setCardActive(card) {
       if (!card) return;
-      if (!preloadSecondaryImage(card)) return;
+      if (activeCard && activeCard !== card) {
+        activeCard.classList.remove('show-second', 'active', 'is-touch-hover');
+      }
 
+      card.classList.add('show-second', 'active', 'is-touch-hover');
       activeCard = card;
-      startX = clientX;
-      startY = clientY;
-      moved = false;
-
-      clearTimeout(hoverTimer);
-      hoverTimer = setTimeout(function() {
-        if (activeCard) {
-          showHover(activeCard);
-        }
-      }, HOLD_DELAY_MS);
     }
 
-    function onMove(clientX, clientY) {
+    function clearActiveCard() {
       if (!activeCard) return;
-
-      var dx = Math.abs(clientX - startX);
-      var dy = Math.abs(clientY - startY);
-
-      if (dx > MOVE_THRESHOLD_PX || dy > MOVE_THRESHOLD_PX) {
-        moved = true;
-
-        // Swipe/scroll should still reveal second image quickly.
-        clearTimeout(hoverTimer);
-        showHover(activeCard);
-      }
-    }
-
-    function onEnd() {
-      clearTimeout(hoverTimer);
-
-      if (activeCard) {
-        var cardToClose = activeCard;
-        setTimeout(function() {
-          cardToClose.classList.remove('is-touch-hover');
-          var content = cardToClose.querySelector('.grid-product__content');
-          if (content) {
-            content.classList.remove('is-touch-hover');
-          }
-        }, HIDE_DELAY_MS);
-      }
-
+      activeCard.classList.remove('show-second', 'active', 'is-touch-hover');
       activeCard = null;
-      moved = false;
     }
 
-    // Pointer Events path (modern browsers)
-    document.addEventListener('pointerdown', function(e) {
-      if (e.pointerType !== 'touch') return;
-      lastPointerStartAt = Date.now();
-      onStart(e.target, e.clientX, e.clientY);
-    }, { passive: true, capture: true });
-
-    document.addEventListener('pointermove', function(e) {
-      if (e.pointerType !== 'touch') return;
-      onMove(e.clientX, e.clientY);
-    }, { passive: true, capture: true });
-
-    document.addEventListener('pointerup', function(e) {
-      if (e.pointerType !== 'touch') return;
-      onEnd();
-    }, { passive: true, capture: true });
-
-    document.addEventListener('pointercancel', function(e) {
-      if (e.pointerType !== 'touch') return;
-      onEnd();
-    }, { passive: true, capture: true });
-
-    // Touch Events path (always on for Safari/webview reliability).
-    // Ignore duplicated touchstart right after pointerdown.
-    document.addEventListener('touchstart', function(e) {
-      if (!e.touches || !e.touches.length) return;
-      if (Date.now() - lastPointerStartAt < 450) return;
-      onStart(e.target, e.touches[0].clientX, e.touches[0].clientY);
-    }, { passive: true, capture: true });
-
-    document.addEventListener('touchmove', function(e) {
-      if (!e.touches || !e.touches.length) return;
-      onMove(e.touches[0].clientX, e.touches[0].clientY);
-    }, { passive: true, capture: true });
-
-    document.addEventListener('touchend', function() {
-      onEnd();
-    }, { passive: true, capture: true });
-
-    document.addEventListener('touchcancel', function() {
-      onEnd();
-    }, { passive: true, capture: true });
-
-    // First tap previews image; second tap navigates.
-    // This prevents immediate navigation from hiding the hover effect.
-    document.addEventListener('click', function(e) {
-      if (!coarseTouch) return;
-
-      var target = toElement(e.target);
-      if (!target) return;
-      if (isExcludedTarget(target)) return;
+    // First tap on product link previews image, second tap navigates.
+    document.addEventListener('click', function(event) {
+      var target = event.target;
+      if (!target || !target.closest) return;
+      if (isIgnoredTarget(target)) return;
 
       var link = target.closest('.grid-product__link');
       if (!link) return;
@@ -182,32 +51,47 @@
       if (!card) return;
       if (!preloadSecondaryImage(card)) return;
 
-      var now = Date.now();
-      var ts = parseInt(card.getAttribute('data-touch-preview-ts') || '0', 10);
-      var recentPreview = ts && (now - ts) < PREVIEW_WINDOW_MS;
-
-      // First tap: preview only, prevent navigation.
-      if (!recentPreview) {
-        e.preventDefault();
-        e.stopPropagation();
-        showHover(card);
-        card.setAttribute('data-touch-preview-ts', String(now));
-
-        setTimeout(function() {
-          card.classList.remove('is-touch-hover');
-          var content = card.querySelector('.grid-product__content');
-          if (content) {
-            content.classList.remove('is-touch-hover');
-          }
-        }, 420);
+      // If this card is not active yet, this tap is a preview tap.
+      if (!card.classList.contains('active')) {
+        event.preventDefault();
+        event.stopPropagation();
+        setCardActive(card);
+        return;
       }
-      // Second tap within PREVIEW_WINDOW_MS is allowed to navigate naturally.
-    }, { capture: true });
+
+      // Active card + second tap: allow normal navigation.
+      clearActiveCard();
+    }, true);
+
+    // Tapping outside product cards resets preview state.
+    document.addEventListener('click', function(event) {
+      var target = event.target;
+      if (!target || !target.closest) return;
+      if (target.closest('.grid-product')) return;
+      clearActiveCard();
+    }, true);
+
+    // Reset on scroll to avoid stuck states.
+    window.addEventListener('scroll', function() {
+      clearActiveCard();
+    }, { passive: true });
+
+    // If user taps another card area (non-link), make only that card active.
+    document.addEventListener('touchstart', function(event) {
+      var target = event.target;
+      if (!target || !target.closest) return;
+      if (isIgnoredTarget(target)) return;
+
+      var card = target.closest('.grid-product');
+      if (!card) return;
+      if (!preloadSecondaryImage(card)) return;
+      setCardActive(card);
+    }, { passive: true, capture: true });
   }
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initMobileTouchHover);
+    document.addEventListener('DOMContentLoaded', initProductCardTouchPreview);
   } else {
-    initMobileTouchHover();
+    initProductCardTouchPreview();
   }
 })();
