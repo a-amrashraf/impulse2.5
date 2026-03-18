@@ -190,6 +190,63 @@ document.addEventListener("DOMContentLoaded", function () {
 }</style> {% endcomment %}
 
 
+
 {%- render 'quick-add-modal' -%}
+
+<script>
+  (function() {
+    // Aggressive Touch Hover Script (Injected directly into theme.liquid)
+    function initMobileHover() {
+      // Use capture phase to ensure we intercept events first
+      document.addEventListener('touchstart', function(e) {
+        // Find the closest product card
+        var card = e.target.closest('.grid-product');
+        if (!card) return;
+
+        // Force check if secondary image exists
+        var secondImg = card.querySelector('.grid-product__secondary-image');
+        if (!secondImg) return;
+
+        // 1. Reset all other cards
+        var allActive = document.querySelectorAll('.is-touch-hover');
+        for (var i = 0; i < allActive.length; i++) {
+          if (allActive[i] !== card) {
+            allActive[i].classList.remove('is-touch-hover');
+          }
+        }
+
+        // 2. Activate CURRENT card immediately
+        card.classList.add('is-touch-hover');
+
+        // 3. Force image loading if lazy (just in case)
+        var img = secondImg.querySelector('img');
+        if (img && img.loading === 'lazy') {
+          img.loading = 'eager'; // Force browser to load it
+        }
+
+        // 4. Handle release (hide after delay)
+        var hideHover = function() {
+          setTimeout(function() {
+            card.classList.remove('is-touch-hover');
+          }, 300); // 300ms delay for visibility
+          
+          card.removeEventListener('touchend', hideHover);
+        };
+
+        // We only listen for touchend. Scrolling (touchmove) keeps it visible.
+        card.addEventListener('touchend', hideHover, { passive: true });
+        
+      }, { passive: true, capture: true });
+    }
+
+    // Initialize immediately if ready, or on load
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initMobileHover);
+    } else {
+      initMobileHover();
+    }
+  })();
+</script>
+
 </body>
 </html>
