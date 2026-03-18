@@ -13248,6 +13248,22 @@ label,.h5,
   pointer-events: none !important;
 }
 
+.grid-product__content.is-touch-hover .grid-product__secondary-image {
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: block !important;
+  z-index: 3 !important;
+  pointer-events: none !important;
+}
+
+.grid-product__secondary-image {
+  z-index: 3 !important;
+}
+
+.grid-product__color-image {
+  z-index: 1 !important;
+}
+
 @media (hover: none) and (pointer: coarse) {
   .grid-product:active .grid-product__secondary-image,
   .grid-product__content:active .grid-product__secondary-image {
@@ -13256,4 +13272,19 @@ label,.h5,
     display: block !important;
     z-index: 2 !important;
   }
+}
+
+/* Remove pop/fade animation on product card images */
+.grid-product .image-element,
+.grid-product__image,
+.grid-product__secondary-image,
+.grid-product__secondary-image img,
+.grid-product__color-image {
+  animation: none !important;
+  transform: none !important;
+}
+
+.grid-product__secondary-image,
+.grid-product__secondary-image img {
+  transition: opacity 0.2s ease-in-out !important;
 }

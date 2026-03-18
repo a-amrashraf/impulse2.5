@@ -8,12 +8,15 @@
     var HOLD_DELAY_MS = 0;
     var MOVE_THRESHOLD_PX = 10;
     var HIDE_DELAY_MS = 300;
+    var PREVIEW_WINDOW_MS = 1400;
+    var coarseTouch = window.matchMedia && window.matchMedia('(hover: none) and (pointer: coarse)').matches;
 
     var activeCard = null;
     var startX = 0;
     var startY = 0;
     var moved = false;
     var hoverTimer = null;
+    var lastPointerStartAt = 0;
 
     function toElement(target) {
       if (!target) return null;
@@ -31,6 +34,10 @@
       for (var i = 0; i < openCards.length; i++) {
         if (openCards[i] !== exceptCard) {
           openCards[i].classList.remove('is-touch-hover');
+          var openContent = openCards[i].querySelector('.grid-product__content');
+          if (openContent) {
+            openContent.classList.remove('is-touch-hover');
+          }
         }
       }
     }
@@ -55,6 +62,10 @@
     function showHover(card) {
       clearOtherActiveCards(card);
       card.classList.add('is-touch-hover');
+      var content = card.querySelector('.grid-product__content');
+      if (content) {
+        content.classList.add('is-touch-hover');
+      }
     }
 
     function onStart(target, clientX, clientY) {
@@ -101,6 +112,10 @@
         var cardToClose = activeCard;
         setTimeout(function() {
           cardToClose.classList.remove('is-touch-hover');
+          var content = cardToClose.querySelector('.grid-product__content');
+          if (content) {
+            content.classList.remove('is-touch-hover');
+          }
         }, HIDE_DELAY_MS);
       }
 
@@ -111,6 +126,7 @@
     // Pointer Events path (modern browsers)
     document.addEventListener('pointerdown', function(e) {
       if (e.pointerType !== 'touch') return;
+      lastPointerStartAt = Date.now();
       onStart(e.target, e.clientX, e.clientY);
     }, { passive: true, capture: true });
 
@@ -129,26 +145,64 @@
       onEnd();
     }, { passive: true, capture: true });
 
-    // Touch Events fallback (older iOS/webviews without Pointer Events)
-    if (!window.PointerEvent) {
-      document.addEventListener('touchstart', function(e) {
-        if (!e.touches || !e.touches.length) return;
-        onStart(e.target, e.touches[0].clientX, e.touches[0].clientY);
-      }, { passive: true, capture: true });
+    // Touch Events path (always on for Safari/webview reliability).
+    // Ignore duplicated touchstart right after pointerdown.
+    document.addEventListener('touchstart', function(e) {
+      if (!e.touches || !e.touches.length) return;
+      if (Date.now() - lastPointerStartAt < 450) return;
+      onStart(e.target, e.touches[0].clientX, e.touches[0].clientY);
+    }, { passive: true, capture: true });
 
-      document.addEventListener('touchmove', function(e) {
-        if (!e.touches || !e.touches.length) return;
-        onMove(e.touches[0].clientX, e.touches[0].clientY);
-      }, { passive: true, capture: true });
+    document.addEventListener('touchmove', function(e) {
+      if (!e.touches || !e.touches.length) return;
+      onMove(e.touches[0].clientX, e.touches[0].clientY);
+    }, { passive: true, capture: true });
 
-      document.addEventListener('touchend', function() {
-        onEnd();
-      }, { passive: true, capture: true });
+    document.addEventListener('touchend', function() {
+      onEnd();
+    }, { passive: true, capture: true });
 
-      document.addEventListener('touchcancel', function() {
-        onEnd();
-      }, { passive: true, capture: true });
-    }
+    document.addEventListener('touchcancel', function() {
+      onEnd();
+    }, { passive: true, capture: true });
+
+    // First tap previews image; second tap navigates.
+    // This prevents immediate navigation from hiding the hover effect.
+    document.addEventListener('click', function(e) {
+      if (!coarseTouch) return;
+
+      var target = toElement(e.target);
+      if (!target) return;
+      if (isExcludedTarget(target)) return;
+
+      var link = target.closest('.grid-product__link');
+      if (!link) return;
+
+      var card = target.closest('.grid-product');
+      if (!card) return;
+      if (!preloadSecondaryImage(card)) return;
+
+      var now = Date.now();
+      var ts = parseInt(card.getAttribute('data-touch-preview-ts') || '0', 10);
+      var recentPreview = ts && (now - ts) < PREVIEW_WINDOW_MS;
+
+      // First tap: preview only, prevent navigation.
+      if (!recentPreview) {
+        e.preventDefault();
+        e.stopPropagation();
+        showHover(card);
+        card.setAttribute('data-touch-preview-ts', String(now));
+
+        setTimeout(function() {
+          card.classList.remove('is-touch-hover');
+          var content = card.querySelector('.grid-product__content');
+          if (content) {
+            content.classList.remove('is-touch-hover');
+          }
+        }, 420);
+      }
+      // Second tap within PREVIEW_WINDOW_MS is allowed to navigate naturally.
+    }, { capture: true });
   }
 
   if (document.readyState === 'loading') {
