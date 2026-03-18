@@ -13228,10 +13228,15 @@ label,.h5,
 /* Force touch hover display */
 .grid-product__secondary-image {
   transition: opacity 0.2s ease-in-out;
+  pointer-events: none; /* Ensure clicks pass through to the link */
+}
+.grid-product {
+  -webkit-touch-callout: none; /* Prevent context menu on long press */
 }
 .is-touch-hover .grid-product__secondary-image { 
   opacity: 1 !important; 
   visibility: visible !important; 
   display: block !important; 
   z-index: 2 !important; 
+  pointer-events: none !important;
 }
