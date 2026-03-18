@@ -1,63 +1,147 @@
 // Mobile Touch Hover Logic for Product Cards
-// Handles touch interactions to show secondary images on mobile devices
+// Shows the second image while the finger is down or swiping over a card.
 (function() {
   function initMobileTouchHover() {
-    // Prevent multiple initializations
     if (window._mobileTouchHoverInited) return;
     window._mobileTouchHoverInited = true;
 
-    // Use capture phase to ensure we intercept events before other scripts
-    document.addEventListener('touchstart', function(e) {
-      
-      // 1. Ignore interactions on Swatches (let them be clickable)
-      if (e.target.closest('.sibling-swatch') || e.target.closest('.swatch')) return;
+    var HOLD_DELAY_MS = 90;
+    var MOVE_THRESHOLD_PX = 10;
+    var HIDE_DELAY_MS = 120;
 
-      // 2. Find the product card
-      var card = e.target.closest('.grid-product');
-      if (!card) return;
+    var activeCard = null;
+    var startX = 0;
+    var startY = 0;
+    var moved = false;
+    var hoverTimer = null;
 
-      // 3. Find secondary image
+    function isExcludedTarget(target) {
+      return !!target.closest('.sibling-swatch, .swatch, .grid-product__quick-add, .grid-product__quick-add-btn, .quick-product__btn');
+    }
+
+    function clearOtherActiveCards(exceptCard) {
+      var openCards = document.querySelectorAll('.is-touch-hover');
+      for (var i = 0; i < openCards.length; i++) {
+        if (openCards[i] !== exceptCard) {
+          openCards[i].classList.remove('is-touch-hover');
+        }
+      }
+    }
+
+    function preloadSecondaryImage(card) {
       var secondaryWrapper = card.querySelector('.grid-product__secondary-image');
-      if (!secondaryWrapper) return;
+      if (!secondaryWrapper) return false;
 
-      // 4. Force Image Loading (Crucial for mobile)
       var img = secondaryWrapper.querySelector('img');
       if (img) {
         if (img.loading === 'lazy') img.loading = 'eager';
-        // Force opacity and visibility to ensure browser paints it
-        img.style.opacity = '1';
-        img.style.visibility = 'visible';
-      }
 
-      // 5. Clear other active cards
-      var others = document.querySelectorAll('.is-touch-hover');
-      for (var i = 0; i < others.length; i++) {
-        if (others[i] !== card) {
-          others[i].classList.remove('is-touch-hover');
+        // If browser delayed src assignment, forcing src from currentSrc can kick paint.
+        if (!img.getAttribute('src') && img.currentSrc) {
+          img.setAttribute('src', img.currentSrc);
         }
       }
 
-      // 6. ACTIVATE HOVER (Immediate)
+      return true;
+    }
+
+    function showHover(card) {
+      clearOtherActiveCards(card);
       card.classList.add('is-touch-hover');
+    }
 
-      // 7. HANDLE RELEASE (Cleanup)
-      var cleanup = function() {
-        // Delay hiding to allow user to see the image (smooth feel)
+    function onStart(target, clientX, clientY) {
+      if (isExcludedTarget(target)) return;
+
+      var card = target.closest('.grid-product');
+      if (!card) return;
+      if (!preloadSecondaryImage(card)) return;
+
+      activeCard = card;
+      startX = clientX;
+      startY = clientY;
+      moved = false;
+
+      clearTimeout(hoverTimer);
+      hoverTimer = setTimeout(function() {
+        if (activeCard) {
+          showHover(activeCard);
+        }
+      }, HOLD_DELAY_MS);
+    }
+
+    function onMove(clientX, clientY) {
+      if (!activeCard) return;
+
+      var dx = Math.abs(clientX - startX);
+      var dy = Math.abs(clientY - startY);
+
+      if (dx > MOVE_THRESHOLD_PX || dy > MOVE_THRESHOLD_PX) {
+        moved = true;
+
+        // Swipe/scroll should still reveal second image quickly.
+        clearTimeout(hoverTimer);
+        showHover(activeCard);
+      }
+    }
+
+    function onEnd() {
+      clearTimeout(hoverTimer);
+
+      if (activeCard) {
+        var cardToClose = activeCard;
         setTimeout(function() {
-          card.classList.remove('is-touch-hover');
-        }, 250);
-        
-        card.removeEventListener('touchend', cleanup);
-      };
+          cardToClose.classList.remove('is-touch-hover');
+        }, HIDE_DELAY_MS);
+      }
 
-      // We only listen for touchend. Scrolling (touchmove) keeps it visible.
-      // This creates the "Sticky Hover" effect during scroll, which is desired.
-      card.addEventListener('touchend', cleanup, { passive: true });
+      activeCard = null;
+      moved = false;
+    }
 
+    // Pointer Events path (modern browsers)
+    document.addEventListener('pointerdown', function(e) {
+      if (e.pointerType !== 'touch') return;
+      onStart(e.target, e.clientX, e.clientY);
     }, { passive: true, capture: true });
+
+    document.addEventListener('pointermove', function(e) {
+      if (e.pointerType !== 'touch') return;
+      onMove(e.clientX, e.clientY);
+    }, { passive: true, capture: true });
+
+    document.addEventListener('pointerup', function(e) {
+      if (e.pointerType !== 'touch') return;
+      onEnd();
+    }, { passive: true, capture: true });
+
+    document.addEventListener('pointercancel', function(e) {
+      if (e.pointerType !== 'touch') return;
+      onEnd();
+    }, { passive: true, capture: true });
+
+    // Touch Events fallback (older iOS/webviews without Pointer Events)
+    if (!window.PointerEvent) {
+      document.addEventListener('touchstart', function(e) {
+        if (!e.touches || !e.touches.length) return;
+        onStart(e.target, e.touches[0].clientX, e.touches[0].clientY);
+      }, { passive: true, capture: true });
+
+      document.addEventListener('touchmove', function(e) {
+        if (!e.touches || !e.touches.length) return;
+        onMove(e.touches[0].clientX, e.touches[0].clientY);
+      }, { passive: true, capture: true });
+
+      document.addEventListener('touchend', function() {
+        onEnd();
+      }, { passive: true, capture: true });
+
+      document.addEventListener('touchcancel', function() {
+        onEnd();
+      }, { passive: true, capture: true });
+    }
   }
 
-  // Initialize on load
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initMobileTouchHover);
   } else {
