@@ -5,9 +5,9 @@
     if (window._mobileTouchHoverInited) return;
     window._mobileTouchHoverInited = true;
 
-    var HOLD_DELAY_MS = 90;
+    var HOLD_DELAY_MS = 0;
     var MOVE_THRESHOLD_PX = 10;
-    var HIDE_DELAY_MS = 120;
+    var HIDE_DELAY_MS = 300;
 
     var activeCard = null;
     var startX = 0;
@@ -15,7 +15,14 @@
     var moved = false;
     var hoverTimer = null;
 
+    function toElement(target) {
+      if (!target) return null;
+      if (target.nodeType === 1) return target;
+      return target.parentElement || null;
+    }
+
     function isExcludedTarget(target) {
+      if (!target || !target.closest) return false;
       return !!target.closest('.sibling-swatch, .swatch, .grid-product__quick-add, .grid-product__quick-add-btn, .quick-product__btn');
     }
 
@@ -51,6 +58,8 @@
     }
 
     function onStart(target, clientX, clientY) {
+      target = toElement(target);
+      if (!target) return;
       if (isExcludedTarget(target)) return;
 
       var card = target.closest('.grid-product');

@@ -13247,3 +13247,13 @@ label,.h5,
   z-index: 2 !important; 
   pointer-events: none !important;
 }
+
+@media (hover: none) and (pointer: coarse) {
+  .grid-product:active .grid-product__secondary-image,
+  .grid-product__content:active .grid-product__secondary-image {
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: block !important;
+    z-index: 2 !important;
+  }
+}
