@@ -9463,9 +9463,9 @@ html[dir=rtl] .grid-product__content{
 
 @media only screen and (max-width:768px){
 
-.supports-touch .grid-product__secondary-image{
+/*.supports-touch .grid-product__secondary-image{
       display:none;
-}
+}*/
   }
 
 .grid-product__color-image{
@@ -13224,3 +13224,6 @@ label,.h5,
   position: absolute !important;
   z-index: -9999 !important;
 }
+
+/* Force touch hover display */
+.is-touch-hover .grid-product__secondary-image { opacity: 1 !important; visibility: visible !important; }

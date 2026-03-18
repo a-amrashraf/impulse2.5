@@ -1,9 +1,35 @@
 document.addEventListener('DOMContentLoaded', function() {
   initSiblingSwatches();
+  initTouchHover();
 });
+
+function initTouchHover() {
+  const cards = document.querySelectorAll('.grid-product:not(.touch-init-done)');
+  cards.forEach(card => {
+    card.classList.add('touch-init-done');
+    
+    // Add touch start listener to show secondary image
+    card.addEventListener('touchstart', function() {
+      // Remove class from all other cards first (optional, but cleaner)
+      document.querySelectorAll('.is-touch-hover').forEach(el => el.classList.remove('is-touch-hover'));
+      this.classList.add('is-touch-hover');
+    }, { passive: true });
+    
+    // Add touch end/cancel listeners to hide secondary image
+    const endHandler = function() {
+      this.classList.remove('is-touch-hover');
+    };
+    
+    card.addEventListener('touchend', endHandler, { passive: true });
+    card.addEventListener('touchcancel', endHandler, { passive: true });
+  });
+}
 
 function initSiblingSwatches() {
   const swatches = document.querySelectorAll('.sibling-swatch:not(.init-done)');
+  
+  // Re-run touch init for new elements (e.g. infinite scroll)
+  initTouchHover();
 
   swatches.forEach(swatch => {
     swatch.classList.add('init-done');
@@ -124,7 +150,11 @@ function initSiblingSwatches() {
                  card.innerHTML = newCard.innerHTML;
                  
                  // 4. UPDATE ATTRIBUTES
-                 if (newCard.className) card.className = newCard.className;
+                 if (newCard.className) {
+                    const wasTouchInit = card.classList.contains('touch-init-done');
+                    card.className = newCard.className;
+                    if (wasTouchInit) card.classList.add('touch-init-done');
+                 }
                  if (newCard.getAttribute('data-product-id')) card.setAttribute('data-product-id', newCard.getAttribute('data-product-id'));
                  if (newCard.getAttribute('data-product-handle')) card.setAttribute('data-product-handle', newCard.getAttribute('data-product-handle'));
                  
