@@ -13356,6 +13356,8 @@ label,.h5,
     width: 100% !important;
     scroll-snap-align: start;
     position: relative !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
   }
 
   .impulse-mobile-dots {
@@ -13388,16 +13390,34 @@ label,.h5,
 
 @media screen and (min-width: 769px) {
   .grid__item-image-wrapper .grid-product__image-mask .impulse-mobile-slider {
-    overflow: visible !important;
+    display: block !important;
+    overflow: hidden !important;
     white-space: normal;
+    position: relative;
   }
 
   .grid__item-image-wrapper .grid-product__image-mask .impulse-mobile-slide {
     display: block !important;
     width: 100% !important;
+    position: relative;
+    opacity: 1;
+    transition: opacity 0.2s ease-in-out;
   }
 
-  .grid__item-image-wrapper .grid-product__image-mask .impulse-mobile-slide:nth-child(n+2),
+  .grid__item-image-wrapper .grid-product__image-mask .impulse-mobile-slide:nth-child(2) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .grid__item-image-wrapper .grid-product__image-mask:hover .impulse-mobile-slide:nth-child(2) {
+    opacity: 1;
+  }
+
   .grid__item-image-wrapper .grid-product__image-mask .impulse-mobile-dots {
     display: none !important;
   }
