@@ -212,7 +212,7 @@ Arguments
   </script>
 </div>
 
-      <a href="{{ product.url | within: collection }}" class="grid-product__link" aria-label="{{ product.title }}">
+      <a href="{{ product.url | within: collection }}" class="grid-product__link">
         <div class="grid-product__meta">
           <div class="grid-product__title grid-product__title--{{ settings.type_product_style }}">{{ product.title }}</div>
           {%- if settings.vendor_enable -%}
@@ -254,16 +254,11 @@ Arguments
                     {{ product_variant.unit_price_measurement.reference_unit }}
                   {%- endif -%}
                 {%- endcapture -%}
+
                 {{ product_variant.unit_price | money }}/{{ unit_price_base_unit }}
               </div>
             {%- endif -%}
           </div>
-          <form method="post" action="/cart/add" class="product-form" enctype="multipart/form-data">
-            <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
-            <button type="submit" class="btn btn--add-to-cart" aria-label="{{ 'products.product.add_to_cart' | t }}">
-              {{ 'products.product.add_to_cart' | t }}
-            </button>
-          </form>
 
           {%- if settings.enable_swatches and type == 'horizontal' -%}
             {%- liquid
