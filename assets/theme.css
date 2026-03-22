@@ -13270,6 +13270,18 @@ label,.h5,
     -ms-overflow-style: none;
   }
 
+  .grid-product.has-impulse-slider .impulse-mobile-slider {
+    touch-action: none !important;
+    cursor: grab;
+  }
+
+  .grid-product.has-impulse-slider .impulse-mobile-slide img,
+  .grid-product.has-impulse-slider .impulse-mobile-slide .image-element {
+    -webkit-user-drag: none;
+    -webkit-touch-callout: none;
+    user-select: none;
+  }
+
   .grid__item-image-wrapper .grid-product__image-mask .impulse-mobile-media .impulse-mobile-slider::-webkit-scrollbar {
     display: none;
   }
