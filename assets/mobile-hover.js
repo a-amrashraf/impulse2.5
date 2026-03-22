@@ -30,7 +30,9 @@ function bindImpulseSwipe(slider) {
 
     var startX = 0;
     var startY = 0;
+    var lastDx = 0;
     var moved = false;
+    var isDragging = false;
 
     function goTo(index, animate) {
         var slides = slider.querySelectorAll('.impulse-mobile-slide');
@@ -52,7 +54,10 @@ function bindImpulseSwipe(slider) {
         if (!e.touches || !e.touches.length) return;
         startX = e.touches[0].clientX;
         startY = e.touches[0].clientY;
+        lastDx = 0;
         moved = false;
+        isDragging = true;
+        slider.dataset.impulseDragging = '1';
         slider.style.transition = 'none';
     }, { passive: true });
 
@@ -64,27 +69,46 @@ function bindImpulseSwipe(slider) {
         var dy = e.touches[0].clientY - startY;
         if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 6) {
             moved = true;
+            lastDx = dx;
+            var currentIndex = Number(slider.dataset.impulseIndex || 0);
+            if (!Number.isFinite(currentIndex)) currentIndex = 0;
+            var width = slider.offsetWidth || 1;
+            var baseX = -currentIndex * width;
+            slider.style.transform = 'translate3d(' + (baseX + dx) + 'px,0,0)';
             e.preventDefault();
         }
     }, { passive: false });
 
     slider.addEventListener('touchend', function(e) {
         if (!window.matchMedia('(max-width: 768px)').matches) return;
+        isDragging = false;
+        slider.dataset.impulseDragging = '0';
 
         var endX = startX;
         if (e.changedTouches && e.changedTouches.length) {
             endX = e.changedTouches[0].clientX;
         }
-        var dx = endX - startX;
+        var dx = moved ? lastDx : (endX - startX);
 
         var current = Number(slider.dataset.impulseIndex || 0);
         if (!Number.isFinite(current)) current = 0;
 
-        if (dx < -30) current += 1;
-        if (dx > 30) current -= 1;
+        var width = slider.offsetWidth || 1;
+        var threshold = Math.max(20, width * 0.12);
+
+        if (dx < -threshold) current += 1;
+        if (dx > threshold) current -= 1;
 
         if (slider._impulseGoTo) slider._impulseGoTo(current, true);
         slider.dataset.impulseMoved = moved ? '1' : '0';
+    }, { passive: true });
+
+    slider.addEventListener('touchcancel', function() {
+        isDragging = false;
+        slider.dataset.impulseDragging = '0';
+        var current = Number(slider.dataset.impulseIndex || 0);
+        if (!Number.isFinite(current)) current = 0;
+        if (slider._impulseGoTo) slider._impulseGoTo(current, true);
     }, { passive: true });
 
     slider.addEventListener('click', function(e) {
@@ -113,6 +137,9 @@ function applyImpulseMediaMode() {
         bindImpulseSwipe(slider);
 
         if (isMobile) {
+            if (slider.dataset.impulseDragging === '1') {
+                continue;
+            }
             slider.style.display = 'flex';
             slider.style.flexWrap = 'nowrap';
             slider.style.overflow = 'hidden';
