@@ -52,14 +52,16 @@
           fallback: fallback,
         -%}
         {%- if section.settings.enable_mobile_swipe_carousel and collection.products.first.media.size > 1 -%}
-          {%- render 'image-element',
-            img: collection.products.first.media[1].preview_image,
-            widths: '360, 540, 720, 900, 1080',
-            classes: classes | append: ' second-image',
-            sizes: sizes,
-            sizeVariable: sizeVariable,
-            fallback: fallback,
-          -%}
+          <div class="collection-image__second" style="display:none">
+            {%- render 'image-element',
+              img: collection.products.first.media[1].preview_image,
+              widths: '360, 540, 720, 900, 1080',
+              classes: classes | append: ' second-image',
+              sizes: sizes,
+              sizeVariable: sizeVariable,
+              fallback: fallback,
+            -%}
+          </div>
         {%- endif -%}
       </div>
     {%- endif -%}
