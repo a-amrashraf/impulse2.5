@@ -8811,3 +8811,31 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
 })();
+
+function initMobileCarousel() {
+  document.querySelectorAll('[data-carousel]').forEach(carousel => {
+
+    if (carousel.classList.contains('carousel-initialized')) return;
+    carousel.classList.add('carousel-initialized');
+
+    const dots = carousel.querySelectorAll('.dot');
+
+    function updateDots() {
+      const scrollLeft = carousel.scrollLeft;
+      const width = carousel.offsetWidth;
+      const index = Math.round(scrollLeft / width);
+
+      dots.forEach(dot => dot.classList.remove('active'));
+      if (dots[index]) dots[index].classList.add('active');
+    }
+
+    carousel.addEventListener('scroll', updateDots);
+    updateDots();
+  });
+}
+
+// Run on normal load
+document.addEventListener("DOMContentLoaded", initMobileCarousel);
+
+// Run on Shopify section reload (VERY IMPORTANT)
+document.addEventListener("shopify:section:load", initMobileCarousel);

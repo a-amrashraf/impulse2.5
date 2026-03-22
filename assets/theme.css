@@ -13325,3 +13325,76 @@ label,.h5,
   animation: none !important;
   transform: none !important;
 }
+
+/* =========================
+   MOBILE INSTAGRAM CAROUSEL
+========================= */
+@media (max-width: 768px) {
+
+  .mobile-carousel {
+    position: relative;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .mobile-carousel-track {
+    display: flex;
+    width: 200%;
+  }
+
+  .mobile-slide {
+    width: 100%;
+    flex: 0 0 100%;
+    scroll-snap-align: start;
+  }
+
+  /* REMOVE HOVER EFFECT ON MOBILE */
+  .grid-product__secondary-image {
+    opacity: 1 !important;
+    position: relative !important;
+    pointer-events: auto !important;
+  }
+
+  /* DOTS */
+  .mobile-dots {
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 6px;
+    z-index: 2;
+  }
+
+  .mobile-dots .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: white;
+    opacity: 0.4;
+    transition: opacity 0.3s;
+  }
+
+  .mobile-dots .dot.active {
+    opacity: 1;
+  }
+
+  /* HIDE SCROLLBAR */
+  .mobile-carousel::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* DESKTOP RESET */
+@media (min-width: 769px) {
+  .mobile-carousel,
+  .mobile-carousel-track,
+  .mobile-slide {
+    all: unset;
+  }
+
+  .mobile-dots {
+    display: none;
+  }
+}
