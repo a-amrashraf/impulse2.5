@@ -13364,7 +13364,7 @@ label,.h5,
     transition: opacity 0.2s ease-in-out;
   }
 
-  .grid__item-image-wrapper .grid-product__content:hover .impulse-mobile-media .impulse-mobile-slide--second,
+  .grid-product__content:hover .impulse-mobile-media .impulse-mobile-slide--second,
   .grid__item-image-wrapper .grid-product__image-mask:hover .impulse-mobile-media .impulse-mobile-slide--second {
     opacity: 1;
   }

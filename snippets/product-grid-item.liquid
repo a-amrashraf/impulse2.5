@@ -212,6 +212,20 @@ Arguments
                   endif
                 endfor
              endif
+
+             # Avoid duplicate first image and fallback to product images if needed
+             if second_image != blank and second_image.id == preview_image.id
+               assign second_image = blank
+             endif
+
+             if second_image == blank and product.images.size > 1
+               for image in product.images
+                 if image.id != preview_image.id
+                   assign second_image = image
+                   break
+                 endif
+               endfor
+             endif
           -%}
           
           {%- if second_image != blank -%}

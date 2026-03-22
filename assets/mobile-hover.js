@@ -1,5 +1,5 @@
 
-var IMPULSE_DEBUG = true;
+var IMPULSE_DEBUG = false;
 
 var impulseDrag = {
     activeSlider: null,
@@ -213,6 +213,10 @@ function applyImpulseMediaMode() {
 
     for (var i = 0; i < mediaBlocks.length; i++) {
         var media = mediaBlocks[i];
+        if (!IMPULSE_DEBUG) {
+            var oldBadge = media.querySelector('.impulse-debug-badge');
+            if (oldBadge) oldBadge.remove();
+        }
         var slider = media.querySelector('.impulse-mobile-slider');
         if (!slider) continue;
 
@@ -281,14 +285,14 @@ function applyImpulseMediaMode() {
                 second.style.pointerEvents = 'none';
                 second.style.transition = 'opacity 0.2s ease-in-out';
 
-                var mask = media.closest('.grid-product__image-mask');
-                if (mask && !mask.dataset.impulseHoverBound) {
-                    mask.dataset.impulseHoverBound = 'true';
-                    mask.addEventListener('mouseenter', function() {
+                var hoverRoot = media.closest('.grid-product__content') || media.closest('.grid__item-image-wrapper') || media.closest('.grid-product__image-mask');
+                if (hoverRoot && !hoverRoot.dataset.impulseHoverBound) {
+                    hoverRoot.dataset.impulseHoverBound = 'true';
+                    hoverRoot.addEventListener('mouseenter', function() {
                         var hoverSecond = this.querySelector('.impulse-mobile-slide--second');
                         if (hoverSecond) hoverSecond.style.opacity = '1';
                     });
-                    mask.addEventListener('mouseleave', function() {
+                    hoverRoot.addEventListener('mouseleave', function() {
                         var hoverSecond = this.querySelector('.impulse-mobile-slide--second');
                         if (hoverSecond) hoverSecond.style.opacity = '0';
                     });
