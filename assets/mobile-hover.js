@@ -1,6 +1,21 @@
 
-/* Mobile Product Slider Logic */
 var IMPULSE_DEBUG = true;
+
+var impulseDrag = {
+    activeSlider: null,
+    startX: 0,
+    startY: 0,
+    lastDx: 0,
+    moved: false,
+    axisLocked: false,
+    axis: '',
+    source: ''
+};
+
+var impulseSuppressClick = {
+    slider: null,
+    until: 0
+};
 
 function ensureImpulseDebugBadge(slider) {
     if (!IMPULSE_DEBUG || !slider) return null;
@@ -37,13 +52,16 @@ function updateImpulseDebug(slider, eventName, mode) {
     var index = Number(slider.dataset.impulseIndex || 0);
     if (!Number.isFinite(index)) index = 0;
     var dragging = slider.dataset.impulseDragging === '1' ? 'yes' : 'no';
-
-    var resolvedMode = mode;
-    if (!resolvedMode) {
-        resolvedMode = window.matchMedia('(max-width: 768px)').matches ? 'mobile' : 'desktop';
-    }
+    var resolvedMode = mode || (window.matchMedia('(max-width: 768px)').matches ? 'mobile' : 'desktop');
 
     badge.textContent = 'mode:' + resolvedMode + ' idx:' + index + ' slides:' + slides + ' drag:' + dragging + ' evt:' + eventName;
+}
+
+function getImpulseSliderFromTarget(target) {
+    if (!target || !target.closest) return null;
+    var media = target.closest('.impulse-mobile-media');
+    if (!media) return null;
+    return media.querySelector('.impulse-mobile-slider');
 }
 
 function setImpulseActiveDot(slider, index) {
@@ -63,6 +81,22 @@ function setImpulseActiveDot(slider, index) {
     }
 }
 
+function goToImpulseSlide(slider, index, animate) {
+    if (!slider) return;
+    var slides = slider.querySelectorAll('.impulse-mobile-slide');
+    var max = slides.length - 1;
+    if (max < 0) return;
+
+    var target = index;
+    if (target < 0) target = 0;
+    if (target > max) target = max;
+
+    slider.dataset.impulseIndex = String(target);
+    slider.style.transition = animate ? 'transform 0.25s ease' : 'none';
+    slider.style.transform = 'translate3d(' + (-target * 100) + '%,0,0)';
+    setImpulseActiveDot(slider, target);
+}
+
 window.updateImpulseMobileDots = function(slider) {
     if (!slider) return;
     var index = Number(slider.dataset.impulseIndex || 0);
@@ -70,255 +104,97 @@ window.updateImpulseMobileDots = function(slider) {
     setImpulseActiveDot(slider, index);
 };
 
-function bindImpulseSwipe(slider) {
-    if (!slider || slider.dataset.impulseSwipeBound) return;
-    slider.dataset.impulseSwipeBound = 'true';
-    var gestureTarget = slider.closest('.impulse-mobile-media') || slider;
+function beginImpulseDrag(slider, x, y, source) {
+    if (!slider) return;
+    impulseDrag.activeSlider = slider;
+    impulseDrag.startX = x;
+    impulseDrag.startY = y;
+    impulseDrag.lastDx = 0;
+    impulseDrag.moved = false;
+    impulseDrag.axisLocked = false;
+    impulseDrag.axis = '';
+    impulseDrag.source = source;
 
-    var startX = 0;
-    var startY = 0;
-    var lastDx = 0;
-    var moved = false;
-    var isDragging = false;
-    var usingPointer = false;
-    var usingMouse = false;
+    slider.dataset.impulseDragging = '1';
+    slider.style.transition = 'none';
+    updateImpulseDebug(slider, source + '-start', 'mobile');
+}
 
-    function goTo(index, animate) {
-        var slides = slider.querySelectorAll('.impulse-mobile-slide');
-        var max = slides.length - 1;
-        var target = index;
-        if (target < 0) target = 0;
-        if (target > max) target = max;
+function moveImpulseDrag(x, y) {
+    var slider = impulseDrag.activeSlider;
+    if (!slider) return { consume: false };
 
-        slider.dataset.impulseIndex = String(target);
-        slider.style.transition = animate ? 'transform 0.25s ease' : 'none';
-        slider.style.transform = 'translate3d(' + (-target * 100) + '%,0,0)';
-        setImpulseActiveDot(slider, target);
+    var dx = x - impulseDrag.startX;
+    var dy = y - impulseDrag.startY;
+
+    if (!impulseDrag.axisLocked) {
+        if (Math.abs(dx) > 6 || Math.abs(dy) > 6) {
+            impulseDrag.axisLocked = true;
+            impulseDrag.axis = Math.abs(dx) > Math.abs(dy) ? 'x' : 'y';
+        } else {
+            return { consume: false };
+        }
     }
 
-    slider._impulseGoTo = goTo;
+    if (impulseDrag.axis !== 'x') {
+        return { consume: false };
+    }
 
-    gestureTarget.addEventListener('touchstart', function(e) {
-        if (!window.matchMedia('(max-width: 768px)').matches) return;
-        if (usingPointer) return;
-        if (!e.touches || !e.touches.length) return;
-        startX = e.touches[0].clientX;
-        startY = e.touches[0].clientY;
-        lastDx = 0;
-        moved = false;
-        isDragging = true;
-        slider.dataset.impulseDragging = '1';
-        slider.style.transition = 'none';
-        updateImpulseDebug(slider, 'touchstart', 'mobile');
-    }, { passive: true });
+    impulseDrag.moved = true;
+    impulseDrag.lastDx = dx;
 
-    gestureTarget.addEventListener('touchmove', function(e) {
-        if (!window.matchMedia('(max-width: 768px)').matches) return;
-        if (usingPointer) return;
-        if (!e.touches || !e.touches.length) return;
+    var currentIndex = Number(slider.dataset.impulseIndex || 0);
+    if (!Number.isFinite(currentIndex)) currentIndex = 0;
+    var width = slider.offsetWidth || 1;
+    var baseX = -currentIndex * width;
+    slider.style.transform = 'translate3d(' + (baseX + dx) + 'px,0,0)';
+    updateImpulseDebug(slider, impulseDrag.source + '-move', 'mobile');
+    return { consume: true };
+}
 
-        var dx = e.touches[0].clientX - startX;
-        var dy = e.touches[0].clientY - startY;
-        if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 6) {
-            moved = true;
-            lastDx = dx;
-            var currentIndex = Number(slider.dataset.impulseIndex || 0);
-            if (!Number.isFinite(currentIndex)) currentIndex = 0;
-            var width = slider.offsetWidth || 1;
-            var baseX = -currentIndex * width;
-            slider.style.transform = 'translate3d(' + (baseX + dx) + 'px,0,0)';
-            e.preventDefault();
-            updateImpulseDebug(slider, 'touchmove', 'mobile');
-        }
-    }, { passive: false });
+function endImpulseDrag(x, source) {
+    var slider = impulseDrag.activeSlider;
+    if (!slider) return;
 
-    gestureTarget.addEventListener('touchend', function(e) {
-        if (!window.matchMedia('(max-width: 768px)').matches) return;
-        if (usingPointer) return;
-        isDragging = false;
-        slider.dataset.impulseDragging = '0';
+    var dx = impulseDrag.moved ? impulseDrag.lastDx : (x - impulseDrag.startX);
+    var current = Number(slider.dataset.impulseIndex || 0);
+    if (!Number.isFinite(current)) current = 0;
 
-        var endX = startX;
-        if (e.changedTouches && e.changedTouches.length) {
-            endX = e.changedTouches[0].clientX;
-        }
-        var dx = moved ? lastDx : (endX - startX);
+    var width = slider.offsetWidth || 1;
+    var threshold = Math.max(20, width * 0.12);
+    if (dx < -threshold) current += 1;
+    if (dx > threshold) current -= 1;
 
-        var current = Number(slider.dataset.impulseIndex || 0);
-        if (!Number.isFinite(current)) current = 0;
+    goToImpulseSlide(slider, current, true);
+    slider.dataset.impulseDragging = '0';
 
-        var width = slider.offsetWidth || 1;
-        var threshold = Math.max(20, width * 0.12);
+    if (impulseDrag.moved && impulseDrag.axis === 'x') {
+        impulseSuppressClick.slider = slider;
+        impulseSuppressClick.until = Date.now() + 500;
+    }
 
-        if (dx < -threshold) current += 1;
-        if (dx > threshold) current -= 1;
+    updateImpulseDebug(slider, source + '-end', 'mobile');
 
-        if (slider._impulseGoTo) slider._impulseGoTo(current, true);
-        slider.dataset.impulseMoved = moved ? '1' : '0';
-        updateImpulseDebug(slider, 'touchend', 'mobile');
-    }, { passive: true });
+    impulseDrag.activeSlider = null;
+    impulseDrag.axisLocked = false;
+    impulseDrag.axis = '';
+    impulseDrag.moved = false;
+}
 
-    gestureTarget.addEventListener('touchcancel', function() {
-        if (usingPointer) return;
-        isDragging = false;
-        slider.dataset.impulseDragging = '0';
-        var current = Number(slider.dataset.impulseIndex || 0);
-        if (!Number.isFinite(current)) current = 0;
-        if (slider._impulseGoTo) slider._impulseGoTo(current, true);
-        updateImpulseDebug(slider, 'touchcancel', 'mobile');
-    }, { passive: true });
+function cancelImpulseDrag(source) {
+    var slider = impulseDrag.activeSlider;
+    if (!slider) return;
 
-    gestureTarget.addEventListener('click', function(e) {
-        if (slider.dataset.impulseMoved === '1') {
-            e.preventDefault();
-            e.stopPropagation();
-            slider.dataset.impulseMoved = '0';
-        }
-    }, true);
+    var current = Number(slider.dataset.impulseIndex || 0);
+    if (!Number.isFinite(current)) current = 0;
+    goToImpulseSlide(slider, current, true);
+    slider.dataset.impulseDragging = '0';
+    updateImpulseDebug(slider, source + '-cancel', 'mobile');
 
-    gestureTarget.addEventListener('pointerdown', function(e) {
-        if (!window.matchMedia('(max-width: 768px)').matches) return;
-        if (e.pointerType !== 'touch' && e.pointerType !== 'pen' && e.pointerType !== 'mouse') return;
-
-        usingPointer = true;
-        usingMouse = e.pointerType === 'mouse';
-        startX = e.clientX;
-        startY = e.clientY;
-        lastDx = 0;
-        moved = false;
-        isDragging = true;
-        slider.dataset.impulseDragging = '1';
-        slider.style.transition = 'none';
-        updateImpulseDebug(slider, 'pointerdown', 'mobile');
-        if (slider.setPointerCapture) {
-            try { slider.setPointerCapture(e.pointerId); } catch (err) {}
-        }
-    }, { passive: true });
-
-    gestureTarget.addEventListener('pointermove', function(e) {
-        if (!window.matchMedia('(max-width: 768px)').matches) return;
-        if (!isDragging) return;
-        if (e.pointerType !== 'touch' && e.pointerType !== 'pen' && e.pointerType !== 'mouse') return;
-
-        var dx = e.clientX - startX;
-        var dy = e.clientY - startY;
-        if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 6) {
-            moved = true;
-            lastDx = dx;
-            var currentIndex = Number(slider.dataset.impulseIndex || 0);
-            if (!Number.isFinite(currentIndex)) currentIndex = 0;
-            var width = slider.offsetWidth || 1;
-            var baseX = -currentIndex * width;
-            slider.style.transform = 'translate3d(' + (baseX + dx) + 'px,0,0)';
-            e.preventDefault();
-            updateImpulseDebug(slider, 'pointermove', 'mobile');
-        }
-    }, { passive: false });
-
-    gestureTarget.addEventListener('pointerup', function(e) {
-        if (!window.matchMedia('(max-width: 768px)').matches) return;
-        if (!isDragging) return;
-
-        isDragging = false;
-        slider.dataset.impulseDragging = '0';
-
-        var dx = moved ? lastDx : (e.clientX - startX);
-        var current = Number(slider.dataset.impulseIndex || 0);
-        if (!Number.isFinite(current)) current = 0;
-
-        var width = slider.offsetWidth || 1;
-        var threshold = Math.max(20, width * 0.12);
-        if (dx < -threshold) current += 1;
-        if (dx > threshold) current -= 1;
-
-        if (slider._impulseGoTo) slider._impulseGoTo(current, true);
-        slider.dataset.impulseMoved = moved ? '1' : '0';
-        updateImpulseDebug(slider, 'pointerup', 'mobile');
-
-        if (slider.releasePointerCapture) {
-            try { slider.releasePointerCapture(e.pointerId); } catch (err) {}
-        }
-
-        window.setTimeout(function() {
-            usingPointer = false;
-            usingMouse = false;
-        }, 0);
-    }, { passive: true });
-
-    gestureTarget.addEventListener('pointercancel', function(e) {
-        if (!isDragging) return;
-        isDragging = false;
-        slider.dataset.impulseDragging = '0';
-
-        var current = Number(slider.dataset.impulseIndex || 0);
-        if (!Number.isFinite(current)) current = 0;
-        if (slider._impulseGoTo) slider._impulseGoTo(current, true);
-        updateImpulseDebug(slider, 'pointercancel', 'mobile');
-
-        if (slider.releasePointerCapture) {
-            try { slider.releasePointerCapture(e.pointerId); } catch (err) {}
-        }
-
-        window.setTimeout(function() {
-            usingPointer = false;
-            usingMouse = false;
-        }, 0);
-    }, { passive: true });
-
-    gestureTarget.addEventListener('mousedown', function(e) {
-        if (!window.matchMedia('(max-width: 768px)').matches) return;
-        if (usingPointer) return;
-
-        usingMouse = true;
-        startX = e.clientX;
-        startY = e.clientY;
-        lastDx = 0;
-        moved = false;
-        isDragging = true;
-        slider.dataset.impulseDragging = '1';
-        slider.style.transition = 'none';
-        updateImpulseDebug(slider, 'mousedown', 'mobile');
-    });
-
-    gestureTarget.addEventListener('mousemove', function(e) {
-        if (!window.matchMedia('(max-width: 768px)').matches) return;
-        if (!isDragging || !usingMouse) return;
-
-        var dx = e.clientX - startX;
-        var dy = e.clientY - startY;
-        if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 4) {
-            moved = true;
-            lastDx = dx;
-            var currentIndex = Number(slider.dataset.impulseIndex || 0);
-            if (!Number.isFinite(currentIndex)) currentIndex = 0;
-            var width = slider.offsetWidth || 1;
-            var baseX = -currentIndex * width;
-            slider.style.transform = 'translate3d(' + (baseX + dx) + 'px,0,0)';
-            updateImpulseDebug(slider, 'mousemove', 'mobile');
-        }
-    });
-
-    window.addEventListener('mouseup', function(e) {
-        if (!isDragging || !usingMouse) return;
-        if (!window.matchMedia('(max-width: 768px)').matches) return;
-
-        isDragging = false;
-        slider.dataset.impulseDragging = '0';
-
-        var dx = moved ? lastDx : (e.clientX - startX);
-        var current = Number(slider.dataset.impulseIndex || 0);
-        if (!Number.isFinite(current)) current = 0;
-
-        var width = slider.offsetWidth || 1;
-        var threshold = Math.max(20, width * 0.12);
-        if (dx < -threshold) current += 1;
-        if (dx > threshold) current -= 1;
-
-        if (slider._impulseGoTo) slider._impulseGoTo(current, true);
-        slider.dataset.impulseMoved = moved ? '1' : '0';
-        usingMouse = false;
-        updateImpulseDebug(slider, 'mouseup', 'mobile');
-    });
+    impulseDrag.activeSlider = null;
+    impulseDrag.axisLocked = false;
+    impulseDrag.axis = '';
+    impulseDrag.moved = false;
 }
 
 function applyImpulseMediaMode() {
@@ -335,17 +211,16 @@ function applyImpulseMediaMode() {
         var dots = media.querySelector('.impulse-mobile-dots');
         var slides = slider.querySelectorAll('.impulse-mobile-slide');
 
-        bindImpulseSwipe(slider);
-
         if (isMobile) {
             if (slider.dataset.impulseDragging === '1') {
                 continue;
             }
+
             slider.style.display = 'flex';
             slider.style.flexWrap = 'nowrap';
             slider.style.overflow = 'hidden';
             slider.style.scrollSnapType = 'none';
-            slider.style.touchAction = 'pan-y';
+            slider.style.touchAction = 'none';
             slider.style.willChange = 'transform';
 
             for (var s = 0; s < slides.length; s++) {
@@ -363,12 +238,13 @@ function applyImpulseMediaMode() {
 
             var currentIndex = Number(slider.dataset.impulseIndex || 0);
             if (!Number.isFinite(currentIndex)) currentIndex = 0;
-            if (slider._impulseGoTo) slider._impulseGoTo(currentIndex, false);
-            updateImpulseDebug(slider, 'apply', 'mobile');
+            goToImpulseSlide(slider, currentIndex, false);
 
             if (dots) {
                 dots.style.display = slides.length > 1 ? 'flex' : 'none';
             }
+
+            updateImpulseDebug(slider, 'apply', 'mobile');
         } else {
             slider.style.display = 'block';
             slider.style.overflow = 'hidden';
@@ -376,6 +252,7 @@ function applyImpulseMediaMode() {
             slider.style.transition = 'none';
             slider.style.willChange = 'auto';
             slider.dataset.impulseIndex = '0';
+            slider.dataset.impulseDragging = '0';
 
             if (first) {
                 first.style.position = 'relative';
@@ -426,6 +303,85 @@ function scheduleImpulseApply() {
         applyImpulseMediaMode();
     });
 }
+
+document.addEventListener('pointerdown', function(e) {
+    if (!window.matchMedia('(max-width: 768px)').matches) return;
+    var slider = getImpulseSliderFromTarget(e.target);
+    if (!slider) return;
+    beginImpulseDrag(slider, e.clientX, e.clientY, 'pointer');
+}, true);
+
+document.addEventListener('pointermove', function(e) {
+    if (!window.matchMedia('(max-width: 768px)').matches) return;
+    var result = moveImpulseDrag(e.clientX, e.clientY);
+    if (result.consume) {
+        e.preventDefault();
+    }
+}, { capture: true, passive: false });
+
+document.addEventListener('pointerup', function(e) {
+    if (!window.matchMedia('(max-width: 768px)').matches) return;
+    endImpulseDrag(e.clientX, 'pointer');
+}, true);
+
+document.addEventListener('pointercancel', function() {
+    cancelImpulseDrag('pointer');
+}, true);
+
+document.addEventListener('touchstart', function(e) {
+    if (!window.matchMedia('(max-width: 768px)').matches) return;
+    if (!e.touches || !e.touches.length) return;
+    var slider = getImpulseSliderFromTarget(e.target);
+    if (!slider) return;
+    beginImpulseDrag(slider, e.touches[0].clientX, e.touches[0].clientY, 'touch');
+}, { capture: true, passive: true });
+
+document.addEventListener('touchmove', function(e) {
+    if (!window.matchMedia('(max-width: 768px)').matches) return;
+    if (!e.touches || !e.touches.length) return;
+    var result = moveImpulseDrag(e.touches[0].clientX, e.touches[0].clientY);
+    if (result.consume) {
+        e.preventDefault();
+    }
+}, { capture: true, passive: false });
+
+document.addEventListener('touchend', function(e) {
+    if (!window.matchMedia('(max-width: 768px)').matches) return;
+    var x = impulseDrag.startX;
+    if (e.changedTouches && e.changedTouches.length) {
+        x = e.changedTouches[0].clientX;
+    }
+    endImpulseDrag(x, 'touch');
+}, { capture: true, passive: true });
+
+document.addEventListener('touchcancel', function() {
+    cancelImpulseDrag('touch');
+}, true);
+
+document.addEventListener('mousedown', function(e) {
+    if (!window.matchMedia('(max-width: 768px)').matches) return;
+    var slider = getImpulseSliderFromTarget(e.target);
+    if (!slider) return;
+    beginImpulseDrag(slider, e.clientX, e.clientY, 'mouse');
+}, true);
+
+document.addEventListener('mousemove', function(e) {
+    if (!window.matchMedia('(max-width: 768px)').matches) return;
+    moveImpulseDrag(e.clientX, e.clientY);
+}, true);
+
+document.addEventListener('mouseup', function(e) {
+    if (!window.matchMedia('(max-width: 768px)').matches) return;
+    endImpulseDrag(e.clientX, 'mouse');
+}, true);
+
+document.addEventListener('click', function(e) {
+    if (Date.now() > impulseSuppressClick.until) return;
+    if (!impulseSuppressClick.slider) return;
+    if (!impulseSuppressClick.slider.contains(e.target)) return;
+    e.preventDefault();
+    e.stopPropagation();
+}, true);
 
 document.addEventListener('DOMContentLoaded', applyImpulseMediaMode);
 window.addEventListener('resize', scheduleImpulseApply);
