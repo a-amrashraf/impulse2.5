@@ -13325,3 +13325,53 @@ label,.h5,
   animation: none !important;
   transform: none !important;
 }
+
+/* Mobile Product Slider CSS */
+.grid-product__image-mask .product-slider {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  overflow-x: auto !important;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+.grid-product__image-mask .product-slider::-webkit-scrollbar { 
+  display: none; 
+}
+.grid-product__image-mask .product-slide {
+  flex: 0 0 100% !important;
+  scroll-snap-align: start;
+  width: 100%;
+  position: relative;
+  height: 100%;
+  display: block !important;
+}
+.grid-product__image-mask .product-slider-dots {
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: center;
+  position: absolute;
+  bottom: 10px;
+  width: 100%;
+  pointer-events: none;
+  z-index: 2;
+  left: 0;
+}
+.grid-product__image-mask .product-slider-dot {
+  width: 6px;
+  height: 6px;
+  background: rgba(0,0,0,0.2) !important;
+  border-radius: 50%;
+  margin: 0 3px;
+  transition: background 0.2s;
+  display: inline-block !important; 
+}
+.grid-product__image-mask .product-slider-dot.active {
+  background: #000 !important;
+  opacity: 1 !important;
+}
+
