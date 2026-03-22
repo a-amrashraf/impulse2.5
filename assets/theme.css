@@ -13366,7 +13366,7 @@ label,.h5,
 
   .grid-product__content:hover .impulse-mobile-media .impulse-mobile-slide--second,
   .grid__item-image-wrapper .grid-product__image-mask:hover .impulse-mobile-media .impulse-mobile-slide--second {
-    opacity: 1;
+    opacity: 1 !important;
   }
 
   .grid__item-image-wrapper .grid-product__image-mask .impulse-mobile-media .impulse-mobile-dots {
