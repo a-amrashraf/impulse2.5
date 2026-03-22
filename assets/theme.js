@@ -8818,24 +8818,23 @@ function initMobileCarousel() {
     if (carousel.classList.contains('carousel-initialized')) return;
     carousel.classList.add('carousel-initialized');
 
+    const track = carousel.querySelector('.mobile-carousel-track');
     const dots = carousel.querySelectorAll('.dot');
 
+    if (!track) return;
+
     function updateDots() {
-      const scrollLeft = carousel.scrollLeft;
-      const width = carousel.offsetWidth;
-      const index = Math.round(scrollLeft / width);
+      const index = Math.round(track.scrollLeft / track.offsetWidth);
 
       dots.forEach(dot => dot.classList.remove('active'));
       if (dots[index]) dots[index].classList.add('active');
     }
 
-    carousel.addEventListener('scroll', updateDots);
+    track.addEventListener('scroll', updateDots);
     updateDots();
   });
 }
 
-// Run on normal load
+// load
 document.addEventListener("DOMContentLoaded", initMobileCarousel);
-
-// Run on Shopify section reload (VERY IMPORTANT)
 document.addEventListener("shopify:section:load", initMobileCarousel);

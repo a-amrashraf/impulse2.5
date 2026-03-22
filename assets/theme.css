@@ -13327,7 +13327,7 @@ label,.h5,
 }
 
 /* =========================
-   FIXED MOBILE CAROUSEL
+   MOBILE CAROUSEL (FIXED)
 ========================= */
 @media (max-width: 768px) {
 
@@ -13335,37 +13335,33 @@ label,.h5,
     position: relative;
     overflow-x: auto;
     overflow-y: hidden;
-    scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
   }
 
   .mobile-carousel-track {
-    display: flex !important;
-    flex-direction: row !important;
-    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
   }
 
   .mobile-slide {
-    flex: 0 0 100% !important;
-    width: 100% !important;
-    scroll-snap-align: start;
+    flex: 0 0 100%;
+    min-width: 100%;
   }
 
-  /* Force images to not break layout */
+  /* IMPORTANT: prevent theme breaking layout */
+  .mobile-slide .grid__image-ratio,
+  .mobile-slide .image-wrap {
+    width: 100%;
+  }
+
   .mobile-slide img {
     width: 100%;
     display: block;
   }
 
-  /* Kill any theme stacking behavior */
-  .grid-product__image-mask .mobile-slide {
-    display: block !important;
-  }
-
-  /* REMOVE hover stacking issues */
+  /* FIX: stop theme from stacking images */
   .grid-product__secondary-image {
-    position: relative !important;
-    opacity: 1 !important;
+    display: none !important;
   }
 
   /* DOTS */
@@ -13376,14 +13372,14 @@ label,.h5,
     transform: translateX(-50%);
     display: flex;
     gap: 6px;
-    z-index: 5;
+    z-index: 2;
   }
 
   .mobile-dots .dot {
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background: white;
+    background: #fff;
     opacity: 0.4;
   }
 
@@ -13391,24 +13387,15 @@ label,.h5,
     opacity: 1;
   }
 
-  /* Hide scrollbar */
+  /* hide scrollbar */
   .mobile-carousel::-webkit-scrollbar {
     display: none;
   }
 }
 
-/* DESKTOP RESET */
+/* DESKTOP */
 @media (min-width: 769px) {
-  .mobile-carousel,
-  .mobile-carousel-track,
-  .mobile-slide {
-    all: unset;
-  }
-
-  .mobile-dots {
+  .mobile-carousel {
     display: none;
   }
-}
-.mobile-carousel-track > * {
-  flex: 0 0 100% !important;
 }
