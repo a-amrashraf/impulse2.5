@@ -13241,6 +13241,17 @@ label,.h5,
 }
 
 @media screen and (max-width: 768px) {
+  .grid-product.has-impulse-slider .grid-product__link:after {
+    pointer-events: none;
+  }
+
+  .grid-product.has-impulse-slider .grid__item-image-wrapper,
+  .grid-product.has-impulse-slider .impulse-mobile-media,
+  .grid-product.has-impulse-slider .impulse-mobile-slider {
+    position: relative;
+    z-index: 3;
+  }
+
   .grid__item-image-wrapper .grid-product__image-mask .impulse-mobile-media .impulse-mobile-slider {
     display: flex !important;
     flex-wrap: nowrap !important;

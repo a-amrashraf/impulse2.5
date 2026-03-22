@@ -36,6 +36,53 @@ function applyImpulseMediaMode() {
         var second = slider.querySelector('.impulse-mobile-slide--second');
         var dots = media.querySelector('.impulse-mobile-dots');
 
+        if (!slider.dataset.impulseSwipeBound) {
+            slider.dataset.impulseSwipeBound = 'true';
+            var startX = 0;
+            var startY = 0;
+            var startScroll = 0;
+            var isDragging = false;
+            var moved = false;
+
+            slider.addEventListener('touchstart', function(e) {
+                if (!e.touches || !e.touches.length) return;
+                startX = e.touches[0].clientX;
+                startY = e.touches[0].clientY;
+                startScroll = this.scrollLeft;
+                isDragging = true;
+                moved = false;
+            }, { passive: true });
+
+            slider.addEventListener('touchmove', function(e) {
+                if (!isDragging || !e.touches || !e.touches.length) return;
+                var dx = e.touches[0].clientX - startX;
+                var dy = e.touches[0].clientY - startY;
+
+                if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 6) {
+                    moved = true;
+                    this.scrollLeft = startScroll - dx;
+                    e.preventDefault();
+                }
+            }, { passive: false });
+
+            slider.addEventListener('touchend', function() {
+                isDragging = false;
+                var w = this.offsetWidth || 1;
+                var snapIndex = Math.round(this.scrollLeft / w);
+                this.scrollTo({ left: snapIndex * w, behavior: 'smooth' });
+                updateImpulseMobileDots(this);
+                this.dataset.impulseMoved = moved ? '1' : '0';
+            }, { passive: true });
+
+            slider.addEventListener('click', function(e) {
+                if (this.dataset.impulseMoved === '1') {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    this.dataset.impulseMoved = '0';
+                }
+            }, true);
+        }
+
         if (isMobile) {
             slider.style.display = 'flex';
             slider.style.flexWrap = 'nowrap';
@@ -68,6 +115,8 @@ function applyImpulseMediaMode() {
             if (dots) {
                 dots.style.display = second ? 'flex' : 'none';
             }
+
+            updateImpulseMobileDots(slider);
         } else {
             slider.style.display = 'block';
             slider.style.overflow = 'hidden';
