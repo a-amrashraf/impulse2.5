@@ -13327,45 +13327,33 @@ label,.h5,
 }
 
 /* =========================
-   FIXED MOBILE CAROUSEL
+   MOBILE INSTAGRAM CAROUSEL
 ========================= */
 @media (max-width: 768px) {
 
   .mobile-carousel {
     position: relative;
     overflow-x: auto;
-    overflow-y: hidden;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
   }
 
   .mobile-carousel-track {
-    display: flex !important;
-    flex-direction: row !important;
-    width: 100%;
+    display: flex;
+    width: 200%;
   }
 
   .mobile-slide {
-    flex: 0 0 100% !important;
-    width: 100% !important;
+    width: 100%;
+    flex: 0 0 100%;
     scroll-snap-align: start;
   }
 
-  /* Force images to not break layout */
-  .mobile-slide img {
-    width: 100%;
-    display: block;
-  }
-
-  /* Kill any theme stacking behavior */
-  .grid-product__image-mask .mobile-slide {
-    display: block !important;
-  }
-
-  /* REMOVE hover stacking issues */
+  /* REMOVE HOVER EFFECT ON MOBILE */
   .grid-product__secondary-image {
-    position: relative !important;
     opacity: 1 !important;
+    position: relative !important;
+    pointer-events: auto !important;
   }
 
   /* DOTS */
@@ -13376,7 +13364,7 @@ label,.h5,
     transform: translateX(-50%);
     display: flex;
     gap: 6px;
-    z-index: 5;
+    z-index: 2;
   }
 
   .mobile-dots .dot {
@@ -13385,13 +13373,14 @@ label,.h5,
     border-radius: 50%;
     background: white;
     opacity: 0.4;
+    transition: opacity 0.3s;
   }
 
   .mobile-dots .dot.active {
     opacity: 1;
   }
 
-  /* Hide scrollbar */
+  /* HIDE SCROLLBAR */
   .mobile-carousel::-webkit-scrollbar {
     display: none;
   }
