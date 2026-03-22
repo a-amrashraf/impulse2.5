@@ -107,6 +107,7 @@ Arguments
 
     <div class="grid__item-image-wrapper" data-original="{{ preview_image | img_url: '600x' }}">
       <div class="grid-product__image-mask">
+        <div class="impulse-mobile-media">
         <div class="impulse-mobile-slider" onscroll="updateImpulseMobileDots(this)">
           <div class="impulse-mobile-slide impulse-mobile-slide--first">
             <a href="{{ product.url | within: collection }}" style="display: block; height: 100%;">
@@ -261,6 +262,7 @@ Arguments
             <div class="impulse-mobile-dot"></div>
         </div>
         {%- endif -%}
+        </div>
 
         {%- if settings.enable_swatches -%}
           {%- assign swatch_trigger = 'products.general.color_swatch_trigger' | t | downcase -%}
