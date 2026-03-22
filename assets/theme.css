@@ -13327,7 +13327,7 @@ label,.h5,
 }
 
 /* =========================
-   MOBILE CAROUSEL (FIXED)
+   FIXED MOBILE CAROUSEL
 ========================= */
 @media (max-width: 768px) {
 
@@ -13335,33 +13335,37 @@ label,.h5,
     position: relative;
     overflow-x: auto;
     overflow-y: hidden;
+    scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
   }
 
   .mobile-carousel-track {
-    display: flex;
-    flex-wrap: nowrap;
-  }
-
-  .mobile-slide {
-    flex: 0 0 100%;
-    min-width: 100%;
-  }
-
-  /* IMPORTANT: prevent theme breaking layout */
-  .mobile-slide .grid__image-ratio,
-  .mobile-slide .image-wrap {
+    display: flex !important;
+    flex-direction: row !important;
     width: 100%;
   }
 
+  .mobile-slide {
+    flex: 0 0 100% !important;
+    width: 100% !important;
+    scroll-snap-align: start;
+  }
+
+  /* Force images to not break layout */
   .mobile-slide img {
     width: 100%;
     display: block;
   }
 
-  /* FIX: stop theme from stacking images */
+  /* Kill any theme stacking behavior */
+  .grid-product__image-mask .mobile-slide {
+    display: block !important;
+  }
+
+  /* REMOVE hover stacking issues */
   .grid-product__secondary-image {
-    display: none !important;
+    position: relative !important;
+    opacity: 1 !important;
   }
 
   /* DOTS */
@@ -13372,14 +13376,14 @@ label,.h5,
     transform: translateX(-50%);
     display: flex;
     gap: 6px;
-    z-index: 2;
+    z-index: 5;
   }
 
   .mobile-dots .dot {
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background: #fff;
+    background: white;
     opacity: 0.4;
   }
 
@@ -13387,15 +13391,24 @@ label,.h5,
     opacity: 1;
   }
 
-  /* hide scrollbar */
+  /* Hide scrollbar */
   .mobile-carousel::-webkit-scrollbar {
     display: none;
   }
 }
 
-/* DESKTOP */
+/* DESKTOP RESET */
 @media (min-width: 769px) {
-  .mobile-carousel {
+  .mobile-carousel,
+  .mobile-carousel-track,
+  .mobile-slide {
+    all: unset;
+  }
+
+  .mobile-dots {
     display: none;
   }
+}
+.mobile-carousel-track > * {
+  flex: 0 0 100% !important;
 }
