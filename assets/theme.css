@@ -13326,57 +13326,78 @@ label,.h5,
   transform: none !important;
 }
 
-/* Mobile Product Slider CSS (Renamed for compatibility) */
-.impulse-mobile-slider {
-  display: flex !important;
-  flex-wrap: nowrap !important;
-  overflow-x: auto !important;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-  touch-action: pan-x;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-  width: 100% !important;
-  height: 100% !important;
-  margin: 0 !important;
-  padding: 0 !important;
-}
-.impulse-mobile-slider::-webkit-scrollbar {
-  display: none;
-}
-.impulse-mobile-slide {
-  flex: 0 0 100% !important;
-  scroll-snap-align: start;
-  width: 100% !important;
-  position: relative !important;
-  height: 100% !important;
-  display: block !important;
-  float: none !important;
+/* Mobile-only product image slider */
+@media screen and (max-width: 768px) {
+  .impulse-mobile-slider {
+    display: block !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-x;
+    scroll-snap-type: x mandatory;
+    white-space: nowrap;
+    font-size: 0;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .impulse-mobile-slider::-webkit-scrollbar {
+    display: none;
+  }
+
+  .impulse-mobile-slide {
+    display: inline-block !important;
+    vertical-align: top;
+    white-space: normal;
+    width: 100% !important;
+    scroll-snap-align: start;
+    position: relative !important;
+  }
+
+  .impulse-mobile-dots {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: center;
+    position: absolute;
+    bottom: 15px;
+    width: 100%;
+    pointer-events: none;
+    z-index: 5;
+    left: 0;
+  }
+
+  .impulse-mobile-dot {
+    width: 6px;
+    height: 6px;
+    background: rgba(0, 0, 0, 0.2) !important;
+    border-radius: 50%;
+    margin: 0 3px;
+    transition: background 0.2s;
+    display: block !important;
+  }
+
+  .impulse-mobile-dot.active {
+    background: #000 !important;
+    opacity: 1 !important;
+  }
 }
 
-/* Dots */
-.impulse-mobile-dots {
-  display: flex !important;
-  flex-direction: row !important;
-  justify-content: center;
-  position: absolute;
-  bottom: 15px;
-  width: 100%;
-  pointer-events: none;
-  z-index: 5;
-  left: 0;
-}
-.impulse-mobile-dot {
-  width: 6px;
-  height: 6px;
-  background: rgba(0,0,0,0.2) !important;
-  border-radius: 50%;
-  margin: 0 3px;
-  transition: background 0.2s;
-  display: block !important;
-}
-.impulse-mobile-dot.active {
-  background: #000 !important;
-  opacity: 1 !important;
+@media screen and (min-width: 769px) {
+  .impulse-mobile-slider {
+    overflow: visible !important;
+    white-space: normal;
+  }
+
+  .impulse-mobile-slide {
+    display: block !important;
+    width: 100% !important;
+  }
+
+  .impulse-mobile-slide + .impulse-mobile-slide,
+  .impulse-mobile-dots {
+    display: none !important;
+  }
 }
 
