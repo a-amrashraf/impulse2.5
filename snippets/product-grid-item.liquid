@@ -110,7 +110,6 @@ Arguments
         <div class="impulse-mobile-media">
         <div class="impulse-mobile-slider" onscroll="updateImpulseMobileDots(this)">
           <div class="impulse-mobile-slide impulse-mobile-slide--first">
-            <a href="{{ product.url | within: collection }}" style="display: block; height: 100%;">
         {%- if fixed_aspect_ratio -%}
           <div
             class="grid__image-ratio grid__image-ratio--{% if image_style == 'circle' %}square{% else %}{{ settings.product_grid_image_size }}{% endif %}">
@@ -157,7 +156,6 @@ Arguments
             {%- endif -%}
           </div>
         {%- endif -%}
-          </a>
         </div>
 
         {%- if product.media.size > 1 -%}
@@ -218,7 +216,6 @@ Arguments
           
           {%- if second_image != blank -%}
             <div class="impulse-mobile-slide impulse-mobile-slide--second">
-              <a href="{{ product.url | within: collection }}" style="display: block; height: 100%;">
               {%- if fixed_aspect_ratio -%}
                 <div
                   class="grid__image-ratio grid__image-ratio--{% if image_style == 'circle' %}square{% else %}{{ settings.product_grid_image_size }}{% endif %}">
@@ -253,7 +250,6 @@ Arguments
                   -%}
                 </div>
               {%- endif -%}
-              </a>
             </div>
           {%- endif -%}
         {%- endif -%}
