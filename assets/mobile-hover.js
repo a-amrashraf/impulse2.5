@@ -1,5 +1,51 @@
 
 /* Mobile Product Slider Logic */
+var IMPULSE_DEBUG = true;
+
+function ensureImpulseDebugBadge(slider) {
+    if (!IMPULSE_DEBUG || !slider) return null;
+    var media = slider.closest('.impulse-mobile-media');
+    if (!media) return null;
+
+    var badge = media.querySelector('.impulse-debug-badge');
+    if (!badge) {
+        badge = document.createElement('div');
+        badge.className = 'impulse-debug-badge';
+        badge.style.position = 'absolute';
+        badge.style.top = '6px';
+        badge.style.left = '6px';
+        badge.style.zIndex = '999';
+        badge.style.background = 'rgba(0,0,0,0.75)';
+        badge.style.color = '#fff';
+        badge.style.fontSize = '10px';
+        badge.style.lineHeight = '1.3';
+        badge.style.padding = '4px 6px';
+        badge.style.borderRadius = '4px';
+        badge.style.pointerEvents = 'none';
+        badge.style.fontFamily = 'monospace';
+        media.appendChild(badge);
+    }
+    return badge;
+}
+
+function updateImpulseDebug(slider, eventName, mode) {
+    if (!IMPULSE_DEBUG || !slider) return;
+    var badge = ensureImpulseDebugBadge(slider);
+    if (!badge) return;
+
+    var slides = slider.querySelectorAll('.impulse-mobile-slide').length;
+    var index = Number(slider.dataset.impulseIndex || 0);
+    if (!Number.isFinite(index)) index = 0;
+    var dragging = slider.dataset.impulseDragging === '1' ? 'yes' : 'no';
+
+    var resolvedMode = mode;
+    if (!resolvedMode) {
+        resolvedMode = window.matchMedia('(max-width: 768px)').matches ? 'mobile' : 'desktop';
+    }
+
+    badge.textContent = 'mode:' + resolvedMode + ' idx:' + index + ' slides:' + slides + ' drag:' + dragging + ' evt:' + eventName;
+}
+
 function setImpulseActiveDot(slider, index) {
     if (!slider || !slider.parentElement) return;
     var dots = slider.parentElement.querySelector('.impulse-mobile-dots');
@@ -61,6 +107,7 @@ function bindImpulseSwipe(slider) {
         isDragging = true;
         slider.dataset.impulseDragging = '1';
         slider.style.transition = 'none';
+        updateImpulseDebug(slider, 'touchstart', 'mobile');
     }, { passive: true });
 
     slider.addEventListener('touchmove', function(e) {
@@ -79,6 +126,7 @@ function bindImpulseSwipe(slider) {
             var baseX = -currentIndex * width;
             slider.style.transform = 'translate3d(' + (baseX + dx) + 'px,0,0)';
             e.preventDefault();
+            updateImpulseDebug(slider, 'touchmove', 'mobile');
         }
     }, { passive: false });
 
@@ -105,6 +153,7 @@ function bindImpulseSwipe(slider) {
 
         if (slider._impulseGoTo) slider._impulseGoTo(current, true);
         slider.dataset.impulseMoved = moved ? '1' : '0';
+        updateImpulseDebug(slider, 'touchend', 'mobile');
     }, { passive: true });
 
     slider.addEventListener('touchcancel', function() {
@@ -114,6 +163,7 @@ function bindImpulseSwipe(slider) {
         var current = Number(slider.dataset.impulseIndex || 0);
         if (!Number.isFinite(current)) current = 0;
         if (slider._impulseGoTo) slider._impulseGoTo(current, true);
+        updateImpulseDebug(slider, 'touchcancel', 'mobile');
     }, { passive: true });
 
     slider.addEventListener('click', function(e) {
@@ -136,6 +186,7 @@ function bindImpulseSwipe(slider) {
         isDragging = true;
         slider.dataset.impulseDragging = '1';
         slider.style.transition = 'none';
+        updateImpulseDebug(slider, 'pointerdown', 'mobile');
         if (slider.setPointerCapture) {
             try { slider.setPointerCapture(e.pointerId); } catch (err) {}
         }
@@ -157,6 +208,7 @@ function bindImpulseSwipe(slider) {
             var baseX = -currentIndex * width;
             slider.style.transform = 'translate3d(' + (baseX + dx) + 'px,0,0)';
             e.preventDefault();
+            updateImpulseDebug(slider, 'pointermove', 'mobile');
         }
     }, { passive: false });
 
@@ -178,6 +230,7 @@ function bindImpulseSwipe(slider) {
 
         if (slider._impulseGoTo) slider._impulseGoTo(current, true);
         slider.dataset.impulseMoved = moved ? '1' : '0';
+        updateImpulseDebug(slider, 'pointerup', 'mobile');
 
         if (slider.releasePointerCapture) {
             try { slider.releasePointerCapture(e.pointerId); } catch (err) {}
@@ -196,6 +249,7 @@ function bindImpulseSwipe(slider) {
         var current = Number(slider.dataset.impulseIndex || 0);
         if (!Number.isFinite(current)) current = 0;
         if (slider._impulseGoTo) slider._impulseGoTo(current, true);
+        updateImpulseDebug(slider, 'pointercancel', 'mobile');
 
         if (slider.releasePointerCapture) {
             try { slider.releasePointerCapture(e.pointerId); } catch (err) {}
@@ -250,6 +304,7 @@ function applyImpulseMediaMode() {
             var currentIndex = Number(slider.dataset.impulseIndex || 0);
             if (!Number.isFinite(currentIndex)) currentIndex = 0;
             if (slider._impulseGoTo) slider._impulseGoTo(currentIndex, false);
+            updateImpulseDebug(slider, 'apply', 'mobile');
 
             if (dots) {
                 dots.style.display = slides.length > 1 ? 'flex' : 'none';
@@ -296,6 +351,8 @@ function applyImpulseMediaMode() {
             if (dots) {
                 dots.style.display = 'none';
             }
+
+            updateImpulseDebug(slider, 'apply', 'desktop');
         }
     }
 }
