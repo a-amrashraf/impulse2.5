@@ -9415,6 +9415,10 @@ html[dir=rtl] .grid-product__content{
   position:relative;
 }
 
+.impulse-mobile-media{
+  position:relative;
+}
+
 .grid-product__image{
   display:block;
   height:100%;
