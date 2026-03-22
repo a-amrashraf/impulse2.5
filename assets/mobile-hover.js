@@ -117,6 +117,10 @@ function beginImpulseDrag(slider, x, y, source) {
 
     slider.dataset.impulseDragging = '1';
     slider.style.transition = 'none';
+    if (window.getSelection) {
+        var sel = window.getSelection();
+        if (sel && sel.removeAllRanges) sel.removeAllRanges();
+    }
     updateImpulseDebug(slider, source + '-start', 'mobile');
 }
 
@@ -308,6 +312,7 @@ document.addEventListener('pointerdown', function(e) {
     if (!window.matchMedia('(max-width: 768px)').matches) return;
     var slider = getImpulseSliderFromTarget(e.target);
     if (!slider) return;
+    e.preventDefault();
     beginImpulseDrag(slider, e.clientX, e.clientY, 'pointer');
 }, true);
 
@@ -362,6 +367,7 @@ document.addEventListener('mousedown', function(e) {
     if (!window.matchMedia('(max-width: 768px)').matches) return;
     var slider = getImpulseSliderFromTarget(e.target);
     if (!slider) return;
+    e.preventDefault();
     beginImpulseDrag(slider, e.clientX, e.clientY, 'mouse');
 }, true);
 
@@ -381,6 +387,12 @@ document.addEventListener('click', function(e) {
     if (!impulseSuppressClick.slider.contains(e.target)) return;
     e.preventDefault();
     e.stopPropagation();
+}, true);
+
+document.addEventListener('dragstart', function(e) {
+    var slider = getImpulseSliderFromTarget(e.target);
+    if (!slider) return;
+    e.preventDefault();
 }, true);
 
 document.addEventListener('DOMContentLoaded', applyImpulseMediaMode);

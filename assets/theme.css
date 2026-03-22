@@ -13275,6 +13275,12 @@ label,.h5,
     cursor: grab;
   }
 
+  .grid-product.has-impulse-slider .impulse-mobile-media,
+  .grid-product.has-impulse-slider .impulse-mobile-media * {
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
   .grid-product.has-impulse-slider .impulse-mobile-slide img,
   .grid-product.has-impulse-slider .impulse-mobile-slide .image-element {
     -webkit-user-drag: none;
