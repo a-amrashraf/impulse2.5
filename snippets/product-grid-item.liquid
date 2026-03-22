@@ -108,56 +108,61 @@ Arguments
     <div class="grid__item-image-wrapper" data-original="{{ preview_image | img_url: '600x' }}">
       <div class="grid-product__image-mask">
   <style>
-    .mobile-carousel-track {
-      display: flex;
-      flex-direction: row;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      -webkit-overflow-scrolling: touch;
+    @media (max-width: 768px) {
+      .mobile-carousel-track {
+        display: flex;
+        flex-direction: row;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+      }
+      .mobile-slide {
+        flex: 0 0 100%;
+        scroll-snap-align: start;
+        box-sizing: border-box;
+      }
+      .mobile-carousel-track::-webkit-scrollbar {
+        display: none;
+      }
+      .mobile-carousel {
+        position: relative;
+        width: 100%;
+        overflow: hidden;
+      }
+      .mobile-dots {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 6px;
+        margin-top: 8px;
+      }
+      .mobile-dots .dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: #bbb;
+        display: inline-block;
+        transition: background 0.2s;
+      }
+      .mobile-dots .dot.active {
+        background: #222;
+      }
+      .mobile-carousel { display: block; }
+      .desktop-carousel { display: none !important; }
     }
-    .mobile-slide {
-      flex: 0 0 100%;
-      scroll-snap-align: start;
-      box-sizing: border-box;
-    }
-    .mobile-carousel-track::-webkit-scrollbar {
-      display: none;
-    }
-    .mobile-carousel {
-      position: relative;
-      width: 100%;
-      overflow: hidden;
-    }
-    .mobile-dots {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 6px;
-      margin-top: 8px;
-    }
-    .mobile-dots .dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: #bbb;
-      display: inline-block;
-      transition: background 0.2s;
-    }
-    .mobile-dots .dot.active {
-      background: #222;
+    @media (min-width: 769px) {
+      .mobile-carousel { display: none !important; }
+      .desktop-carousel { display: block; }
     }
   </style>
   <div class="mobile-carousel" data-carousel>
     <div class="mobile-carousel-track">
-      
-      <!-- FIRST IMAGE -->
       <div class="mobile-slide">
         {%- if fixed_aspect_ratio -%}
           <div class="grid__image-ratio grid__image-ratio--{% if image_style == 'circle' %}square{% else %}{{ settings.product_grid_image_size }}{% endif %}">
             {%- capture image_classes -%}
               product-image {% unless settings.product_grid_image_fill %} grid__image-contain{% endunless %} image-style--{{ image_style }}
             {%- endcapture -%}
-
             {%- render 'image-element',
               img: preview_image,
               classes: image_classes,
@@ -182,8 +187,6 @@ Arguments
           </div>
         {%- endif -%}
       </div>
-
-      <!-- SECOND IMAGE -->
       {%- if settings.product_hover_image and product.media.size > 1 -%}
         {%- assign second_image = product.media[1].preview_image -%}
         {%- if second_image != blank -%}
@@ -201,16 +204,59 @@ Arguments
           </div>
         {%- endif -%}
       {%- endif -%}
-
     </div>
-
-    <!-- DOTS -->
     <div class="mobile-dots">
       <span class="dot active"></span>
       <span class="dot"></span>
     </div>
-
   </div>
+  <div class="desktop-carousel">
+    {%- if fixed_aspect_ratio -%}
+      <div class="grid__image-ratio grid__image-ratio--{% if image_style == 'circle' %}square{% else %}{{ settings.product_grid_image_size }}{% endif %}">
+        {%- capture image_classes -%}
+          product-image {% unless settings.product_grid_image_fill %} grid__image-contain{% endunless %} image-style--{{ image_style }}
+        {%- endcapture -%}
+        {%- render 'image-element',
+          img: preview_image,
+          classes: image_classes,
+          sizes: sizes,
+          sizeVariable: sizeVariable,
+          fallback: fallback,
+          widths: '360, 540, 720, 900, 1080',
+          animation: 'none'
+        -%}
+      </div>
+    {%- else -%}
+      <div class="image-wrap" style="height:0;padding-bottom:{{ 100 | divided_by: preview_image.aspect_ratio }}%;">
+        {%- render 'image-element',
+          img: preview_image,
+          classes: 'grid-product__image product-image',
+          sizes: sizes,
+          sizeVariable: sizeVariable,
+          fallback: fallback,
+          widths: '360, 540, 720, 900, 1080',
+          animation: 'none'
+        -%}
+      </div>
+    {%- endif -%}
+  </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (window.matchMedia('(max-width: 768px)').matches) {
+        document.querySelectorAll('.mobile-carousel').forEach(function(carousel) {
+          var track = carousel.querySelector('.mobile-carousel-track');
+          var dots = carousel.querySelectorAll('.mobile-dots .dot');
+          if (!track) return;
+          track.addEventListener('scroll', function() {
+            var idx = Math.round(track.scrollLeft / track.offsetWidth);
+            dots.forEach(function(dot, i) {
+              dot.classList.toggle('active', i === idx);
+            });
+          });
+        });
+      }
+    });
+  </script>
 </div>
 
       <a href="{{ product.url | within: collection }}" class="grid-product__link">
