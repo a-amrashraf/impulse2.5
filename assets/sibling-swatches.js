@@ -3,9 +3,51 @@ document.addEventListener('DOMContentLoaded', function() {
   initTouchHover();
 });
 
-function initTouchHover() { 
-  // Disable old implementation to avoid conflicts with new mobile-hover.js
-  return;
+function initTouchHover() {
+  // Mobile swipe for second image (Instagram style)
+  if (!window.matchMedia || !window.matchMedia('(hover: none) and (pointer: coarse)').matches) return;
+
+  document.querySelectorAll('.collection-image[data-mobile-swipe="true"]').forEach(function(wrapper) {
+    var startX = 0;
+    var moved = false;
+    var threshold = 30;
+    var second = wrapper.querySelector('.collection-image__second');
+    if (!second) return;
+
+    wrapper.addEventListener('touchstart', function(e) {
+      if (e.touches && e.touches.length === 1) {
+        startX = e.touches[0].clientX;
+        moved = false;
+      }
+    }, {passive: true});
+
+    wrapper.addEventListener('touchmove', function(e) {
+      if (!e.touches || e.touches.length !== 1) return;
+      var dx = e.touches[0].clientX - startX;
+      if (Math.abs(dx) > threshold) {
+        moved = true;
+        if (dx < 0) {
+          // Swipe left: show second image
+          second.style.display = '';
+          second.style.position = 'absolute';
+          second.style.left = 0;
+          second.style.top = 0;
+          second.style.width = '100%';
+          second.style.height = '100%';
+          second.style.zIndex = 2;
+        } else {
+          // Swipe right: hide second image
+          second.style.display = 'none';
+        }
+      }
+    }, {passive: true});
+
+    wrapper.addEventListener('touchend', function(e) {
+      if (!moved) {
+        second.style.display = 'none';
+      }
+    }, {passive: true});
+  });
 }
 
 function initSiblingSwatches() {
