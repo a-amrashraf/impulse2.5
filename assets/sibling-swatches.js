@@ -11,8 +11,47 @@ function initTouchHover() {
     var startX = 0;
     var moved = false;
     var threshold = 30;
-    var second = wrapper.querySelector('.collection-image__second');
-    if (!second) return;
+    var first = wrapper.querySelector('img.image-element:not(.second-image)');
+    var second = wrapper.querySelector('img.second-image');
+    if (!first || !second) return;
+
+    // Add indicator circles if not present
+    var indicator = wrapper.querySelector('.mobile-swipe-indicator');
+    if (!indicator) {
+      indicator = document.createElement('div');
+      indicator.className = 'mobile-swipe-indicator';
+      indicator.innerHTML = '<span class="dot active"></span><span class="dot"></span>';
+      wrapper.appendChild(indicator);
+    }
+
+    // Style for smooth transitions
+    first.style.transition = 'opacity 0.3s';
+    second.style.transition = 'opacity 0.3s';
+    first.style.position = 'relative';
+    second.style.position = 'absolute';
+    second.style.left = 0;
+    second.style.top = 0;
+    second.style.width = '100%';
+    second.style.height = '100%';
+    second.style.zIndex = 2;
+    first.style.opacity = '1';
+    second.style.opacity = '0';
+    second.style.pointerEvents = 'none';
+
+    function setActiveImage(idx) {
+      if (idx === 0) {
+        first.style.opacity = '1';
+        second.style.opacity = '0';
+        indicator.children[0].classList.add('active');
+        indicator.children[1].classList.remove('active');
+      } else {
+        first.style.opacity = '0';
+        second.style.opacity = '1';
+        indicator.children[0].classList.remove('active');
+        indicator.children[1].classList.add('active');
+      }
+    }
+    setActiveImage(0);
 
     wrapper.addEventListener('touchstart', function(e) {
       if (e.touches && e.touches.length === 1) {
@@ -28,26 +67,27 @@ function initTouchHover() {
         moved = true;
         if (dx < 0) {
           // Swipe left: show second image
-          second.style.display = '';
-          second.style.position = 'absolute';
-          second.style.left = 0;
-          second.style.top = 0;
-          second.style.width = '100%';
-          second.style.height = '100%';
-          second.style.zIndex = 2;
+          setActiveImage(1);
         } else {
-          // Swipe right: hide second image
-          second.style.display = 'none';
+          // Swipe right: show first image
+          setActiveImage(0);
         }
       }
     }, {passive: true});
 
     wrapper.addEventListener('touchend', function(e) {
       if (!moved) {
-        second.style.display = 'none';
+        setActiveImage(0);
       }
     }, {passive: true});
   });
+  // Add indicator styles if not present
+  if (!document.getElementById('mobile-swipe-indicator-style')) {
+    var style = document.createElement('style');
+    style.id = 'mobile-swipe-indicator-style';
+    style.innerHTML = '.mobile-swipe-indicator { display: flex; justify-content: center; align-items: center; gap: 6px; margin-top: 8px; } .mobile-swipe-indicator .dot { width: 7px; height: 7px; border-radius: 50%; background: #bbb; display: inline-block; transition: background 0.2s; } .mobile-swipe-indicator .dot.active { background: #222; }';
+    document.head.appendChild(style);
+  }
 }
 
 function initSiblingSwatches() {
