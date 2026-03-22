@@ -13326,51 +13326,54 @@ label,.h5,
   transform: none !important;
 }
 
-/* Mobile Product Slider CSS */
-.grid-product__image-mask .product-slider {
+/* Mobile Product Slider CSS (Renamed for compatibility) */
+.impulse-mobile-slider {
   display: flex !important;
   flex-wrap: nowrap !important;
   overflow-x: auto !important;
   scroll-snap-type: x mandatory;
   scrollbar-width: none;
   -ms-overflow-style: none;
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
+  width: 100% !important;
+  height: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
-.grid-product__image-mask .product-slider::-webkit-scrollbar { 
-  display: none; 
+.impulse-mobile-slider::-webkit-scrollbar {
+  display: none;
 }
-.grid-product__image-mask .product-slide {
+.impulse-mobile-slide {
   flex: 0 0 100% !important;
   scroll-snap-align: start;
-  width: 100%;
-  position: relative;
-  height: 100%;
+  width: 100% !important;
+  position: relative !important;
+  height: 100% !important;
   display: block !important;
+  float: none !important;
 }
-.grid-product__image-mask .product-slider-dots {
+
+/* Dots */
+.impulse-mobile-dots {
   display: flex !important;
   flex-direction: row !important;
   justify-content: center;
   position: absolute;
-  bottom: 10px;
+  bottom: 15px;
   width: 100%;
   pointer-events: none;
-  z-index: 2;
+  z-index: 5;
   left: 0;
 }
-.grid-product__image-mask .product-slider-dot {
+.impulse-mobile-dot {
   width: 6px;
   height: 6px;
   background: rgba(0,0,0,0.2) !important;
   border-radius: 50%;
   margin: 0 3px;
   transition: background 0.2s;
-  display: inline-block !important; 
+  display: block !important;
 }
-.grid-product__image-mask .product-slider-dot.active {
+.impulse-mobile-dot.active {
   background: #000 !important;
   opacity: 1 !important;
 }

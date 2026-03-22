@@ -1,9 +1,11 @@
 
-/* Mobile Hover replaced with Carousel dot logic */
-window.updateProductDots = function(slider) {
-    var dots = slider.parentElement.querySelector('.product-slider-dots');
+/* Mobile Product Slider Logic (Replaces Hover) */
+window.updateImpulseMobileDots = function(slider) {
+    if (!slider || !slider.parentElement) return;
+    var dots = slider.parentElement.querySelector('.impulse-mobile-dots');
     if (!dots) return;
-    var dotElements = dots.querySelectorAll('.product-slider-dot');
+
+    var dotElements = dots.querySelectorAll('.impulse-mobile-dot');
     if (dotElements.length < 2) return;
     
     var scrollLeft = slider.scrollLeft;
