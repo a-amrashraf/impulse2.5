@@ -11,6 +11,8 @@ window.updateImpulseMobileDots = function(slider) {
     var scrollLeft = slider.scrollLeft;
     var width = slider.offsetWidth;
     var index = Math.round(scrollLeft / width);
+    if (index < 0) index = 0;
+    if (index > dotElements.length - 1) index = dotElements.length - 1;
     
     for (var i = 0; i < dotElements.length; i++) {
         if (i === index) {
