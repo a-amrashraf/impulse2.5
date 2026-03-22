@@ -13330,36 +13330,40 @@ label,.h5,
    MOBILE CAROUSEL (FIXED)
 ========================= */
 @media (max-width: 768px) {
+
   .mobile-carousel {
     position: relative;
     overflow-x: auto;
     overflow-y: hidden;
-    scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
   }
+
   .mobile-carousel-track {
     display: flex;
-    flex-direction: row;
     flex-wrap: nowrap;
-    width: 100%;
   }
+
   .mobile-slide {
     flex: 0 0 100%;
     min-width: 100%;
-    scroll-snap-align: start;
   }
+
+  /* IMPORTANT: prevent theme breaking layout */
   .mobile-slide .grid__image-ratio,
   .mobile-slide .image-wrap {
     width: 100%;
   }
+
   .mobile-slide img {
     width: 100%;
     display: block;
   }
-  /* Hide secondary image stacking */
+
+  /* FIX: stop theme from stacking images */
   .grid-product__secondary-image {
     display: none !important;
   }
+
   /* DOTS */
   .mobile-dots {
     position: absolute;
@@ -13370,22 +13374,26 @@ label,.h5,
     gap: 6px;
     z-index: 2;
   }
+
   .mobile-dots .dot {
     width: 6px;
     height: 6px;
     border-radius: 50%;
     background: #fff;
     opacity: 0.4;
-    transition: opacity 0.2s;
   }
+
   .mobile-dots .dot.active {
     opacity: 1;
   }
-  /* Hide scrollbar */
+
+  /* hide scrollbar */
   .mobile-carousel::-webkit-scrollbar {
     display: none;
   }
 }
+
+/* DESKTOP */
 @media (min-width: 769px) {
   .mobile-carousel {
     display: none;
