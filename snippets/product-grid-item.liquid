@@ -109,7 +109,7 @@ Arguments
       <div class="grid-product__image-mask">
   <!-- mobile carousel styles moved to theme.css -->
 <div class="mobile-carousel" data-carousel>
-  <div class="mobile-carousel-track">
+    <div class="mobile-carousel-track" style="display:flex;">
       <div class="mobile-slide">
         {%- if fixed_aspect_ratio -%}
           <div class="grid__image-ratio grid__image-ratio--{% if image_style == 'circle' %}square{% else %}{{ settings.product_grid_image_size }}{% endif %}">
@@ -159,21 +159,15 @@ Arguments
       {%- endif -%}
     </div>
     <div class="mobile-dots">
-      {%- assign slide_count = 1 -%}
-      {%- if settings.product_hover_image and product.media.size > 1 -%}
-        {%- assign slide_count = 2 -%}
-      {%- endif -%}
-      {%- for i in (1..slide_count) -%}
-        <span class="dot {% if forloop.first %}active{% endif %}"></span>
-      {%- endfor -%}
-    </div>
-    <!-- Add to cart overlay for mobile carousel -->
-    <form method="post" action="/cart/add" class="mobile-carousel-atc product-form" enctype="multipart/form-data">
-      <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
-      <button type="submit" class="btn btn--add-to-cart" aria-label="{{ 'products.product.add_to_cart' | t }}">
-        {{ 'products.product.add_to_cart' | t }}
-      </button>
-    </form>
+  {%- assign slide_count = 1 -%}
+  {%- if settings.product_hover_image and product.media.size > 1 -%}
+    {%- assign slide_count = 2 -%}
+  {%- endif -%}
+
+  {%- for i in (1..slide_count) -%}
+    <span class="dot {% if forloop.first %}active{% endif %}"></span>
+  {%- endfor -%}
+</div>
   </div>
   <div class="desktop-carousel">
     {%- if fixed_aspect_ratio -%}
