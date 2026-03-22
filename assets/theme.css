@@ -13225,119 +13225,15 @@ label,.h5,
   z-index: -9999 !important;
 }
 
-/* Force touch hover display */
-.grid-product__secondary-image {
-  transition: opacity 0.2s ease-in-out;
-  pointer-events: none; /* Ensure clicks pass through to the link */
-  
-  /* Ensure it covers the area */
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  position: absolute;
-}
-.grid-product {
-  -webkit-touch-callout: none; /* Prevent context menu on long press */
-}
-.is-touch-hover .grid-product__secondary-image { 
-  opacity: 1 !important; 
-  visibility: visible !important; 
-  display: block !important; 
-  z-index: 2 !important; 
-  pointer-events: none !important;
-}
-
-.grid-product.show-second .grid-product__secondary-image,
-.grid-product.active .grid-product__secondary-image {
-  opacity: 1 !important;
-  visibility: visible !important;
-  display: block !important;
-  z-index: 3 !important;
-  pointer-events: none !important;
-}
-
-.grid-product__content.is-touch-hover .grid-product__secondary-image {
-  opacity: 1 !important;
-  visibility: visible !important;
-  display: block !important;
-  z-index: 3 !important;
-  pointer-events: none !important;
-}
-
-.grid-product__secondary-image {
-  z-index: 3 !important;
-}
-
-.grid-product__color-image {
-  z-index: 1 !important;
-}
-
-@media (hover: none) and (pointer: coarse) {
-  .grid-product:active .grid-product__secondary-image,
-  .grid-product__content:active .grid-product__secondary-image {
-    opacity: 1 !important;
-    visibility: visible !important;
-    display: block !important;
-    z-index: 2 !important;
-  }
-}
-
-/* Remove pop/fade animation on product card images */
-.grid-product .image-element,
-.grid-product__image,
-.grid-product__secondary-image,
-.grid-product__secondary-image img,
-.grid-product__color-image {
-  animation: none !important;
-  transform: none !important;
-}
-
-.grid-product__secondary-image,
-.grid-product__secondary-image img {
-  transition: opacity 0.2s ease-in-out !important;
-}
-
-/* Compatibility with app-like class naming */
-.secondary-image {
-  opacity: 0;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  transition: opacity 0.2s ease-in-out;
-}
-
-.show-second .secondary-image,
-.active .secondary-image {
-  opacity: 1;
-}
-
-.grid-product .aos-animate[data-aos=image-fade-in] .image-element,
-.grid-product .aos-animate[data-aos=image-fade-in] .grid-product__image,
-.grid-product .aos-animate[data-aos=image-fade-in] .grid-product__secondary-image {
-  animation: none !important;
-}
-
-/* Remove homepage pop-in effect caused by AOS image fade */
-.template-index .aos-animate[data-aos=image-fade-in] .image-element {
-  animation: none !important;
-  transform: none !important;
-}
-
-/* Mobile-only product image slider */
+/* Product-card image behavior: desktop hover + mobile swipe */
 @media screen and (max-width: 768px) {
   .grid__item-image-wrapper .grid-product__image-mask .impulse-mobile-slider {
-    display: grid !important;
-    grid-auto-flow: column;
-    grid-auto-columns: 100%;
+    display: flex !important;
+    flex-wrap: nowrap !important;
     overflow-x: auto !important;
     -webkit-overflow-scrolling: touch;
     touch-action: pan-x;
     scroll-snap-type: x mandatory;
-    white-space: nowrap !important;
-    font-size: 0 !important;
     width: 100% !important;
     margin: 0 !important;
     padding: 0 !important;
@@ -13349,18 +13245,21 @@ label,.h5,
     display: none;
   }
 
-  .grid__item-image-wrapper .grid-product__image-mask .impulse-mobile-slider > .impulse-mobile-slide {
-    display: block !important;
-    white-space: normal !important;
+  .grid__item-image-wrapper .grid-product__image-mask .impulse-mobile-slide {
+    flex: 0 0 100% !important;
     min-width: 100% !important;
     width: 100% !important;
-    scroll-snap-align: start;
+    display: block !important;
     position: relative !important;
+    scroll-snap-align: start;
     opacity: 1 !important;
+  }
+
+  .grid__item-image-wrapper .grid-product__image-mask .impulse-mobile-slide--second {
     pointer-events: auto !important;
   }
 
-  .impulse-mobile-dots {
+  .grid__item-image-wrapper .grid-product__image-mask .impulse-mobile-dots {
     display: flex !important;
     flex-direction: row !important;
     justify-content: center;
@@ -13391,8 +13290,8 @@ label,.h5,
 @media screen and (min-width: 769px) {
   .grid__item-image-wrapper .grid-product__image-mask .impulse-mobile-slider {
     display: block !important;
+    width: 100% !important;
     overflow: hidden !important;
-    white-space: normal;
     position: relative;
   }
 
@@ -13400,21 +13299,20 @@ label,.h5,
     display: block !important;
     width: 100% !important;
     position: relative;
-    opacity: 1;
-    transition: opacity 0.2s ease-in-out;
   }
 
-  .grid__item-image-wrapper .grid-product__image-mask .impulse-mobile-slide:nth-child(2) {
-    position: absolute;
+  .grid__item-image-wrapper .grid-product__image-mask .impulse-mobile-slide--second {
+    position: absolute !important;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
     opacity: 0;
     pointer-events: none;
+    transition: opacity 0.2s ease-in-out;
   }
 
-  .grid__item-image-wrapper .grid-product__image-mask:hover .impulse-mobile-slide:nth-child(2) {
+  .grid__item-image-wrapper .grid-product__image-mask:hover .impulse-mobile-slide--second {
     opacity: 1;
   }
 
