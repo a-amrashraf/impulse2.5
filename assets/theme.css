@@ -13249,7 +13249,11 @@ label,.h5,
   .grid-product.has-impulse-slider .impulse-mobile-media,
   .grid-product.has-impulse-slider .impulse-mobile-slider {
     position: relative;
-    z-index: 3;
+    z-index: 20;
+  }
+
+  .grid-product.has-impulse-slider .impulse-mobile-dots {
+    z-index: 30 !important;
   }
 
   .grid__item-image-wrapper .grid-product__image-mask .impulse-mobile-media .impulse-mobile-slider {
@@ -13342,6 +13346,7 @@ label,.h5,
     transition: opacity 0.2s ease-in-out;
   }
 
+  .grid__item-image-wrapper .grid-product__content:hover .impulse-mobile-media .impulse-mobile-slide--second,
   .grid__item-image-wrapper .grid-product__image-mask:hover .impulse-mobile-media .impulse-mobile-slide--second {
     opacity: 1;
   }

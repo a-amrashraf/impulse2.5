@@ -206,10 +206,13 @@ Arguments
                      endif
                  endfor
              else
-                 # Initial Load: Standard Behavior (Use 2nd media item)
-                 if product.media[1].media_type == 'image'
-                    assign second_image = product.media[1].preview_image
-                 endif
+                # Initial load: pick next available image media (skip videos/models)
+                for media in product.media offset: 1
+                  if media.media_type == 'image'
+                    assign second_image = media.preview_image
+                    break
+                  endif
+                endfor
              endif
           -%}
           
