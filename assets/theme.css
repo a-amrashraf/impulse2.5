@@ -13332,6 +13332,8 @@ label,.h5,
   flex-wrap: nowrap !important;
   overflow-x: auto !important;
   scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-x;
   scrollbar-width: none;
   -ms-overflow-style: none;
   width: 100% !important;
