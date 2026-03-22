@@ -60,8 +60,14 @@ function updateImpulseDebug(slider, eventName, mode) {
 function getImpulseSliderFromTarget(target) {
     if (!target || !target.closest) return null;
     var media = target.closest('.impulse-mobile-media');
-    if (!media) return null;
-    return media.querySelector('.impulse-mobile-slider');
+    if (media) {
+        return media.querySelector('.impulse-mobile-slider');
+    }
+
+    // Fallback: card overlay links can be siblings that cover the media area.
+    var card = target.closest('.grid-product.has-impulse-slider, .product-card.has-impulse-slider');
+    if (!card) return null;
+    return card.querySelector('.impulse-mobile-slider');
 }
 
 function setImpulseActiveDot(slider, index) {
