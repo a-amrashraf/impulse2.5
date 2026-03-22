@@ -107,54 +107,7 @@ Arguments
 
     <div class="grid__item-image-wrapper" data-original="{{ preview_image | img_url: '600x' }}">
       <div class="grid-product__image-mask">
-  <style>
-    @media (max-width: 768px) {
-      .mobile-carousel-track {
-        display: flex;
-        flex-direction: row;
-        overflow-x: auto;
-        scroll-snap-type: x mandatory;
-        -webkit-overflow-scrolling: touch;
-      }
-      .mobile-slide {
-        flex: 0 0 100%;
-        scroll-snap-align: start;
-        box-sizing: border-box;
-      }
-      .mobile-carousel-track::-webkit-scrollbar {
-        display: none;
-      }
-      .mobile-carousel {
-        position: relative;
-        width: 100%;
-        overflow: hidden;
-      }
-      .mobile-dots {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 6px;
-        margin-top: 8px;
-      }
-      .mobile-dots .dot {
-        width: 7px;
-        height: 7px;
-        border-radius: 50%;
-        background: #bbb;
-        display: inline-block;
-        transition: background 0.2s;
-      }
-      .mobile-dots .dot.active {
-        background: #222;
-      }
-      .mobile-carousel { display: block; }
-      .desktop-carousel { display: none !important; }
-    }
-    @media (min-width: 769px) {
-      .mobile-carousel { display: none !important; }
-      .desktop-carousel { display: block; }
-    }
-  </style>
+  <!-- mobile carousel styles moved to theme.css -->
   <div class="mobile-carousel" data-carousel>
     <div class="mobile-carousel-track">
       <div class="mobile-slide">
