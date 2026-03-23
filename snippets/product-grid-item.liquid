@@ -198,7 +198,7 @@ Arguments
                          endif
                      endif
                      
-                     if is_match
+                    if is_match and media.id != main_media.id and media.preview_image.src != preview_image.src
                         assign second_image = media.preview_image
                         break
                      endif
@@ -206,7 +206,7 @@ Arguments
              else
                 # Initial load: pick next available image media (skip videos/models)
                 for media in product.media offset: 1
-                  if media.media_type == 'image'
+                  if media.media_type == 'image' and media.id != main_media.id and media.preview_image.src != preview_image.src
                     assign second_image = media.preview_image
                     break
                   endif
@@ -220,7 +220,7 @@ Arguments
 
              if second_image == blank and product.images.size > 1
                for image in product.images
-                 if image.id != preview_image.id
+                 if image.id != preview_image.id and image.src != preview_image.src
                    assign second_image = image
                    break
                  endif

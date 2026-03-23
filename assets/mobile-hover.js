@@ -255,7 +255,7 @@ function applyImpulseMediaMode() {
             goToImpulseSlide(slider, currentIndex, false);
 
             if (dots) {
-                dots.style.display = slides.length > 1 ? 'flex' : 'none';
+                dots.style.display = slides.length > 1 ? '' : 'none';
             }
 
             updateImpulseDebug(slider, 'apply', 'mobile');
@@ -300,7 +300,7 @@ function applyImpulseMediaMode() {
             }
 
             if (dots) {
-                dots.style.display = 'none';
+                dots.style.display = '';
             }
 
             updateImpulseDebug(slider, 'apply', 'desktop');
