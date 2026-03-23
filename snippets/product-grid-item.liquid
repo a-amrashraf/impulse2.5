@@ -103,6 +103,7 @@ Arguments
       endif
       
       assign preview_image = main_media.preview_image
+      assign second_image = blank
     -%}
 
     <div class="grid__item-image-wrapper" data-original="{{ preview_image | img_url: '600x' }}">
@@ -229,13 +230,13 @@ Arguments
           {%- endif -%}
         {%- endif -%}
 
+        </div>
         {%- if second_image != blank -%}
-        <div class="impulse-mobile-dots">
+          <div class="impulse-mobile-dots">
             <div class="impulse-mobile-dot active"></div>
             <div class="impulse-mobile-dot"></div>
-        </div>
+          </div>
         {%- endif -%}
-        </div>
         </div>
 
         {%- if settings.enable_swatches -%}
