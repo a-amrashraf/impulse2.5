@@ -138,11 +138,36 @@
     return media ? media.querySelectorAll('.impulse-mobile-dot') : [];
   }
 
+  function ensureDots(slider, slideCount) {
+    var media = slider ? slider.closest('.impulse-mobile-media') : null;
+    if (!media) return null;
+    if (!slideCount || slideCount < 2) return null;
+
+    var dotsWrap = media.querySelector('.impulse-mobile-dots');
+    if (!dotsWrap) {
+      dotsWrap = document.createElement('div');
+      dotsWrap.className = 'impulse-mobile-dots';
+      media.appendChild(dotsWrap);
+    }
+
+    var existingDots = dotsWrap.querySelectorAll('.impulse-mobile-dot');
+    if (existingDots.length >= 2) return dotsWrap;
+
+    dotsWrap.innerHTML = '';
+    for (var i = 0; i < slideCount; i++) {
+      var dot = document.createElement('div');
+      dot.className = 'impulse-mobile-dot' + (i === 0 ? ' active' : '');
+      dotsWrap.appendChild(dot);
+    }
+    return dotsWrap;
+  }
+
   function setDotsDisplay(slider, show) {
     var media = slider ? slider.closest('.impulse-mobile-media') : null;
     if (!media) return;
 
-    var dotsWrap = media.querySelector('.impulse-mobile-dots');
+    var slideCount = getSlides(slider).length;
+    var dotsWrap = show ? ensureDots(slider, slideCount) : media.querySelector('.impulse-mobile-dots');
     if (!dotsWrap) return;
 
     dotsWrap.style.setProperty('display', show ? 'flex' : 'none', 'important');
@@ -284,6 +309,7 @@
 
     var media = slider.closest('.impulse-mobile-media');
     if (media) {
+      ensureDots(slider, slides.length);
       var dotsWrap = media.querySelector('.impulse-mobile-dots');
       if (dotsWrap) {
         setDotsDisplay(slider, slides.length > 1);
