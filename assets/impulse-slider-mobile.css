@@ -17,7 +17,12 @@
 .grid-product.has-impulse-slider .impulse-mobile-media,
 .grid-product.has-impulse-slider .impulse-mobile-slider {
   position: relative;
-  z-index: 20;
+  z-index: 1;
+}
+
+.grid-product.has-impulse-slider .grid-product__tag,
+.grid-product.has-impulse-slider .quick-product__btn {
+  z-index: 30;
 }
 
 .grid-product.has-impulse-slider .impulse-mobile-dots {
