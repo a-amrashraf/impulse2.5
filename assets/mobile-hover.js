@@ -550,6 +550,20 @@
         updateDebugBadge(slider, 'click', 'suppressed=1');
       }
     }, true);
+
+    gestureTarget.addEventListener('selectstart', function(e) {
+      if (drag.active) {
+        e.preventDefault();
+      }
+    }, true);
+
+    if (card) {
+      card.addEventListener('selectstart', function(e) {
+        if (drag.active) {
+          e.preventDefault();
+        }
+      }, true);
+    }
   }
 
   function applyMode() {

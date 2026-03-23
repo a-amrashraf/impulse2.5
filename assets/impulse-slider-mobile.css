@@ -1,3 +1,13 @@
+.grid-product.has-impulse-slider {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.grid-product.has-impulse-slider .grid-product__link {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
 /* Mobile-only slider styles for product cards */
 .grid__item-image-wrapper .grid-product__image-mask .impulse-mobile-media {
   position: relative;
