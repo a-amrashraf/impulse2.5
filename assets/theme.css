@@ -13259,8 +13259,10 @@ label,.h5,
   .grid__item-image-wrapper .grid-product__image-mask .impulse-mobile-media .impulse-mobile-slider {
     display: flex !important;
     flex-wrap: nowrap !important;
-    overflow: hidden !important;
-    touch-action: none;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-x;
+    scroll-snap-type: x mandatory;
     width: 100% !important;
     margin: 0 !important;
     padding: 0 !important;
@@ -13297,6 +13299,7 @@ label,.h5,
     width: 100% !important;
     display: block !important;
     position: relative !important;
+    scroll-snap-align: start;
     opacity: 1 !important;
     top: auto !important;
     left: auto !important;
@@ -13348,8 +13351,6 @@ label,.h5,
     display: block !important;
     width: 100% !important;
     position: relative;
-    opacity: 1;
-    transition: opacity 0.2s ease-in-out;
   }
 
   .grid__item-image-wrapper .grid-product__image-mask .impulse-mobile-media .impulse-mobile-slide--second {
@@ -13368,11 +13369,6 @@ label,.h5,
   .grid__item-image-wrapper .grid-product__image-mask:hover .impulse-mobile-media .impulse-mobile-slide--second {
     opacity: 1 !important;
     visibility: visible;
-  }
-
-  .grid-product__content:hover .impulse-mobile-media .impulse-mobile-slide--first,
-  .grid__item-image-wrapper .grid-product__image-mask:hover .impulse-mobile-media .impulse-mobile-slide--first {
-    opacity: 0;
   }
 
   .grid__item-image-wrapper .grid-product__image-mask .impulse-mobile-media .impulse-mobile-dots {
