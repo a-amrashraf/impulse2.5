@@ -399,6 +399,7 @@
       drag.axis = '';
       slider.dataset.impulseMoved = '0';
       slider.dataset.impulseDragging = '1';
+      if (card) card.dataset.impulseDragging = '1';
       slider.style.transition = 'none';
 
       if (window.getSelection) {
@@ -449,6 +450,7 @@
       if (!drag.active || !isMobileMode()) return;
       drag.active = false;
       slider.dataset.impulseDragging = '0';
+      if (card) card.dataset.impulseDragging = '0';
 
       var dx = drag.moved ? drag.dx : (clientX - drag.startX);
       var current = Number(slider.dataset.impulseIndex || 0);
@@ -472,6 +474,7 @@
       if (!drag.active) return;
       drag.active = false;
       slider.dataset.impulseDragging = '0';
+      if (card) card.dataset.impulseDragging = '0';
       var current = Number(slider.dataset.impulseIndex || 0);
       if (!Number.isFinite(current)) current = 0;
       setIndex(slider, current, true);
