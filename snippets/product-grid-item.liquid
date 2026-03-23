@@ -252,9 +252,11 @@ Arguments
             </button>
           </form>
         {%- endif -%}
-        </div>
+      </div>
+    </div>
+    </div>
 
-        <a href="{{ product.url | within: collection }}" class="grid-product__link">
+    <a href="{{ product.url | within: collection }}" class="grid-product__link">
         <div class="grid-product__meta">
           <div class="grid-product__title grid-product__title--{{ settings.type_product_style }}">{{ product.title }}</div>
           {%- if settings.vendor_enable -%}
@@ -435,8 +437,7 @@ Arguments
           {%- endif -%}
         </div>
       </a>
-    </div>
-  </div>
+
       {%- if settings.enable_swatches and type == blank and show_bottom_swatches -%}
         {%- liquid
       assign swatch_trigger = 'products.general.color_swatch_trigger' | t | downcase
@@ -658,6 +659,8 @@ Arguments
 
     {%- endif -%}
   {%- endif -%}
+
+  </div>
 
   {%- if quick_shop_enable and type == blank -%}
     {%- render 'quick-shop-modal', product: product -%}
