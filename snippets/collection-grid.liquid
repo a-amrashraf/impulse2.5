@@ -140,6 +140,34 @@ Snippet Arguments
 }
 </style>
 
+{%- liquid
+  assign mobile_card_width = '50%'
+  assign desktop_card_width = '25%'
+  case per_row
+    when 2
+      assign desktop_card_width = '50%'
+    when 3
+      assign desktop_card_width = '33.33333%'
+    when 4
+      assign desktop_card_width = '25%'
+    when 5
+      assign desktop_card_width = '20%'
+  endcase
+-%}
+
+<style>
+/* Scoped fallback sizing to keep product cards side-by-side in collection grid */
+.collection-grid__wrapper .grid.grid--uniform > .grid__item.grid-product {
+  width: {{ mobile_card_width }};
+}
+
+@media only screen and (min-width: 769px) {
+  .collection-grid__wrapper .grid.grid--uniform > .grid__item.grid-product {
+    width: {{ desktop_card_width }};
+  }
+}
+</style>
+
 
 {%- if enable_sidebar -%}
   {%- assign show_filters = true -%}
