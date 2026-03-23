@@ -2966,7 +2966,6 @@ html:not(.no-js):not(.tab-outline) :focus{
 .skip-link:focus{
   clip:auto;
   background-color:var(--colorBody);
-  color:var(--colorTextBody);
   height:auto;
   margin:0;
   opacity:1;
@@ -13359,7 +13358,8 @@ label,.h5,
     left: 0;
     right: 0;
     bottom: 0;
-    opacity: 0;
+    opacity: 0 !important;
+    visibility: hidden;
     pointer-events: none;
     transition: opacity 0.2s ease-in-out;
   }
@@ -13367,6 +13367,13 @@ label,.h5,
   .grid-product__content:hover .impulse-mobile-media .impulse-mobile-slide--second,
   .grid__item-image-wrapper .grid-product__image-mask:hover .impulse-mobile-media .impulse-mobile-slide--second {
     opacity: 1 !important;
+    visibility: visible !important;
+  }
+
+  .grid-product__content:hover .impulse-mobile-media .impulse-mobile-slide--first,
+  .grid__item-image-wrapper .grid-product__image-mask:hover .impulse-mobile-media .impulse-mobile-slide--first {
+    opacity: 0 !important;
+    visibility: hidden;
   }
 
   .grid__item-image-wrapper .grid-product__image-mask .impulse-mobile-media .impulse-mobile-dots {

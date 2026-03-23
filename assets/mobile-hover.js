@@ -9,6 +9,14 @@
     return Math.max(min, Math.min(max, n));
   }
 
+  function getViewportWidth(slider) {
+    var media = slider ? slider.closest('.impulse-mobile-media') : null;
+    var width = media ? media.offsetWidth : 0;
+    if (!width && slider && slider.parentElement) width = slider.parentElement.offsetWidth;
+    if (!width && slider) width = slider.offsetWidth;
+    return width || 1;
+  }
+
   function getSlides(slider) {
     return slider ? slider.querySelectorAll('.impulse-mobile-slide') : [];
   }
@@ -36,7 +44,8 @@
     var target = clamp(index, 0, slides.length - 1);
     slider.dataset.impulseIndex = String(target);
     slider.style.transition = animate ? 'transform 0.25s ease' : 'none';
-    slider.style.transform = 'translate3d(' + (-target * 100) + '%,0,0)';
+    var viewportWidth = getViewportWidth(slider);
+    slider.style.transform = 'translate3d(' + (-target * viewportWidth) + 'px,0,0)';
     updateDots(slider, target);
   }
 
@@ -167,7 +176,7 @@
 
       var current = Number(slider.dataset.impulseIndex || 0);
       if (!Number.isFinite(current)) current = 0;
-      var width = slider.offsetWidth || 1;
+      var width = getViewportWidth(slider);
       var baseX = -current * width;
       slider.style.transform = 'translate3d(' + (baseX + dx) + 'px,0,0)';
       return true;
@@ -182,7 +191,7 @@
       var current = Number(slider.dataset.impulseIndex || 0);
       if (!Number.isFinite(current)) current = 0;
 
-      var width = slider.offsetWidth || 1;
+      var width = getViewportWidth(slider);
       var threshold = Math.max(20, width * 0.12);
       if (dx < -threshold) current += 1;
       if (dx > threshold) current -= 1;
