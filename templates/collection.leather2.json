@@ -35,13 +35,6 @@
             "custom_title": "BOWLER"
           }
         },
-        "collection_jcRwWm": {
-          "type": "collection",
-          "settings": {
-            "collection": "shopper-bag",
-            "custom_title": "SHOPPER"
-          }
-        },
         "collection_DMVxWD": {
           "type": "collection",
           "settings": {
@@ -102,7 +95,6 @@
       },
       "block_order": [
         "collection_kUz6iQ",
-        "collection_jcRwWm",
         "collection_DMVxWD",
         "collection_RUhfck",
         "collection_Hmycmc",
