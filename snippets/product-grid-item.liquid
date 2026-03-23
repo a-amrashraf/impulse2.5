@@ -158,24 +158,34 @@ Arguments
         {%- endif -%}
         </div>
 
-        {%- if product.images.size > 1 -%}
+        {%- if product.media.size > 1 or product.images.size > 1 -%}
           {%- liquid
-             assign second_image = product.images[1]
+             assign second_image = blank
+             assign second_media = blank
 
-             # If first two are same source, pick the next distinct image
-             if second_image.src == preview_image.src
-               assign second_image = blank
-               for image in product.images offset: 2
-                 if image.src != preview_image.src
-                   assign second_image = image
-                   break
-                 endif
-               endfor
+             for media in product.media
+               if media.media_type == 'image' and media.id != main_media.id
+                 assign second_media = media
+                 break
+               endif
+             endfor
+
+             if second_media != blank
+               assign second_image = second_media.preview_image
              endif
 
-             # Final fallback to first image after primary if no distinct src found
              if second_image == blank and product.images.size > 1
                assign second_image = product.images[1]
+
+               if second_image.src == preview_image.src
+                 assign second_image = blank
+                 for image in product.images offset: 2
+                   if image.src != preview_image.src
+                     assign second_image = image
+                     break
+                   endif
+                 endfor
+               endif
              endif
           -%}
           
