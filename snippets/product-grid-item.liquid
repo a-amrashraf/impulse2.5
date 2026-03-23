@@ -158,73 +158,21 @@ Arguments
         {%- endif -%}
         </div>
 
-        {%- if product.media.size > 1 -%}
+        {%- if product.images.size > 1 -%}
           {%- liquid
              assign second_image = blank
-             
-             if is_ajax
-                 # AJAX Request: Find strictly matched variant image
-                 for v in main_media.variants
-                    assign main_variant_ids = main_variant_ids | append: v.id | append: ","
-                 endfor
-                 
-                 assign start_index = main_media.position
-                 
-                 for media in product.media offset: start_index
-                     if media.media_type != 'image'
-                        continue
-                     endif
-                     
-                     assign is_match = false
-                     
-                     if main_variant_ids != ""
-                         # Main image is tied to variants. Find next image sharing a variant.
-                         if media.variants.size > 0
-                            for v in media.variants
-                               assign v_id = v.id | append: ","
-                               if main_variant_ids contains v_id
-                                   assign is_match = true
-                                   break
-                               endif
-                            endfor
-                         else
-                            # Candidate is generic. Match.
-                            assign is_match = true
-                         endif
-                     else
-                         # Main image is generic. Match only generic.
-                         if media.variants.size == 0
-                            assign is_match = true
-                         endif
-                     endif
-                     
-                    if is_match and media.id != main_media.id and media.preview_image.src != preview_image.src
-                        assign second_image = media.preview_image
-                        break
-                     endif
-                 endfor
-             else
-                # Initial load: pick next available image media (skip videos/models)
-                for media in product.media offset: 1
-                  if media.media_type == 'image' and media.id != main_media.id and media.preview_image.src != preview_image.src
-                    assign second_image = media.preview_image
-                    break
-                  endif
-                endfor
-             endif
 
-             # Avoid duplicate first image and fallback to product images if needed
-             if second_image != blank and second_image.id == preview_image.id
-               assign second_image = blank
-             endif
+             # Always pick a real, distinct product image for slide 2
+             for image in product.images
+               if image.src != preview_image.src
+                 assign second_image = image
+                 break
+               endif
+             endfor
 
+             # Last fallback: second image in array (if first comparison failed)
              if second_image == blank and product.images.size > 1
-               for image in product.images
-                 if image.id != preview_image.id and image.src != preview_image.src
-                   assign second_image = image
-                   break
-                 endif
-               endfor
+               assign second_image = product.images[1]
              endif
           -%}
           
