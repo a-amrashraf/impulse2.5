@@ -165,6 +165,12 @@
             "collection": "hobo-bag"
           }
         },
+        "collection_6jHbkr": {
+          "type": "collection",
+          "settings": {
+            "collection": "bowler-bag"
+          }
+        },
         "collection_i8kcPp": {
           "type": "collection",
           "settings": {
@@ -211,6 +217,7 @@
       "block_order": [
         "collection_bmhUEq",
         "collection_fwzba7",
+        "collection_6jHbkr",
         "collection_i8kcPp",
         "collection_ANJ97N",
         "collection_MdiMrM",
