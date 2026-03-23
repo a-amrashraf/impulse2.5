@@ -28,13 +28,6 @@
     "collection_slider_ddKWri": {
       "type": "collection-slider",
       "blocks": {
-        "collection_kUz6iQ": {
-          "type": "collection",
-          "settings": {
-            "collection": "bowler-bag",
-            "custom_title": "BOWLER"
-          }
-        },
         "collection_DMVxWD": {
           "type": "collection",
           "settings": {
@@ -48,6 +41,13 @@
           "settings": {
             "collection": "hobo-bag",
             "custom_title": "Hobo"
+          }
+        },
+        "collection_kUz6iQ": {
+          "type": "collection",
+          "settings": {
+            "collection": "bowler-bag",
+            "custom_title": "BOWLER"
           }
         },
         "collection_Hmycmc": {
@@ -94,9 +94,9 @@
         }
       },
       "block_order": [
-        "collection_kUz6iQ",
         "collection_DMVxWD",
         "collection_RUhfck",
+        "collection_kUz6iQ",
         "collection_Hmycmc",
         "collection_ggyCtV",
         "collection_cRwFje",
