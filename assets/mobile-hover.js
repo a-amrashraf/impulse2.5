@@ -169,6 +169,25 @@
     updateDebugBadge(slider, 'fallback', 'applied=1');
   }
 
+  function forceSecondSlideVisibility(slider) {
+    var secondSlide;
+    var secondImg;
+    if (!slider) return;
+
+    secondSlide = slider.querySelector('.impulse-mobile-slide--second');
+    if (!secondSlide) return;
+
+    secondSlide.style.opacity = '1';
+    secondSlide.style.visibility = 'visible';
+    secondSlide.style.backgroundColor = 'transparent';
+
+    secondImg = secondSlide.querySelector('img');
+    if (!secondImg) return;
+    secondImg.style.display = 'block';
+    secondImg.style.opacity = '1';
+    secondImg.style.visibility = 'visible';
+  }
+
   function updateDots(slider, index) {
     var dots = getDots(slider);
     if (!dots.length) return;
@@ -189,7 +208,10 @@
     slider.style.transition = animate ? 'transform 0.25s ease' : 'none';
     var viewportWidth = getViewportWidth(slider);
     slider.style.transform = 'translate3d(' + (-target * viewportWidth) + 'px,0,0)';
-    if (target > 0) ensureSecondSlideImage(slider);
+    if (target > 0) {
+      ensureSecondSlideImage(slider);
+      forceSecondSlideVisibility(slider);
+    }
     debugLog('setIndex', { target: target, animate: !!animate, viewportWidth: viewportWidth, transform: slider.style.transform });
     updateDebugBadge(slider, 'setIndex', 't=' + target);
     updateDots(slider, target);
@@ -237,6 +259,7 @@
     var current = Number(slider.dataset.impulseIndex || 0);
     if (!Number.isFinite(current)) current = 0;
     ensureSecondSlideImage(slider);
+    forceSecondSlideVisibility(slider);
     setIndex(slider, current, false);
     debugLog('styleForMobile', { slides: slides.length, index: current });
     updateDebugBadge(slider, 'style', 'slides=' + slides.length);
@@ -277,74 +300,6 @@
       }
     }
     updateDebugBadge(slider, 'desktop', 'cleared=1');
-  }
-
-  function applyDesktopLayering(slider) {
-    var slides = getSlides(slider);
-    var first;
-    var second;
-    var card;
-
-    if (!slides.length) return;
-
-    slider.style.display = 'block';
-    slider.style.overflow = 'hidden';
-    slider.style.position = 'relative';
-    slider.style.transform = '';
-    slider.style.transition = '';
-
-    first = slides[0];
-    if (first) {
-      first.style.position = 'relative';
-      first.style.opacity = '1';
-      first.style.visibility = 'visible';
-      first.style.pointerEvents = 'auto';
-      first.style.width = '100%';
-    }
-
-    second = slides.length > 1 ? slides[1] : null;
-    if (second) {
-      second.style.position = 'absolute';
-      second.style.top = '0';
-      second.style.right = '0';
-      second.style.bottom = '0';
-      second.style.left = '0';
-      second.style.opacity = '0';
-      second.style.visibility = 'hidden';
-      second.style.pointerEvents = 'none';
-      second.style.width = '100%';
-    }
-
-    card = slider.closest('.grid-product__content') || slider.closest('.grid-product');
-    if (card && second && first && card.dataset.impulseDesktopBound !== '1') {
-      card.dataset.impulseDesktopBound = '1';
-
-      card.addEventListener('mouseenter', function() {
-        second.style.opacity = '1';
-        second.style.visibility = 'visible';
-        first.style.opacity = '0';
-      });
-
-      card.addEventListener('mouseleave', function() {
-        second.style.opacity = '0';
-        second.style.visibility = 'hidden';
-        first.style.opacity = '1';
-      });
-
-      card.addEventListener('focusin', function() {
-        second.style.opacity = '1';
-        second.style.visibility = 'visible';
-        first.style.opacity = '0';
-      });
-
-      card.addEventListener('focusout', function() {
-        second.style.opacity = '0';
-        second.style.visibility = 'hidden';
-        first.style.opacity = '1';
-      });
-    }
-
-    updateDebugBadge(slider, 'desktop-layer', 'slides=' + slides.length);
   }
 
   function initSlider(slider) {
@@ -523,7 +478,6 @@
         styleForMobile(slider);
       } else {
         clearMobileInlineStyles(slider);
-        applyDesktopLayering(slider);
       }
     }
   }

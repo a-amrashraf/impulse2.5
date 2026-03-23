@@ -13358,17 +13358,24 @@ label,.h5,
     right: 0;
     bottom: 0;
     left: 0;
-    opacity: 0;
+    opacity: 0 !important;
+    visibility: hidden;
     pointer-events: none;
     transition: opacity 0.2s ease-in-out;
   }
 
-  .grid-product.has-impulse-slider .grid-product__content:hover .impulse-mobile-slide--second {
-    opacity: 1;
+  .grid-product.has-impulse-slider:hover .impulse-mobile-slide--second,
+  .grid-product.has-impulse-slider .grid-product__content:hover .impulse-mobile-slide--second,
+  .grid-product.has-impulse-slider:focus-within .impulse-mobile-slide--second {
+    opacity: 1 !important;
+    visibility: visible;
   }
 
-  .grid-product.has-impulse-slider .grid-product__content:hover .impulse-mobile-slide--first {
-    opacity: 0;
+  .grid-product.has-impulse-slider:hover .impulse-mobile-slide--first,
+  .grid-product.has-impulse-slider .grid-product__content:hover .impulse-mobile-slide--first,
+  .grid-product.has-impulse-slider:focus-within .impulse-mobile-slide--first {
+    opacity: 0 !important;
+    visibility: hidden;
   }
 
   .grid__item-image-wrapper .grid-product__image-mask .impulse-mobile-media .impulse-mobile-dots {
