@@ -138,6 +138,36 @@
     return media ? media.querySelectorAll('.impulse-mobile-dot') : [];
   }
 
+  function setDotsDisplay(slider, show) {
+    var media = slider ? slider.closest('.impulse-mobile-media') : null;
+    if (!media) return;
+
+    var dotsWrap = media.querySelector('.impulse-mobile-dots');
+    if (!dotsWrap) return;
+
+    dotsWrap.style.setProperty('display', show ? 'flex' : 'none', 'important');
+    if (!show) return;
+
+    dotsWrap.style.setProperty('position', 'absolute');
+    dotsWrap.style.setProperty('left', '0');
+    dotsWrap.style.setProperty('right', '0');
+    dotsWrap.style.setProperty('bottom', '10px');
+    dotsWrap.style.setProperty('justify-content', 'center');
+    dotsWrap.style.setProperty('align-items', 'center');
+    dotsWrap.style.setProperty('gap', '6px');
+    dotsWrap.style.setProperty('z-index', '35', 'important');
+
+    var dots = dotsWrap.querySelectorAll('.impulse-mobile-dot');
+    for (var i = 0; i < dots.length; i++) {
+      var dot = dots[i];
+      dot.style.setProperty('display', 'block', 'important');
+      dot.style.setProperty('width', '7px');
+      dot.style.setProperty('height', '7px');
+      dot.style.setProperty('border-radius', '50%');
+      dot.style.setProperty('border', '1px solid rgba(0,0,0,0.28)');
+    }
+  }
+
   function ensureSecondSlideImage(slider) {
     if (!slider) return;
     var firstSlide = slider.querySelector('.impulse-mobile-slide--first');
@@ -194,7 +224,11 @@
 
     var safe = clamp(index, 0, dots.length - 1);
     for (var i = 0; i < dots.length; i++) {
-      dots[i].classList.toggle('active', i === safe);
+      var isActive = i === safe;
+      dots[i].classList.toggle('active', isActive);
+      dots[i].style.setProperty('background', isActive ? '#ffffff' : 'rgba(255,255,255,0.55)', 'important');
+      dots[i].style.setProperty('opacity', isActive ? '1' : '0.9', 'important');
+      dots[i].style.setProperty('box-shadow', '0 0 0 1px rgba(0,0,0,0.2)', 'important');
     }
   }
 
@@ -252,7 +286,7 @@
     if (media) {
       var dotsWrap = media.querySelector('.impulse-mobile-dots');
       if (dotsWrap) {
-        dotsWrap.style.display = slides.length > 1 ? 'flex' : 'none';
+        setDotsDisplay(slider, slides.length > 1);
       }
     }
 
@@ -296,7 +330,7 @@
     if (media) {
       var dotsWrap = media.querySelector('.impulse-mobile-dots');
       if (dotsWrap) {
-        dotsWrap.style.display = 'none';
+        setDotsDisplay(slider, false);
       }
     }
     updateDebugBadge(slider, 'desktop', 'cleared=1');
