@@ -375,7 +375,8 @@
     slider.dataset.impulseIndex = slider.dataset.impulseIndex || '0';
 
     var media = slider.closest('.impulse-mobile-media') || slider;
-    var gestureTarget = slider;
+    var card = slider.closest('.grid-product.has-impulse-slider, .product-card.has-impulse-slider');
+    var gestureTarget = card || media;
     var usePointerEvents = !!window.PointerEvent;
     var drag = {
       active: false,
@@ -407,6 +408,12 @@
 
       debugLog('drag start', { x: clientX, y: clientY, index: slider.dataset.impulseIndex || '0' });
       updateDebugBadge(slider, 'start', 'x=' + Math.round(clientX));
+    }
+
+    function isWithinMedia(clientX, clientY) {
+      if (!media || !media.getBoundingClientRect) return false;
+      var rect = media.getBoundingClientRect();
+      return clientX >= rect.left && clientX <= rect.right && clientY >= rect.top && clientY <= rect.bottom;
     }
 
     function move(clientX, clientY) {
@@ -479,6 +486,8 @@
       gestureTarget.addEventListener('pointerdown', function(e) {
         if (e.pointerType !== 'touch' && e.pointerType !== 'pen') return;
         if (!isMobileMode()) return;
+        if (!isWithinMedia(e.clientX, e.clientY)) return;
+        e.preventDefault();
         if (gestureTarget.setPointerCapture) {
           try {
             gestureTarget.setPointerCapture(e.pointerId);
@@ -507,8 +516,10 @@
       gestureTarget.addEventListener('touchstart', function(e) {
         if (!isMobileMode()) return;
         if (!e.touches || !e.touches.length) return;
+        if (!isWithinMedia(e.touches[0].clientX, e.touches[0].clientY)) return;
+        e.preventDefault();
         start(e.touches[0].clientX, e.touches[0].clientY);
-      }, { passive: true });
+      }, { passive: false });
 
       gestureTarget.addEventListener('touchmove', function(e) {
         if (!isMobileMode()) return;
