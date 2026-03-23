@@ -15,25 +15,6 @@ Arguments
     render 'products_per_row', products_per_row: per_row, style: 'fractions'
   endcapture
 
-  assign per_row_int = per_row | times: 1
-  assign fallback_grid_class = 'small--one-half medium-up--one-quarter'
-  case per_row_int
-    when 2
-      assign fallback_grid_class = 'medium-up--one-half'
-    when 3
-      assign fallback_grid_class = 'small--one-half medium-up--one-third'
-    when 4
-      assign fallback_grid_class = 'small--one-half medium-up--one-quarter'
-    when 5
-      assign fallback_grid_class = 'small--one-half medium-up--one-fifth'
-    else
-      assign fallback_grid_class = 'small--one-third medium-up--one-sixth'
-  endcase
-
-  if gridView == blank
-    assign gridView = fallback_grid_class
-  endif
-
   # These assignments have no effect if a sizes parameter is passed in
   assign sizeVariable = gridView
   if fallback != blank
@@ -65,30 +46,24 @@ Arguments
   endif
 -%}
 
-<div class="grid__item grid-product has-impulse-slider {{ gridView }} {% if quick_shop_enable %} grid-product__has-quick-shop{% endif %}" data-product-handle="{{ product.handle }}" data-product-id="{{ product.id }}">
+<div class="grid__item grid-product product-card has-impulse-slider {{ gridView }} {% if quick_shop_enable %} grid-product__has-quick-shop{% endif %}" data-product-handle="{{ product.handle }}" data-product-id="{{ product.id }}">
   <div class="grid-product__content">
-    {%- liquid
-      assign product_badge = ''
-      if has_custom_label
-        capture product_badge
-          echo '<div class="grid-product__tag grid-product__tag--custom">'
-          echo custom_label
-          echo '</div>'
-        endcapture
-      elsif product.available == false
-        capture product_badge
-          echo '<div class="grid-product__tag grid-product__tag--sold-out">'
-          echo 'products.product.sold_out' | t
-          echo '</div>'
-        endcapture
-      elsif on_sale and product.available
-        capture product_badge
-          echo '<div class="grid-product__tag grid-product__tag--sale">'
-          echo 'products.general.sale' | t
-          echo '</div>'
-        endcapture
-      endif
-    -%}
+    {%- if has_custom_label -%}
+      <div class="grid-product__tag grid-product__tag--custom">
+        {{ custom_label }}
+      </div>
+    {%- else -%}
+      {%- unless product.available -%}
+        <div class="grid-product__tag grid-product__tag--sold-out">
+          {{ 'products.product.sold_out' | t }}
+        </div>
+      {%- endunless -%}
+      {%- if on_sale and product.available -%}
+        <div class="grid-product__tag grid-product__tag--sale">
+          {{ 'products.general.sale' | t }}
+        </div>
+      {%- endif -%}
+    {%- endif -%}
 
     {%- liquid
       assign imageRatio = settings.product_grid_image_size
@@ -131,7 +106,6 @@ Arguments
     -%}
 
     <div class="grid__item-image-wrapper" data-original="{{ preview_image | img_url: '600x' }}">
-      {{ product_badge }}
       <div class="grid-product__image-mask">
         <div class="impulse-mobile-media">
         <div class="impulse-mobile-slider">
@@ -189,17 +163,8 @@ Arguments
              assign second_image = blank
              assign second_media = blank
 
-             if main_media and main_media.position
-               for media in product.media
-                 if media.media_type == 'image' and media.position > main_media.position
-                   assign second_media = media
-                   break
-                 endif
-               endfor
-             endif
-
              for media in product.media
-               if second_media == blank and media.media_type == 'image' and media.id != main_media.id
+               if media.media_type == 'image' and media.id != main_media.id
                  assign second_media = media
                  break
                endif
@@ -210,12 +175,17 @@ Arguments
              endif
 
              if second_image == blank and product.images.size > 1
-               for image in product.images offset: 1
-                 if image.src != preview_image.src
-                   assign second_image = image
-                   break
-                 endif
-               endfor
+               assign second_image = product.images[1]
+
+               if second_image.src == preview_image.src
+                 assign second_image = blank
+                 for image in product.images offset: 2
+                   if image.src != preview_image.src
+                     assign second_image = image
+                     break
+                   endif
+                 endfor
+               endif
              endif
           -%}
           
@@ -253,6 +223,13 @@ Arguments
               {%- endif -%}
             </div>
           {%- endif -%}
+        {%- endif -%}
+        </div>
+        {%- if second_image != blank -%}
+        <div class="impulse-mobile-dots">
+          <div class="impulse-mobile-dot active"></div>
+          <div class="impulse-mobile-dot"></div>
+        </div>
         {%- endif -%}
         </div>
 
@@ -313,13 +290,6 @@ Arguments
           </form>
         {%- endif -%}
       </div>
-
-      {%- if second_image != blank -%}
-      <div class="impulse-mobile-dots">
-        <div class="impulse-mobile-dot active"></div>
-        <div class="impulse-mobile-dot"></div>
-      </div>
-      {%- endif -%}
 
       <a href="{{ product.url | within: collection }}" class="grid-product__link">
         <div class="grid-product__meta">
