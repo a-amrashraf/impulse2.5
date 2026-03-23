@@ -214,7 +214,16 @@
       s.style.minWidth = '100%';
       s.style.width = '100%';
       s.style.opacity = '1';
+      s.style.visibility = 'visible';
       s.style.pointerEvents = 'auto';
+      s.style.backgroundColor = 'transparent';
+    }
+
+    if (slides.length > 1) {
+      slides[1].style.position = 'relative';
+      slides[1].style.opacity = '1';
+      slides[1].style.visibility = 'visible';
+      slides[1].style.pointerEvents = 'auto';
     }
 
     var media = slider.closest('.impulse-mobile-media');
@@ -227,6 +236,7 @@
 
     var current = Number(slider.dataset.impulseIndex || 0);
     if (!Number.isFinite(current)) current = 0;
+    ensureSecondSlideImage(slider);
     setIndex(slider, current, false);
     debugLog('styleForMobile', { slides: slides.length, index: current });
     updateDebugBadge(slider, 'style', 'slides=' + slides.length);
@@ -254,7 +264,9 @@
       s.style.minWidth = '';
       s.style.width = '';
       s.style.opacity = '';
+      s.style.visibility = '';
       s.style.pointerEvents = '';
+      s.style.backgroundColor = '';
     }
 
     var media = slider.closest('.impulse-mobile-media');
@@ -265,6 +277,74 @@
       }
     }
     updateDebugBadge(slider, 'desktop', 'cleared=1');
+  }
+
+  function applyDesktopLayering(slider) {
+    var slides = getSlides(slider);
+    var first;
+    var second;
+    var card;
+
+    if (!slides.length) return;
+
+    slider.style.display = 'block';
+    slider.style.overflow = 'hidden';
+    slider.style.position = 'relative';
+    slider.style.transform = '';
+    slider.style.transition = '';
+
+    first = slides[0];
+    if (first) {
+      first.style.position = 'relative';
+      first.style.opacity = '1';
+      first.style.visibility = 'visible';
+      first.style.pointerEvents = 'auto';
+      first.style.width = '100%';
+    }
+
+    second = slides.length > 1 ? slides[1] : null;
+    if (second) {
+      second.style.position = 'absolute';
+      second.style.top = '0';
+      second.style.right = '0';
+      second.style.bottom = '0';
+      second.style.left = '0';
+      second.style.opacity = '0';
+      second.style.visibility = 'hidden';
+      second.style.pointerEvents = 'none';
+      second.style.width = '100%';
+    }
+
+    card = slider.closest('.grid-product__content') || slider.closest('.grid-product');
+    if (card && second && first && card.dataset.impulseDesktopBound !== '1') {
+      card.dataset.impulseDesktopBound = '1';
+
+      card.addEventListener('mouseenter', function() {
+        second.style.opacity = '1';
+        second.style.visibility = 'visible';
+        first.style.opacity = '0';
+      });
+
+      card.addEventListener('mouseleave', function() {
+        second.style.opacity = '0';
+        second.style.visibility = 'hidden';
+        first.style.opacity = '1';
+      });
+
+      card.addEventListener('focusin', function() {
+        second.style.opacity = '1';
+        second.style.visibility = 'visible';
+        first.style.opacity = '0';
+      });
+
+      card.addEventListener('focusout', function() {
+        second.style.opacity = '0';
+        second.style.visibility = 'hidden';
+        first.style.opacity = '1';
+      });
+    }
+
+    updateDebugBadge(slider, 'desktop-layer', 'slides=' + slides.length);
   }
 
   function initSlider(slider) {
@@ -443,6 +523,7 @@
         styleForMobile(slider);
       } else {
         clearMobileInlineStyles(slider);
+        applyDesktopLayering(slider);
       }
     }
   }
