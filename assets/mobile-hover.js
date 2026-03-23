@@ -83,6 +83,11 @@
     var width;
     var src;
     var nw;
+    var slidesCount;
+    var dotsCount;
+    var mobile;
+    var dotsWrap;
+    var dotsDisplay;
     if (!slider) return;
     media = slider.closest('.impulse-mobile-media');
     if (!media) return;
@@ -101,8 +106,13 @@
     width = getViewportWidth(slider);
     src = secondImg ? (secondImg.currentSrc || secondImg.getAttribute('src') || 'none') : 'none';
     nw = secondImg ? secondImg.naturalWidth : 0;
+    slidesCount = getSlides(slider).length;
+    dotsCount = getDots(slider).length;
+    mobile = isMobileMode() ? '1' : '0';
+    dotsWrap = media.querySelector('.impulse-mobile-dots');
+    dotsDisplay = dotsWrap ? ((window.getComputedStyle && window.getComputedStyle(dotsWrap).display) || dotsWrap.style.display || 'none') : 'missing';
 
-    badge.textContent = 'evt=' + eventName + ' idx=' + idx + ' w=' + width + ' nw=' + nw + (extra ? ' ' + extra : '');
+    badge.textContent = 'evt=' + eventName + ' mm=' + mobile + ' idx=' + idx + ' s=' + slidesCount + ' d=' + dotsCount + ' dd=' + dotsDisplay + ' w=' + width + ' nw=' + nw + (extra ? ' ' + extra : '');
     badge.setAttribute('title', src);
   }
 
@@ -529,6 +539,7 @@
   function applyMode() {
     var sliders = document.querySelectorAll('.impulse-mobile-media .impulse-mobile-slider');
     var mobile = isMobileMode();
+    debugLog('applyMode', { sliders: sliders.length, mobile: mobile });
 
     for (var i = 0; i < sliders.length; i++) {
       var slider = sliders[i];
