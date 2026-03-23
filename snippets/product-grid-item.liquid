@@ -163,13 +163,17 @@ Arguments
              assign second_image = blank
              assign second_media = blank
 
+             if main_media and main_media.position
+               for media in product.media
+                 if media.media_type == 'image' and media.position > main_media.position
+                   assign second_media = media
+                   break
+                 endif
+               endfor
+             endif
+
              for media in product.media
-               assign media_alt = media.preview_image.alt | downcase
-               assign media_is_swatch = false
-               if media_alt contains 'swatch' or media_alt contains 'color'
-                 assign media_is_swatch = true
-               endif
-               if media.media_type == 'image' and media.id != main_media.id and media.preview_image.width > 300 and media.preview_image.height > 300 and media_is_swatch == false
+               if second_media == blank and media.media_type == 'image' and media.id != main_media.id
                  assign second_media = media
                  break
                endif
@@ -181,25 +185,11 @@ Arguments
 
              if second_image == blank and product.images.size > 1
                for image in product.images offset: 1
-                 assign image_alt = image.alt | downcase
-                 assign image_is_swatch = false
-                 if image_alt contains 'swatch' or image_alt contains 'color'
-                   assign image_is_swatch = true
-                 endif
-                 if image.src != preview_image.src and image.width > 300 and image.height > 300 and image_is_swatch == false
+                 if image.src != preview_image.src
                    assign second_image = image
                    break
                  endif
                endfor
-
-               if second_image == blank
-                 for image in product.images offset: 1
-                   if image.src != preview_image.src
-                     assign second_image = image
-                     break
-                   endif
-                 endfor
-               endif
              endif
           -%}
           
