@@ -114,7 +114,7 @@
   };
 
   function isMobileMode() {
-    return window.matchMedia(MOBILE_QUERY).matches;
+    return window.matchMedia(MOBILE_QUERY).matches || window.matchMedia('(hover: none) and (pointer: coarse)').matches;
   }
 
   function clamp(n, min, max) {

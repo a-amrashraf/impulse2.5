@@ -49,6 +49,8 @@
   opacity: 0 !important;
 }
 
-.grid__item-image-wrapper .grid-product__image-mask .impulse-mobile-media .impulse-mobile-dots {
-  display: none !important;
+@media (hover: hover) and (pointer: fine) {
+  .grid__item-image-wrapper .grid-product__image-mask .impulse-mobile-media .impulse-mobile-dots {
+    display: none !important;
+  }
 }
