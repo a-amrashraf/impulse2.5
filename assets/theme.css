@@ -13359,8 +13359,7 @@ label,.h5,
     left: 0;
     right: 0;
     bottom: 0;
-    opacity: 0 !important;
-    visibility: hidden;
+    opacity: 0;
     pointer-events: none;
     transition: opacity 0.2s ease-in-out;
   }
@@ -13368,7 +13367,6 @@ label,.h5,
   .grid-product__content:hover .impulse-mobile-media .impulse-mobile-slide--second,
   .grid__item-image-wrapper .grid-product__image-mask:hover .impulse-mobile-media .impulse-mobile-slide--second {
     opacity: 1 !important;
-    visibility: visible;
   }
 
   .grid__item-image-wrapper .grid-product__image-mask .impulse-mobile-media .impulse-mobile-dots {
