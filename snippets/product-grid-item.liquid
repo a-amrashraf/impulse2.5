@@ -252,34 +252,6 @@ Arguments
             </button>
           </form>
         {%- endif -%}
-              if option_name contains swatch_trigger
-                assign is_color = true
-              elsif swatch_trigger == 'color' and option_name contains 'colour'
-                assign is_color = true
-              endif
-            -%}
-            {%- if is_color -%}
-              {%- assign option_index = forloop.index0 -%}
-              {%- assign values = '' -%}
-              {%- for variant in product.variants -%}
-                {%- assign value = variant.options[option_index] %}
-                {%- unless values contains value -%}
-                  {%- liquid
-                    assign values = values | join: ',' | append: ',' | append: value | split: ','
-                  -%}
-
-                  {%- if variant.image -%}
-                    {% comment %}
-                    <div
-                      class="grid-product__color-image grid-product__color-image--{{ variant.id }} small--hide">
-                    </div>
-                    {% endcomment %}
-                  {%- endif -%}
-                {%- endunless -%}
-              {%- endfor -%}
-            {%- endif -%}
-          {%- endfor -%}
-        {%- endif -%}
         </div>
 
         <a href="{{ product.url | within: collection }}" class="grid-product__link">
