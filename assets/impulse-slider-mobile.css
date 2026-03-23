@@ -20,13 +20,8 @@
   z-index: 1;
 }
 
-.grid-product.has-impulse-slider .grid-product__tag,
-.grid-product.has-impulse-slider .quick-product__btn {
-  z-index: 30;
-}
-
 .grid-product.has-impulse-slider .impulse-mobile-dots {
-  z-index: 30 !important;
+  z-index: 2 !important;
 }
 
 .grid__item-image-wrapper .grid-product__image-mask .impulse-mobile-media .impulse-mobile-slider {

@@ -192,23 +192,23 @@
     dotsWrap.style.setProperty('position', 'relative');
     dotsWrap.style.setProperty('justify-content', 'center');
     dotsWrap.style.setProperty('align-items', 'center');
-    dotsWrap.style.setProperty('gap', '8px');
-    dotsWrap.style.setProperty('z-index', '35', 'important');
+    dotsWrap.style.setProperty('gap', '6px');
+    dotsWrap.style.setProperty('z-index', '2', 'important');
     dotsWrap.style.setProperty('pointer-events', 'none');
-    dotsWrap.style.setProperty('padding', '6px 10px');
+    dotsWrap.style.setProperty('padding', '0');
     dotsWrap.style.setProperty('width', 'fit-content');
     dotsWrap.style.setProperty('margin', '8px auto 6px');
-    dotsWrap.style.setProperty('background', 'rgba(0,0,0,0.45)', 'important');
-    dotsWrap.style.setProperty('border-radius', '999px');
+    dotsWrap.style.setProperty('background', 'transparent', 'important');
+    dotsWrap.style.setProperty('border-radius', '0');
 
     var dots = dotsWrap.querySelectorAll('.impulse-mobile-dot');
     for (var i = 0; i < dots.length; i++) {
       var dot = dots[i];
       dot.style.setProperty('display', 'block', 'important');
-      dot.style.setProperty('width', '10px');
-      dot.style.setProperty('height', '10px');
+      dot.style.setProperty('width', '6px');
+      dot.style.setProperty('height', '6px');
       dot.style.setProperty('border-radius', '50%');
-      dot.style.setProperty('border', '1px solid rgba(0,0,0,0.9)');
+      dot.style.setProperty('border', '0');
     }
   }
 
@@ -271,9 +271,9 @@
     for (var i = 0; i < dots.length; i++) {
       var isActive = i === safe;
       dots[i].classList.toggle('active', isActive);
-      dots[i].style.setProperty('background', isActive ? '#ffeb3b' : '#ffffff', 'important');
-      dots[i].style.setProperty('opacity', isActive ? '1' : '0.75', 'important');
-      dots[i].style.setProperty('box-shadow', '0 0 0 1px rgba(0,0,0,0.9)', 'important');
+      dots[i].style.setProperty('background', isActive ? '#000' : 'rgba(0,0,0,0.25)', 'important');
+      dots[i].style.setProperty('opacity', '1', 'important');
+      dots[i].style.setProperty('box-shadow', 'none', 'important');
     }
   }
 

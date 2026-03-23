@@ -164,7 +164,12 @@ Arguments
              assign second_media = blank
 
              for media in product.media
-               if media.media_type == 'image' and media.id != main_media.id and media.preview_image.width > 300 and media.preview_image.height > 300
+               assign media_alt = media.preview_image.alt | downcase
+               assign media_is_swatch = false
+               if media_alt contains 'swatch' or media_alt contains 'color'
+                 assign media_is_swatch = true
+               endif
+               if media.media_type == 'image' and media.id != main_media.id and media.preview_image.width > 300 and media.preview_image.height > 300 and media_is_swatch == false
                  assign second_media = media
                  break
                endif
@@ -176,7 +181,12 @@ Arguments
 
              if second_image == blank and product.images.size > 1
                for image in product.images offset: 1
-                 if image.src != preview_image.src and image.width > 300 and image.height > 300
+                 assign image_alt = image.alt | downcase
+                 assign image_is_swatch = false
+                 if image_alt contains 'swatch' or image_alt contains 'color'
+                   assign image_is_swatch = true
+                 endif
+                 if image.src != preview_image.src and image.width > 300 and image.height > 300 and image_is_swatch == false
                    assign second_image = image
                    break
                  endif
@@ -198,35 +208,31 @@ Arguments
               {%- if fixed_aspect_ratio -%}
                 <div
                   class="grid__image-ratio grid__image-ratio--{% if image_style == 'circle' %}square{% else %}{{ settings.product_grid_image_size }}{% endif %}">
-                  {%- capture second_image_classes -%}
-                    product-image {% unless settings.product_grid_image_fill %}grid__image-contain{% endunless %} image-style--{{ image_style }}
-                  {%- endcapture -%}
-                  {%- render 'image-element',
-                    img: second_image,
-                    classes: second_image_classes,
-                    sizes: sizes,
-                    sizeVariable: sizeVariable,
-                    fallback: fallback,
-                    widths: '360, 540, 720, 900, 1080',
-                    animation: 'none'
-                  -%}
+                  <img
+                    class="product-image {% unless settings.product_grid_image_fill %}grid__image-contain{% endunless %} image-style--{{ image_style }}"
+                    src="{{ second_image | img_url: '900x' }}"
+                    srcset="{{ second_image | img_url: '360x' }} 360w, {{ second_image | img_url: '540x' }} 540w, {{ second_image | img_url: '720x' }} 720w, {{ second_image | img_url: '900x' }} 900w, {{ second_image | img_url: '1080x' }} 1080w"
+                    sizes="{{ sizes }}"
+                    alt="{{ product.title | escape }}"
+                    loading="eager"
+                    width="{{ second_image.width }}"
+                    height="{{ second_image.height }}"
+                  >
                 </div>
               {%- else -%}
                 <div class="image-wrap"
                     style="height: 0; padding-bottom: {{ 100 | divided_by: second_image.aspect_ratio }}%;"
                 >
-                  {%- capture second_image_classes -%}
-                    grid-product__image product-image image-style--{{ image_style }}
-                  {%- endcapture -%}
-                  {%- render 'image-element',
-                    img: second_image,
-                    classes: second_image_classes,
-                    sizes: sizes,
-                    sizeVariable: sizeVariable,
-                    fallback: fallback,
-                    widths: '360, 540, 720, 900, 1080',
-                    animation: 'none'
-                  -%}
+                  <img
+                    class="grid-product__image product-image image-style--{{ image_style }}"
+                    src="{{ second_image | img_url: '900x' }}"
+                    srcset="{{ second_image | img_url: '360x' }} 360w, {{ second_image | img_url: '540x' }} 540w, {{ second_image | img_url: '720x' }} 720w, {{ second_image | img_url: '900x' }} 900w, {{ second_image | img_url: '1080x' }} 1080w"
+                    sizes="{{ sizes }}"
+                    alt="{{ product.title | escape }}"
+                    loading="eager"
+                    width="{{ second_image.width }}"
+                    height="{{ second_image.height }}"
+                  >
                 </div>
               {%- endif -%}
             </div>
