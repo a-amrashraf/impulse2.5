@@ -278,6 +278,8 @@
 
     for (var i = 0; i < sliders.length; i++) {
       var slider = sliders[i];
+      var legacySecond = slider.querySelector('.impulse-mobile-slide--second.grid-product__secondary-image');
+      if (legacySecond) legacySecond.classList.remove('grid-product__secondary-image');
       initSlider(slider);
       if (mobile) {
         if (slider.dataset.impulseDragging === '1') continue;
