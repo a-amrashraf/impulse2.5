@@ -301,7 +301,7 @@
     slider.style.display = 'flex';
     slider.style.flexWrap = 'nowrap';
     slider.style.overflow = 'hidden';
-    slider.style.touchAction = 'none';
+    slider.style.touchAction = 'pan-y';
     slider.style.willChange = 'transform';
 
     for (var i = 0; i < slides.length; i++) {
@@ -375,8 +375,7 @@
     slider.dataset.impulseIndex = slider.dataset.impulseIndex || '0';
 
     var media = slider.closest('.impulse-mobile-media') || slider;
-    var card = slider.closest('.grid-product.has-impulse-slider, .product-card.has-impulse-slider');
-    var gestureTarget = card || media;
+    var gestureTarget = media;
     var drag = {
       active: false,
       startX: 0,
@@ -396,6 +395,7 @@
       drag.moved = false;
       drag.axisLocked = false;
       drag.axis = '';
+      slider.dataset.impulseMoved = '0';
       slider.dataset.impulseDragging = '1';
       slider.style.transition = 'none';
 
@@ -475,7 +475,7 @@
     }
 
     gestureTarget.addEventListener('pointerdown', function(e) {
-      if (e.pointerType !== 'touch' && e.pointerType !== 'pen' && e.pointerType !== 'mouse') return;
+      if (e.pointerType !== 'touch' && e.pointerType !== 'pen') return;
       if (!isMobileMode()) return;
       e.preventDefault();
       start(e.clientX, e.clientY);
