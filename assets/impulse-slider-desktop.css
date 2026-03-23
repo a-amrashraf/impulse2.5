@@ -50,7 +50,7 @@
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .grid__item-image-wrapper .grid-product__image-mask .impulse-mobile-dots {
+  .grid__item-image-wrapper .impulse-mobile-dots {
     display: none !important;
   }
 }

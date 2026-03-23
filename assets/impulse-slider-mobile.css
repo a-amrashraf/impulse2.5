@@ -81,12 +81,12 @@
   pointer-events: auto !important;
 }
 
-.grid__item-image-wrapper .grid-product__image-mask .impulse-mobile-dots {
+.grid__item-image-wrapper .impulse-mobile-dots {
   display: flex !important;
   flex-direction: row !important;
   justify-content: center;
   position: relative;
-  margin: 10px auto 2px;
+  margin: 8px auto 6px;
   width: fit-content;
   pointer-events: none;
   z-index: 5;

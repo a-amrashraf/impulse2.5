@@ -146,7 +146,7 @@
 
   function getDotsScope(slider) {
     if (!slider) return null;
-    return slider.closest('.grid-product__image-mask') || slider.closest('.impulse-mobile-media');
+    return slider.closest('.grid__item-image-wrapper') || slider.closest('.grid-product__image-mask') || slider.closest('.impulse-mobile-media');
   }
 
   function getDots(slider) {
@@ -197,7 +197,7 @@
     dotsWrap.style.setProperty('pointer-events', 'none');
     dotsWrap.style.setProperty('padding', '6px 10px');
     dotsWrap.style.setProperty('width', 'fit-content');
-    dotsWrap.style.setProperty('margin', '10px auto 2px');
+    dotsWrap.style.setProperty('margin', '8px auto 6px');
     dotsWrap.style.setProperty('background', 'rgba(0,0,0,0.45)', 'important');
     dotsWrap.style.setProperty('border-radius', '999px');
 
