@@ -13307,6 +13307,18 @@ label,.h5,
     pointer-events: auto !important;
   }
 
+  .grid-product.has-impulse-slider .impulse-mobile-slide--second.grid-product__secondary-image {
+    position: relative !important;
+    top: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    left: auto !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    background-color: transparent !important;
+    pointer-events: auto !important;
+  }
+
   .grid__item-image-wrapper .grid-product__image-mask .impulse-mobile-media .impulse-mobile-dots {
     display: flex !important;
     flex-direction: row !important;
@@ -13336,43 +13348,6 @@ label,.h5,
 }
 
 @media screen and (min-width: 769px) {
-  .grid__item-image-wrapper .grid-product__image-mask .impulse-mobile-media .impulse-mobile-slider {
-    display: block !important;
-    width: 100% !important;
-    overflow: hidden !important;
-    position: relative;
-  }
-
-  .grid__item-image-wrapper .grid-product__image-mask .impulse-mobile-media .impulse-mobile-slide {
-    display: block !important;
-    width: 100% !important;
-    position: relative;
-  }
-
-  .grid__item-image-wrapper .grid-product__image-mask .impulse-mobile-media .impulse-mobile-slide--second {
-    position: absolute !important;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    opacity: 0 !important;
-    visibility: hidden;
-    pointer-events: none;
-    transition: opacity 0.2s ease-in-out;
-  }
-
-  .grid-product__content:hover .impulse-mobile-media .impulse-mobile-slide--second,
-  .grid__item-image-wrapper .grid-product__image-mask:hover .impulse-mobile-media .impulse-mobile-slide--second {
-    opacity: 1 !important;
-    visibility: visible !important;
-  }
-
-  .grid-product__content:hover .impulse-mobile-media .impulse-mobile-slide--first,
-  .grid__item-image-wrapper .grid-product__image-mask:hover .impulse-mobile-media .impulse-mobile-slide--first {
-    opacity: 0 !important;
-    visibility: hidden;
-  }
-
   .grid__item-image-wrapper .grid-product__image-mask .impulse-mobile-media .impulse-mobile-dots {
     display: none !important;
   }
