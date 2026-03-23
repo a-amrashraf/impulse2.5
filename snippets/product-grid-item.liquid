@@ -15,6 +15,25 @@ Arguments
     render 'products_per_row', products_per_row: per_row, style: 'fractions'
   endcapture
 
+  assign per_row_int = per_row | times: 1
+  assign fallback_grid_class = 'small--one-half medium-up--one-quarter'
+  case per_row_int
+    when 2
+      assign fallback_grid_class = 'medium-up--one-half'
+    when 3
+      assign fallback_grid_class = 'small--one-half medium-up--one-third'
+    when 4
+      assign fallback_grid_class = 'small--one-half medium-up--one-quarter'
+    when 5
+      assign fallback_grid_class = 'small--one-half medium-up--one-fifth'
+    else
+      assign fallback_grid_class = 'small--one-third medium-up--one-sixth'
+  endcase
+
+  if gridView == blank
+    assign gridView = fallback_grid_class
+  endif
+
   # These assignments have no effect if a sizes parameter is passed in
   assign sizeVariable = gridView
   if fallback != blank
