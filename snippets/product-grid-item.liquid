@@ -103,6 +103,7 @@ Arguments
       endif
       
       assign preview_image = main_media.preview_image
+      assign second_image = blank
     -%}
 
     <div class="grid__item-image-wrapper" data-original="{{ preview_image | img_url: '600x' }}">
@@ -158,70 +159,84 @@ Arguments
         {%- endif -%}
         </div>
 
-        {%- if product.images.size > 1 -%}
+        {%- if product.media.size > 1 or product.images.size > 1 -%}
           {%- liquid
-             assign second_image = product.images[1]
+             assign second_image = blank
+             assign second_media = blank
 
-             # If first two are same source, pick the next distinct image
-             if second_image.src == preview_image.src
-               assign second_image = blank
-               for image in product.images offset: 2
-                 if image.src != preview_image.src
-                   assign second_image = image
-                   break
-                 endif
-               endfor
+             for media in product.media
+               if media.media_type == 'image' and media.id != main_media.id
+                 assign second_media = media
+                 break
+               endif
+             endfor
+
+             if second_media != blank
+               assign second_image = second_media.preview_image
              endif
 
-             # Final fallback to first image after primary if no distinct src found
              if second_image == blank and product.images.size > 1
                assign second_image = product.images[1]
+               if second_image.src == preview_image.src
+                 assign second_image = blank
+                 for image in product.images offset: 2
+                   if image.src != preview_image.src
+                     assign second_image = image
+                     break
+                   endif
+                 endfor
+               endif
              endif
           -%}
           
           {%- if second_image != blank -%}
-            <div class="impulse-mobile-slide impulse-mobile-slide--second grid-product__secondary-image">
+            <div class="impulse-mobile-slide impulse-mobile-slide--second">
               {%- if fixed_aspect_ratio -%}
                 <div
                   class="grid__image-ratio grid__image-ratio--{% if image_style == 'circle' %}square{% else %}{{ settings.product_grid_image_size }}{% endif %}">
-                  <img
-                    class="product-image {% unless settings.product_grid_image_fill %}grid__image-contain{% endunless %} image-style--{{ image_style }}"
-                    src="{{ second_image | img_url: '900x' }}"
-                    srcset="{{ second_image | img_url: '360x' }} 360w, {{ second_image | img_url: '540x' }} 540w, {{ second_image | img_url: '720x' }} 720w, {{ second_image | img_url: '900x' }} 900w, {{ second_image | img_url: '1080x' }} 1080w"
-                    sizes="{{ sizes }}"
-                    alt="{{ product.title | escape }}"
-                    loading="eager"
-                    width="{{ second_image.width }}"
-                    height="{{ second_image.height }}"
-                  >
+                  {%- capture second_image_classes -%}
+                    product-image {% unless settings.product_grid_image_fill %}grid__image-contain{% endunless %} image-style--{{ image_style }}
+                  {%- endcapture -%}
+                  {%- render 'image-element',
+                    img: second_image,
+                    classes: second_image_classes,
+                    sizes: sizes,
+                    sizeVariable: sizeVariable,
+                    fallback: fallback,
+                    widths: '360, 540, 720, 900, 1080',
+                    loading: 'eager',
+                    animation: 'none'
+                  -%}
                 </div>
               {%- else -%}
                 <div class="image-wrap"
                     style="height: 0; padding-bottom: {{ 100 | divided_by: second_image.aspect_ratio }}%;"
                 >
-                  <img
-                    class="grid-product__image product-image image-style--{{ image_style }}"
-                    src="{{ second_image | img_url: '900x' }}"
-                    srcset="{{ second_image | img_url: '360x' }} 360w, {{ second_image | img_url: '540x' }} 540w, {{ second_image | img_url: '720x' }} 720w, {{ second_image | img_url: '900x' }} 900w, {{ second_image | img_url: '1080x' }} 1080w"
-                    sizes="{{ sizes }}"
-                    alt="{{ product.title | escape }}"
-                    loading="eager"
-                    width="{{ second_image.width }}"
-                    height="{{ second_image.height }}"
-                  >
+                  {%- capture second_image_classes -%}
+                    grid-product__image product-image image-style--{{ image_style }}
+                  {%- endcapture -%}
+                  {%- render 'image-element',
+                    img: second_image,
+                    classes: second_image_classes,
+                    sizes: sizes,
+                    sizeVariable: sizeVariable,
+                    fallback: fallback,
+                    widths: '360, 540, 720, 900, 1080',
+                    loading: 'eager',
+                    animation: 'none'
+                  -%}
                 </div>
               {%- endif -%}
             </div>
           {%- endif -%}
         {%- endif -%}
-        </div>
-
         {%- if second_image != blank -%}
-        <div class="impulse-mobile-dots">
-            <div class="impulse-mobile-dot active"></div>
-            <div class="impulse-mobile-dot"></div>
-        </div>
+          <div class="impulse-mobile-dots">
+              <div class="impulse-mobile-dot active"></div>
+              <div class="impulse-mobile-dot"></div>
+          </div>
         {%- endif -%}
+        </div>
         </div>
 
         {%- if settings.enable_swatches -%}

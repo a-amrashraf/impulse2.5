@@ -13258,10 +13258,8 @@ label,.h5,
   .grid__item-image-wrapper .grid-product__image-mask .impulse-mobile-media .impulse-mobile-slider {
     display: flex !important;
     flex-wrap: nowrap !important;
-    overflow-x: auto !important;
-    -webkit-overflow-scrolling: touch;
-    touch-action: pan-x;
-    scroll-snap-type: x mandatory;
+    overflow: hidden !important;
+    touch-action: none;
     width: 100% !important;
     margin: 0 !important;
     padding: 0 !important;
@@ -13298,7 +13296,6 @@ label,.h5,
     width: 100% !important;
     display: block !important;
     position: relative !important;
-    scroll-snap-align: start;
     opacity: 1 !important;
     top: auto !important;
     left: auto !important;
