@@ -27,6 +27,8 @@
 
   {%- render 'font-face' -%}
   {{ 'theme.css' | asset_url | stylesheet_tag: preload: true }}
+  <link rel="stylesheet" href="{{ 'impulse-slider-mobile.css' | asset_url }}" media="screen and (max-width: 768px)">
+  <link rel="stylesheet" href="{{ 'impulse-slider-desktop.css' | asset_url }}" media="screen and (min-width: 769px)">
   {%- render 'css-variables' -%}
 
   <script>
