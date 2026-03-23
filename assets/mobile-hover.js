@@ -375,7 +375,8 @@
     slider.dataset.impulseIndex = slider.dataset.impulseIndex || '0';
 
     var media = slider.closest('.impulse-mobile-media') || slider;
-    var gestureTarget = media;
+    var gestureTarget = slider;
+    var usePointerEvents = !!window.PointerEvent;
     var drag = {
       active: false,
       startX: 0,
@@ -474,53 +475,60 @@
       drag.moved = false;
     }
 
-    gestureTarget.addEventListener('pointerdown', function(e) {
-      if (e.pointerType !== 'touch' && e.pointerType !== 'pen') return;
-      if (!isMobileMode()) return;
-      e.preventDefault();
-      start(e.clientX, e.clientY);
-    }, true);
+    if (usePointerEvents) {
+      gestureTarget.addEventListener('pointerdown', function(e) {
+        if (e.pointerType !== 'touch' && e.pointerType !== 'pen') return;
+        if (!isMobileMode()) return;
+        if (gestureTarget.setPointerCapture) {
+          try {
+            gestureTarget.setPointerCapture(e.pointerId);
+          } catch (err) {
+          }
+        }
+        start(e.clientX, e.clientY);
+      }, true);
 
-    window.addEventListener('pointermove', function(e) {
-      if (!drag.active) return;
-      if (move(e.clientX, e.clientY)) {
-        e.preventDefault();
-      }
-    }, { passive: false });
+      gestureTarget.addEventListener('pointermove', function(e) {
+        if (!drag.active) return;
+        if (move(e.clientX, e.clientY)) {
+          e.preventDefault();
+        }
+      }, { passive: false });
 
-    window.addEventListener('pointerup', function(e) {
-      if (!drag.active) return;
-      end(e.clientX);
-    }, true);
+      gestureTarget.addEventListener('pointerup', function(e) {
+        if (!drag.active) return;
+        end(e.clientX);
+      }, true);
 
-    window.addEventListener('pointercancel', function() {
-      cancel();
-    }, true);
+      gestureTarget.addEventListener('pointercancel', function() {
+        cancel();
+      }, true);
+    } else {
+      gestureTarget.addEventListener('touchstart', function(e) {
+        if (!isMobileMode()) return;
+        if (!e.touches || !e.touches.length) return;
+        start(e.touches[0].clientX, e.touches[0].clientY);
+      }, { passive: true });
 
-    gestureTarget.addEventListener('touchstart', function(e) {
-      if (!isMobileMode()) return;
-      if (!e.touches || !e.touches.length) return;
-      start(e.touches[0].clientX, e.touches[0].clientY);
-    }, { passive: true });
+      gestureTarget.addEventListener('touchmove', function(e) {
+        if (!isMobileMode()) return;
+        if (!e.touches || !e.touches.length) return;
+        if (move(e.touches[0].clientX, e.touches[0].clientY)) {
+          e.preventDefault();
+        }
+      }, { passive: false });
 
-    gestureTarget.addEventListener('touchmove', function(e) {
-      if (!isMobileMode()) return;
-      if (!e.touches || !e.touches.length) return;
-      if (move(e.touches[0].clientX, e.touches[0].clientY)) {
-        e.preventDefault();
-      }
-    }, { passive: false });
+      gestureTarget.addEventListener('touchend', function(e) {
+        if (!drag.active) return;
+        var x = drag.startX;
+        if (e.changedTouches && e.changedTouches.length) x = e.changedTouches[0].clientX;
+        end(x);
+      }, { passive: true });
 
-    gestureTarget.addEventListener('touchend', function(e) {
-      if (!drag.active) return;
-      var x = drag.startX;
-      if (e.changedTouches && e.changedTouches.length) x = e.changedTouches[0].clientX;
-      end(x);
-    }, { passive: true });
-
-    gestureTarget.addEventListener('touchcancel', function() {
-      cancel();
-    }, true);
+      gestureTarget.addEventListener('touchcancel', function() {
+        cancel();
+      }, true);
+    }
 
     gestureTarget.addEventListener('click', function(e) {
       if (slider.dataset.impulseMoved === '1') {
