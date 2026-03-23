@@ -109,7 +109,8 @@
     slidesCount = getSlides(slider).length;
     dotsCount = getDots(slider).length;
     mobile = isMobileMode() ? '1' : '0';
-    dotsWrap = media.querySelector('.impulse-mobile-dots');
+    dotsWrap = getDotsScope(slider);
+    dotsWrap = dotsWrap ? dotsWrap.querySelector('.impulse-mobile-dots') : null;
     dotsDisplay = dotsWrap ? ((window.getComputedStyle && window.getComputedStyle(dotsWrap).display) || dotsWrap.style.display || 'none') : 'missing';
 
     badge.textContent = 'evt=' + eventName + ' mm=' + mobile + ' idx=' + idx + ' s=' + slidesCount + ' d=' + dotsCount + ' dd=' + dotsDisplay + ' w=' + width + ' nw=' + nw + (extra ? ' ' + extra : '');
@@ -143,21 +144,26 @@
     return slider ? slider.querySelectorAll('.impulse-mobile-slide') : [];
   }
 
+  function getDotsScope(slider) {
+    if (!slider) return null;
+    return slider.closest('.grid-product__image-mask') || slider.closest('.impulse-mobile-media');
+  }
+
   function getDots(slider) {
-    var media = slider ? slider.closest('.impulse-mobile-media') : null;
-    return media ? media.querySelectorAll('.impulse-mobile-dot') : [];
+    var scope = getDotsScope(slider);
+    return scope ? scope.querySelectorAll('.impulse-mobile-dot') : [];
   }
 
   function ensureDots(slider, slideCount) {
-    var media = slider ? slider.closest('.impulse-mobile-media') : null;
-    if (!media) return null;
+    var scope = getDotsScope(slider);
+    if (!scope) return null;
     if (!slideCount || slideCount < 2) return null;
 
-    var dotsWrap = media.querySelector('.impulse-mobile-dots');
+    var dotsWrap = scope.querySelector('.impulse-mobile-dots');
     if (!dotsWrap) {
       dotsWrap = document.createElement('div');
       dotsWrap.className = 'impulse-mobile-dots';
-      media.appendChild(dotsWrap);
+      scope.appendChild(dotsWrap);
     }
 
     var existingDots = dotsWrap.querySelectorAll('.impulse-mobile-dot');
@@ -173,20 +179,17 @@
   }
 
   function setDotsDisplay(slider, show) {
-    var media = slider ? slider.closest('.impulse-mobile-media') : null;
-    if (!media) return;
+    var scope = getDotsScope(slider);
+    if (!scope) return;
 
     var slideCount = getSlides(slider).length;
-    var dotsWrap = show ? ensureDots(slider, slideCount) : media.querySelector('.impulse-mobile-dots');
+    var dotsWrap = show ? ensureDots(slider, slideCount) : scope.querySelector('.impulse-mobile-dots');
     if (!dotsWrap) return;
 
     dotsWrap.style.setProperty('display', show ? 'flex' : 'none', 'important');
     if (!show) return;
 
-    dotsWrap.style.setProperty('position', 'absolute');
-    dotsWrap.style.setProperty('left', '0');
-    dotsWrap.style.setProperty('right', '0');
-    dotsWrap.style.setProperty('bottom', '14px');
+    dotsWrap.style.setProperty('position', 'relative');
     dotsWrap.style.setProperty('justify-content', 'center');
     dotsWrap.style.setProperty('align-items', 'center');
     dotsWrap.style.setProperty('gap', '8px');
@@ -194,7 +197,7 @@
     dotsWrap.style.setProperty('pointer-events', 'none');
     dotsWrap.style.setProperty('padding', '6px 10px');
     dotsWrap.style.setProperty('width', 'fit-content');
-    dotsWrap.style.setProperty('margin', '0 auto');
+    dotsWrap.style.setProperty('margin', '10px auto 2px');
     dotsWrap.style.setProperty('background', 'rgba(0,0,0,0.45)', 'important');
     dotsWrap.style.setProperty('border-radius', '999px');
 
@@ -323,14 +326,8 @@
       slides[1].style.pointerEvents = 'auto';
     }
 
-    var media = slider.closest('.impulse-mobile-media');
-    if (media) {
-      ensureDots(slider, slides.length);
-      var dotsWrap = media.querySelector('.impulse-mobile-dots');
-      if (dotsWrap) {
-        setDotsDisplay(slider, slides.length > 1);
-      }
-    }
+    ensureDots(slider, slides.length);
+    setDotsDisplay(slider, slides.length > 1);
 
     var current = Number(slider.dataset.impulseIndex || 0);
     if (!Number.isFinite(current)) current = 0;
@@ -368,13 +365,7 @@
       s.style.backgroundColor = '';
     }
 
-    var media = slider.closest('.impulse-mobile-media');
-    if (media) {
-      var dotsWrap = media.querySelector('.impulse-mobile-dots');
-      if (dotsWrap) {
-        setDotsDisplay(slider, false);
-      }
-    }
+    setDotsDisplay(slider, false);
     updateDebugBadge(slider, 'desktop', 'cleared=1');
   }
 

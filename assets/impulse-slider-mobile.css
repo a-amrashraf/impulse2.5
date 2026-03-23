@@ -76,16 +76,15 @@
   pointer-events: auto !important;
 }
 
-.grid__item-image-wrapper .grid-product__image-mask .impulse-mobile-media .impulse-mobile-dots {
+.grid__item-image-wrapper .grid-product__image-mask .impulse-mobile-dots {
   display: flex !important;
   flex-direction: row !important;
   justify-content: center;
-  position: absolute;
-  bottom: 15px;
-  width: 100%;
+  position: relative;
+  margin: 10px auto 2px;
+  width: fit-content;
   pointer-events: none;
   z-index: 5;
-  left: 0;
 }
 
 .impulse-mobile-dot {
