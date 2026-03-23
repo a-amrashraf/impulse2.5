@@ -160,6 +160,7 @@ Arguments
 
         {%- if product.media.size > 1 or product.images.size > 1 -%}
           {%- liquid
+             assign second_image = blank
              assign second_media = blank
              for media in product.media
                if media.media_type == 'image' and media.id != main_media.id
