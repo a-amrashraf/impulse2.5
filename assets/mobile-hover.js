@@ -66,7 +66,7 @@
     if (media) {
       var dotsWrap = media.querySelector('.impulse-mobile-dots');
       if (dotsWrap) {
-        dotsWrap.style.display = slides.length > 1 ? '' : 'none';
+        dotsWrap.style.display = slides.length > 1 ? 'flex' : 'none';
       }
     }
 
@@ -104,7 +104,7 @@
     if (media) {
       var dotsWrap = media.querySelector('.impulse-mobile-dots');
       if (dotsWrap) {
-        dotsWrap.style.display = '';
+        dotsWrap.style.display = 'none';
       }
     }
   }
@@ -115,6 +115,8 @@
     slider.dataset.impulseIndex = slider.dataset.impulseIndex || '0';
 
     var media = slider.closest('.impulse-mobile-media') || slider;
+    var card = slider.closest('.grid-product.has-impulse-slider, .product-card.has-impulse-slider');
+    var gestureTarget = card || media;
     var drag = {
       active: false,
       startX: 0,
@@ -204,7 +206,7 @@
       drag.moved = false;
     }
 
-    media.addEventListener('pointerdown', function(e) {
+    gestureTarget.addEventListener('pointerdown', function(e) {
       if (e.pointerType !== 'touch' && e.pointerType !== 'pen' && e.pointerType !== 'mouse') return;
       if (!isMobileMode()) return;
       e.preventDefault();
@@ -227,13 +229,13 @@
       cancel();
     }, true);
 
-    media.addEventListener('touchstart', function(e) {
+    gestureTarget.addEventListener('touchstart', function(e) {
       if (!isMobileMode()) return;
       if (!e.touches || !e.touches.length) return;
       start(e.touches[0].clientX, e.touches[0].clientY);
     }, { passive: true });
 
-    media.addEventListener('touchmove', function(e) {
+    gestureTarget.addEventListener('touchmove', function(e) {
       if (!isMobileMode()) return;
       if (!e.touches || !e.touches.length) return;
       if (move(e.touches[0].clientX, e.touches[0].clientY)) {
@@ -241,18 +243,18 @@
       }
     }, { passive: false });
 
-    media.addEventListener('touchend', function(e) {
+    gestureTarget.addEventListener('touchend', function(e) {
       if (!drag.active) return;
       var x = drag.startX;
       if (e.changedTouches && e.changedTouches.length) x = e.changedTouches[0].clientX;
       end(x);
     }, { passive: true });
 
-    media.addEventListener('touchcancel', function() {
+    gestureTarget.addEventListener('touchcancel', function() {
       cancel();
     }, true);
 
-    media.addEventListener('click', function(e) {
+    gestureTarget.addEventListener('click', function(e) {
       if (slider.dataset.impulseMoved === '1') {
         e.preventDefault();
         e.stopPropagation();
