@@ -186,20 +186,26 @@
     dotsWrap.style.setProperty('position', 'absolute');
     dotsWrap.style.setProperty('left', '0');
     dotsWrap.style.setProperty('right', '0');
-    dotsWrap.style.setProperty('bottom', '10px');
+    dotsWrap.style.setProperty('bottom', '14px');
     dotsWrap.style.setProperty('justify-content', 'center');
     dotsWrap.style.setProperty('align-items', 'center');
-    dotsWrap.style.setProperty('gap', '6px');
+    dotsWrap.style.setProperty('gap', '8px');
     dotsWrap.style.setProperty('z-index', '35', 'important');
+    dotsWrap.style.setProperty('pointer-events', 'none');
+    dotsWrap.style.setProperty('padding', '6px 10px');
+    dotsWrap.style.setProperty('width', 'fit-content');
+    dotsWrap.style.setProperty('margin', '0 auto');
+    dotsWrap.style.setProperty('background', 'rgba(0,0,0,0.45)', 'important');
+    dotsWrap.style.setProperty('border-radius', '999px');
 
     var dots = dotsWrap.querySelectorAll('.impulse-mobile-dot');
     for (var i = 0; i < dots.length; i++) {
       var dot = dots[i];
       dot.style.setProperty('display', 'block', 'important');
-      dot.style.setProperty('width', '7px');
-      dot.style.setProperty('height', '7px');
+      dot.style.setProperty('width', '10px');
+      dot.style.setProperty('height', '10px');
       dot.style.setProperty('border-radius', '50%');
-      dot.style.setProperty('border', '1px solid rgba(0,0,0,0.28)');
+      dot.style.setProperty('border', '1px solid rgba(0,0,0,0.9)');
     }
   }
 
@@ -261,9 +267,9 @@
     for (var i = 0; i < dots.length; i++) {
       var isActive = i === safe;
       dots[i].classList.toggle('active', isActive);
-      dots[i].style.setProperty('background', isActive ? '#ffffff' : 'rgba(255,255,255,0.55)', 'important');
-      dots[i].style.setProperty('opacity', isActive ? '1' : '0.9', 'important');
-      dots[i].style.setProperty('box-shadow', '0 0 0 1px rgba(0,0,0,0.2)', 'important');
+      dots[i].style.setProperty('background', isActive ? '#ffeb3b' : '#ffffff', 'important');
+      dots[i].style.setProperty('opacity', isActive ? '1' : '0.75', 'important');
+      dots[i].style.setProperty('box-shadow', '0 0 0 1px rgba(0,0,0,0.9)', 'important');
     }
   }
 
