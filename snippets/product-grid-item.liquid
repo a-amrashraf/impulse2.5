@@ -48,22 +48,28 @@ Arguments
 
 <div class="grid__item grid-product has-impulse-slider {{ gridView }} {% if quick_shop_enable %} grid-product__has-quick-shop{% endif %}" data-product-handle="{{ product.handle }}" data-product-id="{{ product.id }}">
   <div class="grid-product__content">
-    {%- if has_custom_label -%}
-      <div class="grid-product__tag grid-product__tag--custom">
-        {{ custom_label }}
-      </div>
-    {%- else -%}
-      {%- unless product.available -%}
-        <div class="grid-product__tag grid-product__tag--sold-out">
-          {{ 'products.product.sold_out' | t }}
-        </div>
-      {%- endunless -%}
-      {%- if on_sale and product.available -%}
-        <div class="grid-product__tag grid-product__tag--sale">
-          {{ 'products.general.sale' | t }}
-        </div>
-      {%- endif -%}
-    {%- endif -%}
+    {%- liquid
+      assign product_badge = ''
+      if has_custom_label
+        capture product_badge
+          echo '<div class="grid-product__tag grid-product__tag--custom">'
+          echo custom_label
+          echo '</div>'
+        endcapture
+      elsif product.available == false
+        capture product_badge
+          echo '<div class="grid-product__tag grid-product__tag--sold-out">'
+          echo 'products.product.sold_out' | t
+          echo '</div>'
+        endcapture
+      elsif on_sale and product.available
+        capture product_badge
+          echo '<div class="grid-product__tag grid-product__tag--sale">'
+          echo 'products.general.sale' | t
+          echo '</div>'
+        endcapture
+      endif
+    -%}
 
     {%- liquid
       assign imageRatio = settings.product_grid_image_size
@@ -106,6 +112,7 @@ Arguments
     -%}
 
     <div class="grid__item-image-wrapper" data-original="{{ preview_image | img_url: '600x' }}">
+      {{ product_badge }}
       <div class="grid-product__image-mask">
         <div class="impulse-mobile-media">
         <div class="impulse-mobile-slider">
