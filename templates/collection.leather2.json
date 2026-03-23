@@ -28,6 +28,13 @@
     "collection_slider_ddKWri": {
       "type": "collection-slider",
       "blocks": {
+        "collection_jcRwWm": {
+          "type": "collection",
+          "settings": {
+            "collection": "shopper-bag",
+            "custom_title": ""
+          }
+        },
         "collection_DMVxWD": {
           "type": "collection",
           "settings": {
@@ -87,6 +94,7 @@
         }
       },
       "block_order": [
+        "collection_jcRwWm",
         "collection_DMVxWD",
         "collection_RUhfck",
         "collection_Hmycmc",
@@ -132,7 +140,6 @@
         "per_row": 4,
         "rows_per_page": 7,
         "mobile_flush_grid": true,
-        "enable_mobile_swipe_carousel": true,
         "divider": false,
         "swatch_overflow_style": "newline",
         "swatch_vertical_offset": -12,
