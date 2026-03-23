@@ -225,20 +225,21 @@
       return;
     }
 
-    var secondBroken = !secondImg.getAttribute('src') || secondImg.naturalWidth === 0;
+    var hasSrc = !!secondImg.getAttribute('src');
+    var isDataUrl = hasSrc && /^data:/i.test(secondImg.getAttribute('src'));
+    var secondBroken = !hasSrc || isDataUrl || (secondImg.complete && secondImg.naturalWidth === 0);
     if (!secondBroken) {
       debugLog('ensureSecondSlideImage: second image OK', secondImg.currentSrc || secondImg.getAttribute('src'), 'naturalWidth=', secondImg.naturalWidth);
       return;
     }
 
     var fallbackSrc = firstImg.currentSrc || firstImg.getAttribute('src');
-    if (!fallbackSrc) {
+    if (!fallbackSrc || /^data:/i.test(fallbackSrc)) {
       debugLog('ensureSecondSlideImage: no fallback src available');
       return;
     }
 
     secondImg.setAttribute('src', fallbackSrc);
-    secondImg.removeAttribute('srcset');
     debugLog('ensureSecondSlideImage: applied fallback src', fallbackSrc);
     updateDebugBadge(slider, 'fallback', 'applied=1');
   }
@@ -331,7 +332,6 @@
 
     var current = Number(slider.dataset.impulseIndex || 0);
     if (!Number.isFinite(current)) current = 0;
-    ensureSecondSlideImage(slider);
     forceSecondSlideVisibility(slider);
     setIndex(slider, current, false);
     debugLog('styleForMobile', { slides: slides.length, index: current });
