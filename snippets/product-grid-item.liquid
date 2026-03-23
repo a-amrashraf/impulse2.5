@@ -160,17 +160,20 @@ Arguments
 
         {%- if product.images.size > 1 -%}
           {%- liquid
-             assign second_image = blank
+             assign second_image = product.images[1]
 
-             # Always pick a real, distinct product image for slide 2
-             for image in product.images
-               if image.src != preview_image.src
-                 assign second_image = image
-                 break
-               endif
-             endfor
+             # If first two are same source, pick the next distinct image
+             if second_image.src == preview_image.src
+               assign second_image = blank
+               for image in product.images offset: 2
+                 if image.src != preview_image.src
+                   assign second_image = image
+                   break
+                 endif
+               endfor
+             endif
 
-             # Last fallback: second image in array (if first comparison failed)
+             # Final fallback to first image after primary if no distinct src found
              if second_image == blank and product.images.size > 1
                assign second_image = product.images[1]
              endif
