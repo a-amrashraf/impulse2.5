@@ -27,11 +27,6 @@
 .grid-product.has-impulse-slider .impulse-mobile-media,
 .grid-product.has-impulse-slider .impulse-mobile-slider {
   position: relative;
-  z-index: 1;
-}
-
-.grid-product.has-impulse-slider .impulse-mobile-dots {
-  z-index: 2 !important;
 }
 
 .grid__item-image-wrapper .grid-product__image-mask .impulse-mobile-media .impulse-mobile-slider {
@@ -95,17 +90,15 @@
   display: flex !important;
   flex-direction: row !important;
   justify-content: center;
-  position: relative;
-  margin: 10px auto 2px;
+  margin: 0;
   width: fit-content;
   pointer-events: none;
-  z-index: 5;
 }
 
 .impulse-mobile-dot {
   width: 6px;
   height: 6px;
-  background: rgba(0, 0, 0, 0.2) !important;
+  background: #9e9e9e !important;
   border-radius: 50%;
   margin: 0 3px;
   transition: background 0.2s;
