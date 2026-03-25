@@ -34,19 +34,6 @@
   z-index: 2 !important;
 }
 
-.grid-product.has-impulse-slider .grid-product__image-mask {
-  position: relative;
-  overflow: hidden;
-}
-
-.grid-product.has-impulse-slider .grid-product__tag {
-  z-index: 40 !important;
-}
-
-.grid-product.has-impulse-slider .grid-product__quick-add {
-  z-index: 35 !important;
-}
-
 .grid__item-image-wrapper .grid-product__image-mask .impulse-mobile-media .impulse-mobile-slider {
   display: flex !important;
   flex-wrap: nowrap !important;
@@ -108,14 +95,11 @@
   display: flex !important;
   flex-direction: row !important;
   justify-content: center;
-  position: absolute;
-  left: 50%;
-  bottom: 8px;
-  transform: translateX(-50%);
-  margin: 0;
+  position: relative;
+  margin: 10px auto 2px;
   width: fit-content;
   pointer-events: none;
-  z-index: 20;
+  z-index: 5;
 }
 
 .impulse-mobile-dot {
