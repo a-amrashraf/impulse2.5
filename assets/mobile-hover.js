@@ -321,18 +321,18 @@
     for (var i = 0; i < slides.length; i++) {
       var isFirst = i === 0;
       var isActive = i === target;
-      slides[i].style.position = isFirst ? 'relative' : 'absolute';
+      slides[i].style.setProperty('position', isFirst ? 'relative' : 'absolute', 'important');
       if (!isFirst) {
-        slides[i].style.top = '0';
-        slides[i].style.left = '0';
-        slides[i].style.right = '0';
-        slides[i].style.bottom = '0';
+        slides[i].style.setProperty('top', '0', 'important');
+        slides[i].style.setProperty('left', '0', 'important');
+        slides[i].style.setProperty('right', '0', 'important');
+        slides[i].style.setProperty('bottom', '0', 'important');
       }
-      slides[i].style.transition = 'opacity ' + duration + ' ease';
-      slides[i].style.opacity = isActive ? '1' : '0';
-      slides[i].style.visibility = (isActive || isFirst) ? 'visible' : 'hidden';
-      slides[i].style.pointerEvents = isActive ? 'auto' : 'none';
-      slides[i].style.zIndex = isActive ? '2' : '1';
+      slides[i].style.setProperty('transition', 'opacity ' + duration + ' ease');
+      slides[i].style.setProperty('opacity', isActive ? '1' : '0', 'important');
+      slides[i].style.setProperty('visibility', (isActive || isFirst) ? 'visible' : 'hidden', 'important');
+      slides[i].style.setProperty('pointer-events', isActive ? 'auto' : 'none', 'important');
+      slides[i].style.setProperty('z-index', isActive ? '2' : '1', 'important');
     }
 
     if (target > 0) {
@@ -354,27 +354,21 @@
 
     for (var i = 0; i < slides.length; i++) {
       var s = slides[i];
-      s.style.position = i === 0 ? 'relative' : 'absolute';
-      s.style.top = 'auto';
-      s.style.left = 'auto';
-      s.style.right = 'auto';
-      s.style.bottom = 'auto';
-      if (i > 0) {
-        s.style.top = '0';
-        s.style.left = '0';
-        s.style.right = '0';
-        s.style.bottom = '0';
-      }
+      s.style.setProperty('position', i === 0 ? 'relative' : 'absolute', 'important');
+      s.style.setProperty('top', i > 0 ? '0' : 'auto', 'important');
+      s.style.setProperty('left', i > 0 ? '0' : 'auto', 'important');
+      s.style.setProperty('right', i > 0 ? '0' : 'auto', 'important');
+      s.style.setProperty('bottom', i > 0 ? '0' : 'auto', 'important');
       s.style.flex = '';
       s.style.minWidth = '';
       s.style.maxWidth = '';
       s.style.width = '100%';
-      s.style.opacity = '1';
-      s.style.visibility = 'visible';
-      s.style.pointerEvents = 'auto';
+      s.style.setProperty('opacity', '1', 'important');
+      s.style.setProperty('visibility', 'visible', 'important');
+      s.style.setProperty('pointer-events', 'auto', 'important');
       s.style.backgroundColor = 'transparent';
       s.style.transition = '';
-      s.style.zIndex = i === 0 ? '2' : '1';
+      s.style.setProperty('z-index', i === 0 ? '2' : '1', 'important');
     }
 
     slider.style.transform = '';
