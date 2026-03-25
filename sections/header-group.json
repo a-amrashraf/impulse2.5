@@ -98,7 +98,7 @@
         ".drawer__title {font-size: 12px;}"
       ],
       "settings": {
-        "main_menu_link_list": "main-menu",
+        "main_menu_link_list": "main-menu-2",
         "hover_menu": true,
         "mega_menu_images": true,
         "main_menu_alignment": "center-drawer",
