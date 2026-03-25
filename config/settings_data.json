@@ -9,7 +9,7 @@
  */
 {
   "current": {
-    "color_body_bg": "#ffffff",
+    "color_body_bg": "#844545",
     "color_body_text": "#0f0f0f",
     "color_price": "#0f0f0f",
     "color_savings_text": "#000000",
@@ -150,19 +150,9 @@
         "disabled": false,
         "settings": {}
       },
-      "3869478966488610803": {
-        "type": "shopify://apps/bisell-upsell/blocks/app-embed/0be6eb92-28a2-4372-b8a6-4a6094b3c651",
-        "disabled": false,
-        "settings": {}
-      },
       "17433512874017181462": {
         "type": "shopify://apps/sb-product-image-hover-effect/blocks/change-image-onhover/b034e4b7-6270-41c0-8990-91db36b7a4b5",
         "disabled": true,
-        "settings": {}
-      },
-      "11504874455466941711": {
-        "type": "shopify://apps/singleton-second-image-hover/blocks/app-block/08b535aa-4bdb-43da-ac29-e340d354e027",
-        "disabled": false,
         "settings": {}
       }
     }
