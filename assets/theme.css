@@ -9466,11 +9466,6 @@ html[dir=rtl] .grid-product__content{
 
 @media only screen and (max-width:768px){
 
-  .grid-product__secondary-image,
-  .product--hover-image[data-item]{
-      display:block !important;
-  }
-
 /*.supports-touch .grid-product__secondary-image{
       display:none;
 }*/
@@ -9548,11 +9543,7 @@ html[dir=rtl] .grid-product__content{
   right:0;
   top:0;
   transition:opacity 0.4s ease;
-  z-index:40;
-}
-
-.grid-product__content .grid-product__tag{
-  z-index:60 !important;
+  z-index:2;
 }
 
 .grid-product__tag.grid-product__tag--sold-out{
