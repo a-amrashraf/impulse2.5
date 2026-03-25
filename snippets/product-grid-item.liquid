@@ -174,39 +174,30 @@ Arguments
                 if second_ratio == blank or second_ratio == 0
                   assign second_ratio = preview_image.aspect_ratio
                 endif
+                assign slider_test_image = 'password-page-background.jpg' | asset_url
               -%}
               {%- if fixed_aspect_ratio -%}
                 <div
                   class="grid__image-ratio grid__image-ratio--{% if image_style == 'circle' %}square{% else %}{{ settings.product_grid_image_size }}{% endif %}">
-                  {%- capture second_image_classes -%}
-                    product-image {% unless settings.product_grid_image_fill %}grid__image-contain{% endunless %} image-style--{{ image_style }}
-                  {%- endcapture -%}
-                  {%- render 'image-element',
-                    img: second_image,
-                    classes: second_image_classes,
-                    sizes: sizes,
-                    sizeVariable: sizeVariable,
-                    fallback: fallback,
-                    widths: '360, 540, 720, 900, 1080',
-                    animation: 'none'
-                  -%}
+                  <img
+                    class="grid-product__image product-image image-style--{{ image_style }}"
+                    src="{{ slider_test_image }}"
+                    alt="Test second image"
+                    loading="eager"
+                    decoding="sync"
+                  >
                 </div>
               {%- else -%}
                 <div class="image-wrap"
                     style="height: 0; padding-bottom: {{ 100 | divided_by: second_ratio }}%;"
                 >
-                  {%- capture second_image_classes -%}
-                    grid-product__image product-image image-style--{{ image_style }}
-                  {%- endcapture -%}
-                  {%- render 'image-element',
-                    img: second_image,
-                    classes: second_image_classes,
-                    sizes: sizes,
-                    sizeVariable: sizeVariable,
-                    fallback: fallback,
-                    widths: '360, 540, 720, 900, 1080',
-                    animation: 'none'
-                  -%}
+                  <img
+                    class="grid-product__image product-image image-style--{{ image_style }}"
+                    src="{{ slider_test_image }}"
+                    alt="Test second image"
+                    loading="eager"
+                    decoding="sync"
+                  >
                 </div>
               {%- endif -%}
             </div>
