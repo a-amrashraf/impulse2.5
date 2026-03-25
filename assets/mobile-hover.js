@@ -423,6 +423,7 @@
 
     function start(clientX, clientY) {
       if (!isMobileMode()) return;
+      if (getSlides(slider).length < 2) return;
       drag.active = true;
       drag.startX = clientX;
       drag.startY = clientY;
@@ -451,6 +452,7 @@
 
     function move(clientX, clientY) {
       if (!drag.active || !isMobileMode()) return false;
+      if (getSlides(slider).length < 2) return false;
 
       var dx = clientX - drag.startX;
       var dy = clientY - drag.startY;
@@ -489,6 +491,12 @@
 
     function end(clientX) {
       if (!drag.active || !isMobileMode()) return;
+      if (getSlides(slider).length < 2) {
+        drag.active = false;
+        slider.dataset.impulseDragging = '0';
+        setIndex(slider, 0, false);
+        return;
+      }
       drag.active = false;
       slider.dataset.impulseDragging = '0';
 

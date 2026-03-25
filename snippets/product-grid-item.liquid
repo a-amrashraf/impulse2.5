@@ -28,6 +28,11 @@ Arguments
     assign on_sale = true
   endif
 
+  assign has_secondary_media = false
+  if product.media.size > 1 or product.images.size > 1
+    assign has_secondary_media = true
+  endif
+
   assign product_tags = product.tags | join: ','
   assign has_custom_label = false
   if product.metafields.theme.label and product.metafields.theme.label != blank
@@ -46,7 +51,7 @@ Arguments
   endif
 -%}
 
-<div class="grid__item grid-product product-card has-impulse-slider {{ gridView }} {% if quick_shop_enable %} grid-product__has-quick-shop{% endif %}" data-product-handle="{{ product.handle }}" data-product-id="{{ product.id }}">
+<div class="grid__item grid-product product-card {% if has_secondary_media %}has-impulse-slider{% endif %} {{ gridView }} {% if quick_shop_enable %} grid-product__has-quick-shop{% endif %}" data-product-handle="{{ product.handle }}" data-product-id="{{ product.id }}">
   <div class="grid-product__content">
     {%- liquid
       assign imageRatio = settings.product_grid_image_size
