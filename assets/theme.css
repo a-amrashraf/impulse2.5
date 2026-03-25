@@ -9551,6 +9551,10 @@ html[dir=rtl] .grid-product__content{
   z-index:40;
 }
 
+.grid-product__content .grid-product__tag{
+  z-index:60 !important;
+}
+
 .grid-product__tag.grid-product__tag--sold-out{
     background-color:var(--colorBody);
     color:var(--colorTextBody);

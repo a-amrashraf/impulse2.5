@@ -271,9 +271,9 @@
     for (var i = 0; i < dots.length; i++) {
       var isActive = i === safe;
       dots[i].classList.toggle('active', isActive);
-      dots[i].style.setProperty('background', isActive ? '#ffeb3b' : '#ffffff', 'important');
-      dots[i].style.setProperty('opacity', isActive ? '1' : '0.75', 'important');
-      dots[i].style.setProperty('box-shadow', '0 0 0 1px rgba(0,0,0,0.9)', 'important');
+      dots[i].style.setProperty('background', isActive ? '#000000' : '#9e9e9e', 'important');
+      dots[i].style.setProperty('opacity', '1', 'important');
+      dots[i].style.setProperty('box-shadow', 'none', 'important');
     }
   }
 
@@ -423,7 +423,7 @@
       var dy = clientY - drag.startY;
 
       if (!drag.axisLocked) {
-        if (Math.abs(dx) > 6 || Math.abs(dy) > 6) {
+        if (Math.abs(dx) > 4 || Math.abs(dy) > 4) {
           drag.axisLocked = true;
           drag.axis = Math.abs(dx) > Math.abs(dy) ? 'x' : 'y';
         } else {
@@ -455,7 +455,7 @@
       if (!Number.isFinite(current)) current = 0;
 
       var width = getViewportWidth(slider);
-      var threshold = Math.max(20, width * 0.12);
+      var threshold = Math.max(12, width * 0.08);
       if (dx < -threshold) current += 1;
       if (dx > threshold) current -= 1;
 
