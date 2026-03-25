@@ -108,7 +108,7 @@
 
     var target = wrapIndex(index, slides.length);
     slider.dataset.impulseIndex = String(target);
-    var duration = animate ? '0.26s' : '0s';
+    var duration = '0s';
 
     for (var i = 0; i < slides.length; i++) {
       var isFirst = i === 0;
@@ -322,7 +322,7 @@
         }
       }
 
-      setIndex(slider, target, true);
+      setIndex(slider, target, false);
       slider.dataset.impulseMoved = drag.moved && drag.axis === 'x' ? '1' : '0';
       drag.axisLocked = false;
       drag.axis = '';
@@ -335,7 +335,7 @@
       slider.dataset.impulseDragging = '0';
       var current = Number(slider.dataset.impulseIndex || 0);
       if (!Number.isFinite(current)) current = 0;
-      setIndex(slider, current, true);
+      setIndex(slider, current, false);
       drag.axisLocked = false;
       drag.axis = '';
       drag.moved = false;
