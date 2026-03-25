@@ -316,48 +316,69 @@
 
     var target = clamp(index, 0, slides.length - 1);
     slider.dataset.impulseIndex = String(target);
-    slider.style.transition = animate ? 'transform 0.32s cubic-bezier(0.22, 0.61, 0.36, 1)' : 'none';
-    var viewportWidth = getViewportWidth(slider);
-    slider.style.transform = 'translate3d(' + (-target * viewportWidth) + 'px,0,0)';
+    var duration = animate ? '0.26s' : '0s';
+
+    for (var i = 0; i < slides.length; i++) {
+      var isFirst = i === 0;
+      var isActive = i === target;
+      slides[i].style.position = isFirst ? 'relative' : 'absolute';
+      if (!isFirst) {
+        slides[i].style.top = '0';
+        slides[i].style.left = '0';
+        slides[i].style.right = '0';
+        slides[i].style.bottom = '0';
+      }
+      slides[i].style.transition = 'opacity ' + duration + ' ease';
+      slides[i].style.opacity = isActive ? '1' : '0';
+      slides[i].style.visibility = (isActive || isFirst) ? 'visible' : 'hidden';
+      slides[i].style.pointerEvents = isActive ? 'auto' : 'none';
+      slides[i].style.zIndex = isActive ? '2' : '1';
+    }
+
     if (target > 0) {
       prepareSecondImage(slider);
       forceSecondSlideVisibility(slider);
     }
-    debugLog('setIndex', { target: target, animate: !!animate, viewportWidth: viewportWidth, transform: slider.style.transform });
+    debugLog('setIndex', { target: target, animate: !!animate, mode: 'stacked' });
     updateDebugBadge(slider, 'setIndex', 't=' + target);
     updateDots(slider, target);
   }
 
   function styleForMobile(slider) {
     var slides = getSlides(slider);
-    slider.style.display = 'flex';
-    slider.style.flexWrap = 'nowrap';
+    slider.style.display = 'block';
+    slider.style.flexWrap = '';
     slider.style.overflow = 'hidden';
     slider.style.touchAction = 'pan-y';
-    slider.style.willChange = 'transform';
+    slider.style.willChange = 'auto';
 
     for (var i = 0; i < slides.length; i++) {
       var s = slides[i];
-      s.style.position = 'relative';
+      s.style.position = i === 0 ? 'relative' : 'absolute';
       s.style.top = 'auto';
       s.style.left = 'auto';
       s.style.right = 'auto';
       s.style.bottom = 'auto';
-      s.style.flex = '0 0 100%';
-      s.style.minWidth = '100%';
+      if (i > 0) {
+        s.style.top = '0';
+        s.style.left = '0';
+        s.style.right = '0';
+        s.style.bottom = '0';
+      }
+      s.style.flex = '';
+      s.style.minWidth = '';
+      s.style.maxWidth = '';
       s.style.width = '100%';
       s.style.opacity = '1';
       s.style.visibility = 'visible';
       s.style.pointerEvents = 'auto';
       s.style.backgroundColor = 'transparent';
+      s.style.transition = '';
+      s.style.zIndex = i === 0 ? '2' : '1';
     }
 
-    if (slides.length > 1) {
-      slides[1].style.position = 'relative';
-      slides[1].style.opacity = '1';
-      slides[1].style.visibility = 'visible';
-      slides[1].style.pointerEvents = 'auto';
-    }
+    slider.style.transform = '';
+    slider.style.transition = '';
 
     ensureDots(slider, slides.length);
     setDotsDisplay(slider, slides.length > 1);
@@ -391,11 +412,14 @@
       s.style.bottom = '';
       s.style.flex = '';
       s.style.minWidth = '';
+      s.style.maxWidth = '';
       s.style.width = '';
       s.style.opacity = '';
       s.style.visibility = '';
       s.style.pointerEvents = '';
       s.style.backgroundColor = '';
+      s.style.zIndex = '';
+      s.style.transition = '';
     }
 
     setDotsDisplay(slider, false);
@@ -481,10 +505,6 @@
           return false;
         }
       }
-
-      var width = getViewportWidth(slider);
-      var baseX = -current * width;
-      slider.style.transform = 'translate3d(' + (baseX + dx) + 'px,0,0)';
       updateDebugBadge(slider, 'move', 'dx=' + Math.round(dx));
       return true;
     }
