@@ -132,6 +132,11 @@
     return Math.max(min, Math.min(max, n));
   }
 
+  function wrapIndex(n, length) {
+    if (!length) return 0;
+    return ((n % length) + length) % length;
+  }
+
   function getViewportWidth(slider) {
     var media = slider ? slider.closest('.impulse-mobile-media') : null;
     var width = media ? media.offsetWidth : 0;
@@ -314,7 +319,7 @@
     var slides = getSlides(slider);
     if (!slides.length) return;
 
-    var target = clamp(index, 0, slides.length - 1);
+    var target = wrapIndex(index, slides.length);
     slider.dataset.impulseIndex = String(target);
     var duration = animate ? '0.26s' : '0s';
 
@@ -517,22 +522,33 @@
       var dx = drag.moved ? drag.dx : (clientX - drag.startX);
       var current = Number(slider.dataset.impulseIndex || 0);
       if (!Number.isFinite(current)) current = 0;
+      var slides = getSlides(slider);
+      var slideCount = slides.length;
+      if (slideCount < 2) {
+        setIndex(slider, 0, false);
+        drag.axisLocked = false;
+        drag.axis = '';
+        drag.moved = false;
+        return;
+      }
 
       var width = getViewportWidth(slider);
       var threshold = Math.max(12, width * 0.08);
-      if (dx < -threshold) current += 1;
-      if (dx > threshold) current -= 1;
+      var target = current;
+      if (dx < -threshold) target = current + 1;
+      if (dx > threshold) target = current - 1;
+      target = wrapIndex(target, slideCount);
 
-      if (current > 0) {
+      if (target > 0) {
         var secondImg = getSecondImage(slider);
         if (secondImg && !isSecondImageReady(secondImg)) {
           prepareSecondImage(slider);
-          current = 0;
+          target = current;
         }
       }
 
-      setIndex(slider, current, true);
-      debugLog('drag end', { dx: dx, threshold: threshold, nextIndex: current });
+      setIndex(slider, target, true);
+      debugLog('drag end', { dx: dx, threshold: threshold, nextIndex: target });
       updateDebugBadge(slider, 'end', 'dx=' + Math.round(dx));
       slider.dataset.impulseMoved = drag.moved && drag.axis === 'x' ? '1' : '0';
       drag.axisLocked = false;
