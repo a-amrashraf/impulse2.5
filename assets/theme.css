@@ -9439,15 +9439,6 @@ html[dir=rtl] .grid-product__content{
   z-index:6;
 }
 
-.grid-product__image-overlay .impulse-mobile-dots{
-  bottom:6px;
-  left:50%;
-  pointer-events:none;
-  position:absolute;
-  transform:translateX(-50%);
-  z-index:5;
-}
-
 .impulse-mobile-media{
   position:relative;
 }

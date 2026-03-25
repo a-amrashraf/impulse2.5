@@ -26,77 +26,6 @@
     return slider ? slider.querySelectorAll('.impulse-mobile-slide') : [];
   }
 
-  function getDotsScope(slider) {
-    if (!slider) return null;
-    return slider.closest('.grid-product__image-mask') || slider.closest('.impulse-mobile-media');
-  }
-
-  function getDots(slider) {
-    var scope = getDotsScope(slider);
-    return scope ? scope.querySelectorAll('.impulse-mobile-dot') : [];
-  }
-
-  function ensureDots(slider, slideCount) {
-    var scope = getDotsScope(slider);
-    if (!scope) return null;
-    if (!slideCount || slideCount < 2) return null;
-
-    var dotsWrap = scope.querySelector('.impulse-mobile-dots');
-    if (!dotsWrap) {
-      dotsWrap = document.createElement('div');
-      dotsWrap.className = 'impulse-mobile-dots';
-      scope.appendChild(dotsWrap);
-    }
-
-    var existingDots = dotsWrap.querySelectorAll('.impulse-mobile-dot');
-    if (existingDots.length >= 2) return dotsWrap;
-
-    dotsWrap.innerHTML = '';
-    for (var i = 0; i < slideCount; i++) {
-      var dot = document.createElement('div');
-      dot.className = 'impulse-mobile-dot' + (i === 0 ? ' active' : '');
-      dotsWrap.appendChild(dot);
-    }
-    return dotsWrap;
-  }
-
-  function setDotsDisplay(slider, show) {
-    var scope = getDotsScope(slider);
-    if (!scope) return;
-
-    var slideCount = getSlides(slider).length;
-    var dotsWrap = show ? ensureDots(slider, slideCount) : scope.querySelector('.impulse-mobile-dots');
-    if (!dotsWrap) return;
-
-    dotsWrap.style.setProperty('display', show ? 'flex' : 'none', 'important');
-    if (!show) return;
-
-    dotsWrap.style.setProperty('position', 'absolute');
-    dotsWrap.style.setProperty('left', '50%');
-    dotsWrap.style.setProperty('bottom', '8px');
-    dotsWrap.style.setProperty('transform', 'translateX(-50%)');
-    dotsWrap.style.setProperty('justify-content', 'center');
-    dotsWrap.style.setProperty('align-items', 'center');
-    dotsWrap.style.setProperty('gap', '6px');
-    dotsWrap.style.setProperty('z-index', '5', 'important');
-    dotsWrap.style.setProperty('pointer-events', 'none');
-    dotsWrap.style.setProperty('padding', '0');
-    dotsWrap.style.setProperty('width', 'fit-content');
-    dotsWrap.style.setProperty('margin', '0');
-    dotsWrap.style.setProperty('background', 'transparent', 'important');
-    dotsWrap.style.setProperty('border-radius', '0');
-
-    var dots = dotsWrap.querySelectorAll('.impulse-mobile-dot');
-    for (var i = 0; i < dots.length; i++) {
-      var dot = dots[i];
-      dot.style.setProperty('display', 'block', 'important');
-      dot.style.setProperty('width', '6px');
-      dot.style.setProperty('height', '6px');
-      dot.style.setProperty('border-radius', '50%');
-      dot.style.setProperty('border', '0');
-    }
-  }
-
   function getSecondImage(slider) {
     if (!slider) return null;
     return slider.querySelector('.impulse-mobile-slide--second img');
@@ -172,20 +101,6 @@
     secondImg.style.visibility = 'visible';
   }
 
-  function updateDots(slider, index) {
-    var dots = getDots(slider);
-    if (!dots.length) return;
-
-    var safe = clamp(index, 0, dots.length - 1);
-    for (var i = 0; i < dots.length; i++) {
-      var isActive = i === safe;
-      dots[i].classList.toggle('active', isActive);
-      dots[i].style.setProperty('background', isActive ? '#000000' : '#9e9e9e', 'important');
-      dots[i].style.setProperty('opacity', '1', 'important');
-      dots[i].style.setProperty('box-shadow', 'none', 'important');
-    }
-  }
-
   function setIndex(slider, index, animate) {
     if (!slider) return;
     var slides = getSlides(slider);
@@ -216,7 +131,6 @@
       prepareSecondImage(slider);
       forceSecondSlideVisibility(slider);
     }
-    updateDots(slider, target);
   }
 
   function styleForMobile(slider) {
@@ -249,8 +163,6 @@
     slider.style.transform = '';
     slider.style.transition = '';
 
-    ensureDots(slider, slides.length);
-    setDotsDisplay(slider, slides.length > 1);
     prepareSecondImage(slider);
 
     var current = Number(slider.dataset.impulseIndex || 0);
@@ -289,7 +201,6 @@
       s.style.transition = '';
     }
 
-    setDotsDisplay(slider, false);
   }
 
   function initSlider(slider) {
@@ -534,14 +445,6 @@
       applyMode();
     });
   }
-
-  // Legacy compatibility for existing inline handler in markup
-  window.updateImpulseMobileDots = function(slider) {
-    if (!slider) return;
-    var idx = Number(slider.dataset.impulseIndex || 0);
-    if (!Number.isFinite(idx)) idx = 0;
-    updateDots(slider, idx);
-  };
 
   document.addEventListener('DOMContentLoaded', applyMode);
   window.addEventListener('resize', scheduleApply);
