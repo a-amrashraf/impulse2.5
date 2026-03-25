@@ -215,6 +215,35 @@
     }
   }
 
+  function getSecondImage(slider) {
+    if (!slider) return null;
+    return slider.querySelector('.impulse-mobile-slide--second img');
+  }
+
+  function isSecondImageReady(secondImg) {
+    if (!secondImg) return false;
+    var src = secondImg.currentSrc || secondImg.getAttribute('src') || '';
+    if (!src || /^data:/i.test(src)) return false;
+    return !!(secondImg.complete && secondImg.naturalWidth > 0);
+  }
+
+  function prioritizeSecondImage(secondImg) {
+    if (!secondImg) return;
+    secondImg.setAttribute('loading', 'eager');
+    secondImg.setAttribute('decoding', 'async');
+    secondImg.setAttribute('fetchpriority', 'high');
+  }
+
+  function prepareSecondImage(slider) {
+    ensureSecondSlideImage(slider);
+    var secondImg = getSecondImage(slider);
+    if (!secondImg) return;
+    prioritizeSecondImage(secondImg);
+    if (typeof secondImg.decode === 'function' && !isSecondImageReady(secondImg)) {
+      secondImg.decode().catch(function() {});
+    }
+  }
+
   function ensureSecondSlideImage(slider) {
     if (!slider) return;
     var firstSlide = slider.querySelector('.impulse-mobile-slide--first');
@@ -291,7 +320,7 @@
     var viewportWidth = getViewportWidth(slider);
     slider.style.transform = 'translate3d(' + (-target * viewportWidth) + 'px,0,0)';
     if (target > 0) {
-      ensureSecondSlideImage(slider);
+      prepareSecondImage(slider);
       forceSecondSlideVisibility(slider);
     }
     debugLog('setIndex', { target: target, animate: !!animate, viewportWidth: viewportWidth, transform: slider.style.transform });
@@ -332,6 +361,7 @@
 
     ensureDots(slider, slides.length);
     setDotsDisplay(slider, slides.length > 1);
+    prepareSecondImage(slider);
 
     var current = Number(slider.dataset.impulseIndex || 0);
     if (!Number.isFinite(current)) current = 0;
@@ -441,6 +471,15 @@
 
       var current = Number(slider.dataset.impulseIndex || 0);
       if (!Number.isFinite(current)) current = 0;
+
+      if (current === 0 && dx < 0) {
+        var secondImg = getSecondImage(slider);
+        if (secondImg && !isSecondImageReady(secondImg)) {
+          prepareSecondImage(slider);
+          return false;
+        }
+      }
+
       var width = getViewportWidth(slider);
       var baseX = -current * width;
       slider.style.transform = 'translate3d(' + (baseX + dx) + 'px,0,0)';
@@ -461,6 +500,14 @@
       var threshold = Math.max(12, width * 0.08);
       if (dx < -threshold) current += 1;
       if (dx > threshold) current -= 1;
+
+      if (current > 0) {
+        var secondImg = getSecondImage(slider);
+        if (secondImg && !isSecondImageReady(secondImg)) {
+          prepareSecondImage(slider);
+          current = 0;
+        }
+      }
 
       setIndex(slider, current, true);
       debugLog('drag end', { dx: dx, threshold: threshold, nextIndex: current });

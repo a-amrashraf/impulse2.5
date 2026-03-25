@@ -174,17 +174,17 @@ Arguments
                 if second_ratio == blank or second_ratio == 0
                   assign second_ratio = preview_image.aspect_ratio
                 endif
-                assign slider_test_image = 'password-page-background.jpg' | asset_url
               -%}
               {%- if fixed_aspect_ratio -%}
                 <div
                   class="grid__image-ratio grid__image-ratio--{% if image_style == 'circle' %}square{% else %}{{ settings.product_grid_image_size }}{% endif %}">
                   <img
                     class="grid-product__image product-image image-style--{{ image_style }}"
-                    src="{{ slider_test_image }}"
-                    alt="Test second image"
+                    src="{{ second_image | img_url: '900x' }}"
+                    alt="{{ product.title | escape }}"
                     loading="eager"
-                    decoding="sync"
+                    decoding="async"
+                    fetchpriority="high"
                   >
                 </div>
               {%- else -%}
@@ -193,10 +193,11 @@ Arguments
                 >
                   <img
                     class="grid-product__image product-image image-style--{{ image_style }}"
-                    src="{{ slider_test_image }}"
-                    alt="Test second image"
+                    src="{{ second_image | img_url: '900x' }}"
+                    alt="{{ product.title | escape }}"
                     loading="eager"
-                    decoding="sync"
+                    decoding="async"
+                    fetchpriority="high"
                   >
                 </div>
               {%- endif -%}
