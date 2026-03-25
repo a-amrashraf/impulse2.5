@@ -154,6 +154,11 @@
           "customcss": ".side-cart-container.bottom-cart {\n  animation: none !important;  \n  transition: none !important;    \n  transform: none !important;\n  will-change: auto !important; \n}\n.discount-info-container-header {\n    display: none !important;\n}",
           "customjs": ""
         }
+      },
+      "1309933516898906475": {
+        "type": "shopify://apps/qboost-upsell-cross-sell/blocks/upsell/c2eea735-43d1-426a-8172-dd37cb7d9dab",
+        "disabled": false,
+        "settings": {}
       }
     }
   },
