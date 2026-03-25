@@ -9466,11 +9466,6 @@ html[dir=rtl] .grid-product__content{
 
 @media only screen and (max-width:768px){
 
-  .grid-product__secondary-image,
-  .product--hover-image[data-item]{
-      display:block !important;
-  }
-
 /*.supports-touch .grid-product__secondary-image{
       display:none;
 }*/
