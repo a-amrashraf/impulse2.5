@@ -178,27 +178,37 @@ Arguments
               {%- if fixed_aspect_ratio -%}
                 <div
                   class="grid__image-ratio grid__image-ratio--{% if image_style == 'circle' %}square{% else %}{{ settings.product_grid_image_size }}{% endif %}">
-                  <img
-                    class="grid-product__image product-image image-style--{{ image_style }}"
-                    src="{{ second_image | img_url: '900x' }}"
-                    alt="{{ product.title | escape }}"
-                    loading="eager"
-                    decoding="async"
-                    fetchpriority="high"
-                  >
+                  {%- capture second_image_classes -%}
+                    product-image {% unless settings.product_grid_image_fill %}grid__image-contain{% endunless %} image-style--{{ image_style }}
+                  {%- endcapture -%}
+                  {%- render 'image-element',
+                    img: second_image,
+                    classes: second_image_classes,
+                    sizes: sizes,
+                    sizeVariable: sizeVariable,
+                    fallback: fallback,
+                    widths: '360, 540, 720, 900, 1080',
+                    loading: 'eager',
+                    animation: 'none'
+                  -%}
                 </div>
               {%- else -%}
                 <div class="image-wrap"
                     style="height: 0; padding-bottom: {{ 100 | divided_by: second_ratio }}%;"
                 >
-                  <img
-                    class="grid-product__image product-image image-style--{{ image_style }}"
-                    src="{{ second_image | img_url: '900x' }}"
-                    alt="{{ product.title | escape }}"
-                    loading="eager"
-                    decoding="async"
-                    fetchpriority="high"
-                  >
+                  {%- capture second_image_classes -%}
+                    grid-product__image product-image image-style--{{ image_style }}
+                  {%- endcapture -%}
+                  {%- render 'image-element',
+                    img: second_image,
+                    classes: second_image_classes,
+                    sizes: sizes,
+                    sizeVariable: sizeVariable,
+                    fallback: fallback,
+                    widths: '360, 540, 720, 900, 1080',
+                    loading: 'eager',
+                    animation: 'none'
+                  -%}
                 </div>
               {%- endif -%}
             </div>
