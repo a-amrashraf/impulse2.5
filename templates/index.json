@@ -52,6 +52,7 @@
       "block_order": [
         "image_PyANit"
       ],
+      "disabled": true,
       "name": "t:sections.slideshow.presets.hero_optional_slideshow.name",
       "settings": {
         "section_height": "650px",
