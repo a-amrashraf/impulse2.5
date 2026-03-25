@@ -38,7 +38,7 @@
   display: flex !important;
   flex-wrap: nowrap !important;
   overflow: hidden !important;
-  touch-action: none;
+  touch-action: pan-y;
   width: 100% !important;
   margin: 0 !important;
   padding: 0 !important;
@@ -47,7 +47,7 @@
 }
 
 .grid-product.has-impulse-slider .impulse-mobile-slider {
-  touch-action: none !important;
+  touch-action: pan-y !important;
   cursor: grab;
 }
 

@@ -487,7 +487,6 @@
         if (e.pointerType !== 'touch' && e.pointerType !== 'pen') return;
         if (!isMobileMode()) return;
         if (!isWithinMedia(e.clientX, e.clientY)) return;
-        e.preventDefault();
         if (gestureTarget.setPointerCapture) {
           try {
             gestureTarget.setPointerCapture(e.pointerId);
@@ -517,7 +516,6 @@
         if (!isMobileMode()) return;
         if (!e.touches || !e.touches.length) return;
         if (!isWithinMedia(e.touches[0].clientX, e.touches[0].clientY)) return;
-        e.preventDefault();
         start(e.touches[0].clientX, e.touches[0].clientY);
       }, { passive: false });
 
