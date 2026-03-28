@@ -1920,8 +1920,13 @@ document.addEventListener('DOMContentLoaded', function() {
           }
 
           var renderSlide = function() {
-            var slideWidth = viewport.getBoundingClientRect().width;
-            track.style.transform = 'translateX(' + (currentIndex * slideWidth * -1) + 'px)';
+            var firstSlide = cards[0];
+            var slideWidth = firstSlide ? firstSlide.getBoundingClientRect().width : viewport.getBoundingClientRect().width;
+            var trackStyles = window.getComputedStyle(track);
+            var slideGap = parseFloat(trackStyles.columnGap || trackStyles.gap || '0') || 0;
+            var step = slideWidth + slideGap;
+
+            track.style.transform = 'translateX(' + (currentIndex * step * -1) + 'px)';
             prevBtn.disabled = currentIndex <= 0;
             nextBtn.disabled = currentIndex >= cards.length - 1;
           };

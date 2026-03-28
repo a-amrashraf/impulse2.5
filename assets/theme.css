@@ -13279,15 +13279,16 @@ label,.h5,
 
 .cart-drawer-upsell__track {
   display: flex;
-  gap: 0;
+  gap: 10px;
   transform: translateX(0);
   transition: transform 0.3s ease;
-  width: 100%;
+  width: max-content;
 }
 
 .cart-drawer-upsell__slide {
   box-sizing: border-box;
-  flex: 0 0 100%;
+  flex: 0 0 calc(100% - 30px);
+  min-width: calc(100% - 30px);
   padding: 0;
 }
 
@@ -13429,6 +13430,15 @@ label,.h5,
 
   .cart-drawer-upsell__viewport {
     padding-right: 34px;
+  }
+
+  .cart-drawer-upsell__track {
+    gap: 8px;
+  }
+
+  .cart-drawer-upsell__slide {
+    flex-basis: calc(100% - 26px);
+    min-width: calc(100% - 26px);
   }
 
   .cart-drawer-upsell__card {
