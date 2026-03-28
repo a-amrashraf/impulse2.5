@@ -1894,7 +1894,9 @@ document.addEventListener('DOMContentLoaded', function() {
       },
 
       initUpsellCarousel: function() {
-        this.form.querySelectorAll('[data-upsell-carousel]').forEach(function(carousel) {
+        var scope = this.form || document;
+
+        scope.querySelectorAll('[data-upsell-carousel]').forEach(function(carousel) {
           if (carousel.dataset.upsellInit === '1') {
             return;
           }
@@ -1920,6 +1922,8 @@ document.addEventListener('DOMContentLoaded', function() {
           }
 
           var renderSlide = function() {
+            carousel.dataset.upsellIndex = String(currentIndex);
+
             cards.forEach(function(card, index) {
               if (index === currentIndex) {
                 card.classList.add('is-active');
@@ -1945,6 +1949,55 @@ document.addEventListener('DOMContentLoaded', function() {
           renderSlide();
 
           carousel.dataset.upsellInit = '1';
+        });
+
+        // Fallback pass: if a carousel exists but wasn't initialized (e.g. dynamic context mismatch),
+        // ensure exactly one visible slide and proper nav state.
+        document.querySelectorAll('[data-upsell-carousel]:not([data-upsell-init="1"])').forEach(function(carousel) {
+          var track = carousel.querySelector('[data-upsell-track]');
+          var prevBtn = carousel.querySelector('[data-upsell-prev]');
+          var nextBtn = carousel.querySelector('[data-upsell-next]');
+          var cards = track ? Array.from(track.querySelectorAll('[data-upsell-slide]')) : [];
+
+          if (!track || !prevBtn || !nextBtn || cards.length === 0) {
+            return;
+          }
+
+          cards.forEach(function(card, index) {
+            card.classList.toggle('is-active', index === 0);
+          });
+
+          track.classList.add('is-initialized');
+          prevBtn.disabled = true;
+          nextBtn.disabled = cards.length <= 1;
+          carousel.dataset.upsellIndex = '0';
+          carousel.dataset.upsellInit = '1';
+
+          prevBtn.addEventListener('click', function() {
+            var index = parseInt(carousel.dataset.upsellIndex || '0', 10);
+            index = Math.max(0, index - 1);
+            carousel.dataset.upsellIndex = String(index);
+
+            cards.forEach(function(card, cardIndex) {
+              card.classList.toggle('is-active', cardIndex === index);
+            });
+
+            prevBtn.disabled = index <= 0;
+            nextBtn.disabled = index >= cards.length - 1;
+          });
+
+          nextBtn.addEventListener('click', function() {
+            var index = parseInt(carousel.dataset.upsellIndex || '0', 10);
+            index = Math.min(cards.length - 1, index + 1);
+            carousel.dataset.upsellIndex = String(index);
+
+            cards.forEach(function(card, cardIndex) {
+              card.classList.toggle('is-active', cardIndex === index);
+            });
+
+            prevBtn.disabled = index <= 0;
+            nextBtn.disabled = index >= cards.length - 1;
+          });
         });
       },
   
