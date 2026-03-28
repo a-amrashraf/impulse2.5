@@ -13273,17 +13273,24 @@ label,.h5,
 }
 
 .cart-drawer-upsell__viewport {
-  overflow: hidden;
+  -webkit-overflow-scrolling: touch;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
   width: 100%;
+}
+
+.cart-drawer-upsell__viewport::-webkit-scrollbar {
+  display: none;
 }
 
 .cart-drawer-upsell__track {
   display: flex;
   gap: 0;
   flex-wrap: nowrap;
-  transform: translateX(0);
-  transition: transform 0.3s ease;
-  width: 100%;
+  width: max-content;
 }
 
 .cart-drawer-upsell__slide {
@@ -13291,6 +13298,7 @@ label,.h5,
   flex: 0 0 100%;
   min-width: 100%;
   padding: 0;
+  scroll-snap-align: start;
 }
 
 .cart-drawer-upsell__card {
@@ -13357,8 +13365,9 @@ label,.h5,
 }
 
 .cart-drawer-upsell__form {
-  display: flex;
-  flex-direction: column;
+  align-items: end;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
   gap: 6px;
   margin-top: 0;
 }
@@ -13371,6 +13380,16 @@ label,.h5,
   min-height: 30px;
   padding: 5px 7px;
   width: 100%;
+}
+
+.cart-drawer-upsell__form .cart-drawer-upsell__price-wrap {
+  grid-column: 1;
+}
+
+.cart-drawer-upsell__form .cart-drawer-upsell__add {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  margin-left: 8px;
 }
 
 .cart-drawer-upsell__add {
@@ -13434,6 +13453,10 @@ label,.h5,
 
   .cart-drawer-upsell__actions {
     min-width: 120px;
+  }
+
+  .cart-drawer-upsell__form {
+    gap: 4px;
   }
 }
 

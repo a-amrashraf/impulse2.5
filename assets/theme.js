@@ -1919,24 +1919,50 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
           }
 
-          var renderSlide = function() {
-            var activeSlide = cards[currentIndex];
-            var targetOffset = activeSlide ? activeSlide.offsetLeft : 0;
+          var closestIndexByScroll = function() {
+            var currentLeft = viewport.scrollLeft;
+            var bestIndex = 0;
+            var bestDistance = Number.POSITIVE_INFINITY;
 
-            track.style.transform = 'translateX(' + (targetOffset * -1) + 'px)';
+            cards.forEach(function(card, idx) {
+              var distance = Math.abs(card.offsetLeft - currentLeft);
+              if (distance < bestDistance) {
+                bestDistance = distance;
+                bestIndex = idx;
+              }
+            });
+
+            return bestIndex;
+          };
+
+          var goToSlide = function(index) {
+            var safeIndex = Math.max(0, Math.min(cards.length - 1, index));
+            var targetCard = cards[safeIndex];
+            if (!targetCard) {
+              return;
+            }
+            currentIndex = safeIndex;
+            viewport.scrollTo({
+              left: targetCard.offsetLeft,
+              behavior: 'smooth'
+            });
+          };
+
+          var renderSlide = function() {
+            currentIndex = closestIndexByScroll();
             prevBtn.disabled = currentIndex <= 0;
             nextBtn.disabled = currentIndex >= cards.length - 1;
           };
 
           prevBtn.addEventListener('click', function() {
-            currentIndex = Math.max(0, currentIndex - 1);
-            renderSlide();
+            goToSlide(currentIndex - 1);
           });
 
           nextBtn.addEventListener('click', function() {
-            currentIndex = Math.min(cards.length - 1, currentIndex + 1);
-            renderSlide();
+            goToSlide(currentIndex + 1);
           });
+
+          viewport.addEventListener('scroll', renderSlide, { passive: true });
 
           window.addEventListener('resize', renderSlide);
           renderSlide();
