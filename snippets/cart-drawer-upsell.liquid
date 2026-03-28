@@ -132,7 +132,8 @@
         <button type="button" class="cart-drawer-upsell__nav cart-drawer-upsell__nav--prev" data-upsell-prev aria-label="Previous recommendation">
           <span aria-hidden="true">&lsaquo;</span>
         </button>
-        <div class="cart-drawer-upsell__track" data-upsell-track>
+        <div class="cart-drawer-upsell__viewport" data-upsell-viewport>
+          <div class="cart-drawer-upsell__track" data-upsell-track>
           {%- if same_collection_product != blank -%}
             <article class="cart-drawer-upsell__card">
               <a href="{{ same_collection_product.url }}" class="cart-drawer-upsell__image-link" aria-label="{{ same_collection_product.title | escape }}">
@@ -228,6 +229,7 @@
               </div>
             </article>
           {%- endif -%}
+          </div>
         </div>
         <button type="button" class="cart-drawer-upsell__nav cart-drawer-upsell__nav--next" data-upsell-next aria-label="Next recommendation">
           <span aria-hidden="true">&rsaquo;</span>

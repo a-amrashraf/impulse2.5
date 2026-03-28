@@ -1899,27 +1899,45 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
           }
 
+          var viewport = carousel.querySelector('[data-upsell-viewport]');
           var track = carousel.querySelector('[data-upsell-track]');
           var prevBtn = carousel.querySelector('[data-upsell-prev]');
           var nextBtn = carousel.querySelector('[data-upsell-next]');
+          var cards;
+          var currentIndex = 0;
 
-          if (!track || !prevBtn || !nextBtn) {
+          if (!viewport || !track || !prevBtn || !nextBtn) {
             return;
           }
 
-          var getScrollAmount = function() {
-            var card = track.querySelector('.cart-drawer-upsell__card');
-            var cardWidth = card ? card.getBoundingClientRect().width : 220;
-            return Math.max(180, Math.round(cardWidth) + 12);
+          cards = Array.from(track.querySelectorAll('.cart-drawer-upsell__card'));
+
+          if (cards.length <= 1) {
+            prevBtn.disabled = true;
+            nextBtn.disabled = true;
+            carousel.dataset.upsellInit = '1';
+            return;
+          }
+
+          var renderSlide = function() {
+            var slideWidth = viewport.getBoundingClientRect().width;
+            track.style.transform = 'translateX(' + (currentIndex * slideWidth * -1) + 'px)';
+            prevBtn.disabled = currentIndex <= 0;
+            nextBtn.disabled = currentIndex >= cards.length - 1;
           };
 
           prevBtn.addEventListener('click', function() {
-            track.scrollBy({ left: -getScrollAmount(), behavior: 'smooth' });
+            currentIndex = Math.max(0, currentIndex - 1);
+            renderSlide();
           });
 
           nextBtn.addEventListener('click', function() {
-            track.scrollBy({ left: getScrollAmount(), behavior: 'smooth' });
+            currentIndex = Math.min(cards.length - 1, currentIndex + 1);
+            renderSlide();
           });
+
+          window.addEventListener('resize', renderSlide);
+          renderSlide();
 
           carousel.dataset.upsellInit = '1';
         });
