@@ -13273,22 +13273,22 @@ label,.h5,
 
 .cart-drawer-upsell__viewport {
   overflow: hidden;
-  padding: 0 38px 0 0;
+  padding: 0;
   width: 100%;
 }
 
 .cart-drawer-upsell__track {
   display: flex;
-  gap: 10px;
+  gap: 0;
   transform: translateX(0);
   transition: transform 0.3s ease;
-  width: max-content;
+  width: 100%;
 }
 
 .cart-drawer-upsell__slide {
   box-sizing: border-box;
-  flex: 0 0 calc(100% - 30px);
-  min-width: calc(100% - 30px);
+  flex: 0 0 100%;
+  min-width: 100%;
   padding: 0;
 }
 
@@ -13429,16 +13429,7 @@ label,.h5,
   }
 
   .cart-drawer-upsell__viewport {
-    padding-right: 34px;
-  }
-
-  .cart-drawer-upsell__track {
-    gap: 8px;
-  }
-
-  .cart-drawer-upsell__slide {
-    flex-basis: calc(100% - 26px);
-    min-width: calc(100% - 26px);
+    padding-right: 0;
   }
 
   .cart-drawer-upsell__card {
