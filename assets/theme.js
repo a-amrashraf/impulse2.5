@@ -1910,6 +1910,7 @@ document.addEventListener('DOMContentLoaded', function() {
           }
 
           cards = Array.from(track.querySelectorAll('.cart-drawer-upsell__slide'));
+          track.classList.add('is-initialized');
 
           if (cards.length <= 1) {
             prevBtn.disabled = true;

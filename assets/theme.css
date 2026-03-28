@@ -13267,29 +13267,34 @@ label,.h5,
 
 .cart-drawer-upsell__carousel {
   align-items: center;
-  display: grid;
+  display: grid !important;
   gap: 8px;
-  grid-template-columns: 30px minmax(0, 1fr) 30px;
+  grid-template-columns: 30px minmax(0, 1fr) 30px !important;
 }
 
 .cart-drawer-upsell__viewport {
-  overflow: hidden;
+  overflow: hidden !important;
   width: 100%;
 }
 
 .cart-drawer-upsell__track {
-  display: block;
+  display: block !important;
   width: 100%;
 }
 
 .cart-drawer-upsell__slide {
   box-sizing: border-box;
-  display: none;
+  display: none !important;
   width: 100%;
   padding: 0;
 }
 
 .cart-drawer-upsell__slide.is-active {
+  display: block !important;
+}
+
+/* JS fallback: show first slide before slider initializes */
+.cart-drawer-upsell__track:not(.is-initialized) .cart-drawer-upsell__slide:first-child {
   display: block;
 }
 
@@ -13402,7 +13407,7 @@ label,.h5,
   border-radius: 50%;
   color: var(--colorDrawerText);
   cursor: pointer;
-  display: inline-flex;
+  display: inline-flex !important;
   height: 30px;
   justify-content: center;
   line-height: 1;
@@ -13412,6 +13417,7 @@ label,.h5,
   min-width: 30px;
   -webkit-appearance: none;
   appearance: none;
+  text-indent: 0;
 }
 
 .cart-drawer-upsell__nav:hover {
