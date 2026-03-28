@@ -136,33 +136,43 @@
           <div class="cart-drawer-upsell__track" data-upsell-track>
           {%- if same_collection_product != blank -%}
             <div class="cart-drawer-upsell__slide">
-              <article class="cart-drawer-upsell__card">
-                <a href="{{ same_collection_product.url }}" class="cart-drawer-upsell__image-link" aria-label="{{ same_collection_product.title | escape }}">
-                  {%- if same_collection_product.featured_image != blank -%}
-                    {{ same_collection_product.featured_image | image_url: width: 360 | image_tag: class: 'cart-drawer-upsell__image', widths: '180,240,360', sizes: '180px', loading: 'lazy', alt: same_collection_product.title }}
-                  {%- endif -%}
-                </a>
-                <div class="cart-drawer-upsell__meta">
-                  <a href="{{ same_collection_product.url }}" class="cart-drawer-upsell__name">{{ same_collection_product.title }}</a>
-                  <div class="cart-drawer-upsell__price">{{ same_collection_product.price | money }}</div>
-                  <form action="{{ routes.cart_add_url }}" method="post" class="cart-drawer-upsell__form" enctype="multipart/form-data">
-                    {%- if same_collection_product.has_only_default_variant == false -%}
-                      <label class="visually-hidden" for="UpsellVariant-{{ same_collection_product.id }}">Choose variant</label>
-                      <select id="UpsellVariant-{{ same_collection_product.id }}" name="id" class="cart-drawer-upsell__variant" required>
-                        {%- for variant in same_collection_product.variants -%}
-                          <option value="{{ variant.id }}"{% if variant == same_collection_product.selected_or_first_available_variant %} selected{% endif %}{% unless variant.available %} disabled{% endunless %}>
-                            {{ variant.title }}{% unless variant.available %} - Sold out{% endunless %}
-                          </option>
-                        {%- endfor -%}
-                      </select>
-                    {%- else -%}
-                      <input type="hidden" name="id" value="{{ same_collection_product.selected_or_first_available_variant.id }}">
+              <article class="cart__item cart-drawer-upsell__card">
+                <div class="cart__image cart-drawer-upsell__image-wrap">
+                  <a href="{{ same_collection_product.url }}" class="image-wrap cart-drawer-upsell__image-link" aria-label="{{ same_collection_product.title | escape }}">
+                    {%- if same_collection_product.featured_image != blank -%}
+                      {{ same_collection_product.featured_image | image_url: width: 240 | image_tag: class: 'cart-drawer-upsell__image', widths: '120,180,240', sizes: '70px', loading: 'lazy', alt: same_collection_product.title }}
                     {%- endif -%}
-                    <input type="hidden" name="quantity" value="1">
-                    <button type="submit" class="btn cart-drawer-upsell__add"{% if same_collection_product.available == false %} disabled{% endif %}>
-                      {%- if same_collection_product.available -%}Add to cart{%- else -%}Sold out{%- endif -%}
-                    </button>
-                  </form>
+                  </a>
+                </div>
+                <div class="cart__item-details cart-drawer-upsell__meta">
+                  <div class="cart__item-title">
+                    <a href="{{ same_collection_product.url }}" class="cart__item-name cart-drawer-upsell__name">{{ same_collection_product.title }}</a>
+                  </div>
+                  <div class="cart__item-sub cart-drawer-upsell__sub">
+                    <div class="cart-drawer-upsell__price-wrap">
+                      <span class="cart__price cart-drawer-upsell__price">{{ same_collection_product.price | money }}</span>
+                    </div>
+                    <div class="cart-drawer-upsell__actions">
+                      <form action="{{ routes.cart_add_url }}" method="post" class="cart-drawer-upsell__form" enctype="multipart/form-data">
+                        {%- if same_collection_product.has_only_default_variant == false -%}
+                          <label class="visually-hidden" for="UpsellVariant-{{ same_collection_product.id }}">Choose variant</label>
+                          <select id="UpsellVariant-{{ same_collection_product.id }}" name="id" class="cart-drawer-upsell__variant" required>
+                            {%- for variant in same_collection_product.variants -%}
+                              <option value="{{ variant.id }}"{% if variant == same_collection_product.selected_or_first_available_variant %} selected{% endif %}{% unless variant.available %} disabled{% endunless %}>
+                                {{ variant.title }}{% unless variant.available %} - Sold out{% endunless %}
+                              </option>
+                            {%- endfor -%}
+                          </select>
+                        {%- else -%}
+                          <input type="hidden" name="id" value="{{ same_collection_product.selected_or_first_available_variant.id }}">
+                        {%- endif -%}
+                        <input type="hidden" name="quantity" value="1">
+                        <button type="submit" class="btn cart-drawer-upsell__add"{% if same_collection_product.available == false %} disabled{% endif %}>
+                          {%- if same_collection_product.available -%}Add to cart{%- else -%}Sold out{%- endif -%}
+                        </button>
+                      </form>
+                    </div>
+                  </div>
                 </div>
               </article>
             </div>
@@ -170,33 +180,43 @@
 
           {%- if same_category_product != blank -%}
             <div class="cart-drawer-upsell__slide">
-              <article class="cart-drawer-upsell__card">
-                <a href="{{ same_category_product.url }}" class="cart-drawer-upsell__image-link" aria-label="{{ same_category_product.title | escape }}">
-                  {%- if same_category_product.featured_image != blank -%}
-                    {{ same_category_product.featured_image | image_url: width: 360 | image_tag: class: 'cart-drawer-upsell__image', widths: '180,240,360', sizes: '180px', loading: 'lazy', alt: same_category_product.title }}
-                  {%- endif -%}
-                </a>
-                <div class="cart-drawer-upsell__meta">
-                  <a href="{{ same_category_product.url }}" class="cart-drawer-upsell__name">{{ same_category_product.title }}</a>
-                  <div class="cart-drawer-upsell__price">{{ same_category_product.price | money }}</div>
-                  <form action="{{ routes.cart_add_url }}" method="post" class="cart-drawer-upsell__form" enctype="multipart/form-data">
-                    {%- if same_category_product.has_only_default_variant == false -%}
-                      <label class="visually-hidden" for="UpsellVariant-{{ same_category_product.id }}">Choose variant</label>
-                      <select id="UpsellVariant-{{ same_category_product.id }}" name="id" class="cart-drawer-upsell__variant" required>
-                        {%- for variant in same_category_product.variants -%}
-                          <option value="{{ variant.id }}"{% if variant == same_category_product.selected_or_first_available_variant %} selected{% endif %}{% unless variant.available %} disabled{% endunless %}>
-                            {{ variant.title }}{% unless variant.available %} - Sold out{% endunless %}
-                          </option>
-                        {%- endfor -%}
-                      </select>
-                    {%- else -%}
-                      <input type="hidden" name="id" value="{{ same_category_product.selected_or_first_available_variant.id }}">
+              <article class="cart__item cart-drawer-upsell__card">
+                <div class="cart__image cart-drawer-upsell__image-wrap">
+                  <a href="{{ same_category_product.url }}" class="image-wrap cart-drawer-upsell__image-link" aria-label="{{ same_category_product.title | escape }}">
+                    {%- if same_category_product.featured_image != blank -%}
+                      {{ same_category_product.featured_image | image_url: width: 240 | image_tag: class: 'cart-drawer-upsell__image', widths: '120,180,240', sizes: '70px', loading: 'lazy', alt: same_category_product.title }}
                     {%- endif -%}
-                    <input type="hidden" name="quantity" value="1">
-                    <button type="submit" class="btn cart-drawer-upsell__add"{% if same_category_product.available == false %} disabled{% endif %}>
-                      {%- if same_category_product.available -%}Add to cart{%- else -%}Sold out{%- endif -%}
-                    </button>
-                  </form>
+                  </a>
+                </div>
+                <div class="cart__item-details cart-drawer-upsell__meta">
+                  <div class="cart__item-title">
+                    <a href="{{ same_category_product.url }}" class="cart__item-name cart-drawer-upsell__name">{{ same_category_product.title }}</a>
+                  </div>
+                  <div class="cart__item-sub cart-drawer-upsell__sub">
+                    <div class="cart-drawer-upsell__price-wrap">
+                      <span class="cart__price cart-drawer-upsell__price">{{ same_category_product.price | money }}</span>
+                    </div>
+                    <div class="cart-drawer-upsell__actions">
+                      <form action="{{ routes.cart_add_url }}" method="post" class="cart-drawer-upsell__form" enctype="multipart/form-data">
+                        {%- if same_category_product.has_only_default_variant == false -%}
+                          <label class="visually-hidden" for="UpsellVariant-{{ same_category_product.id }}">Choose variant</label>
+                          <select id="UpsellVariant-{{ same_category_product.id }}" name="id" class="cart-drawer-upsell__variant" required>
+                            {%- for variant in same_category_product.variants -%}
+                              <option value="{{ variant.id }}"{% if variant == same_category_product.selected_or_first_available_variant %} selected{% endif %}{% unless variant.available %} disabled{% endunless %}>
+                                {{ variant.title }}{% unless variant.available %} - Sold out{% endunless %}
+                              </option>
+                            {%- endfor -%}
+                          </select>
+                        {%- else -%}
+                          <input type="hidden" name="id" value="{{ same_category_product.selected_or_first_available_variant.id }}">
+                        {%- endif -%}
+                        <input type="hidden" name="quantity" value="1">
+                        <button type="submit" class="btn cart-drawer-upsell__add"{% if same_category_product.available == false %} disabled{% endif %}>
+                          {%- if same_category_product.available -%}Add to cart{%- else -%}Sold out{%- endif -%}
+                        </button>
+                      </form>
+                    </div>
+                  </div>
                 </div>
               </article>
             </div>
@@ -204,33 +224,43 @@
 
           {%- if random_product != blank -%}
             <div class="cart-drawer-upsell__slide">
-              <article class="cart-drawer-upsell__card">
-                <a href="{{ random_product.url }}" class="cart-drawer-upsell__image-link" aria-label="{{ random_product.title | escape }}">
-                  {%- if random_product.featured_image != blank -%}
-                    {{ random_product.featured_image | image_url: width: 360 | image_tag: class: 'cart-drawer-upsell__image', widths: '180,240,360', sizes: '180px', loading: 'lazy', alt: random_product.title }}
-                  {%- endif -%}
-                </a>
-                <div class="cart-drawer-upsell__meta">
-                  <a href="{{ random_product.url }}" class="cart-drawer-upsell__name">{{ random_product.title }}</a>
-                  <div class="cart-drawer-upsell__price">{{ random_product.price | money }}</div>
-                  <form action="{{ routes.cart_add_url }}" method="post" class="cart-drawer-upsell__form" enctype="multipart/form-data">
-                    {%- if random_product.has_only_default_variant == false -%}
-                      <label class="visually-hidden" for="UpsellVariant-{{ random_product.id }}">Choose variant</label>
-                      <select id="UpsellVariant-{{ random_product.id }}" name="id" class="cart-drawer-upsell__variant" required>
-                        {%- for variant in random_product.variants -%}
-                          <option value="{{ variant.id }}"{% if variant == random_product.selected_or_first_available_variant %} selected{% endif %}{% unless variant.available %} disabled{% endunless %}>
-                            {{ variant.title }}{% unless variant.available %} - Sold out{% endunless %}
-                          </option>
-                        {%- endfor -%}
-                      </select>
-                    {%- else -%}
-                      <input type="hidden" name="id" value="{{ random_product.selected_or_first_available_variant.id }}">
+              <article class="cart__item cart-drawer-upsell__card">
+                <div class="cart__image cart-drawer-upsell__image-wrap">
+                  <a href="{{ random_product.url }}" class="image-wrap cart-drawer-upsell__image-link" aria-label="{{ random_product.title | escape }}">
+                    {%- if random_product.featured_image != blank -%}
+                      {{ random_product.featured_image | image_url: width: 240 | image_tag: class: 'cart-drawer-upsell__image', widths: '120,180,240', sizes: '70px', loading: 'lazy', alt: random_product.title }}
                     {%- endif -%}
-                    <input type="hidden" name="quantity" value="1">
-                    <button type="submit" class="btn cart-drawer-upsell__add"{% if random_product.available == false %} disabled{% endif %}>
-                      {%- if random_product.available -%}Add to cart{%- else -%}Sold out{%- endif -%}
-                    </button>
-                  </form>
+                  </a>
+                </div>
+                <div class="cart__item-details cart-drawer-upsell__meta">
+                  <div class="cart__item-title">
+                    <a href="{{ random_product.url }}" class="cart__item-name cart-drawer-upsell__name">{{ random_product.title }}</a>
+                  </div>
+                  <div class="cart__item-sub cart-drawer-upsell__sub">
+                    <div class="cart-drawer-upsell__price-wrap">
+                      <span class="cart__price cart-drawer-upsell__price">{{ random_product.price | money }}</span>
+                    </div>
+                    <div class="cart-drawer-upsell__actions">
+                      <form action="{{ routes.cart_add_url }}" method="post" class="cart-drawer-upsell__form" enctype="multipart/form-data">
+                        {%- if random_product.has_only_default_variant == false -%}
+                          <label class="visually-hidden" for="UpsellVariant-{{ random_product.id }}">Choose variant</label>
+                          <select id="UpsellVariant-{{ random_product.id }}" name="id" class="cart-drawer-upsell__variant" required>
+                            {%- for variant in random_product.variants -%}
+                              <option value="{{ variant.id }}"{% if variant == random_product.selected_or_first_available_variant %} selected{% endif %}{% unless variant.available %} disabled{% endunless %}>
+                                {{ variant.title }}{% unless variant.available %} - Sold out{% endunless %}
+                              </option>
+                            {%- endfor -%}
+                          </select>
+                        {%- else -%}
+                          <input type="hidden" name="id" value="{{ random_product.selected_or_first_available_variant.id }}">
+                        {%- endif -%}
+                        <input type="hidden" name="quantity" value="1">
+                        <button type="submit" class="btn cart-drawer-upsell__add"{% if random_product.available == false %} disabled{% endif %}>
+                          {%- if random_product.available -%}Add to cart{%- else -%}Sold out{%- endif -%}
+                        </button>
+                      </form>
+                    </div>
+                  </div>
                 </div>
               </article>
             </div>
