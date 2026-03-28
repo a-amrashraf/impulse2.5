@@ -13371,11 +13371,13 @@ label,.h5,
 
 .cart-drawer-upsell__add {
   border-radius: 4px;
-  font-size: calc(var(--typeBaseSize) * 0.72);
+  font-size: calc(var(--typeBaseSize) * 0.66);
   margin-top: 0;
-  min-height: 32px;
-  padding: 6px 10px;
-  width: 100%;
+  min-height: 26px;
+  min-width: 58px;
+  padding: 4px 10px;
+  white-space: nowrap;
+  width: auto;
 }
 
 .cart-drawer-upsell__nav {

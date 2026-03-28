@@ -168,7 +168,7 @@
                         {%- endif -%}
                         <input type="hidden" name="quantity" value="1">
                         <button type="submit" class="btn cart-drawer-upsell__add"{% if same_collection_product.available == false %} disabled{% endif %}>
-                          {%- if same_collection_product.available -%}Add to cart{%- else -%}Sold out{%- endif -%}
+                          {%- if same_collection_product.available -%}Add{%- else -%}Sold out{%- endif -%}
                         </button>
                       </form>
                     </div>
@@ -212,7 +212,7 @@
                         {%- endif -%}
                         <input type="hidden" name="quantity" value="1">
                         <button type="submit" class="btn cart-drawer-upsell__add"{% if same_category_product.available == false %} disabled{% endif %}>
-                          {%- if same_category_product.available -%}Add to cart{%- else -%}Sold out{%- endif -%}
+                          {%- if same_category_product.available -%}Add{%- else -%}Sold out{%- endif -%}
                         </button>
                       </form>
                     </div>
@@ -256,7 +256,7 @@
                         {%- endif -%}
                         <input type="hidden" name="quantity" value="1">
                         <button type="submit" class="btn cart-drawer-upsell__add"{% if random_product.available == false %} disabled{% endif %}>
-                          {%- if random_product.available -%}Add to cart{%- else -%}Sold out{%- endif -%}
+                          {%- if random_product.available -%}Add{%- else -%}Sold out{%- endif -%}
                         </button>
                       </form>
                     </div>
