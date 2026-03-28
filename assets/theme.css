@@ -13252,28 +13252,28 @@ label,.h5,
 }
 
 .cart-drawer-upsell {
-  border-top: 1px solid var(--colorDrawerBorder);
+  background: #f3f3f3;
+  border: 1px solid #ececec;
+  border-radius: 12px;
   margin-top: 16px;
-  padding-top: 16px;
+  padding: 14px;
 }
 
 .cart-drawer-upsell__header {
-  color: var(--colorDrawerText);
-  font-size: calc(var(--typeBaseSize) * 0.95);
+  color: #111;
+  font-size: calc(var(--typeBaseSize) * 0.98);
   font-weight: 700;
-  letter-spacing: 0.03em;
-  margin-bottom: 12px;
+  letter-spacing: 0;
+  margin-bottom: 10px;
 }
 
 .cart-drawer-upsell__carousel {
-  align-items: center;
-  display: grid;
-  gap: 8px;
-  grid-template-columns: 30px minmax(0, 1fr) 30px;
+  position: relative;
 }
 
 .cart-drawer-upsell__viewport {
   overflow: hidden;
+  padding: 0 38px 0 0;
   width: 100%;
 }
 
@@ -13288,25 +13288,25 @@ label,.h5,
 .cart-drawer-upsell__slide {
   box-sizing: border-box;
   flex: 0 0 100%;
-  padding: 0 1px;
+  padding: 0;
 }
 
 .cart-drawer-upsell__card {
-  background: var(--colorDrawersDim);
-  border: 1px solid var(--colorDrawerBorder);
-  border-radius: 8px;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
   display: grid;
-  gap: 10px;
-  grid-template-columns: 72px minmax(0, 1fr);
-  min-height: 96px;
-  padding: 10px;
+  gap: 12px;
+  grid-template-columns: 54px minmax(0, 1fr);
+  min-height: 76px;
+  padding: 6px 0;
 }
 
 .cart-drawer-upsell__image-link {
-  background: #fff;
-  border-radius: 6px;
+  background: transparent;
+  border-radius: 4px;
   display: block;
-  height: 72px;
+  height: 54px;
   overflow: hidden;
 }
 
@@ -13327,58 +13327,85 @@ label,.h5,
 }
 
 .cart-drawer-upsell__name {
-  color: var(--colorDrawerText);
+  color: #111;
   font-size: calc(var(--typeBaseSize) * 0.82);
-  line-height: 1.35;
+  line-height: 1.25;
   text-decoration: none;
 }
 
 .cart-drawer-upsell__price {
-  color: var(--colorDrawerText);
+  color: #111;
   font-size: calc(var(--typeBaseSize) * 0.82);
   font-weight: 700;
 }
 
 .cart-drawer-upsell__form {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 8px;
   margin-top: auto;
+  justify-content: flex-end;
+  align-items: center;
 }
 
 .cart-drawer-upsell__variant {
-  background: var(--colorDrawers);
-  border: 1px solid var(--colorDrawerBorder);
-  color: var(--colorDrawerText);
-  font-size: calc(var(--typeBaseSize) * 0.76);
-  min-height: 34px;
-  padding: 5px 8px;
-  width: 100%;
+  background: #fff;
+  border: 1px solid #d7d7d7;
+  color: #222;
+  font-size: calc(var(--typeBaseSize) * 0.72);
+  min-height: 30px;
+  padding: 4px 7px;
+  width: calc(100% - 46px);
 }
 
 .cart-drawer-upsell__add {
-  border-radius: 4px;
-  font-size: calc(var(--typeBaseSize) * 0.76);
+  background: #000;
+  border: 0;
+  border-radius: 999px;
+  color: #fff;
+  font-size: 0;
   margin-top: 0;
-  min-height: 34px;
-  padding: 7px 10px;
-  width: 100%;
+  min-height: 38px;
+  min-width: 38px;
+  padding: 0;
+  width: 38px;
+}
+
+.cart-drawer-upsell__add:before {
+  content: '+';
+  display: block;
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 38px;
+  text-align: center;
 }
 
 .cart-drawer-upsell__nav {
   align-items: center;
-  background: var(--colorDrawers);
-  border: 1px solid var(--colorDrawerBorder);
+  background: #000;
+  border: 0;
   border-radius: 50%;
-  color: var(--colorDrawerText);
+  color: #fff;
   cursor: pointer;
   display: inline-flex;
-  height: 30px;
+  height: 38px;
   justify-content: center;
   line-height: 1;
   padding: 0;
   transition: opacity 0.2s ease;
-  width: 30px;
+  width: 38px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+}
+
+.cart-drawer-upsell__nav--prev {
+  left: 0;
+}
+
+.cart-drawer-upsell__nav--next {
+  right: 0;
 }
 
 .cart-drawer-upsell__nav:hover {
@@ -13386,25 +13413,45 @@ label,.h5,
 }
 
 .cart-drawer-upsell__nav span {
-  font-size: 20px;
+  font-size: 26px;
   margin-top: -1px;
 }
 
 .cart-drawer-upsell__nav[disabled] {
-  cursor: default;
-  opacity: 0.35;
+  opacity: 0;
+  pointer-events: none;
 }
 
 @media only screen and (max-width: 420px) {
+  .cart-drawer-upsell {
+    padding: 12px;
+  }
+
+  .cart-drawer-upsell__viewport {
+    padding-right: 34px;
+  }
+
   .cart-drawer-upsell__card {
     gap: 8px;
-    grid-template-columns: 64px minmax(0, 1fr);
-    min-height: 88px;
-    padding: 8px;
+    grid-template-columns: 48px minmax(0, 1fr);
+    min-height: 72px;
+    padding: 4px 0;
   }
 
   .cart-drawer-upsell__image-link {
-    height: 64px;
+    height: 48px;
+  }
+
+  .cart-drawer-upsell__add,
+  .cart-drawer-upsell__nav {
+    height: 34px;
+    min-height: 34px;
+    min-width: 34px;
+    width: 34px;
+  }
+
+  .cart-drawer-upsell__add:before {
+    line-height: 34px;
   }
 }
 
