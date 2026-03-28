@@ -126,202 +126,50 @@
   {%- if random_product != blank -%}{%- assign upsell_count = upsell_count | plus: 1 -%}{%- endif -%}
 
   {%- if upsell_count > 0 -%}
-    <style>
-      .upsell-slider {
-        border-top: 1px solid var(--colorDrawerBorder);
-        margin-top: 16px;
-        padding-top: 12px;
-      }
+    <div class="upsell-cart-carousel" data-cart-upsell-section>
+      <div class="upsell-cart-carousel__title">You may also like</div>
 
-      .upsell-slider__title {
-        color: var(--colorDrawerText);
-        font-size: calc(var(--typeBaseSize) * 0.9);
-        font-weight: 700;
-        margin-bottom: 10px;
-      }
-
-      .upsell-slider__carousel {
-        align-items: center;
-        display: grid;
-        gap: 8px;
-        grid-template-columns: 30px minmax(0, 1fr) 30px;
-      }
-
-      .upsell-slider__viewport {
-        overflow: hidden;
-      }
-
-      .upsell-slider__track {
-        width: 100%;
-      }
-
-      .upsell-slider__slide {
-        display: none;
-        width: 100%;
-      }
-
-      .upsell-slider__slide.is-active {
-        display: block;
-      }
-
-      .upsell-slider__track:not(.is-initialized) [data-upsell-slide]:first-child {
-        display: block;
-      }
-
-      .upsell-slider__item {
-        align-items: flex-start;
-        border-bottom: 0;
-        display: grid;
-        gap: 10px;
-        grid-template-columns: 64px minmax(0, 1fr);
-        margin: 0;
-        padding: 8px 0;
-      }
-
-      .upsell-slider__media {
-        display: block;
-        height: 64px;
-      }
-
-      .upsell-slider__img {
-        display: block;
-        height: 100%;
-        object-fit: contain;
-        width: 100%;
-      }
-
-      .upsell-slider__name {
-        color: var(--colorTextBody);
-        display: block;
-        font-size: calc(var(--typeBaseSize) * 0.84);
-        line-height: 1.3;
-        margin-bottom: 6px;
-        text-decoration: none;
-      }
-
-      .upsell-slider__form {
-        align-items: end;
-        display: grid;
-        gap: 6px 8px;
-        grid-template-columns: minmax(0, 1fr) auto;
-      }
-
-      .upsell-slider__price-wrap {
-        display: flex;
-        flex-direction: column;
-        gap: 6px;
-        grid-column: 1;
-        min-width: 0;
-      }
-
-      .upsell-slider__price {
-        color: var(--colorDrawerText);
-        font-size: calc(var(--typeBaseSize) * 0.8);
-        font-weight: 700;
-      }
-
-      .upsell-slider__variant {
-        background: var(--colorDrawers);
-        border: 1px solid var(--colorDrawerBorder);
-        color: var(--colorDrawerText);
-        font-size: calc(var(--typeBaseSize) * 0.72);
-        min-height: 30px;
-        padding: 5px 7px;
-        width: 100%;
-      }
-
-      .upsell-slider__add {
-        grid-column: 2;
-        grid-row: 1 / span 2;
-        min-height: 26px;
-        min-width: 58px;
-        padding: 4px 10px;
-        white-space: nowrap;
-        width: auto;
-      }
-
-      .upsell-slider__nav {
-        align-items: center;
-        appearance: none;
-        background: var(--colorDrawers);
-        border: 1px solid var(--colorDrawerBorder);
-        border-radius: 50%;
-        color: var(--colorDrawerText);
-        cursor: pointer;
-        display: inline-flex;
-        height: 30px;
-        justify-content: center;
-        min-width: 30px;
-        padding: 0;
-        width: 30px;
-      }
-
-      .upsell-slider__nav[disabled] {
-        cursor: default;
-        opacity: 0.35;
-      }
-
-      .upsell-slider__nav-text {
-        font-size: 20px;
-        line-height: 1;
-      }
-
-      @media only screen and (max-width: 420px) {
-        .upsell-slider__carousel {
-          grid-template-columns: 26px minmax(0, 1fr) 26px;
-        }
-
-        .upsell-slider__item {
-          grid-template-columns: 56px minmax(0, 1fr);
-        }
-
-        .upsell-slider__media {
-          height: 56px;
-        }
-
-        .upsell-slider__form {
-          gap: 4px 6px;
-        }
-      }
-    </style>
-
-    <div class="upsell-slider" data-cart-upsell-section>
-      <div class="upsell-slider__title">You may also like</div>
-      <div class="upsell-slider__carousel" data-upsell-carousel>
-        <button type="button" class="upsell-slider__nav" data-upsell-prev aria-label="Previous recommendation">
-          <span class="upsell-slider__nav-text" aria-hidden="true">&lsaquo;</span>
+      <div class="upsell-cart-carousel__layout" data-upsell-carousel>
+        <button type="button" class="upsell-cart-carousel__nav" data-upsell-prev aria-label="Previous recommendation">
+          <span aria-hidden="true">&lsaquo;</span>
         </button>
-        <div class="upsell-slider__viewport" data-upsell-viewport>
-          <div class="upsell-slider__track" data-upsell-track>
+
+        <div class="upsell-cart-carousel__viewport" data-upsell-viewport>
+          <div class="upsell-cart-carousel__track" data-upsell-track>
             {%- if same_collection_product != blank -%}
-              <div class="upsell-slider__slide" data-upsell-slide>
-                <article class="upsell-slider__item">
-                  <a href="{{ same_collection_product.url }}" class="upsell-slider__media" aria-label="{{ same_collection_product.title | escape }}">
-                    {%- if same_collection_product.featured_image != blank -%}
-                      {{ same_collection_product.featured_image | image_url: width: 240 | image_tag: class: 'upsell-slider__img', widths: '120,180,240', sizes: '64px', loading: 'lazy', alt: same_collection_product.title }}
-                    {%- endif -%}
-                  </a>
-                  <div>
-                    <a href="{{ same_collection_product.url }}" class="upsell-slider__name">{{ same_collection_product.title }}</a>
-                    <form action="{{ routes.cart_add_url }}" method="post" class="upsell-slider__form" enctype="multipart/form-data">
-                      <div class="upsell-slider__price-wrap">
-                        <span class="upsell-slider__price">{{ same_collection_product.price | money }}</span>
+              <div class="upsell-cart-carousel__slide" data-upsell-slide>
+                <article class="upsell-cart-carousel__item cart__item">
+                  <div class="upsell-cart-carousel__media cart__image">
+                    <a href="{{ same_collection_product.url }}" class="image-wrap" aria-label="{{ same_collection_product.title | escape }}">
+                      {%- if same_collection_product.featured_image != blank -%}
+                        {{ same_collection_product.featured_image | image_url: width: 220 | image_tag: class: 'upsell-cart-carousel__img', widths: '110,165,220', sizes: '62px', loading: 'lazy', alt: same_collection_product.title }}
+                      {%- endif -%}
+                    </a>
+                  </div>
+
+                  <div class="upsell-cart-carousel__content cart__item-details">
+                    <a href="{{ same_collection_product.url }}" class="upsell-cart-carousel__name cart__item-name">{{ same_collection_product.title }}</a>
+
+                    <form action="{{ routes.cart_add_url }}" method="post" class="upsell-cart-carousel__form" enctype="multipart/form-data">
+                      <div class="upsell-cart-carousel__info">
+                        <span class="upsell-cart-carousel__price cart__price">{{ same_collection_product.price | money }}</span>
+
                         {%- if same_collection_product.has_only_default_variant == false -%}
                           <label class="visually-hidden" for="UpsellVariant-{{ same_collection_product.id }}">Choose variant</label>
-                          <select id="UpsellVariant-{{ same_collection_product.id }}" name="id" class="upsell-slider__variant" required>
+                          <select id="UpsellVariant-{{ same_collection_product.id }}" name="id" class="upsell-cart-carousel__variant" required>
                             {%- for variant in same_collection_product.variants -%}
                               <option value="{{ variant.id }}"{% if variant == same_collection_product.selected_or_first_available_variant %} selected{% endif %}{% unless variant.available %} disabled{% endunless %}>
                                 {{ variant.title }}{% unless variant.available %} - Sold out{% endunless %}
                               </option>
                             {%- endfor -%}
                           </select>
+                        {%- else -%}
+                          <input type="hidden" name="id" value="{{ same_collection_product.selected_or_first_available_variant.id }}">
                         {%- endif -%}
                       </div>
-                      {%- if same_collection_product.has_only_default_variant -%}
-                        <input type="hidden" name="id" value="{{ same_collection_product.selected_or_first_available_variant.id }}">
-                      {%- endif -%}
+
                       <input type="hidden" name="quantity" value="1">
-                      <button type="submit" class="btn upsell-slider__add"{% if same_collection_product.available == false %} disabled{% endif %}>
+                      <button type="submit" class="btn upsell-cart-carousel__add"{% if same_collection_product.available == false %} disabled{% endif %}>
                         {%- if same_collection_product.available -%}Add{%- else -%}Sold out{%- endif -%}
                       </button>
                     </form>
@@ -331,34 +179,39 @@
             {%- endif -%}
 
             {%- if same_category_product != blank -%}
-              <div class="upsell-slider__slide" data-upsell-slide>
-                <article class="upsell-slider__item">
-                  <a href="{{ same_category_product.url }}" class="upsell-slider__media" aria-label="{{ same_category_product.title | escape }}">
-                    {%- if same_category_product.featured_image != blank -%}
-                      {{ same_category_product.featured_image | image_url: width: 240 | image_tag: class: 'upsell-slider__img', widths: '120,180,240', sizes: '64px', loading: 'lazy', alt: same_category_product.title }}
-                    {%- endif -%}
-                  </a>
-                  <div>
-                    <a href="{{ same_category_product.url }}" class="upsell-slider__name">{{ same_category_product.title }}</a>
-                    <form action="{{ routes.cart_add_url }}" method="post" class="upsell-slider__form" enctype="multipart/form-data">
-                      <div class="upsell-slider__price-wrap">
-                        <span class="upsell-slider__price">{{ same_category_product.price | money }}</span>
+              <div class="upsell-cart-carousel__slide" data-upsell-slide>
+                <article class="upsell-cart-carousel__item cart__item">
+                  <div class="upsell-cart-carousel__media cart__image">
+                    <a href="{{ same_category_product.url }}" class="image-wrap" aria-label="{{ same_category_product.title | escape }}">
+                      {%- if same_category_product.featured_image != blank -%}
+                        {{ same_category_product.featured_image | image_url: width: 220 | image_tag: class: 'upsell-cart-carousel__img', widths: '110,165,220', sizes: '62px', loading: 'lazy', alt: same_category_product.title }}
+                      {%- endif -%}
+                    </a>
+                  </div>
+
+                  <div class="upsell-cart-carousel__content cart__item-details">
+                    <a href="{{ same_category_product.url }}" class="upsell-cart-carousel__name cart__item-name">{{ same_category_product.title }}</a>
+
+                    <form action="{{ routes.cart_add_url }}" method="post" class="upsell-cart-carousel__form" enctype="multipart/form-data">
+                      <div class="upsell-cart-carousel__info">
+                        <span class="upsell-cart-carousel__price cart__price">{{ same_category_product.price | money }}</span>
+
                         {%- if same_category_product.has_only_default_variant == false -%}
                           <label class="visually-hidden" for="UpsellVariant-{{ same_category_product.id }}">Choose variant</label>
-                          <select id="UpsellVariant-{{ same_category_product.id }}" name="id" class="upsell-slider__variant" required>
+                          <select id="UpsellVariant-{{ same_category_product.id }}" name="id" class="upsell-cart-carousel__variant" required>
                             {%- for variant in same_category_product.variants -%}
                               <option value="{{ variant.id }}"{% if variant == same_category_product.selected_or_first_available_variant %} selected{% endif %}{% unless variant.available %} disabled{% endunless %}>
                                 {{ variant.title }}{% unless variant.available %} - Sold out{% endunless %}
                               </option>
                             {%- endfor -%}
                           </select>
+                        {%- else -%}
+                          <input type="hidden" name="id" value="{{ same_category_product.selected_or_first_available_variant.id }}">
                         {%- endif -%}
                       </div>
-                      {%- if same_category_product.has_only_default_variant -%}
-                        <input type="hidden" name="id" value="{{ same_category_product.selected_or_first_available_variant.id }}">
-                      {%- endif -%}
+
                       <input type="hidden" name="quantity" value="1">
-                      <button type="submit" class="btn upsell-slider__add"{% if same_category_product.available == false %} disabled{% endif %}>
+                      <button type="submit" class="btn upsell-cart-carousel__add"{% if same_category_product.available == false %} disabled{% endif %}>
                         {%- if same_category_product.available -%}Add{%- else -%}Sold out{%- endif -%}
                       </button>
                     </form>
@@ -368,34 +221,39 @@
             {%- endif -%}
 
             {%- if random_product != blank -%}
-              <div class="upsell-slider__slide" data-upsell-slide>
-                <article class="upsell-slider__item">
-                  <a href="{{ random_product.url }}" class="upsell-slider__media" aria-label="{{ random_product.title | escape }}">
-                    {%- if random_product.featured_image != blank -%}
-                      {{ random_product.featured_image | image_url: width: 240 | image_tag: class: 'upsell-slider__img', widths: '120,180,240', sizes: '64px', loading: 'lazy', alt: random_product.title }}
-                    {%- endif -%}
-                  </a>
-                  <div>
-                    <a href="{{ random_product.url }}" class="upsell-slider__name">{{ random_product.title }}</a>
-                    <form action="{{ routes.cart_add_url }}" method="post" class="upsell-slider__form" enctype="multipart/form-data">
-                      <div class="upsell-slider__price-wrap">
-                        <span class="upsell-slider__price">{{ random_product.price | money }}</span>
+              <div class="upsell-cart-carousel__slide" data-upsell-slide>
+                <article class="upsell-cart-carousel__item cart__item">
+                  <div class="upsell-cart-carousel__media cart__image">
+                    <a href="{{ random_product.url }}" class="image-wrap" aria-label="{{ random_product.title | escape }}">
+                      {%- if random_product.featured_image != blank -%}
+                        {{ random_product.featured_image | image_url: width: 220 | image_tag: class: 'upsell-cart-carousel__img', widths: '110,165,220', sizes: '62px', loading: 'lazy', alt: random_product.title }}
+                      {%- endif -%}
+                    </a>
+                  </div>
+
+                  <div class="upsell-cart-carousel__content cart__item-details">
+                    <a href="{{ random_product.url }}" class="upsell-cart-carousel__name cart__item-name">{{ random_product.title }}</a>
+
+                    <form action="{{ routes.cart_add_url }}" method="post" class="upsell-cart-carousel__form" enctype="multipart/form-data">
+                      <div class="upsell-cart-carousel__info">
+                        <span class="upsell-cart-carousel__price cart__price">{{ random_product.price | money }}</span>
+
                         {%- if random_product.has_only_default_variant == false -%}
                           <label class="visually-hidden" for="UpsellVariant-{{ random_product.id }}">Choose variant</label>
-                          <select id="UpsellVariant-{{ random_product.id }}" name="id" class="upsell-slider__variant" required>
+                          <select id="UpsellVariant-{{ random_product.id }}" name="id" class="upsell-cart-carousel__variant" required>
                             {%- for variant in random_product.variants -%}
                               <option value="{{ variant.id }}"{% if variant == random_product.selected_or_first_available_variant %} selected{% endif %}{% unless variant.available %} disabled{% endunless %}>
                                 {{ variant.title }}{% unless variant.available %} - Sold out{% endunless %}
                               </option>
                             {%- endfor -%}
                           </select>
+                        {%- else -%}
+                          <input type="hidden" name="id" value="{{ random_product.selected_or_first_available_variant.id }}">
                         {%- endif -%}
                       </div>
-                      {%- if random_product.has_only_default_variant -%}
-                        <input type="hidden" name="id" value="{{ random_product.selected_or_first_available_variant.id }}">
-                      {%- endif -%}
+
                       <input type="hidden" name="quantity" value="1">
-                      <button type="submit" class="btn upsell-slider__add"{% if random_product.available == false %} disabled{% endif %}>
+                      <button type="submit" class="btn upsell-cart-carousel__add"{% if random_product.available == false %} disabled{% endif %}>
                         {%- if random_product.available -%}Add{%- else -%}Sold out{%- endif -%}
                       </button>
                     </form>
@@ -405,8 +263,9 @@
             {%- endif -%}
           </div>
         </div>
-        <button type="button" class="upsell-slider__nav" data-upsell-next aria-label="Next recommendation">
-          <span class="upsell-slider__nav-text" aria-hidden="true">&rsaquo;</span>
+
+        <button type="button" class="upsell-cart-carousel__nav" data-upsell-next aria-label="Next recommendation">
+          <span aria-hidden="true">&rsaquo;</span>
         </button>
       </div>
     </div>
