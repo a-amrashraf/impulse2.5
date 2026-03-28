@@ -1899,14 +1899,13 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
           }
 
-          var viewport = carousel.querySelector('[data-upsell-viewport]');
           var track = carousel.querySelector('[data-upsell-track]');
           var prevBtn = carousel.querySelector('[data-upsell-prev]');
           var nextBtn = carousel.querySelector('[data-upsell-next]');
           var cards;
           var currentIndex = 0;
 
-          if (!viewport || !track || !prevBtn || !nextBtn) {
+          if (!track || !prevBtn || !nextBtn) {
             return;
           }
 
@@ -1919,52 +1918,29 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
           }
 
-          var closestIndexByScroll = function() {
-            var currentLeft = viewport.scrollLeft;
-            var bestIndex = 0;
-            var bestDistance = Number.POSITIVE_INFINITY;
-
-            cards.forEach(function(card, idx) {
-              var distance = Math.abs(card.offsetLeft - currentLeft);
-              if (distance < bestDistance) {
-                bestDistance = distance;
-                bestIndex = idx;
+          var renderSlide = function() {
+            cards.forEach(function(card, index) {
+              if (index === currentIndex) {
+                card.classList.add('is-active');
+              } else {
+                card.classList.remove('is-active');
               }
             });
 
-            return bestIndex;
-          };
-
-          var goToSlide = function(index) {
-            var safeIndex = Math.max(0, Math.min(cards.length - 1, index));
-            var targetCard = cards[safeIndex];
-            if (!targetCard) {
-              return;
-            }
-            currentIndex = safeIndex;
-            viewport.scrollTo({
-              left: targetCard.offsetLeft,
-              behavior: 'smooth'
-            });
-          };
-
-          var renderSlide = function() {
-            currentIndex = closestIndexByScroll();
             prevBtn.disabled = currentIndex <= 0;
             nextBtn.disabled = currentIndex >= cards.length - 1;
           };
 
           prevBtn.addEventListener('click', function() {
-            goToSlide(currentIndex - 1);
+            currentIndex = Math.max(0, currentIndex - 1);
+            renderSlide();
           });
 
           nextBtn.addEventListener('click', function() {
-            goToSlide(currentIndex + 1);
+            currentIndex = Math.min(cards.length - 1, currentIndex + 1);
+            renderSlide();
           });
 
-          viewport.addEventListener('scroll', renderSlide, { passive: true });
-
-          window.addEventListener('resize', renderSlide);
           renderSlide();
 
           carousel.dataset.upsellInit = '1';
