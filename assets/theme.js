@@ -1678,6 +1678,7 @@ document.addEventListener('DOMContentLoaded', function() {
   theme.CartForm = (function() {
     var selectors = {
       products: '[data-products]',
+      upsellContainer: '[data-cart-upsell-container]',
       qtySelector: '.js-qty__wrapper',
       discounts: '[data-discounts]',
       savings: '[data-savings]',
@@ -1707,6 +1708,7 @@ document.addEventListener('DOMContentLoaded', function() {
       this.location = form.dataset.location;
       this.namespace = '.cart-' + this.location;
       this.products = form.querySelector(selectors.products)
+      this.upsellContainer = form.querySelector(selectors.upsellContainer);
       this.submitBtn = form.querySelector(selectors.checkoutBtn);
   
       this.discounts = form.querySelector(selectors.discounts);
@@ -1727,6 +1729,7 @@ document.addEventListener('DOMContentLoaded', function() {
     CartForm.prototype = Object.assign({}, CartForm.prototype, {
       init: function() {
         this.initQtySelectors();
+        this.initUpsellCarousel();
   
         document.addEventListener('cart:quantity' + this.namespace, this.quantityChanged.bind(this));
   
@@ -1823,6 +1826,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
         return {
           items: html.querySelector('.cart__items'),
+          upsell: html.querySelector('[data-cart-upsell-section]'),
           discounts: html.querySelector('.cart__discounts')
         }
       },
@@ -1852,6 +1856,8 @@ document.addEventListener('DOMContentLoaded', function() {
         // Append item markup
         this.products.innerHTML = '';
         this.products.append(items);
+
+        this.updateUpsell(markup.upsell);
   
         // Update subtotal
         this.subtotal.innerHTML = theme.Currency.formatMoney(subtotal, theme.settings.moneyFormat);
@@ -1871,6 +1877,52 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         this.discounts.innerHTML = '';
         this.discounts.append(markup);
+      },
+
+      updateUpsell: function(markup) {
+        if (!this.upsellContainer) {
+          return;
+        }
+
+        this.upsellContainer.innerHTML = '';
+
+        if (markup) {
+          this.upsellContainer.append(markup);
+        }
+
+        this.initUpsellCarousel();
+      },
+
+      initUpsellCarousel: function() {
+        this.form.querySelectorAll('[data-upsell-carousel]').forEach(function(carousel) {
+          if (carousel.dataset.upsellInit === '1') {
+            return;
+          }
+
+          var track = carousel.querySelector('[data-upsell-track]');
+          var prevBtn = carousel.querySelector('[data-upsell-prev]');
+          var nextBtn = carousel.querySelector('[data-upsell-next]');
+
+          if (!track || !prevBtn || !nextBtn) {
+            return;
+          }
+
+          var getScrollAmount = function() {
+            var card = track.querySelector('.cart-drawer-upsell__card');
+            var cardWidth = card ? card.getBoundingClientRect().width : 220;
+            return Math.max(180, Math.round(cardWidth) + 12);
+          };
+
+          prevBtn.addEventListener('click', function() {
+            track.scrollBy({ left: -getScrollAmount(), behavior: 'smooth' });
+          });
+
+          nextBtn.addEventListener('click', function() {
+            track.scrollBy({ left: getScrollAmount(), behavior: 'smooth' });
+          });
+
+          carousel.dataset.upsellInit = '1';
+        });
       },
   
       /*============================================================================
