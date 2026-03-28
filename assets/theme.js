@@ -1914,27 +1914,33 @@ document.addEventListener('DOMContentLoaded', function() {
           cards = Array.from(track.querySelectorAll('[data-upsell-slide]'));
           track.classList.add('is-initialized');
 
-          if (cards.length <= 1) {
-            prevBtn.disabled = true;
-            nextBtn.disabled = true;
-            carousel.dataset.upsellInit = '1';
+          if (cards.length === 0) {
             return;
           }
 
+          track.style.transform = 'translate3d(0%, 0, 0)';
+
           var renderSlide = function() {
+            var offset = currentIndex * -100;
+            track.style.transform = 'translate3d(' + offset + '%, 0, 0)';
             carousel.dataset.upsellIndex = String(currentIndex);
 
             cards.forEach(function(card, index) {
-              if (index === currentIndex) {
-                card.classList.add('is-active');
-              } else {
-                card.classList.remove('is-active');
-              }
+              card.setAttribute('aria-hidden', index === currentIndex ? 'false' : 'true');
             });
 
             prevBtn.disabled = currentIndex <= 0;
             nextBtn.disabled = currentIndex >= cards.length - 1;
           };
+
+          if (cards.length <= 1) {
+            cards[0].setAttribute('aria-hidden', 'false');
+            prevBtn.disabled = true;
+            nextBtn.disabled = true;
+            carousel.dataset.upsellIndex = '0';
+            carousel.dataset.upsellInit = '1';
+            return;
+          }
 
           prevBtn.addEventListener('click', function() {
             currentIndex = Math.max(0, currentIndex - 1);
@@ -1949,55 +1955,6 @@ document.addEventListener('DOMContentLoaded', function() {
           renderSlide();
 
           carousel.dataset.upsellInit = '1';
-        });
-
-        // Fallback pass: if a carousel exists but wasn't initialized (e.g. dynamic context mismatch),
-        // ensure exactly one visible slide and proper nav state.
-        document.querySelectorAll('[data-upsell-carousel]:not([data-upsell-init="1"])').forEach(function(carousel) {
-          var track = carousel.querySelector('[data-upsell-track]');
-          var prevBtn = carousel.querySelector('[data-upsell-prev]');
-          var nextBtn = carousel.querySelector('[data-upsell-next]');
-          var cards = track ? Array.from(track.querySelectorAll('[data-upsell-slide]')) : [];
-
-          if (!track || !prevBtn || !nextBtn || cards.length === 0) {
-            return;
-          }
-
-          cards.forEach(function(card, index) {
-            card.classList.toggle('is-active', index === 0);
-          });
-
-          track.classList.add('is-initialized');
-          prevBtn.disabled = true;
-          nextBtn.disabled = cards.length <= 1;
-          carousel.dataset.upsellIndex = '0';
-          carousel.dataset.upsellInit = '1';
-
-          prevBtn.addEventListener('click', function() {
-            var index = parseInt(carousel.dataset.upsellIndex || '0', 10);
-            index = Math.max(0, index - 1);
-            carousel.dataset.upsellIndex = String(index);
-
-            cards.forEach(function(card, cardIndex) {
-              card.classList.toggle('is-active', cardIndex === index);
-            });
-
-            prevBtn.disabled = index <= 0;
-            nextBtn.disabled = index >= cards.length - 1;
-          });
-
-          nextBtn.addEventListener('click', function() {
-            var index = parseInt(carousel.dataset.upsellIndex || '0', 10);
-            index = Math.min(cards.length - 1, index + 1);
-            carousel.dataset.upsellIndex = String(index);
-
-            cards.forEach(function(card, cardIndex) {
-              card.classList.toggle('is-active', cardIndex === index);
-            });
-
-            prevBtn.disabled = index <= 0;
-            nextBtn.disabled = index >= cards.length - 1;
-          });
         });
       },
   
