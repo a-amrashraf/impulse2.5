@@ -13285,15 +13285,20 @@ label,.h5,
   width: 100%;
 }
 
+.cart-drawer-upsell__slide {
+  box-sizing: border-box;
+  flex: 0 0 100%;
+  padding: 0 1px;
+}
+
 .cart-drawer-upsell__card {
   background: var(--colorDrawersDim);
   border: 1px solid var(--colorDrawerBorder);
   border-radius: 8px;
   display: grid;
-  flex: 0 0 100%;
   gap: 10px;
-  grid-template-columns: 96px minmax(0, 1fr);
-  min-height: 120px;
+  grid-template-columns: 72px minmax(0, 1fr);
+  min-height: 96px;
   padding: 10px;
 }
 
@@ -13301,7 +13306,7 @@ label,.h5,
   background: #fff;
   border-radius: 6px;
   display: block;
-  height: 96px;
+  height: 72px;
   overflow: hidden;
 }
 
@@ -13393,13 +13398,13 @@ label,.h5,
 @media only screen and (max-width: 420px) {
   .cart-drawer-upsell__card {
     gap: 8px;
-    grid-template-columns: 84px minmax(0, 1fr);
-    min-height: 108px;
+    grid-template-columns: 64px minmax(0, 1fr);
+    min-height: 88px;
     padding: 8px;
   }
 
   .cart-drawer-upsell__image-link {
-    height: 84px;
+    height: 64px;
   }
 }
 

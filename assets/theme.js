@@ -1910,7 +1910,7 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
           }
 
-          cards = Array.from(track.querySelectorAll('.cart-drawer-upsell__card'));
+          cards = Array.from(track.querySelectorAll('.cart-drawer-upsell__slide'));
 
           if (cards.length <= 1) {
             prevBtn.disabled = true;
