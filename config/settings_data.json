@@ -155,8 +155,8 @@
           "customjs": ""
         }
       },
-      "1309933516898906475": {
-        "type": "shopify://apps/qboost-upsell-cross-sell/blocks/upsell/c2eea735-43d1-426a-8172-dd37cb7d9dab",
+      "10553572162545005813": {
+        "type": "shopify://apps/upsell-app-by-essentialwolf/blocks/app-embed/ae950cb1-1eb5-4b22-b308-ab5141c9f88c",
         "disabled": false,
         "settings": {}
       }
