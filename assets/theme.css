@@ -13247,33 +13247,6 @@ label,.h5,
 
 #FilterDrawer, .filter-drawer-wrapper, #FilterDrawer .drawer__inner, .filter-drawer-wrapper .drawer__inner, #FilterDrawer .drawer__fixed-header, .filter-drawer-wrapper .drawer__fixed-header { background-color: white !important; color: black !important; }
 
-/* Keep injected upsell/app widgets in cart drawer flow so they don't overlap cart items */
-#CartDrawer [data-products] {
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  z-index: 1;
-}
-
-#CartDrawer [data-products] > * {
-  clear: both;
-}
-
-#CartDrawer [data-products] .shopify-app-block,
-#CartDrawer [data-products] [id*="upsell"],
-#CartDrawer [data-products] [class*="upsell"],
-#CartDrawer [data-products] [id*="cross-sell"],
-#CartDrawer [data-products] [class*="cross-sell"] {
-  position: relative !important;
-  top: auto !important;
-  right: auto !important;
-  bottom: auto !important;
-  left: auto !important;
-  z-index: 1 !important;
-  width: 100% !important;
-  margin-top: 12px;
-}
-
 /* Force hide pbioh-hidden elements */
 .pbioh-hidden,
 .pbioh-second,
