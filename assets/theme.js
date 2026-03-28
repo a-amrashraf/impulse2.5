@@ -1909,7 +1909,7 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
           }
 
-          cards = Array.from(track.querySelectorAll('.cart-drawer-upsell__slide'));
+          cards = Array.from(track.querySelectorAll('[data-upsell-slide]'));
           track.classList.add('is-initialized');
 
           if (cards.length <= 1) {
