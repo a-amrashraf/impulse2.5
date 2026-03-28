@@ -13280,9 +13280,10 @@ label,.h5,
 .cart-drawer-upsell__track {
   display: flex;
   gap: 0;
+  flex-wrap: nowrap;
   transform: translateX(0);
   transition: transform 0.3s ease;
-  width: max-content;
+  width: 100%;
 }
 
 .cart-drawer-upsell__slide {
@@ -13329,14 +13330,17 @@ label,.h5,
 }
 
 .cart-drawer-upsell__sub {
-  align-items: flex-end;
+  align-items: stretch;
   display: flex;
   gap: 10px;
-  justify-content: space-between;
+  justify-content: flex-start;
   line-height: 1.2;
 }
 
 .cart-drawer-upsell__price-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
   min-width: 0;
 }
 
@@ -13348,8 +13352,8 @@ label,.h5,
 
 .cart-drawer-upsell__actions {
   margin-left: auto;
-  max-width: 56%;
-  min-width: 150px;
+  max-width: 60%;
+  min-width: 170px;
 }
 
 .cart-drawer-upsell__form {
@@ -13429,7 +13433,7 @@ label,.h5,
   }
 
   .cart-drawer-upsell__actions {
-    min-width: 132px;
+    min-width: 120px;
   }
 }
 
