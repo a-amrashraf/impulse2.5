@@ -87,6 +87,7 @@
         },
         "collection_bjVALb": {
           "type": "collection",
+          "disabled": true,
           "settings": {
             "collection": "switch-bag",
             "custom_title": "Switch"
