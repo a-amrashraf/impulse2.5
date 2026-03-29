@@ -1678,7 +1678,6 @@ document.addEventListener('DOMContentLoaded', function() {
   theme.CartForm = (function() {
     var selectors = {
       products: '[data-products]',
-      upsellContainer: '[data-cart-upsell-container]',
       qtySelector: '.js-qty__wrapper',
       discounts: '[data-discounts]',
       savings: '[data-savings]',
@@ -1708,7 +1707,6 @@ document.addEventListener('DOMContentLoaded', function() {
       this.location = form.dataset.location;
       this.namespace = '.cart-' + this.location;
       this.products = form.querySelector(selectors.products)
-      this.upsellContainer = form.querySelector(selectors.upsellContainer);
       this.submitBtn = form.querySelector(selectors.checkoutBtn);
   
       this.discounts = form.querySelector(selectors.discounts);
@@ -1729,7 +1727,6 @@ document.addEventListener('DOMContentLoaded', function() {
     CartForm.prototype = Object.assign({}, CartForm.prototype, {
       init: function() {
         this.initQtySelectors();
-        this.initUpsellCarousel();
   
         document.addEventListener('cart:quantity' + this.namespace, this.quantityChanged.bind(this));
   
@@ -1826,7 +1823,6 @@ document.addEventListener('DOMContentLoaded', function() {
   
         return {
           items: html.querySelector('.cart__items'),
-          upsell: html.querySelector('[data-cart-upsell-section]'),
           discounts: html.querySelector('.cart__discounts')
         }
       },
@@ -1856,8 +1852,6 @@ document.addEventListener('DOMContentLoaded', function() {
         // Append item markup
         this.products.innerHTML = '';
         this.products.append(items);
-
-        this.updateUpsell(markup.upsell);
   
         // Update subtotal
         this.subtotal.innerHTML = theme.Currency.formatMoney(subtotal, theme.settings.moneyFormat);
@@ -1877,85 +1871,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         this.discounts.innerHTML = '';
         this.discounts.append(markup);
-      },
-
-      updateUpsell: function(markup) {
-        if (!this.upsellContainer) {
-          return;
-        }
-
-        this.upsellContainer.innerHTML = '';
-
-        if (markup) {
-          this.upsellContainer.append(markup);
-        }
-
-        this.initUpsellCarousel();
-      },
-
-      initUpsellCarousel: function() {
-        var scope = this.form || document;
-
-        scope.querySelectorAll('[data-upsell-carousel]').forEach(function(carousel) {
-          if (carousel.dataset.upsellInit === '1') {
-            return;
-          }
-
-          var track = carousel.querySelector('[data-upsell-track]');
-          var prevBtn = carousel.querySelector('[data-upsell-prev]');
-          var nextBtn = carousel.querySelector('[data-upsell-next]');
-          var cards;
-          var currentIndex = 0;
-
-          if (!track || !prevBtn || !nextBtn) {
-            return;
-          }
-
-          cards = Array.from(track.querySelectorAll('[data-upsell-slide]'));
-          track.classList.add('is-initialized');
-
-          if (cards.length === 0) {
-            return;
-          }
-
-          track.style.transform = 'translate3d(0%, 0, 0)';
-
-          var renderSlide = function() {
-            var offset = currentIndex * -100;
-            track.style.transform = 'translate3d(' + offset + '%, 0, 0)';
-            carousel.dataset.upsellIndex = String(currentIndex);
-
-            cards.forEach(function(card, index) {
-              card.setAttribute('aria-hidden', index === currentIndex ? 'false' : 'true');
-            });
-
-            prevBtn.disabled = currentIndex <= 0;
-            nextBtn.disabled = currentIndex >= cards.length - 1;
-          };
-
-          if (cards.length <= 1) {
-            cards[0].setAttribute('aria-hidden', 'false');
-            prevBtn.disabled = true;
-            nextBtn.disabled = true;
-            carousel.dataset.upsellIndex = '0';
-            carousel.dataset.upsellInit = '1';
-            return;
-          }
-
-          prevBtn.addEventListener('click', function() {
-            currentIndex = Math.max(0, currentIndex - 1);
-            renderSlide();
-          });
-
-          nextBtn.addEventListener('click', function() {
-            currentIndex = Math.min(cards.length - 1, currentIndex + 1);
-            renderSlide();
-          });
-
-          renderSlide();
-
-          carousel.dataset.upsellInit = '1';
-        });
       },
   
       /*============================================================================
