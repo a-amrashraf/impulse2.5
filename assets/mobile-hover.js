@@ -216,18 +216,20 @@
       active: false,
       startX: 0,
       startY: 0,
+      startTarget: null,
       dx: 0,
       moved: false,
       axisLocked: false,
       axis: ''
     };
 
-    function start(clientX, clientY) {
+    function start(clientX, clientY, eventTarget) {
       if (!isMobileMode()) return;
       if (getSlides(slider).length < 2) return;
       drag.active = true;
       drag.startX = clientX;
       drag.startY = clientY;
+      drag.startTarget = eventTarget || null;
       drag.dx = 0;
       drag.moved = false;
       drag.axisLocked = false;
@@ -283,18 +285,22 @@
       return true;
     }
 
-    function end(clientX) {
+    function end(clientX, clientY) {
       if (!drag.active || !isMobileMode()) return;
+
+      if (!Number.isFinite(clientY)) clientY = drag.startY;
       if (getSlides(slider).length < 2) {
         drag.active = false;
         slider.dataset.impulseDragging = '0';
         setIndex(slider, 0, false);
+        drag.startTarget = null;
         return;
       }
       drag.active = false;
       slider.dataset.impulseDragging = '0';
 
       var dx = drag.moved ? drag.dx : (clientX - drag.startX);
+      var dy = clientY - drag.startY;
       var current = Number(slider.dataset.impulseIndex || 0);
       if (!Number.isFinite(current)) current = 0;
       var slides = getSlides(slider);
@@ -324,9 +330,19 @@
 
       setIndex(slider, target, false);
       slider.dataset.impulseMoved = drag.moved && drag.axis === 'x' ? '1' : '0';
+
+      var isTap = !drag.moved && Math.abs(dx) < 10 && Math.abs(dy) < 10;
+      if (isTap && isWithinMedia(clientX, clientY) && !isInteractiveTapTarget(drag.startTarget)) {
+        if (card) {
+          slider.dataset.impulseTapNavAt = String(Date.now());
+          navigateToProductFromCard();
+        }
+      }
+
       drag.axisLocked = false;
       drag.axis = '';
       drag.moved = false;
+      drag.startTarget = null;
     }
 
     function cancel() {
@@ -339,6 +355,7 @@
       drag.axisLocked = false;
       drag.axis = '';
       drag.moved = false;
+      drag.startTarget = null;
     }
 
     if (usePointerEvents) {
@@ -352,7 +369,7 @@
           } catch (err) {
           }
         }
-        start(e.clientX, e.clientY);
+        start(e.clientX, e.clientY, e.target);
       }, true);
 
       gestureTarget.addEventListener('pointermove', function(e) {
@@ -364,7 +381,7 @@
 
       gestureTarget.addEventListener('pointerup', function(e) {
         if (!drag.active) return;
-        end(e.clientX);
+        end(e.clientX, e.clientY);
       }, true);
 
       gestureTarget.addEventListener('pointercancel', function() {
@@ -375,7 +392,7 @@
         if (!isMobileMode()) return;
         if (!e.touches || !e.touches.length) return;
         if (!isWithinMedia(e.touches[0].clientX, e.touches[0].clientY)) return;
-        start(e.touches[0].clientX, e.touches[0].clientY);
+        start(e.touches[0].clientX, e.touches[0].clientY, e.target);
       }, { passive: false });
 
       gestureTarget.addEventListener('touchmove', function(e) {
@@ -389,8 +406,12 @@
       gestureTarget.addEventListener('touchend', function(e) {
         if (!drag.active) return;
         var x = drag.startX;
-        if (e.changedTouches && e.changedTouches.length) x = e.changedTouches[0].clientX;
-        end(x);
+        var y = drag.startY;
+        if (e.changedTouches && e.changedTouches.length) {
+          x = e.changedTouches[0].clientX;
+          y = e.changedTouches[0].clientY;
+        }
+        end(x, y);
       }, { passive: true });
 
       gestureTarget.addEventListener('touchcancel', function() {
@@ -417,6 +438,13 @@
         e.preventDefault();
         e.stopPropagation();
         slider.dataset.impulseMoved = '0';
+        return;
+      }
+
+      var tapNavAt = Number(slider.dataset.impulseTapNavAt || 0);
+      if (tapNavAt && (Date.now() - tapNavAt) < 700) {
+        e.preventDefault();
+        e.stopPropagation();
         return;
       }
 
