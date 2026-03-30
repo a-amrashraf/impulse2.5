@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function initTouchHover() { 
-  // Disable old implementation to avoid conflicts with new mobile-hover.js
+  // Disable old implementation to avoid conflicts with new mobile-swipe.js
   return;
 }
 
