@@ -86,6 +86,7 @@
         },
         "collection_UXenQT": {
           "type": "collection",
+          "disabled": true,
           "settings": {
             "collection": "vernis-bag",
             "custom_title": "Vernis"
