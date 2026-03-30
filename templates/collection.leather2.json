@@ -32,7 +32,7 @@
           "type": "collection",
           "settings": {
             "collection": "scrunch-bag",
-            "custom_image": "shopify://shop_images/IMG_1559.heic",
+            "custom_image": "shopify://shop_images/Scrunch-removebg-preview.png",
             "custom_title": "Scrunch"
           }
         },
@@ -40,6 +40,7 @@
           "type": "collection",
           "settings": {
             "collection": "hobo-bag",
+            "custom_image": "shopify://shop_images/Hobo-removebg-preview.png",
             "custom_title": "Hobo"
           }
         },
@@ -47,6 +48,7 @@
           "type": "collection",
           "settings": {
             "collection": "bowler-bag",
+            "custom_image": "shopify://shop_images/Bowler-removebg-preview.png",
             "custom_title": "BOWLER"
           }
         },
@@ -54,6 +56,7 @@
           "type": "collection",
           "settings": {
             "collection": "halo-bag",
+            "custom_image": "shopify://shop_images/Halo-removebg-preview.png",
             "custom_title": "Halo"
           }
         },
@@ -61,6 +64,7 @@
           "type": "collection",
           "settings": {
             "collection": "croco-bag",
+            "custom_image": "shopify://shop_images/Croco-removebg-preview.png",
             "custom_title": "Croco"
           }
         },
@@ -68,6 +72,7 @@
           "type": "collection",
           "settings": {
             "collection": "baguette-bag",
+            "custom_image": "shopify://shop_images/Baguette_-removebg-preview.png",
             "custom_title": "Baguette"
           }
         },
@@ -75,6 +80,7 @@
           "type": "collection",
           "settings": {
             "collection": "dragon-bag",
+            "custom_image": "shopify://shop_images/Dragon-removebg-preview.png",
             "custom_title": "Dragon"
           }
         },
@@ -92,6 +98,14 @@
             "collection": "switch-bag",
             "custom_title": "Switch"
           }
+        },
+        "collection_LqqbrY": {
+          "type": "collection",
+          "settings": {
+            "collection": "token-bag",
+            "custom_image": "shopify://shop_images/Token-removebg-preview.png",
+            "custom_title": "Token"
+          }
         }
       },
       "block_order": [
@@ -103,7 +117,8 @@
         "collection_cRwFje",
         "collection_rFz7LR",
         "collection_UXenQT",
-        "collection_bjVALb"
+        "collection_bjVALb",
+        "collection_LqqbrY"
       ],
       "name": "Collection Navigation",
       "settings": {
