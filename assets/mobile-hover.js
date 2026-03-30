@@ -398,11 +398,38 @@
       }, true);
     }
 
+    function isInteractiveTapTarget(target) {
+      if (!target || !target.closest) return false;
+      return !!target.closest('a, button, input, select, textarea, label, summary, [role="button"], .grid-product__quick-add, .color-swatch, .sibling-swatch');
+    }
+
+    function navigateToProductFromCard() {
+      if (!card) return;
+      var productLink = card.querySelector('a.grid-product__link[href]');
+      if (!productLink) return;
+      var href = productLink.getAttribute('href');
+      if (!href) return;
+      window.location.href = href;
+    }
+
     gestureTarget.addEventListener('click', function(e) {
       if (slider.dataset.impulseMoved === '1') {
         e.preventDefault();
         e.stopPropagation();
         slider.dataset.impulseMoved = '0';
+        return;
+      }
+
+      if (!isMobileMode()) return;
+      if (isInteractiveTapTarget(e.target)) return;
+
+      var clientX = typeof e.clientX === 'number' ? e.clientX : drag.startX;
+      var clientY = typeof e.clientY === 'number' ? e.clientY : drag.startY;
+      if (!isWithinMedia(clientX, clientY)) return;
+
+      if (card) {
+        e.preventDefault();
+        navigateToProductFromCard();
       }
     }, true);
 
