@@ -4699,10 +4699,18 @@ svg.icon-cart circle{
   padding-top:15px;
 }
 
+#CartDrawer .drawer__footer{
+  padding-top:10px;
+}
+
 @media only screen and (min-width:769px){
 
 .drawer__footer{
     padding-top:22.22222px;
+}
+
+#CartDrawer .drawer__footer{
+    padding-top:14px;
 }
   }
 
