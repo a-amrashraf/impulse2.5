@@ -32,7 +32,7 @@
           "type": "collection",
           "settings": {
             "collection": "scrunch-bag",
-            "custom_image": "shopify://shop_images/IMG_1559.heic",
+            "custom_image": "shopify://shop_images/Scrunch-removebg-preview.png",
             "custom_title": "Scrunch"
           }
         },
@@ -40,6 +40,7 @@
           "type": "collection",
           "settings": {
             "collection": "hobo-bag",
+            "custom_image": "shopify://shop_images/Hobo-removebg-preview.png",
             "custom_title": "Hobo"
           }
         },
@@ -47,6 +48,7 @@
           "type": "collection",
           "settings": {
             "collection": "bowler-bag",
+            "custom_image": "shopify://shop_images/Bowler-removebg-preview.png",
             "custom_title": "BOWLER"
           }
         },
