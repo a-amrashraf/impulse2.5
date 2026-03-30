@@ -212,6 +212,9 @@
     var card = slider.closest('.grid-product.has-impulse-slider, .product-card.has-impulse-slider');
     var gestureTarget = card || media;
     var usePointerEvents = !!window.PointerEvent;
+    var TAP_MAX_MOVEMENT = 10;
+    var SWIPE_CLICK_SUPPRESS_MS = 500;
+    var suppressClickUntil = 0;
     var drag = {
       active: false,
       startX: 0,
@@ -225,7 +228,6 @@
 
     function start(clientX, clientY, eventTarget) {
       if (!isMobileMode()) return;
-      if (getSlides(slider).length < 2) return;
       drag.active = true;
       drag.startX = clientX;
       drag.startY = clientY;
@@ -243,6 +245,19 @@
         if (sel && sel.removeAllRanges) sel.removeAllRanges();
       }
 
+    }
+
+    function maybeNavigateTap(clientX, clientY, dx, dy) {
+      var isTap = Math.abs(dx) <= TAP_MAX_MOVEMENT && Math.abs(dy) <= TAP_MAX_MOVEMENT;
+      if (!isTap) return false;
+      if (!isWithinMedia(clientX, clientY)) return false;
+      if (isInteractiveTapTarget(drag.startTarget)) return false;
+      if (!card) return false;
+
+      slider.dataset.impulseTapNavAt = String(Date.now());
+      suppressClickUntil = Date.now() + SWIPE_CLICK_SUPPRESS_MS;
+      navigateToProductFromCard();
+      return true;
     }
 
     function isWithinMedia(clientX, clientY) {
@@ -289,18 +304,25 @@
       if (!drag.active || !isMobileMode()) return;
 
       if (!Number.isFinite(clientY)) clientY = drag.startY;
+      if (!Number.isFinite(clientX)) clientX = drag.startX;
+      var dx = drag.moved ? drag.dx : (clientX - drag.startX);
+      var dy = clientY - drag.startY;
+
       if (getSlides(slider).length < 2) {
         drag.active = false;
         slider.dataset.impulseDragging = '0';
         setIndex(slider, 0, false);
+        slider.dataset.impulseMoved = '0';
+        maybeNavigateTap(clientX, clientY, dx, dy);
+        drag.axisLocked = false;
+        drag.axis = '';
+        drag.moved = false;
         drag.startTarget = null;
         return;
       }
       drag.active = false;
       slider.dataset.impulseDragging = '0';
 
-      var dx = drag.moved ? drag.dx : (clientX - drag.startX);
-      var dy = clientY - drag.startY;
       var current = Number(slider.dataset.impulseIndex || 0);
       if (!Number.isFinite(current)) current = 0;
       var slides = getSlides(slider);
@@ -316,11 +338,12 @@
       var width = getViewportWidth(slider);
       var threshold = Math.max(12, width * 0.08);
       var target = current;
-      if (dx < -threshold) target = current + 1;
-      if (dx > threshold) target = current - 1;
+      var didSwipe = drag.axis === 'x' && Math.abs(dx) >= threshold;
+      if (didSwipe && dx < 0) target = current + 1;
+      if (didSwipe && dx > 0) target = current - 1;
       target = wrapIndex(target, slideCount);
 
-      if (target > 0) {
+      if (didSwipe && target > 0) {
         var secondImg = getSecondImage(slider);
         if (secondImg && !isSecondImageReady(secondImg)) {
           prepareSecondImage(slider);
@@ -328,15 +351,14 @@
         }
       }
 
-      setIndex(slider, target, false);
-      slider.dataset.impulseMoved = drag.moved && drag.axis === 'x' ? '1' : '0';
-
-      var isTap = !drag.moved && Math.abs(dx) < 10 && Math.abs(dy) < 10;
-      if (isTap && isWithinMedia(clientX, clientY) && !isInteractiveTapTarget(drag.startTarget)) {
-        if (card) {
-          slider.dataset.impulseTapNavAt = String(Date.now());
-          navigateToProductFromCard();
-        }
+      if (didSwipe) {
+        setIndex(slider, target, false);
+        slider.dataset.impulseMoved = '1';
+        suppressClickUntil = Date.now() + SWIPE_CLICK_SUPPRESS_MS;
+      } else {
+        setIndex(slider, current, false);
+        slider.dataset.impulseMoved = '0';
+        maybeNavigateTap(clientX, clientY, dx, dy);
       }
 
       drag.axisLocked = false;
@@ -434,6 +456,12 @@
     }
 
     gestureTarget.addEventListener('click', function(e) {
+      if (Date.now() < suppressClickUntil) {
+        e.preventDefault();
+        e.stopPropagation();
+        return;
+      }
+
       if (slider.dataset.impulseMoved === '1') {
         e.preventDefault();
         e.stopPropagation();
@@ -446,18 +474,6 @@
         e.preventDefault();
         e.stopPropagation();
         return;
-      }
-
-      if (!isMobileMode()) return;
-      if (isInteractiveTapTarget(e.target)) return;
-
-      var clientX = typeof e.clientX === 'number' ? e.clientX : drag.startX;
-      var clientY = typeof e.clientY === 'number' ? e.clientY : drag.startY;
-      if (!isWithinMedia(clientX, clientY)) return;
-
-      if (card) {
-        e.preventDefault();
-        navigateToProductFromCard();
       }
     }, true);
 
