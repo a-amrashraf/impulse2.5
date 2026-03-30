@@ -98,6 +98,14 @@
             "collection": "switch-bag",
             "custom_title": "Switch"
           }
+        },
+        "collection_LqqbrY": {
+          "type": "collection",
+          "settings": {
+            "collection": "token-bag",
+            "custom_image": "shopify://shop_images/Token-removebg-preview.png",
+            "custom_title": ""
+          }
         }
       },
       "block_order": [
@@ -109,7 +117,8 @@
         "collection_cRwFje",
         "collection_rFz7LR",
         "collection_UXenQT",
-        "collection_bjVALb"
+        "collection_bjVALb",
+        "collection_LqqbrY"
       ],
       "name": "Collection Navigation",
       "settings": {
