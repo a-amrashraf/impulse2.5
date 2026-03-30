@@ -164,8 +164,8 @@
         "filter_style": "drawer",
         "enable_color_swatches": true,
         "enable_swatch_labels": true,
-        "enable_sort": false,
-        "padding_top": 40,
+        "enable_sort": true,
+        "padding_top": 20,
         "padding_bottom": 40,
         "padding_top_mobile": 20,
         "padding_bottom_mobile": 20
