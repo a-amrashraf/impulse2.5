@@ -167,7 +167,7 @@
         "enable_sort": true,
         "padding_top": 20,
         "padding_bottom": 40,
-        "padding_top_mobile": 20,
+        "padding_top_mobile": 16,
         "padding_bottom_mobile": 20
       }
     },
