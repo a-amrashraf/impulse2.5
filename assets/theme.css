@@ -4703,6 +4703,14 @@ svg.icon-cart circle{
   padding-top:10px;
 }
 
+#CartDrawer .cart__checkout-wrapper .additional-checkout-buttons{
+  margin-top:4px;
+}
+
+#CartDrawer .additional-checkout-buttons{
+  margin-bottom:0;
+}
+
 @media only screen and (min-width:769px){
 
 .drawer__footer{
@@ -4711,6 +4719,10 @@ svg.icon-cart circle{
 
 #CartDrawer .drawer__footer{
     padding-top:14px;
+}
+
+#CartDrawer .cart__checkout-wrapper .additional-checkout-buttons{
+    margin-top:6px;
 }
   }
 
