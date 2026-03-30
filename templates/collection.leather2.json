@@ -56,6 +56,7 @@
           "type": "collection",
           "settings": {
             "collection": "halo-bag",
+            "custom_image": "shopify://shop_images/Halo-removebg-preview.png",
             "custom_title": "Halo"
           }
         },
@@ -63,6 +64,7 @@
           "type": "collection",
           "settings": {
             "collection": "croco-bag",
+            "custom_image": "shopify://shop_images/Croco-removebg-preview.png",
             "custom_title": "Croco"
           }
         },
@@ -70,6 +72,7 @@
           "type": "collection",
           "settings": {
             "collection": "baguette-bag",
+            "custom_image": "shopify://shop_images/Baguette_-removebg-preview.png",
             "custom_title": "Baguette"
           }
         },
@@ -77,6 +80,7 @@
           "type": "collection",
           "settings": {
             "collection": "dragon-bag",
+            "custom_image": "shopify://shop_images/Dragon-removebg-preview.png",
             "custom_title": "Dragon"
           }
         },
