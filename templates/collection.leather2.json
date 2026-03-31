@@ -68,6 +68,14 @@
             "custom_title": "Croco"
           }
         },
+        "collection_B4TTNQ": {
+          "type": "collection",
+          "settings": {
+            "collection": "radioset-bag",
+            "custom_image": "shopify://shop_images/Radioset-removebg-preview.png",
+            "custom_title": "Radio"
+          }
+        },
         "collection_cRwFje": {
           "type": "collection",
           "settings": {
@@ -115,6 +123,7 @@
         "collection_kUz6iQ",
         "collection_Hmycmc",
         "collection_ggyCtV",
+        "collection_B4TTNQ",
         "collection_cRwFje",
         "collection_rFz7LR",
         "collection_UXenQT",
