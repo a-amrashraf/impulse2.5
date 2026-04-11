@@ -699,6 +699,12 @@
         "label": "t:settings_schema.product_tiles.settings.enable_swatches.label"
       },
       {
+        "type": "checkbox",
+        "id": "show_out_of_stock_color_swatches",
+        "label": "Show out of stock color swatches",
+        "default": true
+      },
+      {
         "type": "range",
         "id": "swatch_vertical_offset",
         "label": "Swatch Vertical Offset",

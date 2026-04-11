@@ -473,7 +473,7 @@ Arguments
           {%- assign sibling_colors = sibling.metafields.custom.color.value -%}
           
           {%- assign sold_out_class = '' -%}
-          {%- if show_out_of_stock_swatches and sibling.available == false -%}
+          {%- if settings.show_out_of_stock_color_swatches and sibling.available == false -%}
             {%- assign sold_out_class = 'color-swatch--sold-out' -%}
           {%- endif -%}
 
@@ -614,7 +614,7 @@ Arguments
                     endif
                   endif
                   assign sold_out_class = ''
-                  if show_out_of_stock_swatches and variant.available == false
+                  if settings.show_out_of_stock_color_swatches and variant.available == false
                     assign sold_out_class = 'color-swatch--sold-out'
                   endif
                   
