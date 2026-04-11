@@ -239,7 +239,7 @@ Arguments
           {%- endif -%}
 
           {%- if second_image != blank -%}
-            <div class="impulse-mobile-dots" data-show-dots="{% if settings.show_mobile_slider_dots %}true{% else %}false{% endif %}">
+            <div class="impulse-mobile-dots" data-show-dots="{% if settings.show_mobile_slider_dots %}true{% else %}false{% endif %}" data-dots-background="{% if settings.show_mobile_slider_dots_background %}true{% else %}false{% endif %}">
               <div class="impulse-mobile-dot active"></div>
               <div class="impulse-mobile-dot"></div>
             </div>
@@ -409,8 +409,7 @@ Arguments
                 <div class="grid-product__colors grid-product__colors--{{ product.id }}" style="{{ swatch_style_inline }}">
                   {%- for variant in product.variants -%}
                     {%- assign value = variant.options[option_index] %}
-                    {%- unless values contains value -%}
-                      {%- liquid
+                    {%- unless values contains value -%}                    {%- unless settings.show_out_of_stock_color_swatches == false and variant.available == false -%}                      {%- liquid
                         assign values = values | join: ',' | append: ',' | append: value | split: ','
 
                         assign color_file_name = value | handle | append: '.' | append: swatch_file_extension
@@ -430,6 +429,7 @@ Arguments
                         style="background-color: {{ color_swatch_fallback }};{% if images[color_file_name] != blank %}  background-image: url({{ color_image }});{% endif %}">
                         <span class="visually-hidden">{{ value }}</span>
                       </span>
+                    {%- endunless -%}
                     {%- endunless -%}
                   {%- endfor -%}
                 </div>
@@ -467,6 +467,7 @@ Arguments
         {%- endif -%}
 
         {%- for sibling in siblings_sorted limit: loop_limit -%}
+          {%- unless settings.show_out_of_stock_color_swatches == false and sibling.available == false -%}
           {%- comment -%}
             New Sibling Logic: Check custom.color which is a List of Metaobjects
           {%- endcomment -%}
@@ -539,6 +540,7 @@ Arguments
                 style="{{ bg_style }}">
              </a>
           {%- endif -%}
+          {%- endunless -%}
         {%- endfor -%}
 
         {%- if limit_swatches and sibling_count > 5 -%}
@@ -567,6 +569,7 @@ Arguments
             {%- for variant in product.variants -%}
               {%- assign value = variant.options[option_index] %}
               {%- unless values contains value -%}
+                {%- unless settings.show_out_of_stock_color_swatches == false and variant.available == false -%}
                 {%- liquid
                   assign values = values | join: ',' | append: ',' | append: value | split: ','
 
@@ -653,6 +656,7 @@ Arguments
                   style="{{ bg_style }}">
                   <span class="visually-hidden">{{ value }}</span>
                 </a>
+                {%- endunless -%}
               {%- endunless -%}
             {%- endfor -%}
           </div>

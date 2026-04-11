@@ -690,6 +690,12 @@
         "default": true
       },
       {
+        "type": "checkbox",
+        "id": "show_mobile_slider_dots_background",
+        "label": "Show circular background for slider dots",
+        "default": false
+      },
+      {
         "type": "header",
         "content": "t:settings_schema.product_tiles.settings.header_color_swatches"
       },

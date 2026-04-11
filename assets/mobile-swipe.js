@@ -86,6 +86,14 @@
     dotsWrap.style.setProperty('background', 'transparent', 'important');      
     dotsWrap.style.setProperty('border-radius', '0');
 
+    // Handle circular background styling based on setting
+    var showBackground = dotsWrap.getAttribute('data-dots-background') === 'true';
+    if (showBackground) {
+      dotsWrap.classList.add('with-background');
+    } else {
+      dotsWrap.classList.remove('with-background');
+    }
+
     var dots = dotsWrap.querySelectorAll('.impulse-mobile-dot');
     for (var i = 0; i < dots.length; i++) {
       var dot = dots[i];

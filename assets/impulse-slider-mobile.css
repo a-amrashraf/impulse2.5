@@ -93,7 +93,10 @@
   margin: 0;
   width: fit-content;
   pointer-events: none;
-  background: rgba(0, 0, 0, 0.4);
+}
+
+.grid__item-image-wrapper .grid-product__image-mask .impulse-mobile-dots.with-background {
+  background-color: rgba(0, 0, 0, 0.4);
   border-radius: 50%;
   padding: 8px 12px;
 }
