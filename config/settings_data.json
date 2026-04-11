@@ -55,6 +55,7 @@
     "product_grid_image_size": "portrait",
     "product_grid_image_fill": true,
     "product_hover_image": true,
+    "show_mobile_slider_dots_background": true,
     "enable_swatches": true,
     "show_out_of_stock_color_swatches": false,
     "collection_grid_shape": "portrait",
