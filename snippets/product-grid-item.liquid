@@ -239,7 +239,7 @@ Arguments
           {%- endif -%}
 
           {%- if second_image != blank -%}
-            <div class="impulse-mobile-dots">
+            <div class="impulse-mobile-dots" data-show-dots="{% if settings.show_mobile_slider_dots %}true{% else %}false{% endif %}">
               <div class="impulse-mobile-dot active"></div>
               <div class="impulse-mobile-dot"></div>
             </div>

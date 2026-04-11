@@ -684,6 +684,12 @@
         "default": false
       },
       {
+        "type": "checkbox",
+        "id": "show_mobile_slider_dots",
+        "label": "Show slider dots on mobile",
+        "default": true
+      },
+      {
         "type": "header",
         "content": "t:settings_schema.product_tiles.settings.header_color_swatches"
       },

@@ -235,7 +235,10 @@
       s.style.setProperty('right', i > 0 ? '0' : 'auto', 'important');
       s.style.setProperty('bottom', i > 0 ? '0' : 'auto', 'important');
     ensureDots(slider, slides.length);
-    setDotsDisplay(slider, slides.length > 1);
+    var dotsScope = getDotsScope(slider);
+    var dotsWrap = dotsScope ? dotsScope.querySelector('.impulse-mobile-dots') : null;
+    var showDotsSettingEnabled = !dotsWrap || dotsWrap.getAttribute('data-show-dots') !== 'false';
+    setDotsDisplay(slider, slides.length > 1 && showDotsSettingEnabled);
       s.style.flex = '';
       s.style.minWidth = '';
       s.style.maxWidth = '';
