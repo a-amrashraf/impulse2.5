@@ -191,7 +191,7 @@
     for (var i = 0; i < dots.length; i++) {
       var isActive = i === safe;
       dots[i].classList.toggle('active', isActive);
-      dots[i].style.setProperty('background', isActive ? '#000000' : '#cecccc', 'important');
+      dots[i].style.setProperty('background', isActive ? '#000000' : '#dedada', 'important');
       dots[i].style.setProperty('opacity', '1', 'important');
       dots[i].style.setProperty('box-shadow', 'none', 'important');
     }
