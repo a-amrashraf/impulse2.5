@@ -157,7 +157,7 @@
         "enable_color_swatches": true,
         "enable_swatch_labels": true,
         "limit_swatches": false,
-        "show_out_of_stock_swatches": false,
+        "show_out_of_stock_swatches": true,
         "enable_sort": false,
         "enable_collection_count": true,
         "per_row": 4,
