@@ -86,6 +86,7 @@
         },
         "collection_rFz7LR": {
           "type": "collection",
+          "disabled": true,
           "settings": {
             "collection": "dragon-bag",
             "custom_image": "shopify://shop_images/Dragon-removebg-preview.png",
@@ -156,7 +157,7 @@
         "enable_color_swatches": true,
         "enable_swatch_labels": true,
         "limit_swatches": false,
-        "show_out_of_stock_swatches": true,
+        "show_out_of_stock_swatches": false,
         "enable_sort": false,
         "enable_collection_count": true,
         "per_row": 4,
