@@ -56,6 +56,7 @@
     "product_grid_image_fill": true,
     "product_hover_image": true,
     "enable_swatches": true,
+    "show_out_of_stock_color_swatches": false,
     "collection_grid_shape": "portrait",
     "collection_grid_image": "collection",
     "collection_grid_text_align": "bottom-left",
