@@ -49,3 +49,9 @@
   opacity: 0 !important;
 }
 
+@media (hover: hover) and (pointer: fine) {
+  .grid__item-image-wrapper .impulse-mobile-dots {
+    display: none !important;
+  }
+}
+

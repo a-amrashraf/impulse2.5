@@ -238,6 +238,13 @@ Arguments
             {%- endif -%}
           {%- endif -%}
 
+          {%- if second_image != blank -%}
+            <div class="impulse-mobile-dots">
+              <div class="impulse-mobile-dot active"></div>
+              <div class="impulse-mobile-dot"></div>
+            </div>
+          {%- endif -%}
+
           {%- if product.available -%}
             <form method="post" action="{{ routes.cart_add_url }}" class="grid-product__quick-add js-ajax-cart-form" data-product-id="{{ product.id }}" data-has-only-default="{{ product.has_only_default_variant }}">
               <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">

@@ -86,3 +86,27 @@
   pointer-events: auto !important;
 }
 
+.grid__item-image-wrapper .grid-product__image-mask .impulse-mobile-dots {     
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: center;
+  margin: 0;
+  width: fit-content;
+  pointer-events: none;
+}
+
+.impulse-mobile-dot {
+  width: 6px;
+  height: 6px;
+  background: #9e9e9e !important;
+  border-radius: 50%;
+  margin: 0 3px;
+  transition: background 0.2s;
+  display: block !important;
+}
+
+.impulse-mobile-dot.active {
+  background: #000 !important;
+  opacity: 1 !important;
+}
+
