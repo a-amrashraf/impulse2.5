@@ -90,14 +90,9 @@
   display: flex !important;
   flex-direction: row !important;
   justify-content: center;
-  align-items: center;
   margin: 0;
   width: fit-content;
   pointer-events: none;
-  background: rgba(0, 0, 0, 0.4);
-  border-radius: 50%;
-  padding: 8px 12px;
-  backdrop-filter: blur(4px);
 }
 
 .impulse-mobile-dot {
