@@ -80,7 +80,7 @@
           "settings": {
             "title": "Description",
             "content": "{{ product.description }}",
-            "force_open": true,
+            "force_open": false,
             "page": ""
           }
         },
@@ -111,14 +111,6 @@
             "page": "exchange-refund-policy"
           }
         },
-        "aov_ai_bundle_offer_inline_LH6n9p": {
-          "type": "shopify://apps/aov-ai-bundle/blocks/offer-inline/0335d423-143c-4ad7-b224-99a1db74a9ee",
-          "settings": {}
-        },
-        "zapio_upsell_zapio_widget_block_fbt_K6a7qh": {
-          "type": "shopify://apps/zapio-upsell/blocks/zapio-widget-block-fbt/019b220e-8c46-7b31-a4a6-4d6d4848207b",
-          "settings": {}
-        },
         "share": {
           "type": "share",
           "disabled": true,
@@ -144,8 +136,6 @@
         "tab",
         "tab_JTXMXc",
         "tab_rYUaej",
-        "aov_ai_bundle_offer_inline_LH6n9p",
-        "zapio_upsell_zapio_widget_block_fbt_K6a7qh",
         "share",
         "judge_me_reviews_review_snippet_widget_KUkUiM"
       ],
