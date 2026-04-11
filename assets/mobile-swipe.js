@@ -88,7 +88,7 @@
     var showBackground = dotsWrap.getAttribute('data-dots-background') === 'true';
     if (showBackground) {
       dotsWrap.classList.add('with-background');
-      dotsWrap.style.setProperty('background', 'rgba(217, 217, 217, 0.72)', 'important');
+      dotsWrap.style.setProperty('background', 'rgba(217, 217, 217, 0.45)', 'important');
       dotsWrap.style.setProperty('border-radius', '999px');
       dotsWrap.style.setProperty('padding', '6px 10px');
     } else {
