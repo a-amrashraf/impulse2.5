@@ -83,15 +83,18 @@
     dotsWrap.style.setProperty('padding', '0');
     dotsWrap.style.setProperty('width', 'fit-content');
     dotsWrap.style.setProperty('margin', '0');
-    dotsWrap.style.setProperty('background', 'transparent', 'important');      
-    dotsWrap.style.setProperty('border-radius', '0');
 
     // Handle circular background styling based on setting
     var showBackground = dotsWrap.getAttribute('data-dots-background') === 'true';
     if (showBackground) {
       dotsWrap.classList.add('with-background');
+      dotsWrap.style.setProperty('background', '#d9d9d9', 'important');
+      dotsWrap.style.setProperty('border-radius', '999px');
+      dotsWrap.style.setProperty('padding', '8px 12px');
     } else {
       dotsWrap.classList.remove('with-background');
+      dotsWrap.style.setProperty('background', 'transparent', 'important');
+      dotsWrap.style.setProperty('border-radius', '0');
     }
 
     var dots = dotsWrap.querySelectorAll('.impulse-mobile-dot');
