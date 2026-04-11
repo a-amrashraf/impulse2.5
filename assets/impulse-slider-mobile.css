@@ -96,7 +96,7 @@
 }
 
 .grid__item-image-wrapper .grid-product__image-mask .impulse-mobile-dots.with-background {
-  background-color: rgba(217, 217, 217, 0.25);
+  background-color: rgba(217, 217, 217, 0.15);
   border-radius: 999px;
   padding: 4px 8px;
 }
