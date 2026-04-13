@@ -33,6 +33,11 @@ Arguments
     assign has_secondary_media = true
   endif
 
+  assign disable_second_image_swipe = disable_second_image_swipe | default: false
+  if disable_second_image_swipe
+    assign has_secondary_media = false
+  endif
+
   assign product_tags = product.tags | join: ','
   assign has_custom_label = false
   if product.metafields.theme.label and product.metafields.theme.label != blank
@@ -146,7 +151,7 @@ Arguments
         {%- endif -%}
         </div>
 
-        {%- if product.media.size > 1 or product.images.size > 1 -%}
+        {%- if has_secondary_media -%}
           {%- liquid
              assign second_image = blank
              assign second_media = blank
@@ -238,7 +243,7 @@ Arguments
             {%- endif -%}
           {%- endif -%}
 
-          {%- if second_image != blank -%}
+          {%- if second_image != blank and disable_second_image_swipe == false -%}
             <div class="impulse-mobile-dots" data-show-dots="{% if settings.show_mobile_slider_dots %}true{% else %}false{% endif %}" data-dots-background="{% if settings.show_mobile_slider_dots_background %}true{% else %}false{% endif %}">
               <div class="impulse-mobile-dot active"></div>
               <div class="impulse-mobile-dot"></div>

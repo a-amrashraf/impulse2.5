@@ -42,7 +42,8 @@
             <div class="grid grid--uniform visually-invisible" aria-hidden="true">
               {%- render 'product-grid-item',
                 product: product,
-                quick_shop_enable: settings.quick_shop_enable
+                quick_shop_enable: settings.quick_shop_enable,
+                disable_second_image_swipe: true
               -%}
             </div>
           </div>
@@ -56,6 +57,7 @@
                   product: product,
                   per_row: section.settings.products_per_row,
                   quick_shop_enable: settings.quick_shop_enable,
+                  disable_second_image_swipe: section.settings.disable_second_image_swipe,
                   fallback: '39vw',
                 -%}
               {%- endfor -%}
