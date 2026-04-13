@@ -209,9 +209,6 @@
     if (!slides.length) return;
 
     var target = wrapIndex(index, slides.length);
-    if (isSecondImageSwipeDisabled(slider)) {
-      target = 0;
-    }
     slider.dataset.impulseIndex = String(target);
     var duration = '0s';
 
@@ -245,7 +242,7 @@
     slider.style.display = 'block';
     slider.style.flexWrap = '';
     slider.style.overflow = 'hidden';
-    slider.style.touchAction = 'pan-y';
+    slider.style.touchAction = swipeDisabled ? 'auto' : 'pan-y';
     slider.style.willChange = 'auto';
 
     for (var i = 0; i < slides.length; i++) {
@@ -508,6 +505,7 @@
         if (e.pointerType !== 'touch' && e.pointerType !== 'pen') return;
         if (!isMobileMode()) return;
         if (!isWithinMedia(e.clientX, e.clientY)) return;
+        if (swipeDisabled) return;
         if (gestureTarget.setPointerCapture) {
           try {
             gestureTarget.setPointerCapture(e.pointerId);
