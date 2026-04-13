@@ -178,7 +178,8 @@
       "settings": {
         "product_recommendations_heading": "You may also like",
         "related_count": 6,
-        "products_per_row": 3
+        "products_per_row": 3,
+        "disable_second_image_swipe": true
       }
     },
     "sub": {
