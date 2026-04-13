@@ -13,6 +13,7 @@
   data-section-id="{{ section.id }}"
   data-section-type="product-recommendations"
   data-enable="{{ recommend_products }}"
+  data-disable-second-image-swipe="{% if section.settings.disable_second_image_swipe %}true{% else %}false{% endif %}"
   data-product-id="{{ product.id }}"
   data-intent="related"
   data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit={{ number_of_products }}"
@@ -97,6 +98,12 @@
       "min": 2,
       "max": 5,
       "step": 1
+    },
+    {
+      "type": "checkbox",
+      "id": "disable_second_image_swipe",
+      "label": "Disable swipe to second image",
+      "default": false
     }
   ],
   "disabled_on": {
