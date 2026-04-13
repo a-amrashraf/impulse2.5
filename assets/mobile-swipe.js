@@ -245,7 +245,7 @@
     slider.style.display = 'block';
     slider.style.flexWrap = '';
     slider.style.overflow = 'hidden';
-    slider.style.touchAction = swipeDisabled ? 'auto' : 'pan-y';
+    slider.style.touchAction = 'pan-y';
     slider.style.willChange = 'auto';
 
     for (var i = 0; i < slides.length; i++) {
