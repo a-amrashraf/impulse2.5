@@ -457,9 +457,16 @@
       var threshold = Math.max(12, width * 0.08);
       var target = current;
       var didSwipe = drag.axis === 'x' && Math.abs(dx) >= threshold;
+      if (swipeDisabled && didSwipe) {
+        target = 0;
+      }
       if (didSwipe && dx < 0) target = current + 1;
       if (didSwipe && dx > 0) target = current - 1;
       target = wrapIndex(target, slideCount);
+
+      if (swipeDisabled && didSwipe) {
+        target = 0;
+      }
 
       if (didSwipe && target > 0) {
         var secondImg = getSecondImage(slider);
@@ -503,7 +510,6 @@
         if (e.pointerType !== 'touch' && e.pointerType !== 'pen') return;
         if (!isMobileMode()) return;
         if (!isWithinMedia(e.clientX, e.clientY)) return;
-        if (swipeDisabled) return;
         if (gestureTarget.setPointerCapture) {
           try {
             gestureTarget.setPointerCapture(e.pointerId);
