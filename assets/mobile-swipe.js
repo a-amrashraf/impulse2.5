@@ -245,7 +245,7 @@
     slider.style.display = 'block';
     slider.style.flexWrap = '';
     slider.style.overflow = 'hidden';
-    slider.style.touchAction = 'pan-y';
+    slider.style.touchAction = swipeDisabled ? 'auto' : 'pan-y';
     slider.style.willChange = 'auto';
 
     for (var i = 0; i < slides.length; i++) {
@@ -328,10 +328,6 @@
     slider.dataset.impulseInit = '1';
     slider.dataset.impulseIndex = slider.dataset.impulseIndex || '0';
 
-    if (isSecondImageSwipeDisabled(slider)) {
-      return;
-    }
-
     var media = slider.closest('.impulse-mobile-media') || slider;
     var card = slider.closest('.grid-product.has-impulse-slider, .product-card.has-impulse-slider');
     var gestureTarget = card || media;
@@ -339,6 +335,7 @@
     var TAP_MAX_MOVEMENT = 10;
     var SWIPE_CLICK_SUPPRESS_MS = 500;
     var suppressClickUntil = 0;
+    var swipeDisabled = isSecondImageSwipeDisabled(slider);
     var drag = {
       active: false,
       startX: 0,
@@ -352,6 +349,7 @@
 
     function start(clientX, clientY, eventTarget) {
       if (!isMobileMode()) return;
+      if (swipeDisabled) return;
       drag.active = true;
       drag.startX = clientX;
       drag.startY = clientY;
@@ -392,6 +390,7 @@
 
     function move(clientX, clientY) {
       if (!drag.active || !isMobileMode()) return false;
+      if (swipeDisabled) return false;
       if (getSlides(slider).length < 2) return false;
 
       var dx = clientX - drag.startX;
