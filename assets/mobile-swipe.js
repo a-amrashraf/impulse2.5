@@ -346,7 +346,6 @@
 
     function start(clientX, clientY, eventTarget) {
       if (!isMobileMode()) return;
-      if (swipeDisabled) return;
       drag.active = true;
       drag.startX = clientX;
       drag.startY = clientY;
@@ -387,7 +386,6 @@
 
     function move(clientX, clientY) {
       if (!drag.active || !isMobileMode()) return false;
-      if (swipeDisabled) return false;
       if (getSlides(slider).length < 2) return false;
 
       var dx = clientX - drag.startX;
