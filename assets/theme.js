@@ -5468,6 +5468,7 @@ document.addEventListener('DOMContentLoaded', function() {
       this.container = container;
       this.sectionId = sectionId;
       this.namespace = '.photoswipe-' + this.sectionId;
+      this.onTriggerClick = this.onTriggerClick.bind(this);
       this.gallery;
       this.images;
       this.items;
@@ -5482,12 +5483,19 @@ document.addEventListener('DOMContentLoaded', function() {
   
     Photoswipe.prototype = Object.assign({}, Photoswipe.prototype, {
       init: function() {
-        this.container.querySelectorAll(selectors.trigger).forEach(trigger => {
-          trigger.addEventListener('click', this.triggerClick.bind(this));
-        });
+        this.container.addEventListener('click', this.onTriggerClick);
+      },
+
+      onTriggerClick: function(evt) {
+        var trigger = evt.target.closest(selectors.trigger);
+        if (!trigger || !this.container.contains(trigger)) {
+          return;
+        }
+
+        this.triggerClick(evt, trigger);
       },
   
-      triggerClick: function(evt) {
+      triggerClick: function(evt, triggerEl) {
         // Check live DOM so zoom still works if the gallery layout changes.
         this.inSlideshow = this.container.querySelectorAll(selectors.slideshowTrack + selectors.images).length > 0;
   
@@ -5496,16 +5504,34 @@ document.addEventListener('DOMContentLoaded', function() {
           return;
         }
   
+        var imageEl = null;
         var index = 1;
         if (this.inSlideshow) {
           var activeSlide = this.container.querySelector(selectors.activeImage);
-          if (activeSlide && activeSlide.dataset && activeSlide.dataset.index) {
-            index = parseInt(activeSlide.dataset.index, 10) + 1;
-          } else if (activeSlide) {
-            index = this.getChildIndex(activeSlide);
+          if (activeSlide) {
+            imageEl = activeSlide.querySelector(selectors.images);
+            if (!imageEl) {
+              imageEl = activeSlide;
+            }
           }
-        } else if (evt.currentTarget && evt.currentTarget.dataset && evt.currentTarget.dataset.index) {
-          index = parseInt(evt.currentTarget.dataset.index, 10);
+        } else {
+          var trigger = triggerEl || evt.currentTarget;
+          var slide = trigger ? trigger.closest('.product-main-slide') : null;
+          imageEl = slide ? slide.querySelector(selectors.images) : null;
+          if (!imageEl && trigger && trigger.dataset && trigger.dataset.index) {
+            index = parseInt(trigger.dataset.index, 10);
+          }
+        }
+
+        if (imageEl) {
+          var imageIndex = Array.prototype.indexOf.call(this.images, imageEl);
+          if (imageIndex > -1) {
+            index = imageIndex + 1;
+          }
+        }
+
+        if (!Number.isFinite(index) || index < 1) {
+          index = 1;
         }
   
         this.initGallery(this.items, index);
