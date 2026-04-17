@@ -5483,25 +5483,30 @@ document.addEventListener('DOMContentLoaded', function() {
     Photoswipe.prototype = Object.assign({}, Photoswipe.prototype, {
       init: function() {
         this.container.querySelectorAll(selectors.trigger).forEach(trigger => {
-          trigger.on('click' + this.namespace, this.triggerClick.bind(this));
+          trigger.addEventListener('click', this.triggerClick.bind(this));
         });
       },
   
       triggerClick: function(evt) {
-        // Streamline changes between a slideshow and
-        // stacked images, so recheck if we are still
-        // working with a slideshow when initializing zoom
-        if (this.container.dataset && this.container.dataset.hasSlideshow === 'true') {
-          this.inSlideshow = true;
-        } else {
-          this.inSlideshow = false;
-        }
+        // Check live DOM so zoom still works if the gallery layout changes.
+        this.inSlideshow = this.container.querySelectorAll(selectors.slideshowTrack + selectors.images).length > 0;
   
         this.items = this.getImageData();
+        if (!this.items.length) {
+          return;
+        }
   
-        var image = this.inSlideshow ? this.container.querySelector(selectors.activeImage) : evt.currentTarget;
-  
-        var index = this.inSlideshow ? this.getChildIndex(image) : image.dataset.index;
+        var index = 1;
+        if (this.inSlideshow) {
+          var activeSlide = this.container.querySelector(selectors.activeImage);
+          if (activeSlide && activeSlide.dataset && activeSlide.dataset.index) {
+            index = parseInt(activeSlide.dataset.index, 10) + 1;
+          } else if (activeSlide) {
+            index = this.getChildIndex(activeSlide);
+          }
+        } else if (evt.currentTarget && evt.currentTarget.dataset && evt.currentTarget.dataset.index) {
+          index = parseInt(evt.currentTarget.dataset.index, 10);
+        }
   
         this.initGallery(this.items, index);
       },
