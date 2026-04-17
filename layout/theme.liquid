@@ -123,10 +123,9 @@
   <!-- Added Mobile Hover Logic -->
   <script src="{{ 'mobile-swipe.js' | asset_url }}" defer="defer"></script>
 
-  {%- render 'video-modal'
-    render 'photoswipe-template'
-    render 'tool-tip'
-  -%}
+  {%- render 'video-modal' -%}
+  {%- render 'photoswipe-template' -%}
+  {%- render 'tool-tip' -%}
 
   {% comment %} Image markup used when building product grid item via JS {% endcomment %}
   <template id="naturalImageMarkup">

@@ -5574,6 +5574,14 @@ document.addEventListener('DOMContentLoaded', function() {
   
       initGallery: function(items, index) {
         var pswpElement = document.querySelectorAll('.pswp')[0];
+        var fallbackItem = items[index - 1] || items[0];
+
+        if (!pswpElement || typeof PhotoSwipe === 'undefined' || typeof PhotoSwipeUI_Default === 'undefined') {
+          if (fallbackItem && fallbackItem.src) {
+            window.open(fallbackItem.src, '_blank');
+          }
+          return;
+        }
   
         var options = {
           allowPanToNext: false,
