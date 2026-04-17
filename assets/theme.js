@@ -8490,6 +8490,10 @@ document.addEventListener('DOMContentLoaded', function() {
       theme.initQuickShop();
     }
 
+    if (typeof theme.initQuickAdd === 'function') {
+      theme.initQuickAdd(scope || document);
+    }
+
     // Re-hook up collapsible box triggers
     theme.collapsibles.init();
   };
@@ -8729,8 +8733,10 @@ document.addEventListener('DOMContentLoaded', function() {
      });
   });
 
-  theme.initQuickAdd = function() {
-    document.querySelectorAll('.grid-product__quick-add-btn').forEach(btn => {
+  theme.initQuickAdd = function(scope) {
+    var quickAddScope = scope || document;
+
+    quickAddScope.querySelectorAll('.grid-product__quick-add-btn').forEach(btn => {
       // Remove existing listeners to prevent duplicates if init is called multiple times
       var newBtn = btn.cloneNode(true);
       btn.parentNode.replaceChild(newBtn, btn);
