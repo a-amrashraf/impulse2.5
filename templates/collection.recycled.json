@@ -63,7 +63,7 @@
       "name": "t:sections.featured-collection.presets.featured_collection.name",
       "settings": {
         "title": "",
-        "home_featured_products": "leather-line-old",
+        "home_featured_products": "leather-line",
         "per_row": 4,
         "rows": 5,
         "mobile_scrollable": true,
