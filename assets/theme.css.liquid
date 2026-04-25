@@ -9651,6 +9651,14 @@ html[dir=rtl] .grid-product__content{
   white-space:nowrap;
 }
 
+.template-collection .grid-product__price--original{
+  color:#000000;
+}
+
+.template-collection .grid-product__price--sale{
+  color:#C1272D;
+}
+
 .grid-product__tag{
   background-color:var(--colorBtnPrimary);
   color:var(--colorBtnPrimaryText);
@@ -12587,6 +12595,10 @@ html[dir=rtl] .product-single__meta .rte{
   color:var(--colorPrice);
   font-size:calc(var(--typeBaseSize) + 2px);
   margin-right:5px;
+}
+
+.template-product .product__price:not(.on-sale){
+  color:#000000;
 }
 
 .product__price.on-sale{

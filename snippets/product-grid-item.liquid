@@ -284,9 +284,13 @@ Arguments
             {%- endif -%}
             {%- if product.price_varies -%}
               {%- assign price = product.price_min | money -%}
-              {{ 'products.general.from_text_html' | t: price: price }}
+              <span class="{% if on_sale %}grid-product__price--sale{% endif %}">
+                {{ 'products.general.from_text_html' | t: price: price }}
+              </span>
             {%- else -%}
-              {{ product.price | money }}
+              <span class="{% if on_sale %}grid-product__price--sale{% endif %}">
+                {{ product.price | money }}
+              </span>
             {%- endif -%}
             {%- if on_sale -%}
               {%- if settings.product_save_amount -%}
