@@ -34,7 +34,11 @@
               <div class="section-header__shadow">
                 {%- render 'breadcrumbs' -%}
                 <h1 class="section-header__title">
-                  {{ collection.title }}
+                  {% if collection.handle == 'all' %}
+                    All products
+                  {% else %}
+                    {{ collection.title }}
+                  {% endif %}
                 </h1>
               </div>
             </header>
@@ -48,7 +52,11 @@
       <header class="section-header section-header--flush">
         {%- render 'breadcrumbs' -%}
         <h1 class="section-header__title">
-          {{ collection.title }}
+          {% if collection.handle == 'all' %}
+            All products
+          {% else %}
+            {{ collection.title }}
+          {% endif %}
         </h1>
       </header>
     </div>
