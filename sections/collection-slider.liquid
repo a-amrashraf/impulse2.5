@@ -2,6 +2,7 @@
 {%- assign padding_top = section.settings.padding_top -%}
 {%- assign padding_bottom = section.settings.padding_bottom -%}
 {%- assign padding_h = section.settings.padding_horizontal -%}
+{%- assign items_alignment = section.settings.items_alignment | default: 'center' -%}
 
 {%- comment -%} Determine border radius based on settings {%- endcomment -%}
 {%- assign border_radius = "0px" -%}
@@ -41,6 +42,7 @@
   --padding-top: {{ padding_top }}px; 
   --padding-bottom: {{ padding_bottom }}px;
   --padding-h: {{ padding_h }}px;
+  --items-justify: {{ items_alignment }};
   --border-radius: {{ border_radius }};
   --image-height-d: {{ image_height_desktop }};
   --image-width-d: {{ image_width_desktop }};
@@ -181,6 +183,16 @@
       "unit": "px",
       "label": "Horizontal Padding",
       "default": 20
+    },
+    {
+      "type": "select",
+      "id": "items_alignment",
+      "label": "Items Alignment",
+      "default": "center",
+      "options": [
+        { "value": "center", "label": "Center" },
+        { "value": "flex-start", "label": "Left (Flex Start)" }
+      ]
     }
   ],
   "blocks": [
@@ -243,7 +255,7 @@
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* IE 10+ */
-  justify-content: center; /* Keep items centered in the container */
+  justify-content: var(--items-justify, center);
   width: 100%;
 }
 
