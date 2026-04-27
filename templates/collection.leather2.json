@@ -150,7 +150,8 @@
         "gap_value": 0,
         "padding_top": 6,
         "padding_bottom": 6,
-        "padding_horizontal": 10
+        "padding_horizontal": 10,
+        "items_alignment": "flex-start"
       }
     },
     "main-collection": {
