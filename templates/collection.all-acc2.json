@@ -45,6 +45,7 @@
         "collection_8YRhHP",
         "collection_ANJ97N"
       ],
+      "disabled": true,
       "custom_css": [
         ".collection-item {flex: 0 0 40%; scroll-snap-align: start; text-align: center;}",
         ".collection-slider {display: flex; gap: 2px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 0px; margin-bottom: -35px; margin-left: 0px; margin-right: 0px;}",
@@ -104,6 +105,52 @@
         "lazyload_images": true
       }
     },
+    "collection_slider_WRAUgN": {
+      "type": "collection-slider",
+      "blocks": {
+        "collection_BpUwfA": {
+          "type": "collection",
+          "settings": {
+            "collection": "canvas-wallets",
+            "custom_image": "shopify://shop_images/IMG_6319.png",
+            "custom_title": "Wallets"
+          }
+        },
+        "collection_QfUcrU": {
+          "type": "collection",
+          "settings": {
+            "collection": "acid-washed-caps",
+            "custom_image": "shopify://shop_images/IMG_6324.png",
+            "custom_title": "Washed caps"
+          }
+        },
+        "collection_EHgX9Q": {
+          "type": "collection",
+          "settings": {
+            "collection": "cardholders",
+            "custom_image": "shopify://shop_images/IMG_6314.png",
+            "custom_title": "Cardholders"
+          }
+        }
+      },
+      "block_order": [
+        "collection_BpUwfA",
+        "collection_QfUcrU",
+        "collection_EHgX9Q"
+      ],
+      "name": "Collection Navigation",
+      "settings": {
+        "title": "",
+        "image_shape": "square",
+        "image_ratio": "square",
+        "image_size_desktop": 70,
+        "image_size_mobile": 60,
+        "gap_value": 10,
+        "padding_top": 8,
+        "padding_bottom": 6,
+        "padding_horizontal": 62
+      }
+    },
     "main-collection": {
       "type": "main-collection",
       "blocks": {
@@ -144,10 +191,10 @@
         "enable_color_swatches": true,
         "enable_swatch_labels": true,
         "enable_sort": true,
-        "padding_top": 20,
-        "padding_bottom": 40,
-        "padding_top_mobile": 16,
-        "padding_bottom_mobile": 20
+        "padding_top": 14,
+        "padding_bottom": 20,
+        "padding_top_mobile": 8,
+        "padding_bottom_mobile": 16
       }
     },
     "countdown": {
@@ -220,6 +267,7 @@
     "collection-header",
     "collection_slider_mobile_LWDNrK",
     "promo-grid",
+    "collection_slider_WRAUgN",
     "main-collection",
     "countdown",
     "blog-posts"

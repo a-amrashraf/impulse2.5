@@ -66,6 +66,7 @@
         "collection_gj8aYt",
         "collection_DnEMFR"
       ],
+      "disabled": true,
       "custom_css": [
         ".collection-item {flex: 0 0 40%; scroll-snap-align: start; text-align: center;}",
         ".collection-slider {display: flex; gap: 2px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 0px; margin-bottom: -35px; margin-left: 0px; margin-right: 0px;}",
@@ -125,6 +126,61 @@
         "lazyload_images": true
       }
     },
+    "collection_slider_VWKnXw": {
+      "type": "collection-slider",
+      "blocks": {
+        "collection_ARb6VU": {
+          "type": "collection",
+          "settings": {
+            "collection": "shopper-bag",
+            "custom_image": "shopify://shop_images/IMG_6320.png",
+            "custom_title": "Shopper"
+          }
+        },
+        "collection_aakMj8": {
+          "type": "collection",
+          "settings": {
+            "collection": "side-bag",
+            "custom_image": "shopify://shop_images/IMG_6323.png",
+            "custom_title": "Side"
+          }
+        },
+        "collection_wcHhjF": {
+          "type": "collection",
+          "settings": {
+            "collection": "helio-stitch",
+            "custom_image": "shopify://shop_images/IMG_6321.png",
+            "custom_title": "Helio & Stitch"
+          }
+        },
+        "collection_heBk4e": {
+          "type": "collection",
+          "settings": {
+            "collection": "hippie-fanny-pack",
+            "custom_image": "shopify://shop_images/IMG_6318.png",
+            "custom_title": "Fanny Pack"
+          }
+        }
+      },
+      "block_order": [
+        "collection_ARb6VU",
+        "collection_aakMj8",
+        "collection_wcHhjF",
+        "collection_heBk4e"
+      ],
+      "name": "Collection Navigation",
+      "settings": {
+        "title": "",
+        "image_shape": "square",
+        "image_ratio": "square",
+        "image_size_desktop": 60,
+        "image_size_mobile": 60,
+        "gap_value": 0,
+        "padding_top": 6,
+        "padding_bottom": 6,
+        "padding_horizontal": 18
+      }
+    },
     "main-collection": {
       "type": "main-collection",
       "blocks": {
@@ -165,10 +221,10 @@
         "enable_color_swatches": true,
         "enable_swatch_labels": true,
         "enable_sort": true,
-        "padding_top": 20,
-        "padding_bottom": 40,
-        "padding_top_mobile": 16,
-        "padding_bottom_mobile": 20
+        "padding_top": 14,
+        "padding_bottom": 20,
+        "padding_top_mobile": 8,
+        "padding_bottom_mobile": 16
       }
     },
     "countdown": {
@@ -241,6 +297,7 @@
     "collection-header",
     "collection_slider_mobile_LWDNrK",
     "promo-grid",
+    "collection_slider_VWKnXw",
     "main-collection",
     "countdown",
     "blog-posts"
