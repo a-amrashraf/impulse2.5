@@ -44,6 +44,14 @@
             "custom_title": "Hobo"
           }
         },
+        "collection_6kzg64": {
+          "type": "collection",
+          "settings": {
+            "collection": "bat-bag",
+            "custom_image": "shopify://shop_images/IMG_6322.png",
+            "custom_title": "Bat"
+          }
+        },
         "collection_kUz6iQ": {
           "type": "collection",
           "settings": {
@@ -116,19 +124,12 @@
             "custom_image": "shopify://shop_images/Token-removebg-preview.png",
             "custom_title": "Token"
           }
-        },
-        "collection_6kzg64": {
-          "type": "collection",
-          "settings": {
-            "collection": "bat-bag",
-            "custom_image": "shopify://shop_images/IMG_6322.png",
-            "custom_title": "Bat"
-          }
         }
       },
       "block_order": [
         "collection_DMVxWD",
         "collection_RUhfck",
+        "collection_6kzg64",
         "collection_kUz6iQ",
         "collection_Hmycmc",
         "collection_ggyCtV",
@@ -137,8 +138,7 @@
         "collection_rFz7LR",
         "collection_UXenQT",
         "collection_bjVALb",
-        "collection_LqqbrY",
-        "collection_6kzg64"
+        "collection_LqqbrY"
       ],
       "name": "Collection Navigation",
       "settings": {
