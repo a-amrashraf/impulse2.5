@@ -25,6 +25,52 @@
         "parallax_direction": "top"
       }
     },
+    "collection_slider_fj6ehn": {
+      "type": "collection-slider",
+      "blocks": {
+        "collection_yMTQiB": {
+          "type": "collection",
+          "settings": {
+            "collection": "urban-wallets",
+            "custom_image": "shopify://shop_images/IMG_6317.png",
+            "custom_title": "Urban"
+          }
+        },
+        "collection_meqRDq": {
+          "type": "collection",
+          "settings": {
+            "collection": "boho-wallets",
+            "custom_image": "shopify://shop_images/IMG_6325.png",
+            "custom_title": "Boho"
+          }
+        },
+        "collection_Tagg9K": {
+          "type": "collection",
+          "settings": {
+            "collection": "canvas-wallets-1",
+            "custom_image": "shopify://shop_images/IMG_6316.png",
+            "custom_title": "Canvas"
+          }
+        }
+      },
+      "block_order": [
+        "collection_yMTQiB",
+        "collection_meqRDq",
+        "collection_Tagg9K"
+      ],
+      "name": "Collection Navigation",
+      "settings": {
+        "title": "",
+        "image_shape": "square",
+        "image_ratio": "square",
+        "image_size_desktop": 70,
+        "image_size_mobile": 60,
+        "gap_value": 0,
+        "padding_top": 6,
+        "padding_bottom": 6,
+        "padding_horizontal": 10
+      }
+    },
     "collection_slider_mobile_LWDNrK": {
       "type": "collection-slider-mobile",
       "blocks": {
@@ -52,6 +98,7 @@
         "collection_ANJ97N",
         "collection_gj8aYt"
       ],
+      "disabled": true,
       "custom_css": [
         ".collection-item {flex: 0 0 40%; scroll-snap-align: start; text-align: center;}",
         ".collection-slider {display: flex; gap: 2px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 0px; margin-bottom: -35px; margin-left: 0px; margin-right: 0px;}",
@@ -151,9 +198,9 @@
         "enable_color_swatches": true,
         "enable_swatch_labels": true,
         "enable_sort": true,
-        "padding_top": 20,
-        "padding_bottom": 40,
-        "padding_top_mobile": 20,
+        "padding_top": 14,
+        "padding_bottom": 20,
+        "padding_top_mobile": 8,
         "padding_bottom_mobile": 20
       }
     },
@@ -225,6 +272,7 @@
   },
   "order": [
     "collection-header",
+    "collection_slider_fj6ehn",
     "collection_slider_mobile_LWDNrK",
     "promo-grid",
     "main-collection",
