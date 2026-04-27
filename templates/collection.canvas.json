@@ -137,20 +137,20 @@
             "custom_title": "Shopper"
           }
         },
-        "collection_wcHhjF": {
-          "type": "collection",
-          "settings": {
-            "collection": "helio-stitch",
-            "custom_image": "shopify://shop_images/IMG_6321.png",
-            "custom_title": "Helio & Stitch"
-          }
-        },
         "collection_aakMj8": {
           "type": "collection",
           "settings": {
             "collection": "side-bag",
             "custom_image": "shopify://shop_images/IMG_6323.png",
             "custom_title": "Side"
+          }
+        },
+        "collection_wcHhjF": {
+          "type": "collection",
+          "settings": {
+            "collection": "helio-stitch",
+            "custom_image": "shopify://shop_images/IMG_6321.png",
+            "custom_title": "Helio & Stitch"
           }
         },
         "collection_heBk4e": {
@@ -164,8 +164,8 @@
       },
       "block_order": [
         "collection_ARb6VU",
-        "collection_wcHhjF",
         "collection_aakMj8",
+        "collection_wcHhjF",
         "collection_heBk4e"
       ],
       "name": "Collection Navigation",
@@ -178,7 +178,7 @@
         "gap_value": 0,
         "padding_top": 6,
         "padding_bottom": 6,
-        "padding_horizontal": 10
+        "padding_horizontal": 18
       }
     },
     "main-collection": {
