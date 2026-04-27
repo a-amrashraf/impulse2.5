@@ -116,6 +116,14 @@
             "custom_image": "shopify://shop_images/Token-removebg-preview.png",
             "custom_title": "Token"
           }
+        },
+        "collection_6kzg64": {
+          "type": "collection",
+          "settings": {
+            "collection": "bat-bag",
+            "custom_image": "shopify://shop_images/IMG_6322.png",
+            "custom_title": "Bat"
+          }
         }
       },
       "block_order": [
@@ -129,7 +137,8 @@
         "collection_rFz7LR",
         "collection_UXenQT",
         "collection_bjVALb",
-        "collection_LqqbrY"
+        "collection_LqqbrY",
+        "collection_6kzg64"
       ],
       "name": "Collection Navigation",
       "settings": {
