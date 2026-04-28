@@ -11,6 +11,7 @@
   "sections": {
     "hero_video_FLc6gA": {
       "type": "hero-video",
+      "disabled": true,
       "name": "t:sections.hero-video.presets.video_hero.name",
       "settings": {
         "title": "",
@@ -29,30 +30,29 @@
     "slideshow_NP9pcB": {
       "type": "slideshow",
       "blocks": {
-        "image_PyANit": {
+        "image_QQxAhH": {
           "type": "image",
           "settings": {
             "top_subheading": "",
-            "title": "NEW ARRIVAL",
+            "title": "",
             "title_size": 80,
-            "subheading": "BAGUETTE BAG",
-            "link": "shopify://products/bundlesuite-byob-bundle",
-            "link_text": "SHOP NOW",
+            "subheading": "",
+            "link": "",
+            "link_text": "",
             "link_2": "",
             "link_text_2": "",
             "color_accent": "rgba(0,0,0,0)",
             "text_align": "vertical-center horizontal-center",
-            "image": "shopify://shop_images/IMG_4602_-_Copy.jpg",
-            "image_mobile": "shopify://shop_images/IMG_4602_-_Copy.jpg",
+            "image": "shopify://shop_images/IMG_6443.png",
+            "image_mobile": "shopify://shop_images/IMG_6443.png",
             "parallax_direction": "top",
             "overlay_opacity": 0
           }
         }
       },
       "block_order": [
-        "image_PyANit"
+        "image_QQxAhH"
       ],
-      "disabled": true,
       "name": "t:sections.slideshow.presets.hero_optional_slideshow.name",
       "settings": {
         "section_height": "650px",
