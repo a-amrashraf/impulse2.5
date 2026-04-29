@@ -44,7 +44,7 @@
             "color_accent": "rgba(0,0,0,0)",
             "text_align": "vertical-center horizontal-center",
             "image": "shopify://shop_images/website_banner_3_by_janarrt.png",
-            "image_mobile": "shopify://shop_images/IMG_6443.png",
+            "image_mobile": "shopify://shop_images/mobile_banner_1_by_janarrt.png",
             "parallax_direction": "top",
             "overlay_opacity": 0
           }
