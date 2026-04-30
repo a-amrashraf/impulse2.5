@@ -37,7 +37,7 @@
   {%- assign image_height_mobile = base_size_m | append: "px" -%}
 {%- endif -%}
 
-<div class="category-bar-wrapper" style="
+<div class="category-bar-wrapper {% if items_alignment == 'flex-start' %}items-align-flex-start{% endif %}" style="
   --gap: {{ gap_value }}px; 
   --padding-top: {{ padding_top }}px; 
   --padding-bottom: {{ padding_bottom }}px;
@@ -257,6 +257,18 @@
   -ms-overflow-style: none; /* IE 10+ */
   justify-content: var(--items-justify, center);
   width: 100%;
+}
+
+/* If user chose flex-start, keep left alignment on small screens
+   but center items on desktop so the block appears centered */
+.items-align-flex-start .category-bar {
+  justify-content: flex-start;
+}
+
+@media screen and (min-width: 769px) {
+  .items-align-flex-start .category-bar {
+    justify-content: center;
+  }
 }
 
 /* Hide scrollbar for Chrome/Safari/Opera */
