@@ -60,6 +60,14 @@
             "custom_title": "BOWLER"
           }
         },
+        "collection_yaVxgT": {
+          "type": "collection",
+          "settings": {
+            "collection": "origin-tote-bag",
+            "custom_image": "shopify://shop_images/unnamed_2_d2c61514-2401-4b20-9f26-3ae6f1ce1a7e.jpg",
+            "custom_title": "ORIGIN TOTE"
+          }
+        },
         "collection_Hmycmc": {
           "type": "collection",
           "settings": {
@@ -131,6 +139,7 @@
         "collection_RUhfck",
         "collection_6kzg64",
         "collection_kUz6iQ",
+        "collection_yaVxgT",
         "collection_Hmycmc",
         "collection_ggyCtV",
         "collection_B4TTNQ",
