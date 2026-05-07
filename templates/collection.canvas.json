@@ -158,7 +158,7 @@
           "settings": {
             "collection": "hippie-fanny-pack",
             "custom_image": "shopify://shop_images/IMG_6318.png",
-            "custom_title": "Fanny Pack"
+            "custom_title": "HIPPIE"
           }
         }
       },
@@ -178,7 +178,8 @@
         "gap_value": 0,
         "padding_top": 6,
         "padding_bottom": 6,
-        "padding_horizontal": 18
+        "padding_horizontal": 18,
+        "items_alignment": "center"
       }
     },
     "main-collection": {
