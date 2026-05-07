@@ -52,6 +52,14 @@
             "custom_title": "Bat"
           }
         },
+        "collection_xjgMGe": {
+          "type": "collection",
+          "settings": {
+            "collection": "muse-bag",
+            "custom_image": "shopify://shop_images/IMG_6951_JPG.jpg",
+            "custom_title": ""
+          }
+        },
         "collection_kUz6iQ": {
           "type": "collection",
           "settings": {
@@ -138,6 +146,7 @@
         "collection_DMVxWD",
         "collection_RUhfck",
         "collection_6kzg64",
+        "collection_xjgMGe",
         "collection_kUz6iQ",
         "collection_yaVxgT",
         "collection_Hmycmc",
