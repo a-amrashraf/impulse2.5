@@ -145,12 +145,19 @@
             "custom_title": "Side"
           }
         },
+        "collection_dPeTtY": {
+          "type": "collection",
+          "settings": {
+            "collection": "",
+            "custom_title": ""
+          }
+        },
         "collection_wcHhjF": {
           "type": "collection",
           "settings": {
             "collection": "helio-stitch",
             "custom_image": "shopify://shop_images/IMG_6321.png",
-            "custom_title": "Helio & Stitch"
+            "custom_title": "STITCH"
           }
         },
         "collection_heBk4e": {
@@ -165,6 +172,7 @@
       "block_order": [
         "collection_ARb6VU",
         "collection_aakMj8",
+        "collection_dPeTtY",
         "collection_wcHhjF",
         "collection_heBk4e"
       ],
