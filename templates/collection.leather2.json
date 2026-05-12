@@ -60,6 +60,14 @@
             "custom_title": "MUSE"
           }
         },
+        "collection_nqH6mE": {
+          "type": "collection",
+          "settings": {
+            "collection": "miss-mess-bag",
+            "custom_image": "shopify://shop_images/IMG_6952_JPG.jpg",
+            "custom_title": "MISS MESS"
+          }
+        },
         "collection_kUz6iQ": {
           "type": "collection",
           "settings": {
@@ -147,6 +155,7 @@
         "collection_RUhfck",
         "collection_6kzg64",
         "collection_xjgMGe",
+        "collection_nqH6mE",
         "collection_kUz6iQ",
         "collection_yaVxgT",
         "collection_Hmycmc",
