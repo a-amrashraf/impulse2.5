@@ -141,7 +141,7 @@
       ],
       "custom_css": [
         "p {font-family: \"poppins\";}",
-        ".product__price.on-sale {color: #C1272D; font-size: calc(var(--typeBaseSize) + 2px); margin-right: 5px;}",
+        ".product__price.on-sale {color: #c1272d; font-size: calc(var(--typeBaseSize) + 2px); margin-right: 5px;}",
         ".product-block--header {margin-bottom: 0px;}",
         ".page-content--product {padding-bottom: 10px;}",
         ".product__price--compare {color: black;}"
@@ -448,10 +448,27 @@
         "full_width": false,
         "space_around": false
       }
+    },
+    "17789337080992ce61": {
+      "type": "apps",
+      "blocks": {
+        "hitsy_progress_bar_hitsy_block_tkXkEb": {
+          "type": "shopify://apps/hitsy-progress-bar/blocks/hitsy-block/0e2f6173-7277-4c61-a4df-2e70602cd303",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "hitsy_progress_bar_hitsy_block_tkXkEb"
+      ],
+      "settings": {
+        "full_width": false,
+        "space_around": true
+      }
     }
   },
   "order": [
     "main",
+    "17789337080992ce61",
     "175959590277a57a8e",
     "product-recommendations",
     "sub",
