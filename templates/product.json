@@ -175,6 +175,7 @@
         "hitsy_progress_bar_hitsy_block_tkXkEb",
         "essential_upsell_app_block_VrdMgn"
       ],
+      "disabled": true,
       "settings": {
         "full_width": false,
         "space_around": true
