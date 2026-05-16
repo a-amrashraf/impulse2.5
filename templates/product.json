@@ -159,27 +159,6 @@
         "product_video_style": "muted"
       }
     },
-    "17789337080992ce61": {
-      "type": "apps",
-      "blocks": {
-        "hitsy_progress_bar_hitsy_block_tkXkEb": {
-          "type": "shopify://apps/hitsy-progress-bar/blocks/hitsy-block/0e2f6173-7277-4c61-a4df-2e70602cd303",
-          "settings": {}
-        },
-        "essential_upsell_app_block_VrdMgn": {
-          "type": "shopify://apps/essential-upsell/blocks/app-block/50627fd9-24fd-4250-8614-accc12826d80",
-          "settings": {}
-        }
-      },
-      "block_order": [
-        "hitsy_progress_bar_hitsy_block_tkXkEb",
-        "essential_upsell_app_block_VrdMgn"
-      ],
-      "settings": {
-        "full_width": false,
-        "space_around": true
-      }
-    },
     "175959590277a57a8e": {
       "type": "apps",
       "disabled": true,
@@ -474,7 +453,6 @@
   },
   "order": [
     "main",
-    "17789337080992ce61",
     "175959590277a57a8e",
     "product-recommendations",
     "sub",
