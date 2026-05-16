@@ -119,6 +119,10 @@
         "judge_me_reviews_review_snippet_widget_KUkUiM": {
           "type": "shopify://apps/judge-me-reviews/blocks/review_snippet_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
           "settings": {}
+        },
+        "essential_upsell_app_block_AgnAMq": {
+          "type": "shopify://apps/essential-upsell/blocks/app-block/50627fd9-24fd-4250-8614-accc12826d80",
+          "settings": {}
         }
       },
       "block_order": [
@@ -137,7 +141,8 @@
         "tab_JTXMXc",
         "tab_rYUaej",
         "share",
-        "judge_me_reviews_review_snippet_widget_KUkUiM"
+        "judge_me_reviews_review_snippet_widget_KUkUiM",
+        "essential_upsell_app_block_AgnAMq"
       ],
       "custom_css": [
         "p {font-family: \"poppins\";}",
