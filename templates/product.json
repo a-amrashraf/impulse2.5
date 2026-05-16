@@ -175,7 +175,6 @@
         "hitsy_progress_bar_hitsy_block_tkXkEb",
         "essential_upsell_app_block_VrdMgn"
       ],
-      "disabled": true,
       "settings": {
         "full_width": false,
         "space_around": true
@@ -183,6 +182,7 @@
     },
     "175959590277a57a8e": {
       "type": "apps",
+      "disabled": true,
       "settings": {
         "full_width": false,
         "space_around": false
