@@ -53,88 +53,12 @@
       "block_order": [
         "image_QQxAhH"
       ],
+      "disabled": true,
       "name": "t:sections.slideshow.presets.hero_optional_slideshow.name",
       "settings": {
         "section_height": "natural",
         "mobile_height": "auto",
         "parallax": false,
-        "style": "bars",
-        "autoplay": true,
-        "autoplay_speed": 5,
-        "lazyload_images": true
-      }
-    },
-    "slideshow": {
-      "type": "slideshow",
-      "blocks": {
-        "image-1": {
-          "type": "image",
-          "settings": {
-            "top_subheading": "",
-            "title": "Fall\nessentials",
-            "title_size": 40,
-            "subheading": "Celebrate joyful moments with the House's emblematic pieces.",
-            "link": "",
-            "link_text": "",
-            "link_2": "",
-            "link_text_2": "",
-            "color_accent": "#000000",
-            "text_align": "vertical-bottom horizontal-left",
-            "image": "shopify://shop_images/IMG_9254_3823e157-b8a2-4880-8ffb-ee7daf75d0b5.jpg",
-            "parallax_direction": "top",
-            "overlay_opacity": 0
-          }
-        },
-        "image-2": {
-          "type": "image",
-          "settings": {
-            "top_subheading": "",
-            "title": "Inspired\nby Nature",
-            "title_size": 40,
-            "subheading": "",
-            "link": "",
-            "link_text": "",
-            "link_2": "",
-            "link_text_2": "",
-            "color_accent": "#000000",
-            "text_align": "vertical-bottom horizontal-left",
-            "image": "shopify://shop_images/IMG_0450.jpg",
-            "parallax_direction": "top",
-            "overlay_opacity": 0
-          }
-        },
-        "image-3": {
-          "type": "image",
-          "disabled": true,
-          "settings": {
-            "top_subheading": "",
-            "title": "Luxette's STYLE",
-            "title_size": 63,
-            "subheading": "Fresh looks for sunny days.",
-            "link": "",
-            "link_text": "Optional button",
-            "link_2": "",
-            "link_text_2": "Shop all",
-            "color_accent": "#8b4e40",
-            "text_align": "vertical-center horizontal-center",
-            "parallax_direction": "top",
-            "overlay_opacity": 0
-          }
-        }
-      },
-      "block_order": [
-        "image-1",
-        "image-2",
-        "image-3"
-      ],
-      "disabled": true,
-      "custom_css": [
-        ".section--divider {padding-bottom: 0px;}"
-      ],
-      "settings": {
-        "section_height": "100vh",
-        "mobile_height": "100vh",
-        "parallax": true,
         "style": "bars",
         "autoplay": true,
         "autoplay_speed": 5,
@@ -219,16 +143,16 @@
           "type": "image",
           "settings": {
             "top_subheading": "",
-            "title": "JACKETS",
+            "title": "NEW ARRIVAL",
             "title_size": 64,
             "subheading": "",
-            "link": "shopify://collections/jackets",
+            "link": "shopify://collections/miss-mess-bag",
             "link_text": "",
             "link_2": "",
             "link_text_2": "",
             "color_accent": "rgba(0,0,0,0)",
             "text_align": "vertical-bottom horizontal-center",
-            "image": "shopify://shop_images/IMG_1174-3.jpg",
+            "image": "shopify://shop_images/IMG_6687_6835f342-68e7-4033-937c-247185c64c25.jpg",
             "parallax_direction": "top",
             "overlay_opacity": 0
           }
@@ -689,7 +613,6 @@
   "order": [
     "hero_video_FLc6gA",
     "slideshow_NP9pcB",
-    "slideshow",
     "featured_collections_VY3yqD",
     "featured-collection",
     "slideshow_9N76Eg",
