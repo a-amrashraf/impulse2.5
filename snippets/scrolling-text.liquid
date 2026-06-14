@@ -7,6 +7,10 @@
     font-size: {{ section.settings.text_size }}px;
   }
 
+  .scrolling-text--{{ section.id }} .scrolling-text__separator {
+    display: inline-block;
+  }
+
   {% if section.settings.color_scheme == 'button' %}
     .scrolling-text--{{ section.id }} {
       background: {{ settings.color_button }};
@@ -14,6 +18,26 @@
     }
   {% endif %}
 {% endstyle %}
+
+{% assign scrolling_text_items = '' %}
+
+{% if section.blocks.size > 0 %}
+  {% for block in section.blocks %}
+    {% assign block_text = block.settings.text | strip %}
+    {% if block_text != blank %}
+      {% if scrolling_text_items != blank %}
+        {% assign scrolling_text_items = scrolling_text_items | append: '|||' %}
+      {% endif %}
+      {% assign scrolling_text_items = scrolling_text_items | append: block_text %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
+{% if scrolling_text_items == blank %}
+  {% assign scrolling_text_items = section.settings.text %}
+{% endif %}
+
+{% assign scrolling_text_items = scrolling_text_items | split: '|||' %}
 
 {% if section.settings.link != blank %}
   <a href="{{ section.settings.link }}">
@@ -26,7 +50,14 @@
     style="gap: {% if section.settings.text_spacing %}40px{% else %}10px{% endif %};"
   >
     {% for i in (1..35) %}
-      <span>{{ section.settings.text }}</span>
+      {% for text_item in scrolling_text_items %}
+        <span>{{ text_item }}</span>
+        {% if section.settings.separator != blank %}
+          {% unless forloop.last and forloop.parentloop.last %}
+            <span class="scrolling-text__separator">{{ section.settings.separator }}</span>
+          {% endunless %}
+        {% endif %}
+      {% endfor %}
     {% endfor %}
   </div>
 </div>

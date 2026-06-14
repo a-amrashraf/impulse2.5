@@ -10,12 +10,19 @@
 {
   "name": "t:sections.marquee.name",
   "class": "index-section--flush",
+  "max_blocks": 10,
   "settings": [
     {
       "type": "text",
       "id": "text",
       "label": "t:sections.marquee.settings.text.label",
       "default": "🚨 BUY 3 ITEMS — SAVE 20% + FREE SHIPPING 🚨"
+    },
+    {
+      "type": "text",
+      "id": "separator",
+      "label": "Separator",
+      "default": "•"
     },
     {
       "type": "url",
@@ -65,9 +72,28 @@
       "unit": "s"
     }
   ],
+  "blocks": [
+    {
+      "type": "text",
+      "name": "Text",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "🚨 BUY 3 ITEMS — SAVE 20% + FREE SHIPPING 🚨"
+        }
+      ]
+    }
+  ],
   "presets": [
     {
-      "name": "t:sections.marquee.presets.scrolling_text.name"
+      "name": "t:sections.marquee.presets.scrolling_text.name",
+      "blocks": [
+        {
+          "type": "text"
+        }
+      ]
     }
   ],
   "disabled_on": {
