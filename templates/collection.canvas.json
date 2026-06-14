@@ -145,12 +145,19 @@
             "custom_title": "Side"
           }
         },
+        "collection_dPeTtY": {
+          "type": "collection",
+          "settings": {
+            "collection": "",
+            "custom_title": ""
+          }
+        },
         "collection_wcHhjF": {
           "type": "collection",
           "settings": {
             "collection": "helio-stitch",
             "custom_image": "shopify://shop_images/IMG_6321.png",
-            "custom_title": "Helio & Stitch"
+            "custom_title": "STITCH"
           }
         },
         "collection_heBk4e": {
@@ -158,13 +165,14 @@
           "settings": {
             "collection": "hippie-fanny-pack",
             "custom_image": "shopify://shop_images/IMG_6318.png",
-            "custom_title": "Fanny Pack"
+            "custom_title": "HIPPIE"
           }
         }
       },
       "block_order": [
         "collection_ARb6VU",
         "collection_aakMj8",
+        "collection_dPeTtY",
         "collection_wcHhjF",
         "collection_heBk4e"
       ],
@@ -178,7 +186,8 @@
         "gap_value": 0,
         "padding_top": 6,
         "padding_bottom": 6,
-        "padding_horizontal": 18
+        "padding_horizontal": 18,
+        "items_alignment": "center"
       }
     },
     "main-collection": {

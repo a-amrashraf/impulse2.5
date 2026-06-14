@@ -68,7 +68,8 @@
         "gap_value": 10,
         "padding_top": 6,
         "padding_bottom": 6,
-        "padding_horizontal": 64
+        "padding_horizontal": 0,
+        "items_alignment": "center"
       }
     },
     "collection_slider_mobile_LWDNrK": {

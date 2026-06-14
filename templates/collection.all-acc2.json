@@ -148,7 +148,8 @@
         "gap_value": 10,
         "padding_top": 8,
         "padding_bottom": 6,
-        "padding_horizontal": 62
+        "padding_horizontal": 0,
+        "items_alignment": "center"
       }
     },
     "main-collection": {
