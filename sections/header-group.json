@@ -13,6 +13,24 @@
   "sections": {
     "scrolling_text_BmWKG3": {
       "type": "scrolling-text",
+      "blocks": {
+        "text_9dPppf": {
+          "type": "text",
+          "settings": {
+            "text": "LIMITED TIME FREE SHIPPING! 🚚"
+          }
+        },
+        "text_6JGHjb": {
+          "type": "text",
+          "settings": {
+            "text": "Extra 5% Off When Paying With Card"
+          }
+        }
+      },
+      "block_order": [
+        "text_9dPppf",
+        "text_6JGHjb"
+      ],
       "custom_css": [
         ".scrolling-text--sections--19811384131815__scrolling_text_BmWKG3 span {font-size: 8px;}",
         ".scrolling-text {background-color: black; color: white;}",
@@ -21,11 +39,12 @@
       "name": "t:sections.marquee.presets.scrolling_text.name",
       "settings": {
         "text": "LIMITED TIME FREE SHIPPING! 🚚",
+        "separator": "•",
         "link": "",
         "text_size": 10,
         "text_spacing": true,
         "direction": "left",
-        "speed": 200
+        "speed": 300
       }
     },
     "announcement": {
@@ -64,6 +83,7 @@
       "name": "t:sections.marquee.presets.scrolling_text.name",
       "settings": {
         "text": "⚡ ON SALE ITEMS — CLICK HERE!",
+        "separator": "•",
         "link": "shopify://collections/on-sale",
         "text_size": 20,
         "text_spacing": false,
