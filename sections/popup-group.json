@@ -27,7 +27,7 @@
       ],
       "custom_css": [],
       "settings": {
-        "disable_for_account_holders": true,
+        "disable_for_account_holders": false,
         "popup_seconds": 5,
         "popup_days": 1,
         "popup_title": "Extra 5% Off When Paying With Card",
