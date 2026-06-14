@@ -6,6 +6,18 @@
   {% endif %}
 {% endfor %}
 
+{% style %}
+  @media only screen and (max-width: 768px) {
+    #NewsletterPopup-{{ section.id }} .modal__inner {
+      align-items: flex-start;
+    }
+
+    #NewsletterPopup-{{ section.id }} .modal__centered {
+      margin-top: {{ section.settings.mobile_vertical_offset }}vh;
+    }
+  }
+{% endstyle %}
+
 <div
   id="NewsletterPopup-{{ section.id }}"
   class="modal modal--square modal--mobile-friendly"
@@ -117,6 +129,17 @@
         "max": 30,
         "step": 1,
         "unit": "day"
+      },
+      {
+        "type": "range",
+        "id": "mobile_vertical_offset",
+        "label": "Mobile popup position",
+        "info": "Higher value moves the popup lower on mobile.",
+        "default": 6,
+        "min": 0,
+        "max": 30,
+        "step": 1,
+        "unit": "vh"
       },
       {
         "type": "header",
