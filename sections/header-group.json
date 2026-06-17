@@ -22,6 +22,7 @@
         },
         "text_6JGHjb": {
           "type": "text",
+          "disabled": true,
           "settings": {
             "text": "Extra 5% Off When Paying With Card"
           }
