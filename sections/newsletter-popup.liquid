@@ -22,10 +22,10 @@
 {% assign popup_max_height = section.settings.popup_max_height | default: 85 %}
 {% assign popup_content_padding = section.settings.popup_content_padding | default: 24 %}
 {% assign popup_content_padding_mobile = section.settings.popup_content_padding_mobile | default: 18 %}
-{% assign popup_padding_top = section.settings.popup_padding_top | default: 14 %}
-{% assign popup_padding_bottom = section.settings.popup_padding_bottom | default: 14 %}
-{% assign popup_padding_top_mobile = section.settings.popup_padding_top_mobile | default: 12 %}
-{% assign popup_padding_bottom_mobile = section.settings.popup_padding_bottom_mobile | default: 12 %}
+{% assign popup_padding_top = section.settings.popup_padding_top | default: 0 %}
+{% assign popup_padding_bottom = section.settings.popup_padding_bottom | default: 0 %}
+{% assign popup_padding_top_mobile = section.settings.popup_padding_top_mobile | default: 0 %}
+{% assign popup_padding_bottom_mobile = section.settings.popup_padding_bottom_mobile | default: 0 %}
 {% assign mobile_vertical_offset = section.settings.mobile_vertical_offset | default: 0 %}
 {% assign popup_title_size = section.settings.popup_title_size | default: 34 %}
 {% assign popup_text_size = section.settings.popup_text_size | default: 16 %}
@@ -159,7 +159,7 @@
     #NewsletterPopup-{{ section.id }} .modal__inner {
       align-items: flex-start;
       width: calc(100% - 20px);
-      margin: 10px;
+      margin: 0;
     }
 
     #NewsletterPopup-{{ section.id }} .modal__centered {
