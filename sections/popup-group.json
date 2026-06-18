@@ -25,6 +25,7 @@
       "block_order": [
         "reminder-block"
       ],
+      "disabled": true,
       "custom_css": [],
       "settings": {
         "disable_for_account_holders": false,
@@ -36,7 +37,7 @@
         "image_position": "left",
         "show_social_icons": false,
         "enable_newsletter": false,
-        "button_label": "shop now",
+        "button_label": "",
         "button_link": "shopify://collections/all"
       }
     },
