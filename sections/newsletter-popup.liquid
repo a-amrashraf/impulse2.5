@@ -158,23 +158,12 @@
   data-delay-days="{{ section.settings.popup_days }}"
   data-has-reminder="{{ has_reminder }}"
   data-delay-seconds="{{ section.settings.popup_seconds }}"
-  {% if section.settings.popup_image != blank %}data-has-image{% endif %}
   data-test-mode="{{ request.design_mode }}">
   <div class="modal__inner">
     <div class="modal__centered medium-up--text-center">
-      <div class="modal__centered-content {% if section.settings.popup_image != blank %}newsletter--has-image{% endif %}">
+      <div class="modal__centered-content">
 
-        <div class="newsletter newsletter-popup {% if section.settings.image_position == 'right' %}newsletter-popup--image-reversed{% endif %}">
-          {% if section.settings.popup_image != blank %}
-            <div class="newsletter-popup__image-wrapper">
-              {%- render 'image-element',
-                img: section.settings.popup_image,
-                img_width: 1000,
-                sizeVariable: '400px',
-                classes: 'newsletter-popup__image',
-              -%}
-            </div>
-          {% endif %}
+        <div class="newsletter newsletter-popup">
 
           <div class="newsletter-popup__content">
             {% if top_image_count > 0 %}
@@ -423,28 +412,6 @@
         "id": "popup_text",
         "label": "t:sections.newsletter-popup.settings.popup_text.label",
         "default": "<p>Entice customers to sign up for your mailing list with discounts or exclusive offers. Include an image for extra impact.</p>"
-      },
-      {
-        "type": "image_picker",
-        "id": "popup_image",
-        "label": "t:sections.newsletter-popup.settings.popup_image.label",
-        "info": "t:sections.newsletter-popup.settings.popup_image.info"
-      },
-      {
-        "type": "select",
-        "id": "image_position",
-        "label": "t:sections.newsletter-popup.settings.image_position.label",
-        "default": "left",
-        "options": [
-          {
-            "value": "left",
-            "label": "t:sections.newsletter-popup.settings.image_position.options.left.label"
-          },
-          {
-            "value": "right",
-            "label": "t:sections.newsletter-popup.settings.image_position.options.right.label"
-          }
-        ]
       },
       {
         "type": "checkbox",
