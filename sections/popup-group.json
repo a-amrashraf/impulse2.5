@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "type": "custom.popups",
   "name": "t:sections.popup-group.name",
@@ -20,7 +29,7 @@
       "custom_css": [],
       "settings": {
         "disable_for_account_holders": false,
-        "popup_seconds": 5,
+        "popup_seconds": 2,
         "popup_days": 1,
 <<<<<<< HEAD
         "mobile_vertical_offset": 6,
@@ -29,10 +38,10 @@
 >>>>>>> parent of 3609d29 (Revert "Merge branch 'main' of https://github.com/a-amrashraf/impulse2.5")
         "popup_title": "Extra 5% Off When Paying With Card",
         "popup_text": "",
-          "mobile_vertical_offset": 0,
+        "image_position": "left",
         "show_social_icons": false,
         "enable_newsletter": false,
-        "button_label": "shop now",
+        "button_label": "",
         "button_link": "shopify://collections/all"
       }
     },
