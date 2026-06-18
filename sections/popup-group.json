@@ -39,6 +39,7 @@
         "popup_padding_bottom": 0,
         "popup_padding_top_mobile": 0,
         "popup_padding_bottom_mobile": 0,
+        "popup_logo": "shopify://shop_images/HELIO_NAME_-_REBRAND_png_d5ae9ed8-87ef-419f-8d4b-15aba4875e6e.png",
         "popup_logo_width": 120,
         "popup_font_family": "body",
         "popup_text_alignment": "center",
