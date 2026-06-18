@@ -39,8 +39,8 @@
       ],
       "name": "t:sections.marquee.presets.scrolling_text.name",
       "settings": {
-        "text": "LIMITED TIME FREE SHIPPING! 🚚",
-        "separator": "•",
+        "text": "LIMITED TIME FREE SHIPPING!",
+        "separator": "",
         "link": "",
         "text_size": 10,
         "text_spacing": true,
