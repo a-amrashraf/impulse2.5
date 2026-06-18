@@ -7,35 +7,13 @@
 {% endfor %}
 
 {% style %}
-  #NewsletterPopup-{{ section.id }} {
-    z-index: 2147483647;
-  }
-
-  #NewsletterPopup-{{ section.id }}::before {
-    z-index: 2147483646;
-  }
-
-  #NewsletterPopup-{{ section.id }} .modal__inner {
-    position: relative;
-    z-index: 2147483647;
-  }
-
   @media only screen and (max-width: 768px) {
-    #NewsletterPopup-{{ section.id }} {
-      top: 0 !important;
-      bottom: 0 !important;
-    }
-
     #NewsletterPopup-{{ section.id }} .modal__inner {
       align-items: flex-start;
     }
 
     #NewsletterPopup-{{ section.id }} .modal__centered {
       margin-top: {{ section.settings.mobile_vertical_offset }}vh;
-    }
-
-    #NewsletterPopup-{{ section.id }} .modal__close {
-      z-index: 2147483647;
     }
   }
 {% endstyle %}
@@ -157,7 +135,7 @@
         "id": "mobile_vertical_offset",
         "label": "Mobile popup position",
         "info": "Higher value moves the popup lower on mobile.",
-        "default": 0,
+        "default": 6,
         "min": 0,
         "max": 30,
         "step": 1,
