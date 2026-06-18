@@ -6,6 +6,25 @@
   {% endif %}
 {% endfor %}
 
+{% assign top_image_count = 0 %}
+{% for block in section.blocks %}
+  {% if block.type == 'top_image' and block.settings.image != blank %}
+    {% assign top_image_count = top_image_count | plus: 1 %}
+  {% endif %}
+{% endfor %}
+
+{% assign popup_font_family = 'var(--typeBasePrimary), var(--typeBaseFallback)' %}
+{% if section.settings.popup_font_family == 'heading' %}
+  {% assign popup_font_family = 'var(--typeHeaderPrimary), var(--typeHeaderFallback)' %}
+{% endif %}
+
+{% assign top_image_alignment = 'flex-start' %}
+{% if section.settings.popup_text_alignment == 'center' %}
+  {% assign top_image_alignment = 'center' %}
+{% elsif section.settings.popup_text_alignment == 'right' %}
+  {% assign top_image_alignment = 'flex-end' %}
+{% endif %}
+
 {% style %}
   #NewsletterPopup-{{ section.id }} {
     z-index: 2147483647;
@@ -18,6 +37,48 @@
   #NewsletterPopup-{{ section.id }} .modal__inner {
     position: relative;
     z-index: 2147483647;
+    width: calc(100% - 30px);
+    max-width: {{ section.settings.popup_max_width }}px;
+  }
+
+  #NewsletterPopup-{{ section.id }} .modal__centered-content {
+    max-height: {{ section.settings.popup_max_height }}vh;
+  }
+
+  #NewsletterPopup-{{ section.id }} .newsletter-popup__content {
+    padding: {{ section.settings.popup_content_padding }}px;
+    text-align: {{ section.settings.popup_text_alignment }};
+  }
+
+  #NewsletterPopup-{{ section.id }} .newsletter-popup__content,
+  #NewsletterPopup-{{ section.id }} .newsletter-popup__content .rte,
+  #NewsletterPopup-{{ section.id }} .newsletter-popup__content .rte p {
+    color: {{ section.settings.popup_text_color }};
+    font-family: {{ popup_font_family }};
+    font-size: {{ section.settings.popup_text_size }}px;
+  }
+
+  #NewsletterPopup-{{ section.id }} .newsletter-popup__content h3 {
+    color: {{ section.settings.popup_title_color }};
+    font-family: {{ popup_font_family }};
+    font-size: {{ section.settings.popup_title_size }}px;
+  }
+
+  #NewsletterPopup-{{ section.id }} .newsletter-popup__top-images {
+    align-items: {{ top_image_alignment }};
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 15px;
+  }
+
+  #NewsletterPopup-{{ section.id }} .newsletter-popup__top-image {
+    width: 100%;
+  }
+
+  #NewsletterPopup-{{ section.id }} .newsletter-popup__top-image img {
+    display: block;
+    height: auto;
   }
 
   @media only screen and (max-width: 768px) {
@@ -28,10 +89,15 @@
 
     #NewsletterPopup-{{ section.id }} .modal__inner {
       align-items: flex-start;
+      width: calc(100% - 20px);
     }
 
     #NewsletterPopup-{{ section.id }} .modal__centered {
       margin-top: {{ section.settings.mobile_vertical_offset }}vh;
+    }
+
+    #NewsletterPopup-{{ section.id }} .newsletter-popup__content {
+      padding: {{ section.settings.popup_content_padding_mobile }}px;
     }
 
     #NewsletterPopup-{{ section.id }} .modal__close {
@@ -67,6 +133,25 @@
           {% endif %}
 
           <div class="newsletter-popup__content">
+            {% if top_image_count > 0 %}
+              <div class="newsletter-popup__top-images">
+                {% for block in section.blocks %}
+                  {% if block.type == 'top_image' and block.settings.image != blank %}
+                    <div class="newsletter-popup__top-image" style="max-width: {{ block.settings.max_width }}px;" {{ block.shopify_attributes }}>
+                      {% if block.settings.link != blank %}<a href="{{ block.settings.link }}">{% endif %}
+                      {%- render 'image-element',
+                        img: block.settings.image,
+                        img_width: 1600,
+                        sizeVariable: block.settings.max_width | append: 'px',
+                        classes: 'newsletter-popup__top-image-el'
+                      -%}
+                      {% if block.settings.link != blank %}</a>{% endif %}
+                    </div>
+                  {% endif %}
+                {% endfor %}
+              </div>
+            {% endif %}
+
             {%- if section.settings.popup_title != blank -%}
               <h3>{{ section.settings.popup_title }}</h3>
             {%- endif -%}
@@ -120,7 +205,7 @@
 {% schema %}
   {
     "name": "t:sections.newsletter-popup.name",
-    "max_blocks": 1,
+    "max_blocks": 8,
     "class": "index-section--hidden",
     "settings": [
       {
@@ -162,6 +247,122 @@
         "max": 30,
         "step": 1,
         "unit": "vh"
+      },
+      {
+        "type": "header",
+        "content": "Popup layout"
+      },
+      {
+        "type": "range",
+        "id": "popup_max_width",
+        "label": "Popup width",
+        "default": 620,
+        "min": 320,
+        "max": 1200,
+        "step": 20,
+        "unit": "px"
+      },
+      {
+        "type": "range",
+        "id": "popup_max_height",
+        "label": "Popup max height",
+        "default": 85,
+        "min": 40,
+        "max": 95,
+        "step": 1,
+        "unit": "vh"
+      },
+      {
+        "type": "range",
+        "id": "popup_content_padding",
+        "label": "Desktop content padding",
+        "default": 30,
+        "min": 0,
+        "max": 80,
+        "step": 2,
+        "unit": "px"
+      },
+      {
+        "type": "range",
+        "id": "popup_content_padding_mobile",
+        "label": "Mobile content padding",
+        "default": 20,
+        "min": 0,
+        "max": 60,
+        "step": 2,
+        "unit": "px"
+      },
+      {
+        "type": "header",
+        "content": "Text style"
+      },
+      {
+        "type": "select",
+        "id": "popup_font_family",
+        "label": "Font",
+        "default": "body",
+        "options": [
+          {
+            "value": "body",
+            "label": "Body font"
+          },
+          {
+            "value": "heading",
+            "label": "Heading font"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "popup_text_alignment",
+        "label": "Text position",
+        "default": "center",
+        "options": [
+          {
+            "value": "left",
+            "label": "Left"
+          },
+          {
+            "value": "center",
+            "label": "Center"
+          },
+          {
+            "value": "right",
+            "label": "Right"
+          }
+        ]
+      },
+      {
+        "type": "range",
+        "id": "popup_title_size",
+        "label": "Heading size",
+        "default": 34,
+        "min": 16,
+        "max": 72,
+        "step": 1,
+        "unit": "px"
+      },
+      {
+        "type": "color",
+        "id": "popup_title_color",
+        "label": "Heading color",
+        "default": "#111111"
+      },
+      {
+        "type": "range",
+        "id": "popup_text_size",
+        "label": "Text size",
+        "default": 16,
+        "min": 12,
+        "max": 36,
+        "step": 1,
+        "unit": "px"
+      },
+      {
+        "type": "color",
+        "id": "popup_text_color",
+        "label": "Text color",
+        "default": "#111111"
       },
       {
         "type": "header",
@@ -249,6 +450,32 @@
             "label": "t:sections.newsletter-popup.blocks.header.settings.text.label",
             "default": "Get 10% off",
             "info": "t:sections.newsletter-popup.blocks.header.settings.text.info"
+          }
+        ]
+      },
+      {
+        "type": "top_image",
+        "name": "Top image",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          },
+          {
+            "type": "url",
+            "id": "link",
+            "label": "Image link"
+          },
+          {
+            "type": "range",
+            "id": "max_width",
+            "label": "Image width",
+            "default": 260,
+            "min": 80,
+            "max": 900,
+            "step": 10,
+            "unit": "px"
           }
         ]
       }
