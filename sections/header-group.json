@@ -45,7 +45,7 @@
         "text_size": 10,
         "text_spacing": true,
         "direction": "left",
-        "speed": 300
+        "speed": 150
       }
     },
     "announcement": {
