@@ -151,11 +151,6 @@
         "type": "shopify://apps/linkify-product-colors/blocks/app-embed-block/1fdc741b-f4ed-4b8c-aee7-aa5e4ad76aa8",
         "disabled": false,
         "settings": {}
-      },
-      "8775946499749290944": {
-        "type": "shopify://apps/gsc-popup-email-pop-up/blocks/popup/019e6f16-da4b-72d6-b441-33cdc9e130bf",
-        "disabled": false,
-        "settings": {}
       }
     }
   },
