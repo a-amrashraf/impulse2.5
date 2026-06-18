@@ -5311,6 +5311,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
       this.cookieName = 'newsletter-' + sectionId;
       this.cookie = Cookies.get(this.cookieName);
+      this.sessionKey = 'newsletter-session-' + sectionId;
   
       if (!container) {
         return;
@@ -5356,8 +5357,12 @@ document.addEventListener('DOMContentLoaded', function() {
   
       document.addEventListener('modalClose.' + container.id, this.closePopup.bind(this));
   
-      if (!this.cookie) {
-        this.initPopupDelay();
+      var params = new URLSearchParams(window.location.search);
+      var forcePopup = params.get('show_popup') === '1';
+      var popupShownThisVisit = (sessionStorage.getItem(this.sessionKey) === 'true');
+
+      if (forcePopup || !popupShownThisVisit) {
+        this.initPopupDelay(forcePopup ? 0 : undefined);
       }
   
       // Open modal if triggered by newsletter reminder
@@ -5367,21 +5372,25 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   
     NewsletterPopup.prototype = Object.assign({}, NewsletterPopup.prototype, {
-      initPopupDelay: function () {
+      initPopupDelay: function (overrideDelay) {
         if (this.data.testMode === 'true') {
           return;
         }
+
+        var delay = (typeof overrideDelay === 'number') ? overrideDelay : this.data.secondsBeforeShow;
+
         setTimeout(function () {
-          const newsletterAppeared = (sessionStorage.getItem('newsletterAppeared') === 'true');
+          const newsletterAppeared = (sessionStorage.getItem(this.sessionKey) === 'true');
+
+          // Only open once per browser visit/session
           if (newsletterAppeared) {
-            const openReminder = new CustomEvent('newsletter:openReminder', { bubbles: true });
-            this.container.dispatchEvent(openReminder);
-          } else {
-            this.modal.open();
-            sessionStorage.setItem('newsletterAppeared', true);
+            return;
           }
+
+          this.modal.open();
+          sessionStorage.setItem(this.sessionKey, true);
   
-        }.bind(this), this.data.secondsBeforeShow * 1000);
+        }.bind(this), delay * 1000);
       },
   
       closePopup: function (success) {

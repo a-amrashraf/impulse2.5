@@ -22,7 +22,11 @@
         "disable_for_account_holders": false,
         "popup_seconds": 5,
         "popup_days": 1,
+<<<<<<< HEAD
         "mobile_vertical_offset": 6,
+=======
+        "mobile_vertical_offset": 0,
+>>>>>>> parent of 3609d29 (Revert "Merge branch 'main' of https://github.com/a-amrashraf/impulse2.5")
         "popup_title": "Extra 5% Off When Paying With Card",
         "popup_text": "",
           "mobile_vertical_offset": 0,
