@@ -56,19 +56,25 @@
     max-height: {{ popup_max_height }}vh;
     overflow: auto;
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   #NewsletterPopup-{{ section.id }} .newsletter-popup__content {
     padding: {{ popup_content_padding }}px;
     padding-top: {{ popup_content_padding | plus: 18 }}px;
     text-align: {{ popup_text_alignment }};
-    width: 100%;
+    width: min(100%, 640px);
     margin: 0 auto;
   }
 
   #NewsletterPopup-{{ section.id }} .newsletter-popup {
+    display: flex;
+    align-items: center;
     width: 100%;
     justify-content: center;
+    min-height: 100%;
   }
 
   #NewsletterPopup-{{ section.id }} .newsletter-popup__content,
