@@ -69,6 +69,14 @@
     margin: 0 auto;
   }
 
+  #NewsletterPopup-{{ section.id }} .newsletter-popup__content,
+  #NewsletterPopup-{{ section.id }} .newsletter-popup__content h3,
+  #NewsletterPopup-{{ section.id }} .newsletter-popup__content .rte,
+  #NewsletterPopup-{{ section.id }} .newsletter-popup__content .rte p,
+  #NewsletterPopup-{{ section.id }} .newsletter-popup__content .rte li {
+    text-align: {{ popup_text_alignment }} !important;
+  }
+
   #NewsletterPopup-{{ section.id }} .newsletter-popup {
     display: flex;
     align-items: center;
