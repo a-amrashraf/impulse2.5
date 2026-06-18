@@ -11,6 +11,7 @@
   "sections": {
     "hero_video_FLc6gA": {
       "type": "hero-video",
+      "disabled": true,
       "name": "t:sections.hero-video.presets.video_hero.name",
       "settings": {
         "title": "",
@@ -52,7 +53,6 @@
       "block_order": [
         "image_QQxAhH"
       ],
-      "disabled": true,
       "name": "t:sections.slideshow.presets.hero_optional_slideshow.name",
       "settings": {
         "section_height": "natural",
@@ -601,6 +601,7 @@
       "name": "t:sections.marquee.presets.scrolling_text.name",
       "settings": {
         "text": "⚡ ON SALE ITEMS — CLICK HERE!",
+        "separator": "•",
         "link": "shopify://collections/on-sale",
         "text_size": 20,
         "text_spacing": false,
