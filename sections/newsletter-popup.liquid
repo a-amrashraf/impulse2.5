@@ -20,14 +20,19 @@
 
 {% assign popup_max_width = section.settings.popup_max_width | default: 620 %}
 {% assign popup_max_height = section.settings.popup_max_height | default: 85 %}
-{% assign popup_content_padding = section.settings.popup_content_padding | default: 30 %}
-{% assign popup_content_padding_mobile = section.settings.popup_content_padding_mobile | default: 20 %}
+{% assign popup_content_padding = section.settings.popup_content_padding | default: 24 %}
+{% assign popup_content_padding_mobile = section.settings.popup_content_padding_mobile | default: 18 %}
+{% assign popup_padding_top = section.settings.popup_padding_top | default: 14 %}
+{% assign popup_padding_bottom = section.settings.popup_padding_bottom | default: 14 %}
+{% assign popup_padding_top_mobile = section.settings.popup_padding_top_mobile | default: 12 %}
+{% assign popup_padding_bottom_mobile = section.settings.popup_padding_bottom_mobile | default: 12 %}
 {% assign mobile_vertical_offset = section.settings.mobile_vertical_offset | default: 0 %}
 {% assign popup_title_size = section.settings.popup_title_size | default: 34 %}
 {% assign popup_text_size = section.settings.popup_text_size | default: 16 %}
 {% assign popup_title_color = section.settings.popup_title_color | default: '#111111' %}
 {% assign popup_text_color = section.settings.popup_text_color | default: '#111111' %}
 {% assign popup_text_alignment = section.settings.popup_text_alignment | default: 'center' %}
+{% assign popup_logo_width = section.settings.popup_logo_width | default: 120 %}
 
 {% assign top_image_alignment = 'flex-start' %}
 {% if popup_text_alignment == 'center' %}
@@ -62,8 +67,10 @@
   }
 
   #NewsletterPopup-{{ section.id }} .newsletter-popup__content {
-    padding: {{ popup_content_padding }}px;
-    padding-top: {{ popup_content_padding | plus: 18 }}px;
+    padding-left: {{ popup_content_padding }}px;
+    padding-right: {{ popup_content_padding }}px;
+    padding-top: {{ popup_padding_top }}px;
+    padding-bottom: {{ popup_padding_bottom }}px;
     text-align: {{ popup_text_alignment }};
     width: min(100%, 640px);
     margin: 0 auto;
@@ -105,6 +112,13 @@
     flex-direction: column;
     gap: 12px;
     margin-bottom: 15px;
+  }
+
+  #NewsletterPopup-{{ section.id }} .newsletter-popup__logo {
+    display: block;
+    margin: 0 auto 14px;
+    max-width: {{ popup_logo_width }}px;
+    width: 100%;
   }
 
   #NewsletterPopup-{{ section.id }} .newsletter-popup__top-image {
@@ -153,8 +167,10 @@
     }
 
     #NewsletterPopup-{{ section.id }} .newsletter-popup__content {
-      padding: {{ popup_content_padding_mobile }}px;
-      padding-top: {{ popup_content_padding_mobile | plus: 16 }}px;
+      padding-left: {{ popup_content_padding_mobile }}px;
+      padding-right: {{ popup_content_padding_mobile }}px;
+      padding-top: {{ popup_padding_top_mobile }}px;
+      padding-bottom: {{ popup_padding_bottom_mobile }}px;
     }
 
     #NewsletterPopup-{{ section.id }} .modal__close {
@@ -180,6 +196,15 @@
         <div class="newsletter newsletter-popup">
 
           <div class="newsletter-popup__content">
+            {% if section.settings.popup_logo != blank %}
+              {%- render 'image-element',
+                img: section.settings.popup_logo,
+                img_width: 600,
+                sizeVariable: popup_logo_width | append: 'px',
+                classes: 'newsletter-popup__logo'
+              -%}
+            {% endif %}
+
             {% if top_image_count > 0 %}
               <div class="newsletter-popup__top-images">
                 {% for block in section.blocks %}
@@ -258,8 +283,8 @@
       {
         "type": "checkbox",
         "id": "disable_for_account_holders",
-        "label": "t:sections.newsletter-popup.settings.disable_for_account_holders.label",
-        "default": true,
+        "label": "Desktop side padding",
+        "default": 24,
         "info": "t:sections.newsletter-popup.settings.disable_for_account_holders.info"
       },
       {
@@ -268,13 +293,68 @@
         "label": "t:sections.newsletter-popup.settings.popup_seconds.label",
         "info": "t:sections.newsletter-popup.settings.popup_seconds.info",
         "default": 5,
-        "min": 2,
-        "max": 60,
+        "label": "Mobile side padding",
+        "default": 18,
         "step": 1,
         "unit": "sec"
       },
       {
         "type": "range",
+      {
+        "type": "range",
+        "id": "popup_padding_top",
+        "label": "Desktop top padding",
+        "default": 14,
+        "min": 0,
+        "max": 60,
+        "step": 1,
+        "unit": "px"
+      },
+      {
+        "type": "range",
+        "id": "popup_padding_bottom",
+        "label": "Desktop bottom padding",
+        "default": 14,
+        "min": 0,
+        "max": 60,
+        "step": 1,
+        "unit": "px"
+      },
+      {
+        "type": "range",
+        "id": "popup_padding_top_mobile",
+        "label": "Mobile top padding",
+        "default": 12,
+        "min": 0,
+        "max": 40,
+        "step": 1,
+        "unit": "px"
+      },
+      {
+        "type": "range",
+        "id": "popup_padding_bottom_mobile",
+        "label": "Mobile bottom padding",
+        "default": 12,
+        "min": 0,
+        "max": 40,
+        "step": 1,
+        "unit": "px"
+      },
+      {
+        "type": "image_picker",
+        "id": "popup_logo",
+        "label": "Top logo icon"
+      },
+      {
+        "type": "range",
+        "id": "popup_logo_width",
+        "label": "Logo width",
+        "default": 120,
+        "min": 40,
+        "max": 240,
+        "step": 5,
+        "unit": "px"
+      },
         "id": "popup_days",
         "label": "t:sections.newsletter-popup.settings.popup_days.label",
         "default": 30,
