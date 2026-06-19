@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "type": "custom.popups",
   "name": "t:sections.popup-group.name",
@@ -32,12 +41,12 @@
         "popup_padding_top_mobile": 0,
         "popup_padding_bottom_mobile": 0,
         "popup_logo": "shopify://shop_images/HSW_LOGO_BLACK.png",
-        "popup_logo_width": 70,
+        "popup_logo_width": 40,
         "popup_font_family": "body",
         "popup_text_alignment": "center",
-        "popup_title_size": 27,
+        "popup_title_size": 23,
         "popup_title_color": "#111111",
-        "popup_text_size": 18,
+        "popup_text_size": 15,
         "popup_text_color": "#111111",
         "popup_title": "Extra 5% Off",
         "popup_text": "<p>When Paying With Card</p>",
