@@ -25,7 +25,6 @@
       "block_order": [
         "reminder-block"
       ],
-      "disabled": true,
       "custom_css": [],
       "settings": {
         "disable_for_account_holders": false,
