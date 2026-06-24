@@ -52,12 +52,20 @@
             "custom_title": "Bat"
           }
         },
-        "collection_xjgMGe": {
+        "collection_XbGVtt": {
           "type": "collection",
           "settings": {
-            "collection": "muse-bag",
-            "custom_image": "shopify://shop_images/IMG_6951_JPG.jpg",
-            "custom_title": "MUSE"
+            "collection": "barque-bag",
+            "custom_image": "shopify://shop_images/Barque_Top_Bar_-_Bag_Only.png",
+            "custom_title": "BARQUE"
+          }
+        },
+        "collection_cRwFje": {
+          "type": "collection",
+          "settings": {
+            "collection": "baguette-bag",
+            "custom_image": "shopify://shop_images/Baguette_-removebg-preview.png",
+            "custom_title": "Baguette"
           }
         },
         "collection_nqH6mE": {
@@ -66,6 +74,14 @@
             "collection": "miss-mess-bag",
             "custom_image": "shopify://shop_images/IMG_6952_JPG.jpg",
             "custom_title": "MISS MESS"
+          }
+        },
+        "collection_xjgMGe": {
+          "type": "collection",
+          "settings": {
+            "collection": "muse-bag",
+            "custom_image": "shopify://shop_images/IMG_6951_JPG.jpg",
+            "custom_title": "MUSE"
           }
         },
         "collection_kUz6iQ": {
@@ -108,14 +124,6 @@
             "custom_title": "Radio"
           }
         },
-        "collection_cRwFje": {
-          "type": "collection",
-          "settings": {
-            "collection": "baguette-bag",
-            "custom_image": "shopify://shop_images/Baguette_-removebg-preview.png",
-            "custom_title": "Baguette"
-          }
-        },
         "collection_rFz7LR": {
           "type": "collection",
           "disabled": true,
@@ -154,14 +162,15 @@
         "collection_DMVxWD",
         "collection_RUhfck",
         "collection_6kzg64",
-        "collection_xjgMGe",
+        "collection_XbGVtt",
+        "collection_cRwFje",
         "collection_nqH6mE",
+        "collection_xjgMGe",
         "collection_kUz6iQ",
         "collection_yaVxgT",
         "collection_Hmycmc",
         "collection_ggyCtV",
         "collection_B4TTNQ",
-        "collection_cRwFje",
         "collection_rFz7LR",
         "collection_UXenQT",
         "collection_bjVALb",
