@@ -74,6 +74,38 @@
         "parallax_direction": "top"
       }
     },
+    "collection_slider_mobile_UtYT8h": {
+      "type": "collection-slider-mobile",
+      "blocks": {
+        "collection_7zcUbF": {
+          "type": "collection",
+          "settings": {
+            "collection": ""
+          }
+        },
+        "collection_y6K4bn": {
+          "type": "collection",
+          "settings": {
+            "collection": ""
+          }
+        },
+        "collection_Ay4UDM": {
+          "type": "collection",
+          "settings": {
+            "collection": ""
+          }
+        }
+      },
+      "block_order": [
+        "collection_7zcUbF",
+        "collection_y6K4bn",
+        "collection_Ay4UDM"
+      ],
+      "name": "Collection Slider",
+      "settings": {
+        "title": "Shop by Collection"
+      }
+    },
     "main-collection": {
       "type": "main-collection",
       "blocks": {
@@ -189,6 +221,7 @@
   "order": [
     "promo-grid",
     "collection-header",
+    "collection_slider_mobile_UtYT8h",
     "main-collection",
     "countdown",
     "blog-posts"
