@@ -74,36 +74,169 @@
         "parallax_direction": "top"
       }
     },
-    "collection_slider_mobile_UtYT8h": {
-      "type": "collection-slider-mobile",
+    "collection_slider_zLjLhq": {
+      "type": "collection-slider",
       "blocks": {
-        "collection_7zcUbF": {
+        "collection_cJxxLY": {
           "type": "collection",
           "settings": {
-            "collection": ""
+            "collection": "scrunch-bag",
+            "custom_image": "shopify://shop_images/Scrunch-removebg-preview.png",
+            "custom_title": "Scrunch"
           }
         },
-        "collection_y6K4bn": {
+        "collection_aaTNH8": {
           "type": "collection",
           "settings": {
-            "collection": ""
+            "collection": "hobo-bag",
+            "custom_image": "shopify://shop_images/Hobo-removebg-preview.png",
+            "custom_title": "Hobo"
           }
         },
-        "collection_Ay4UDM": {
+        "collection_8iziXb": {
           "type": "collection",
           "settings": {
-            "collection": ""
+            "collection": "bat-bag",
+            "custom_image": "shopify://shop_images/IMG_6322.png",
+            "custom_title": "Bat"
+          }
+        },
+        "collection_Ecfbbc": {
+          "type": "collection",
+          "settings": {
+            "collection": "barque-bag",
+            "custom_image": "shopify://shop_images/Barque_Top_Bar_-_Bag_Only.png",
+            "custom_title": "BARQUE"
+          }
+        },
+        "collection_mhAF9a": {
+          "type": "collection",
+          "settings": {
+            "collection": "baguette-bag",
+            "custom_image": "shopify://shop_images/Baguette_-removebg-preview.png",
+            "custom_title": "Baguette"
+          }
+        },
+        "collection_GgQt9d": {
+          "type": "collection",
+          "settings": {
+            "collection": "miss-mess-bag",
+            "custom_image": "shopify://shop_images/IMG_6952_JPG.jpg",
+            "custom_title": "MISS MESS"
+          }
+        },
+        "collection_bePz6z": {
+          "type": "collection",
+          "settings": {
+            "collection": "muse-bag",
+            "custom_image": "shopify://shop_images/IMG_6951_JPG.jpg",
+            "custom_title": "MUSE"
+          }
+        },
+        "collection_R3LNTX": {
+          "type": "collection",
+          "settings": {
+            "collection": "bowler-bag",
+            "custom_image": "shopify://shop_images/Bowler-removebg-preview.png",
+            "custom_title": "BOWLER"
+          }
+        },
+        "collection_w3PXwG": {
+          "type": "collection",
+          "settings": {
+            "collection": "origin-tote-bag",
+            "custom_image": "shopify://shop_images/unnamed_2_d2c61514-2401-4b20-9f26-3ae6f1ce1a7e.jpg",
+            "custom_title": "TOTE"
+          }
+        },
+        "collection_ync7zj": {
+          "type": "collection",
+          "settings": {
+            "collection": "halo-bag",
+            "custom_image": "shopify://shop_images/Halo-removebg-preview.png",
+            "custom_title": "Halo"
+          }
+        },
+        "collection_7H6CLW": {
+          "type": "collection",
+          "settings": {
+            "collection": "croco-bag",
+            "custom_image": "shopify://shop_images/Croco-removebg-preview.png",
+            "custom_title": "Croco"
+          }
+        },
+        "collection_GMYY3E": {
+          "type": "collection",
+          "settings": {
+            "collection": "radioset-bag",
+            "custom_image": "shopify://shop_images/Radioset-removebg-preview.png",
+            "custom_title": "Radio"
+          }
+        },
+        "collection_8REyeR": {
+          "type": "collection",
+          "disabled": true,
+          "settings": {
+            "collection": "dragon-bag",
+            "custom_image": "shopify://shop_images/Dragon-removebg-preview.png",
+            "custom_title": "Dragon"
+          }
+        },
+        "collection_xkWWj8": {
+          "type": "collection",
+          "disabled": true,
+          "settings": {
+            "collection": "vernis-bag",
+            "custom_title": "Vernis"
+          }
+        },
+        "collection_FJPC43": {
+          "type": "collection",
+          "disabled": true,
+          "settings": {
+            "collection": "switch-bag",
+            "custom_title": "Switch"
+          }
+        },
+        "collection_xgazQm": {
+          "type": "collection",
+          "settings": {
+            "collection": "token-bag",
+            "custom_image": "shopify://shop_images/Token-removebg-preview.png",
+            "custom_title": "Token"
           }
         }
       },
       "block_order": [
-        "collection_7zcUbF",
-        "collection_y6K4bn",
-        "collection_Ay4UDM"
+        "collection_cJxxLY",
+        "collection_aaTNH8",
+        "collection_8iziXb",
+        "collection_Ecfbbc",
+        "collection_mhAF9a",
+        "collection_GgQt9d",
+        "collection_bePz6z",
+        "collection_R3LNTX",
+        "collection_w3PXwG",
+        "collection_ync7zj",
+        "collection_7H6CLW",
+        "collection_GMYY3E",
+        "collection_8REyeR",
+        "collection_xkWWj8",
+        "collection_FJPC43",
+        "collection_xgazQm"
       ],
-      "name": "Collection Slider",
+      "name": "Collection Navigation",
       "settings": {
-        "title": "Shop by Collection"
+        "title": "",
+        "image_shape": "square",
+        "image_ratio": "square",
+        "image_size_desktop": 70,
+        "image_size_mobile": 60,
+        "gap_value": 0,
+        "padding_top": 18,
+        "padding_bottom": 18,
+        "padding_horizontal": 10,
+        "items_alignment": "flex-start"
       }
     },
     "main-collection": {
@@ -146,10 +279,10 @@
         "enable_color_swatches": true,
         "enable_swatch_labels": true,
         "enable_sort": false,
-        "padding_top": 10,
-        "padding_bottom": 40,
-        "padding_top_mobile": 8,
-        "padding_bottom_mobile": 20
+        "padding_top": 14,
+        "padding_bottom": 20,
+        "padding_top_mobile": 12,
+        "padding_bottom_mobile": 14
       }
     },
     "countdown": {
@@ -221,7 +354,7 @@
   "order": [
     "promo-grid",
     "collection-header",
-    "collection_slider_mobile_UtYT8h",
+    "collection_slider_zLjLhq",
     "main-collection",
     "countdown",
     "blog-posts"
