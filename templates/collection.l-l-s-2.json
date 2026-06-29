@@ -74,6 +74,52 @@
         "parallax_direction": "top"
       }
     },
+    "main-collection": {
+      "type": "main-collection",
+      "blocks": {
+        "collection_description": {
+          "type": "collection_description",
+          "settings": {}
+        },
+        "subcollections": {
+          "type": "subcollections",
+          "settings": {
+            "subcollections_per_row": 5
+          }
+        },
+        "product_grid": {
+          "type": "product_grid",
+          "settings": {
+            "enable_collection_count": true,
+            "per_row": 4,
+            "rows_per_page": 7,
+            "mobile_flush_grid": true
+          }
+        }
+      },
+      "block_order": [
+        "collection_description",
+        "subcollections",
+        "product_grid"
+      ],
+      "custom_css": [
+        ".grid-product__image-mask {margin-bottom: 4px !important; margin-top: -8px;}",
+        " /* Remove bottom padding under product card */.grid-product__content,.grid-product__meta {padding-bottom: 4px !important; margin-bottom: 4px !important; margin-top: 0px;}",
+        " /* Optional: remove extra space from the whole card */.grid-product {margin-bottom: 4px !important; margin-top: 0px;}"
+      ],
+      "settings": {
+        "enable_sidebar": false,
+        "collapsed": false,
+        "filter_style": "drawer",
+        "enable_color_swatches": true,
+        "enable_swatch_labels": true,
+        "enable_sort": false,
+        "padding_top": 14,
+        "padding_bottom": 0,
+        "padding_top_mobile": 12,
+        "padding_bottom_mobile": 0
+      }
+    },
     "collection_slider_zLjLhq": {
       "type": "collection-slider",
       "blocks": {
@@ -239,52 +285,6 @@
         "items_alignment": "flex-start"
       }
     },
-    "main-collection": {
-      "type": "main-collection",
-      "blocks": {
-        "collection_description": {
-          "type": "collection_description",
-          "settings": {}
-        },
-        "subcollections": {
-          "type": "subcollections",
-          "settings": {
-            "subcollections_per_row": 5
-          }
-        },
-        "product_grid": {
-          "type": "product_grid",
-          "settings": {
-            "enable_collection_count": true,
-            "per_row": 4,
-            "rows_per_page": 7,
-            "mobile_flush_grid": true
-          }
-        }
-      },
-      "block_order": [
-        "collection_description",
-        "subcollections",
-        "product_grid"
-      ],
-      "custom_css": [
-        ".grid-product__image-mask {margin-bottom: 4px !important; margin-top: -8px;}",
-        " /* Remove bottom padding under product card */.grid-product__content,.grid-product__meta {padding-bottom: 4px !important; margin-bottom: 4px !important; margin-top: 0px;}",
-        " /* Optional: remove extra space from the whole card */.grid-product {margin-bottom: 4px !important; margin-top: 0px;}"
-      ],
-      "settings": {
-        "enable_sidebar": false,
-        "collapsed": false,
-        "filter_style": "drawer",
-        "enable_color_swatches": true,
-        "enable_swatch_labels": true,
-        "enable_sort": false,
-        "padding_top": 14,
-        "padding_bottom": 20,
-        "padding_top_mobile": 12,
-        "padding_bottom_mobile": 14
-      }
-    },
     "countdown": {
       "type": "countdown",
       "blocks": {
@@ -354,8 +354,8 @@
   "order": [
     "promo-grid",
     "collection-header",
-    "collection_slider_zLjLhq",
     "main-collection",
+    "collection_slider_zLjLhq",
     "countdown",
     "blog-posts"
   ]
