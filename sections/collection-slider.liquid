@@ -49,7 +49,7 @@
   --image-height-m: {{ image_height_mobile }};
   --image-width-m: {{ image_width_mobile }};
   --image-object-fit: {% if section.settings.image_shape == 'circle' %}cover{% else %}contain{% endif %};
-  --collection-name-font-size: {{ section.settings.collection_name_font_size | default: 11 }}px;
+  --collection-name-font-size: {{ section.settings.collection_name_font_size | default: 3 }}px;
 ">
   {% if section.settings.title != blank %}
   <div class="section-header text-center">
@@ -328,7 +328,7 @@
 
 /* Text styling */
 .category-bar .category-item .category-title {
-  font-size: var(--collection-name-font-size, 11px) !important;
+  font-size: var(--collection-name-font-size, 3px) !important;
   letter-spacing: 0.05em;
   text-transform: uppercase;
   font-weight: 600;
