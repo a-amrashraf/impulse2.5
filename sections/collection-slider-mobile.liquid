@@ -32,8 +32,8 @@
     },
     {
       "type": "range",
-      "id": "title_font_size",
-      "label": "Title Font Size",
+      "id": "collection_name_font_size",
+      "label": "Collection Name Font Size",
       "min": 10,
       "max": 30,
       "step": 1,
@@ -103,7 +103,7 @@
 .collection-title {
   padding: 8px 0;
   font-weight: 600;
-  font-size: {{ section.settings.title_font_size | default: 16 }}px;
+  font-size: {{ section.settings.collection_name_font_size | default: 16 }}px;
 }
 
 /* 🧠 Desktop fallback (grid view) */

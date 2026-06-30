@@ -93,16 +93,6 @@
       "default": "Shop by Collection"
     },
     {
-      "type": "range",
-      "id": "title_font_size",
-      "label": "Title Font Size",
-      "min": 10,
-      "max": 30,
-      "step": 1,
-      "unit": "px",
-      "default": 11
-    },
-    {
       "type": "header",
       "content": "Image Settings"
     },
@@ -193,6 +183,16 @@
       "unit": "px",
       "label": "Horizontal Padding",
       "default": 20
+    },
+    {
+      "type": "range",
+      "id": "collection_name_font_size",
+      "label": "Collection Name Font Size",
+      "min": 10,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "default": 11
     },
     {
       "type": "select",
@@ -327,7 +327,7 @@
 
 /* Text styling */
 .category-title {
-  font-size: {{ section.settings.title_font_size | default: 11 }}px;
+  font-size: {{ section.settings.collection_name_font_size | default: 11 }}px;
   letter-spacing: 0.05em;
   text-transform: uppercase;
   font-weight: 600;
@@ -360,7 +360,7 @@
     margin-bottom: 8px;
   }
   .category-title {
-    font-size: {{ section.settings.title_font_size | default: 11 }}px;
+    font-size: {{ section.settings.collection_name_font_size | default: 11 }}px;
   }
 }
 {% endstylesheet %}
