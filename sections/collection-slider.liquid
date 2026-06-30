@@ -326,7 +326,7 @@
 }
 
 /* Text styling */
-.category-title {
+.category-bar .category-item .category-title {
   font-size: {{ section.settings.collection_name_font_size | default: 11 }}px;
   letter-spacing: 0.05em;
   text-transform: uppercase;
@@ -359,7 +359,7 @@
     width: var(--image-width-m, 60px);
     margin-bottom: 8px;
   }
-  .category-title {
+  .category-bar .category-item .category-title {
     font-size: {{ section.settings.collection_name_font_size | default: 11 }}px;
   }
 }
