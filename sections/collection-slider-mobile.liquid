@@ -1,4 +1,4 @@
-<div class="page-width">
+<div class="page-width" style="--collection-name-font-size: {{ section.settings.collection_name_font_size | default: 16 }}px;">
   {% if section.settings.title != blank %}
     <div class="section-header">
       <h2 class="section-header__title">{{ section.settings.title }}</h2>
@@ -103,7 +103,7 @@
 .collection-slider .collection-item .collection-title {
   padding: 8px 0;
   font-weight: 600;
-  font-size: {{ section.settings.collection_name_font_size | default: 16 }}px;
+  font-size: var(--collection-name-font-size, 16px) !important;
 }
 
 /* 🧠 Desktop fallback (grid view) */
