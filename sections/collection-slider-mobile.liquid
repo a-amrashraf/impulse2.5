@@ -29,6 +29,16 @@
       "id": "title",
       "label": "Section title",
       "default": "Shop by Collection"
+    },
+    {
+      "type": "range",
+      "id": "title_font_size",
+      "label": "Title Font Size",
+      "min": 10,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "default": 16
     }
   ],
   "blocks": [
@@ -93,7 +103,7 @@
 .collection-title {
   padding: 8px 0;
   font-weight: 600;
-  font-size: 1rem;
+  font-size: {{ section.settings.title_font_size | default: 16 }}px;
 }
 
 /* 🧠 Desktop fallback (grid view) */

@@ -93,6 +93,16 @@
       "default": "Shop by Collection"
     },
     {
+      "type": "range",
+      "id": "title_font_size",
+      "label": "Title Font Size",
+      "min": 10,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "default": 11
+    },
+    {
       "type": "header",
       "content": "Image Settings"
     },
@@ -317,7 +327,7 @@
 
 /* Text styling */
 .category-title {
-  font-size: 11px;
+  font-size: {{ section.settings.title_font_size | default: 11 }}px;
   letter-spacing: 0.05em;
   text-transform: uppercase;
   font-weight: 600;
@@ -350,7 +360,7 @@
     margin-bottom: 8px;
   }
   .category-title {
-    font-size: 10px;
+    font-size: {{ section.settings.title_font_size | default: 11 }}px;
   }
 }
 {% endstylesheet %}
