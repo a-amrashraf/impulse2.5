@@ -87,7 +87,8 @@
       ],
       "name": "Collection Slider",
       "settings": {
-        "title": ""
+        "title": "",
+        "collection_name_font_size": 10
       }
     },
     "promo-grid": {
