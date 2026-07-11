@@ -80,6 +80,7 @@
         "collection_G9VH4G",
         "collection_K3gpLQ"
       ],
+      "disabled": true,
       "custom_css": [
         ".collection-item {flex: 0 0 40%; scroll-snap-align: start; text-align: center;}",
         ".collection-slider {display: flex; gap: 2px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 0px; margin-bottom: -35px; margin-left: 0px; margin-right: 0px;}",
