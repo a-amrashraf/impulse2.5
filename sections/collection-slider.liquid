@@ -62,8 +62,6 @@
       {%- assign collection = collections[block.settings.collection] -%}
       {%- assign item_image = block.settings.custom_image -%}
       {%- assign item_title = block.settings.custom_title -%}
-      {%- assign display_title = item_title | default: collection.title -%}
-      {%- assign title_parts = display_title | split: ' ' -%}
       
       {%- if collection != blank or item_image != blank -%}
         <a href="{{ collection.url | default: '#' }}" class="category-item" {{ block.shopify_attributes }}>
@@ -78,14 +76,7 @@
                 {{ 'collection-1' | placeholder_svg_tag: 'placeholder-svg' }}
              {%- endif -%}
           </div>
-          <span class="category-title">
-            {%- if title_parts.size == 2 -%}
-              {{ title_parts[0] | escape }}<br>
-              {{ title_parts[1] | escape }}
-            {%- else -%}
-              {{ display_title | escape }}
-            {%- endif -%}
-          </span>
+          <span class="category-title">{{ item_title | default: collection.title }}</span>
         </a>
       {%- endif -%}
     {% endfor %}
