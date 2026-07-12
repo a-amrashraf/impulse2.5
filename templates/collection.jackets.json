@@ -31,25 +31,29 @@
         "collection_fwzba7": {
           "type": "collection",
           "settings": {
-            "collection": "hsw-denim-jacket"
+            "collection": "hsw-denim-jacket",
+            "custom_title": "HSW DENIM JACKET"
           }
         },
         "collection_gj8aYt": {
           "type": "collection",
           "settings": {
-            "collection": "fleece-lined-corduroy-jacket"
+            "collection": "fleece-lined-corduroy-jacket",
+            "custom_title": "CORDUROY JACKET"
           }
         },
         "collection_ANJ97N": {
           "type": "collection",
           "settings": {
-            "collection": "waterproof-puffer-jacket"
+            "collection": "waterproof-puffer-jacket",
+            "custom_title": "PUFFER JACKET"
           }
         },
         "collection_G9VH4G": {
           "type": "collection",
           "settings": {
-            "collection": "denim-bomber-jacket"
+            "collection": "denim-bomber-jacket",
+            "custom_title": "BOMBER JACKET"
           }
         }
       },
