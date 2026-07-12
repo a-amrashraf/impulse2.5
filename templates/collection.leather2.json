@@ -81,7 +81,7 @@
           "settings": {
             "collection": "miss-mess-bag",
             "custom_image": "shopify://shop_images/IMG_6952_JPG.jpg",
-            "custom_title": "MISS MESS"
+            "custom_title": "MISSMESS"
           }
         },
         "collection_kUz6iQ": {
@@ -282,61 +282,71 @@
         "collection_bmhUEq": {
           "type": "collection",
           "settings": {
-            "collection": "scrunch-bag"
+            "collection": "scrunch-bag",
+            "custom_title": ""
           }
         },
         "collection_fwzba7": {
           "type": "collection",
           "settings": {
-            "collection": "hobo-bag"
+            "collection": "hobo-bag",
+            "custom_title": ""
           }
         },
         "collection_6jHbkr": {
           "type": "collection",
           "settings": {
-            "collection": "bowler-bag"
+            "collection": "bowler-bag",
+            "custom_title": ""
           }
         },
         "collection_i8kcPp": {
           "type": "collection",
           "settings": {
-            "collection": "halo-bag"
+            "collection": "halo-bag",
+            "custom_title": ""
           }
         },
         "collection_ANJ97N": {
           "type": "collection",
           "settings": {
-            "collection": "croco-bag"
+            "collection": "croco-bag",
+            "custom_title": ""
           }
         },
         "collection_MdiMrM": {
           "type": "collection",
           "settings": {
-            "collection": "baguette-bag"
+            "collection": "baguette-bag",
+            "custom_title": ""
           }
         },
         "collection_G9VH4G": {
           "type": "collection",
           "settings": {
-            "collection": "dragon-bag"
+            "collection": "dragon-bag",
+            "custom_title": ""
           }
         },
         "collection_gj8aYt": {
           "type": "collection",
           "settings": {
-            "collection": "token-bag"
+            "collection": "token-bag",
+            "custom_title": ""
           }
         },
         "collection_DnEMFR": {
           "type": "collection",
           "settings": {
-            "collection": "vernis-bag"
+            "collection": "vernis-bag",
+            "custom_title": ""
           }
         },
         "collection_BMdhYE": {
           "type": "collection",
           "settings": {
-            "collection": "switch-bag"
+            "collection": "switch-bag",
+            "custom_title": ""
           }
         }
       },
