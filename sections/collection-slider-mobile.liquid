@@ -8,12 +8,14 @@
   <div class="collection-slider">
     {% for block in section.blocks %}
       {% assign collection = collections[block.settings.collection] %}
+      {% assign custom_title = block.settings.custom_title %}
+      {% assign display_title = custom_title | default: collection.title %}
       {% if collection %}
         <a href="{{ collection.url }}" class="collection-item" {{ block.shopify_attributes }}>
           {% if collection.image %}
             <div class="collection-image" style="background-image:url('{{ collection.image | img_url: '800x' }}');"></div>
           {% endif %}
-          <div class="collection-title">{{ collection.title }}</div>
+          <div class="collection-title">{{ display_title }}</div>
         </a>
       {% endif %}
     {% endfor %}
@@ -50,6 +52,12 @@
           "type": "collection",
           "id": "collection",
           "label": "Select collection"
+        },
+        {
+          "type": "text",
+          "id": "custom_title",
+          "label": "Custom Label (Optional)",
+          "info": "Overrides the collection title"
         }
       ]
     }
