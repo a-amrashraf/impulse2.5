@@ -334,7 +334,7 @@
       "add_to_cart": "Add to cart",
       "preorder": "Pre-order",
       "include_taxes": "Tax included.",
-      "shipping_policy_html": "Discounts and <a href=\"{{ link }}\">shipping</a> calculated at checkout",
+      "shipping_policy_html": " ",
       "will_not_ship_until": "Ready to ship {{ date }}",
       "will_be_in_stock_after": "Back in stock {{ date }}",
       "waiting_for_stock": "Backordered, shipping soon",
