@@ -14,8 +14,15 @@
     "scrolling_text_BmWKG3": {
       "type": "scrolling-text",
       "blocks": {
+        "text_BwCRij": {
+          "type": "text",
+          "settings": {
+            "text": "FREE SHIPPING OVER 2000 EGP"
+          }
+        },
         "text_9dPppf": {
           "type": "text",
+          "disabled": true,
           "settings": {
             "text": "LIMITED TIME FREE SHIPPING!"
           }
@@ -29,6 +36,7 @@
         }
       },
       "block_order": [
+        "text_BwCRij",
         "text_9dPppf",
         "text_6JGHjb"
       ],
