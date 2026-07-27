@@ -61,10 +61,9 @@
       "blocks": {
         "announcement-0": {
           "type": "announcement",
-          "disabled": true,
           "settings": {
-            "text": "November Sale",
-            "link_text": "Save up to 40%",
+            "text": "",
+            "link_text": "LIMITED-TIME DEAL",
             "link": "shopify://collections/on-sale"
           }
         },
@@ -82,7 +81,6 @@
         "announcement-0",
         "announcement-1"
       ],
-      "disabled": true,
       "settings": {
         "announcement_compact": true
       }
