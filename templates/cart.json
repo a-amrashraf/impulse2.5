@@ -16,13 +16,13 @@
     "17724666813bc47e4f": {
       "type": "apps",
       "blocks": {
-        "hitsy_progress_bar_hitsy_block_LgeUYV": {
-          "type": "shopify://apps/hitsy-progress-bar/blocks/hitsy-block/0e2f6173-7277-4c61-a4df-2e70602cd303",
+        "bisell_upsell_bf_upsell_widget_icuc_ABfmjC": {
+          "type": "shopify://apps/bisell-upsell/blocks/bf-upsell-widget-icuc/0be6eb92-28a2-4372-b8a6-4a6094b3c651",
           "settings": {}
         }
       },
       "block_order": [
-        "hitsy_progress_bar_hitsy_block_LgeUYV"
+        "bisell_upsell_bf_upsell_widget_icuc_ABfmjC"
       ],
       "settings": {
         "full_width": false,
