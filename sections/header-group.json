@@ -61,6 +61,7 @@
       "blocks": {
         "announcement-0": {
           "type": "announcement",
+          "disabled": true,
           "settings": {
             "text": "",
             "link_text": "LIMITED-TIME DEAL",
@@ -69,11 +70,10 @@
         },
         "announcement-1": {
           "type": "announcement",
-          "disabled": true,
           "settings": {
-            "text": "Hassle-free returns",
-            "link_text": "30-day postage paid returns",
-            "link": ""
+            "text": "",
+            "link_text": "EXCLUSIVE DROP IS OUT NOW!",
+            "link": "shopify://collections/exclusive-edition"
           }
         }
       },
