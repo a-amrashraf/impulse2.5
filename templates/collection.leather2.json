@@ -28,6 +28,14 @@
     "collection_slider_ddKWri": {
       "type": "collection-slider",
       "blocks": {
+        "collection_nCkKFF": {
+          "type": "collection",
+          "settings": {
+            "collection": "exclusive-edition",
+            "custom_image": "shopify://shop_images/transparent_tiger.png",
+            "custom_title": ""
+          }
+        },
         "collection_DMVxWD": {
           "type": "collection",
           "settings": {
@@ -167,6 +175,7 @@
         }
       },
       "block_order": [
+        "collection_nCkKFF",
         "collection_DMVxWD",
         "collection_RUhfck",
         "collection_cRwFje",
