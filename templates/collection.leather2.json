@@ -32,7 +32,7 @@
           "type": "collection",
           "settings": {
             "collection": "exclusive-edition",
-            "custom_image": "shopify://shop_images/transparent_tiger.png",
+            "custom_image": "shopify://shop_images/transparent_silver.png",
             "custom_title": "EXCLUSIVE"
           }
         },
