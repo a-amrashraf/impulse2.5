@@ -145,13 +145,14 @@
             "title": "NEW ARRIVAL",
             "title_size": 64,
             "subheading": "",
-            "link": "shopify://collections/miss-mess-bag",
+            "link": "shopify://collections/exclusive-edition",
             "link_text": "",
             "link_2": "",
             "link_text_2": "",
             "color_accent": "rgba(0,0,0,0)",
             "text_align": "vertical-bottom horizontal-center",
-            "image": "shopify://shop_images/IMG_6687_6835f342-68e7-4033-937c-247185c64c25.jpg",
+            "image": "shopify://shop_images/DSCF9107copy.jpg",
+            "image_mobile": "shopify://shop_images/DSCF9107copy.jpg",
             "parallax_direction": "top",
             "overlay_opacity": 0
           }
