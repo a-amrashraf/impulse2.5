@@ -32,16 +32,8 @@
           "type": "collection",
           "settings": {
             "collection": "starlit-wallet",
-            "custom_image": "shopify://shop_images/WALLER.png",
+            "custom_image": "shopify://shop_images/wallet_png.png",
             "custom_title": "STARLIT"
-          }
-        },
-        "collection_yMTQiB": {
-          "type": "collection",
-          "settings": {
-            "collection": "urban-wallets",
-            "custom_image": "shopify://shop_images/IMG_6317.png",
-            "custom_title": "Urban"
           }
         },
         "collection_meqRDq": {
@@ -59,13 +51,21 @@
             "custom_image": "shopify://shop_images/IMG_6316.png",
             "custom_title": "Canvas"
           }
+        },
+        "collection_yMTQiB": {
+          "type": "collection",
+          "settings": {
+            "collection": "urban-wallets",
+            "custom_image": "shopify://shop_images/IMG_6317.png",
+            "custom_title": "Urban"
+          }
         }
       },
       "block_order": [
         "collection_WzFTx9",
-        "collection_yMTQiB",
         "collection_meqRDq",
-        "collection_Tagg9K"
+        "collection_Tagg9K",
+        "collection_yMTQiB"
       ],
       "name": "Collection Navigation",
       "settings": {
