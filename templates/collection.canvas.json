@@ -31,31 +31,36 @@
         "collection_6WeahR": {
           "type": "collection",
           "settings": {
-            "collection": "shopper-bag"
+            "collection": "shopper-bag",
+            "custom_title": ""
           }
         },
         "collection_fwzba7": {
           "type": "collection",
           "settings": {
-            "collection": "helio-stitch"
+            "collection": "helio-stitch",
+            "custom_title": ""
           }
         },
         "collection_ANJ97N": {
           "type": "collection",
           "settings": {
-            "collection": "side-bag"
+            "collection": "side-bag",
+            "custom_title": ""
           }
         },
         "collection_gj8aYt": {
           "type": "collection",
           "settings": {
-            "collection": "cross-bag"
+            "collection": "cross-bag",
+            "custom_title": ""
           }
         },
         "collection_DnEMFR": {
           "type": "collection",
           "settings": {
-            "collection": "hippie-fanny-pack"
+            "collection": "hippie-fanny-pack",
+            "custom_title": ""
           }
         }
       },
@@ -74,7 +79,8 @@
       ],
       "name": "Collection Slider",
       "settings": {
-        "title": ""
+        "title": "",
+        "collection_name_font_size": 16
       }
     },
     "promo-grid": {
@@ -167,6 +173,14 @@
             "custom_image": "shopify://shop_images/IMG_6318.png",
             "custom_title": "HIPPIE"
           }
+        },
+        "collection_CxYnWV": {
+          "type": "collection",
+          "settings": {
+            "collection": "tokyo-bag",
+            "custom_image": "shopify://shop_images/Newag.png",
+            "custom_title": "TOKYO"
+          }
         }
       },
       "block_order": [
@@ -174,7 +188,8 @@
         "collection_aakMj8",
         "collection_dPeTtY",
         "collection_wcHhjF",
-        "collection_heBk4e"
+        "collection_heBk4e",
+        "collection_CxYnWV"
       ],
       "name": "Collection Navigation",
       "settings": {
@@ -187,6 +202,7 @@
         "padding_top": 6,
         "padding_bottom": 6,
         "padding_horizontal": 18,
+        "collection_name_font_size": 11,
         "items_alignment": "center"
       }
     },
