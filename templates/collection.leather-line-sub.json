@@ -244,7 +244,7 @@
         "gap_value": 0,
         "padding_top": 8,
         "padding_bottom": 4,
-        "padding_horizontal": 10,
+        "padding_horizontal": 0,
         "collection_name_font_size": 10,
         "items_alignment": "flex-start"
       }
