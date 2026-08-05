@@ -203,7 +203,7 @@
         "padding_bottom": 6,
         "padding_horizontal": 0,
         "collection_name_font_size": 11,
-        "items_alignment": "center"
+        "items_alignment": "flex-start"
       }
     },
     "main-collection": {
