@@ -175,6 +175,7 @@
         },
         "collection_w3PXwG": {
           "type": "collection",
+          "disabled": true,
           "settings": {
             "collection": "origin-tote-bag",
             "custom_image": "shopify://shop_images/unnamed_2_d2c61514-2401-4b20-9f26-3ae6f1ce1a7e.jpg",
@@ -183,6 +184,7 @@
         },
         "collection_GMYY3E": {
           "type": "collection",
+          "disabled": true,
           "settings": {
             "collection": "radioset-bag",
             "custom_image": "shopify://shop_images/Radioset-removebg-preview.png",
