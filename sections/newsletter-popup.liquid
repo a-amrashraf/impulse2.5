@@ -226,12 +226,7 @@
 
           <div class="newsletter-popup__content">
             {% if section.settings.popup_logo != blank %}
-              {%- render 'image-element',
-                img: section.settings.popup_logo,
-                img_width: 600,
-                sizeVariable: popup_logo_width | append: 'px',
-                classes: 'newsletter-popup__logo'
-              -%}
+              {%- render 'image-element', img: section.settings.popup_logo, img_width: 600, sizeVariable: popup_logo_width, append: 'px', classes: 'newsletter-popup__logo' -%}
             {% endif %}
 
             {% if top_image_count > 0 %}
@@ -240,12 +235,7 @@
                   {% if block.type == 'top_image' and block.settings.image != blank %}
                     <div class="newsletter-popup__top-image" style="max-width: {{ block.settings.max_width }}px;" {{ block.shopify_attributes }}>
                       {% if block.settings.link != blank %}<a href="{{ block.settings.link }}">{% endif %}
-                      {%- render 'image-element',
-                        img: block.settings.image,
-                        img_width: 1600,
-                        sizeVariable: block.settings.max_width | append: 'px',
-                        classes: 'newsletter-popup__top-image-el'
-                      -%}
+                      {%- render 'image-element', img: block.settings.image, img_width: 1600, sizeVariable: block.settings.max_width, append: 'px', classes: 'newsletter-popup__top-image-el' -%}
                       {% if block.settings.link != blank %}</a>{% endif %}
                     </div>
                   {% endif %}
@@ -628,3 +618,32 @@
   }
 }
 {% endschema %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: |-
+    {%- render 'image-element',
+                    img: section.settings.popup_logo,
+                    img_width: 600,
+                    sizeVariable: popup_logo_width | append: 'px',
+                    classes: 'newsletter-popup__logo'
+                  -%}
+  to: "{%- render 'image-element', img: section.settings.popup_logo, img_width: 600,
+    sizeVariable: popup_logo_width, append: 'px', classes: 'newsletter-popup__logo'
+    -%}"
+  position: 7234..7395
+- from: |-
+    {%- render 'image-element',
+                            img: block.settings.image,
+                            img_width: 1600,
+                            sizeVariable: block.settings.max_width | append: 'px',
+                            classes: 'newsletter-popup__top-image-el'
+                          -%}
+  to: "{%- render 'image-element', img: block.settings.image, img_width: 1600, sizeVariable:
+    block.settings.max_width, append: 'px', classes: 'newsletter-popup__top-image-el'
+    -%}"
+  position: 7931..8102
+{% endcomment %}

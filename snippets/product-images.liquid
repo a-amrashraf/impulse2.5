@@ -124,13 +124,7 @@
                       appear-delay-{{ forloop.index | times: 3 }}
                     {%- endcapture -%}
 
-                    {%- render 'image-element',
-                      img: media.preview_image,
-                      alt: media.alt | escape | split: '#' | first,
-                      widths: '120, 360, 540, 720',
-                      sizeVariable: '80px',
-                      loading: loading,
-                    -%}
+                    {%- render 'image-element', img: media.preview_image, alt: media.alt, split: '#', widths: '120, 360, 540, 720', sizeVariable: '80px', loading: loading -%}
                   </div>
                 </a>
               </div>
@@ -179,3 +173,21 @@
     </div>
   </div>
 {%- endunless -%}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: |-
+    {%- render 'image-element',
+                          img: media.preview_image,
+                          alt: media.alt | escape | split: '#' | first,
+                          widths: '120, 360, 540, 720',
+                          sizeVariable: '80px',
+                          loading: loading,
+                        -%}
+  to: "{%- render 'image-element', img: media.preview_image, alt: media.alt, split:
+    '#', widths: '120, 360, 540, 720', sizeVariable: '80px', loading: loading -%}"
+  position: 5989..6143
+{% endcomment %}
