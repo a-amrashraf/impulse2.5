@@ -44,7 +44,7 @@
             "color_accent": "rgba(0,0,0,0)",
             "text_align": "vertical-center horizontal-center",
             "image": "shopify://shop_images/DSCF91891copy.jpg",
-            "image_mobile": "shopify://shop_images/unnamed.png",
+            "image_mobile": "shopify://shop_images/DSCF91891copy.jpg",
             "parallax_direction": "top",
             "overlay_opacity": 0
           }
