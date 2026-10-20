@@ -106,9 +106,9 @@
           "type": "logo",
           "settings": {
             "logo": "shopify://shop_images/HELIO_NAME_-_REBRAND_png_76445b3a-dc47-4ba1-966e-cf77639d590f.png",
-            "logo-inverted": "shopify://shop_images/WITHLOGOSMlaaaast_LOGO_HELIO_-_REBRAND_BLACK_BG_-_Copy.png",
+            "logo-inverted": "shopify://shop_images/HELIO_Logo_RGB_transparent-02_3fb01e7c-f9e8-4d64-a081-c22a45595afe.png",
             "desktop_logo_width": 120,
-            "mobile_logo_width": 90
+            "mobile_logo_width": 130
           }
         }
       },
