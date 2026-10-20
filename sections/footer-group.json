@@ -63,11 +63,10 @@
       "blocks": {
         "logo_social_CPeDPR": {
           "type": "logo_social",
-          "disabled": true,
           "settings": {
             "logo": "shopify://shop_images/HELIO_Logo_RGB_BLACKBG-TRANSPARENT-01.png",
-            "desktop_logo_height": 42,
-            "container_width": 15
+            "desktop_logo_height": 100,
+            "container_width": 95
           }
         },
         "custom_w8CdFF": {
