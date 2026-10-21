@@ -90,16 +90,25 @@
     dotsWrap.style.setProperty('width', 'fit-content');
     dotsWrap.style.setProperty('margin', '0');
 
-    // Handle circular background styling based on setting
-    var showBackground = dotsWrap.getAttribute('data-dots-background') === 'true';
+    // Use the collection section setting when available; otherwise use the global setting.
+    var collectionSection = dotsWrap.closest('[data-slider-dots-background]');
+    var sectionBackground = collectionSection
+      ? collectionSection.getAttribute('data-slider-dots-background')
+      : null;
+    var showBackground = sectionBackground
+      ? sectionBackground !== 'transparent'
+      : dotsWrap.getAttribute('data-dots-background') === 'true';
+    var backgroundColor = showBackground
+      ? (sectionBackground || 'rgba(217, 217, 217, 0.45)')
+      : 'transparent';
     if (showBackground) {
       dotsWrap.classList.add('with-background');
-      dotsWrap.style.setProperty('background', 'rgba(217, 217, 217, 0.45)', 'important');
+      dotsWrap.style.setProperty('background', backgroundColor, 'important');
       dotsWrap.style.setProperty('border-radius', '999px');
       dotsWrap.style.setProperty('padding', '6px 10px');
     } else {
       dotsWrap.classList.remove('with-background');
-      dotsWrap.style.setProperty('background', 'transparent', 'important');
+      dotsWrap.style.setProperty('background', backgroundColor, 'important');
       dotsWrap.style.setProperty('border-radius', '0');
     }
 

@@ -29,6 +29,7 @@
   class="collection-content"
   data-section-id="{{ section.id }}"
   data-section-type="collection-grid"
+  data-slider-dots-background="{% if section.settings.enable_slider_dots_background %}{{ section.settings.slider_dots_background_color }}{% else %}transparent{% endif %}"
 >
   <div id="CollectionAjaxContent-{{ section.id }}">
     <div class="page-width">
