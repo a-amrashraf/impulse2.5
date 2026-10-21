@@ -11,12 +11,10 @@
     padding-top: {{ section.settings.padding_top }}px;
     padding-bottom: {{ section.settings.padding_bottom }}px;
   }
-  #CollectionSection-{{ section.id }} .impulse-mobile-dots.with-background {
-    background: transparent !important;
-  }
-  #CollectionSection-{{ section.id }} .impulse-mobile-dot,
-  #CollectionSection-{{ section.id }} .impulse-mobile-dot.active {
-    background: {{ section.settings.slider_dots_color }} !important;
+  #CollectionSection-{{ section.id }} .impulse-mobile-dots {
+    background: {% if section.settings.enable_slider_dots_background %}{{ section.settings.slider_dots_background_color }}{% else %}transparent{% endif %} !important;
+    border-radius: {% if section.settings.enable_slider_dots_background %}999px{% else %}0{% endif %};
+    padding: {% if section.settings.enable_slider_dots_background %}4px 8px{% else %}0{% endif %};
   }
   @media screen and (max-width: 768px) {
     #CollectionSection-{{ section.id }} {
@@ -183,10 +181,16 @@
       "default": true
     },
     {
+      "type": "checkbox",
+      "id": "enable_slider_dots_background",
+      "label": "Show background around slider dots",
+      "default": false
+    },
+    {
       "type": "color",
-      "id": "slider_dots_color",
-      "label": "Slider dots color",
-      "default": "#000000"
+      "id": "slider_dots_background_color",
+      "label": "Slider dots background color",
+      "default": "#D9D9D9"
     },
     {
       "type": "header",
