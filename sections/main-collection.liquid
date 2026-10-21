@@ -1,5 +1,6 @@
 {%- liquid
   assign current_filter_size = 0
+  assign slider_dots_background_opacity = section.settings.slider_dots_background_opacity | divided_by: 100.0
 
   for filter in collection.filters
     assign current_filter_size = current_filter_size | plus: filter.active_values.size
@@ -12,7 +13,7 @@
     padding-bottom: {{ section.settings.padding_bottom }}px;
   }
   #CollectionSection-{{ section.id }} .impulse-mobile-dots {
-    background: {% if section.settings.enable_slider_dots_background %}{{ section.settings.slider_dots_background_color }}{% else %}transparent{% endif %} !important;
+    background: {% if section.settings.enable_slider_dots_background %}{{ section.settings.slider_dots_background_color | color_modify: 'alpha', slider_dots_background_opacity }}{% else %}transparent{% endif %} !important;
     border-radius: {% if section.settings.enable_slider_dots_background %}999px{% else %}0{% endif %};
     padding: {% if section.settings.enable_slider_dots_background %}4px 8px{% else %}0{% endif %};
   }
@@ -29,7 +30,7 @@
   class="collection-content"
   data-section-id="{{ section.id }}"
   data-section-type="collection-grid"
-  data-slider-dots-background="{% if section.settings.enable_slider_dots_background %}{{ section.settings.slider_dots_background_color }}{% else %}transparent{% endif %}"
+  data-slider-dots-background="{% if section.settings.enable_slider_dots_background %}{{ section.settings.slider_dots_background_color | color_modify: 'alpha', slider_dots_background_opacity }}{% else %}transparent{% endif %}"
 >
   <div id="CollectionAjaxContent-{{ section.id }}">
     <div class="page-width">
@@ -192,6 +193,16 @@
       "id": "slider_dots_background_color",
       "label": "Slider dots background color",
       "default": "#D9D9D9"
+    },
+    {
+      "type": "range",
+      "id": "slider_dots_background_opacity",
+      "label": "Slider dots background opacity",
+      "default": 10,
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%"
     },
     {
       "type": "header",
