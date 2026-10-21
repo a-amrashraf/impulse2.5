@@ -11,17 +11,12 @@
     padding-top: {{ section.settings.padding_top }}px;
     padding-bottom: {{ section.settings.padding_bottom }}px;
   }
-  #CollectionSection-{{ section.id }} .pagination {
-    color: {{ section.settings.pagination_color }};
+  #CollectionSection-{{ section.id }} .impulse-mobile-dots.with-background {
+    background: transparent !important;
   }
-  #CollectionSection-{{ section.id }} .pagination .next,
-  #CollectionSection-{{ section.id }} .pagination .prev {
-    background: transparent;
-    color: {{ section.settings.pagination_color }};
-  }
-  #CollectionSection-{{ section.id }} .pagination .next .icon,
-  #CollectionSection-{{ section.id }} .pagination .prev .icon {
-    color: {{ section.settings.pagination_color }};
+  #CollectionSection-{{ section.id }} .impulse-mobile-dot,
+  #CollectionSection-{{ section.id }} .impulse-mobile-dot.active {
+    background: {{ section.settings.slider_dots_color }} !important;
   }
   @media screen and (max-width: 768px) {
     #CollectionSection-{{ section.id }} {
@@ -189,8 +184,8 @@
     },
     {
       "type": "color",
-      "id": "pagination_color",
-      "label": "Pagination color",
+      "id": "slider_dots_color",
+      "label": "Slider dots color",
       "default": "#000000"
     },
     {
