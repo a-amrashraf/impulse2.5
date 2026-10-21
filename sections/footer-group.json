@@ -65,7 +65,7 @@
           "type": "logo_social",
           "settings": {
             "logo": "shopify://shop_images/HELIO_Logo_RGB_BLACKBG-TRANSPARENT-01.png",
-            "desktop_logo_height": 50,
+            "desktop_logo_height": 40,
             "container_width": 95
           }
         },
