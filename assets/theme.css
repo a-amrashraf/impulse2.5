@@ -13303,5 +13303,21 @@ label,.h5,
   z-index: -9999 !important;
 }
 
+.grid-product__quick-add-btn {
+  background-color: transparent;
+  color: #000000;
+  border: none;
+}
 
+.grid-product__quick-add-btn:hover {
+  background-color: transparent;
+}
 
+.grid-product__quick-add-btn .icon-plus {
+  width: 24px;
+  height: 24px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-width: 2;
+}

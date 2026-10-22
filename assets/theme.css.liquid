@@ -13336,12 +13336,8 @@ label,.h5,
 }
 
 .grid-product__quick-add-btn {
-  {% if settings.add_to_cart_bg_transparent %}
-    background-color: transparent;
-  {% else %}
-    background-color: {{ settings.add_to_cart_bg_color | default: '#1c1d1d' }};
-  {% endif %}
-  color: {{ settings.add_to_cart_icon_color | default: '#ffffff' }};
+  background-color: transparent;
+  color: #000000;
   border: none;
   border-radius: 50%;
   cursor: pointer;
@@ -13356,27 +13352,19 @@ label,.h5,
 
 .grid-product__quick-add-btn:hover {
   transform: scale(1.05);
-  {% unless settings.add_to_cart_bg_transparent %}
-    background-color: {{ settings.add_to_cart_bg_color | default: '#1c1d1d' | color_darken: 10 }};
-  {% endunless %}
 }
 
 .grid-product__quick-add-btn:active {
   transform: scale(0.95);
 }
 
-.grid-product__quick-add-btn .icon-bag-plus {
-  fill: currentColor !important;
-}
-
-.grid-product__quick-add-btn .icon-cart-custom {
-  width: 30px;
-  height: 30px;
-  object-fit: contain;
-  /* Invert color if icon color isn't set, ensuring visibility on dark backgrounds */
-  {% unless settings.add_to_cart_icon_color != blank %}
-    filter: brightness(0) saturate(100%) invert(1);
-  {% endunless %}
+.grid-product__quick-add-btn .icon-plus {
+  width: 24px;
+  height: 24px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-width: 2;
 }
 
 
