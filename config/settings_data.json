@@ -51,7 +51,7 @@
     "product_save_type": "percent",
     "vendor_enable": false,
     "quick_shop_enable": false,
-    "add_to_cart_bg_transparent": true,
+    "add_to_cart_background_enabled": true,
     "product_grid_image_size": "portrait",
     "product_grid_image_fill": true,
     "product_hover_image": true,

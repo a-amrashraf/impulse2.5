@@ -637,7 +637,7 @@
       },
       {
         "type": "checkbox",
-        "id": "add_to_cart_bg_transparent",
+        "id": "add_to_cart_background_enabled",
         "label": "Enable Add to Cart Background",
         "default": true
       },
