@@ -254,7 +254,7 @@ Arguments
             <form method="post" action="{{ routes.cart_add_url }}" class="grid-product__quick-add js-ajax-cart-form" data-product-id="{{ product.id }}" data-has-only-default="{{ product.has_only_default_variant }}">
               <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
               <input type="hidden" name="quantity" value="1">
-              <button type="submit" class="grid-product__quick-add-btn js-ajax-add-to-cart" aria-label="{{ 'products.product.add_to_cart' | t }}">
+              <button type="submit" class="grid-product__quick-add-btn{% if settings.add_to_cart_bg_transparent %} grid-product__quick-add-btn--with-background{% endif %} js-ajax-add-to-cart" aria-label="{{ 'products.product.add_to_cart' | t }}">
                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon icon-plus" aria-hidden="true">
                  <path d="M12 5v14M5 12h14" />
                </svg>

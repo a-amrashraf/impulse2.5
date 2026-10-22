@@ -638,8 +638,8 @@
       {
         "type": "checkbox",
         "id": "add_to_cart_bg_transparent",
-        "label": "Transparent Background",
-        "default": false
+        "label": "Enable Add to Cart Background",
+        "default": true
       },
       {
          "type": "color",
