@@ -74,6 +74,35 @@
         "parallax_direction": "top"
       }
     },
+    "products_grid_new_7DEWfY": {
+      "type": "products-grid-new",
+      "disabled": true,
+      "name": "Products Grid New",
+      "settings": {
+        "title": "",
+        "collection": "",
+        "enable_sidebar": true,
+        "collapsed": false,
+        "filter_style": "drawer",
+        "enable_color_swatches": true,
+        "enable_swatch_labels": true,
+        "limit_swatches": false,
+        "show_out_of_stock_swatches": true,
+        "enable_sort": true,
+        "enable_collection_count": true,
+        "per_row": 4,
+        "rows_per_page": 7,
+        "mobile_flush_grid": true,
+        "divider": false,
+        "swatch_overflow_style": "newline",
+        "swatch_vertical_offset": -12,
+        "swatch_bottom_padding": 10,
+        "padding_top": 10,
+        "padding_bottom": 20,
+        "padding_top_mobile": 8,
+        "padding_bottom_mobile": 16
+      }
+    },
     "main-collection": {
       "type": "main-collection",
       "blocks": {
@@ -102,7 +131,6 @@
         "subcollections",
         "product_grid"
       ],
-      "disabled": true,
       "custom_css": [
         ".grid-product__image-mask {margin-bottom: 4px !important; margin-top: -8px;}",
         " /* Remove bottom padding under product card */.grid-product__content,.grid-product__meta {padding-bottom: 4px !important; margin-bottom: 4px !important; margin-top: 0px;}",
@@ -188,42 +216,14 @@
         "blog_image_size": "wide",
         "divider": false
       }
-    },
-    "products_grid_new_7DEWfY": {
-      "type": "products-grid-new",
-      "name": "Products Grid New",
-      "settings": {
-        "title": "",
-        "collection": "",
-        "enable_sidebar": true,
-        "collapsed": false,
-        "filter_style": "drawer",
-        "enable_color_swatches": true,
-        "enable_swatch_labels": true,
-        "limit_swatches": false,
-        "show_out_of_stock_swatches": true,
-        "enable_sort": true,
-        "enable_collection_count": true,
-        "per_row": 4,
-        "rows_per_page": 7,
-        "mobile_flush_grid": true,
-        "divider": false,
-        "swatch_overflow_style": "newline",
-        "swatch_vertical_offset": -12,
-        "swatch_bottom_padding": 10,
-        "padding_top": 10,
-        "padding_bottom": 20,
-        "padding_top_mobile": 8,
-        "padding_bottom_mobile": 16
-      }
     }
   },
   "order": [
     "promo-grid",
     "collection-header",
+    "products_grid_new_7DEWfY",
     "main-collection",
     "countdown",
-    "blog-posts",
-    "products_grid_new_7DEWfY"
+    "blog-posts"
   ]
 }
