@@ -36,20 +36,20 @@
             "custom_title": "EXCLUSIVE"
           }
         },
-        "collection_DMVxWD": {
-          "type": "collection",
-          "settings": {
-            "collection": "scrunch-bag",
-            "custom_image": "shopify://shop_images/Scrunch-removebg-preview.png",
-            "custom_title": "Scrunch"
-          }
-        },
         "collection_RUhfck": {
           "type": "collection",
           "settings": {
             "collection": "hobo-bag",
             "custom_image": "shopify://shop_images/Hobo-removebg-preview.png",
             "custom_title": "Hobo"
+          }
+        },
+        "collection_HaqEeH": {
+          "type": "collection",
+          "settings": {
+            "collection": "buckle-bag",
+            "custom_image": "shopify://shop_images/IMG_7369_JPG.png",
+            "custom_title": "BUCKLE"
           }
         },
         "collection_cRwFje": {
@@ -68,6 +68,38 @@
             "custom_title": "Bat"
           }
         },
+        "collection_nqH6mE": {
+          "type": "collection",
+          "settings": {
+            "collection": "miss-mess-bag",
+            "custom_image": "shopify://shop_images/IMG_6952_JPG.jpg",
+            "custom_title": "MISSMESS"
+          }
+        },
+        "collection_xjgMGe": {
+          "type": "collection",
+          "settings": {
+            "collection": "muse-bag",
+            "custom_image": "shopify://shop_images/IMG_6951_JPG.jpg",
+            "custom_title": "MUSE"
+          }
+        },
+        "collection_DMVxWD": {
+          "type": "collection",
+          "settings": {
+            "collection": "scrunch-bag",
+            "custom_image": "shopify://shop_images/Scrunch-removebg-preview.png",
+            "custom_title": "Scrunch"
+          }
+        },
+        "collection_kUz6iQ": {
+          "type": "collection",
+          "settings": {
+            "collection": "bowler-bag",
+            "custom_image": "shopify://shop_images/Bowler-removebg-preview.png",
+            "custom_title": "BOWLER"
+          }
+        },
         "collection_EhHm4t": {
           "type": "collection",
           "settings": {
@@ -84,20 +116,12 @@
             "custom_title": "BARQUE"
           }
         },
-        "collection_nqH6mE": {
+        "collection_Hmycmc": {
           "type": "collection",
           "settings": {
-            "collection": "miss-mess-bag",
-            "custom_image": "shopify://shop_images/IMG_6952_JPG.jpg",
-            "custom_title": "MISSMESS"
-          }
-        },
-        "collection_kUz6iQ": {
-          "type": "collection",
-          "settings": {
-            "collection": "bowler-bag",
-            "custom_image": "shopify://shop_images/Bowler-removebg-preview.png",
-            "custom_title": "BOWLER"
+            "collection": "halo-bag",
+            "custom_image": "shopify://shop_images/Halo-removebg-preview.png",
+            "custom_title": "Halo"
           }
         },
         "collection_ggyCtV": {
@@ -108,22 +132,6 @@
             "custom_title": "Croco"
           }
         },
-        "collection_xjgMGe": {
-          "type": "collection",
-          "settings": {
-            "collection": "muse-bag",
-            "custom_image": "shopify://shop_images/IMG_6951_JPG.jpg",
-            "custom_title": "MUSE"
-          }
-        },
-        "collection_Hmycmc": {
-          "type": "collection",
-          "settings": {
-            "collection": "halo-bag",
-            "custom_image": "shopify://shop_images/Halo-removebg-preview.png",
-            "custom_title": "Halo"
-          }
-        },
         "collection_LqqbrY": {
           "type": "collection",
           "settings": {
@@ -131,70 +139,23 @@
             "custom_image": "shopify://shop_images/Token-removebg-preview.png",
             "custom_title": "Token"
           }
-        },
-        "collection_yaVxgT": {
-          "type": "collection",
-          "disabled": true,
-          "settings": {
-            "collection": "origin-tote-bag",
-            "custom_image": "shopify://shop_images/unnamed_2_d2c61514-2401-4b20-9f26-3ae6f1ce1a7e.jpg",
-            "custom_title": "TOTE"
-          }
-        },
-        "collection_B4TTNQ": {
-          "type": "collection",
-          "disabled": true,
-          "settings": {
-            "collection": "radioset-bag",
-            "custom_image": "shopify://shop_images/Radioset-removebg-preview.png",
-            "custom_title": "Radio"
-          }
-        },
-        "collection_rFz7LR": {
-          "type": "collection",
-          "disabled": true,
-          "settings": {
-            "collection": "dragon-bag",
-            "custom_image": "shopify://shop_images/Dragon-removebg-preview.png",
-            "custom_title": "Dragon"
-          }
-        },
-        "collection_UXenQT": {
-          "type": "collection",
-          "disabled": true,
-          "settings": {
-            "collection": "vernis-bag",
-            "custom_title": "Vernis"
-          }
-        },
-        "collection_bjVALb": {
-          "type": "collection",
-          "disabled": true,
-          "settings": {
-            "collection": "switch-bag",
-            "custom_title": "Switch"
-          }
         }
       },
       "block_order": [
         "collection_nCkKFF",
-        "collection_DMVxWD",
         "collection_RUhfck",
+        "collection_HaqEeH",
         "collection_cRwFje",
         "collection_6kzg64",
+        "collection_nqH6mE",
+        "collection_xjgMGe",
+        "collection_DMVxWD",
+        "collection_kUz6iQ",
         "collection_EhHm4t",
         "collection_XbGVtt",
-        "collection_nqH6mE",
-        "collection_kUz6iQ",
-        "collection_ggyCtV",
-        "collection_xjgMGe",
         "collection_Hmycmc",
-        "collection_LqqbrY",
-        "collection_yaVxgT",
-        "collection_B4TTNQ",
-        "collection_rFz7LR",
-        "collection_UXenQT",
-        "collection_bjVALb"
+        "collection_ggyCtV",
+        "collection_LqqbrY"
       ],
       "name": "Collection Navigation",
       "settings": {
@@ -251,6 +212,9 @@
         "enable_color_swatches": true,
         "enable_swatch_labels": true,
         "enable_sort": true,
+        "enable_slider_dots_background": false,
+        "slider_dots_background_color": "#d9d9d9",
+        "slider_dots_background_opacity": 10,
         "padding_top": 14,
         "padding_bottom": 20,
         "padding_top_mobile": 8,
