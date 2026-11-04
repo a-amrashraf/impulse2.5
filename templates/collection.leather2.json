@@ -60,6 +60,15 @@
             "custom_title": "Baguette"
           }
         },
+        "collection_wB7ytJ": {
+          "type": "collection",
+          "disabled": true,
+          "settings": {
+            "collection": "swan-bag",
+            "custom_image": "shopify://shop_images/v1_try.png",
+            "custom_title": "SWAN"
+          }
+        },
         "collection_6kzg64": {
           "type": "collection",
           "settings": {
@@ -146,6 +155,7 @@
         "collection_RUhfck",
         "collection_HaqEeH",
         "collection_cRwFje",
+        "collection_wB7ytJ",
         "collection_6kzg64",
         "collection_nqH6mE",
         "collection_xjgMGe",
