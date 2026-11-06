@@ -64,7 +64,7 @@
   {% endunless %}
 
   {% if overlay_header %}
-    .header-wrapper--sticky {
+    .header-wrapper--sticky .site-header:not(.site-header--stuck) {
       background: transparent;
       -webkit-backdrop-filter: blur({{ section.settings.transparent_header_blur }}px);
       backdrop-filter: blur({{ section.settings.transparent_header_blur }}px);
