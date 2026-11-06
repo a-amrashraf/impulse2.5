@@ -896,6 +896,10 @@
           "label": "En-tête superposé sur la collection",
           "info": "(si l'image de la collection est activée)"
         },
+        "transparent_header_opacity": {
+          "label": "Opacité de la superposition de l'en-tête transparent",
+          "info": "Contrôle l'opacité du dégradé sombre lorsque l'en-tête se superpose à une image."
+        },
         "header_announcement_bar": "Barre d'annonces",
         "announcement_compact": {
           "label": "Utiliser le style compact"

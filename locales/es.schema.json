@@ -896,6 +896,10 @@
           "label": "Cabecera superpuesta sobre la colección",
           "info": "(si la imagen de la colección está activada)"
         },
+        "transparent_header_opacity": {
+          "label": "Opacidad de la superposición de la cabecera transparente",
+          "info": "Controla la opacidad del degradado oscuro cuando la cabecera se superpone a una imagen."
+        },
         "header_announcement_bar": "Barra de anuncios",
         "announcement_compact": {
           "label": "Utilizar el estilo compacto"

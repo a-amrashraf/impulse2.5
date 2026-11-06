@@ -896,6 +896,10 @@
           "label": "Header über Kategorie legen",
           "info": "(wenn Kategoriebild aktiviert ist)"
         },
+        "transparent_header_opacity": {
+          "label": "Deckkraft der transparenten Header-Überlagerung",
+          "info": "Steuert die Deckkraft des dunklen Verlaufs, wenn der Header über einem Bild liegt."
+        },
         "header_announcement_bar": "Ankündigungsleiste",
         "announcement_compact": {
           "label": "Kompaktes Design verwenden"
