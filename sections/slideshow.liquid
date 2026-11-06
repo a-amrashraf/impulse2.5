@@ -116,6 +116,17 @@
                   }
                 }
 
+                .slideshow__slide--{{ block.id }} .hero__link .btn {
+                  border-radius: {{ block.settings.button_border_radius | default: 0 }}px;
+                  font-size: {{ block.settings.button_text_size | default: 14 | times: 0.9 }}px;
+                }
+
+                @media only screen and (min-width: 769px) {
+                  .slideshow__slide--{{ block.id }} .hero__link .btn {
+                    font-size: {{ block.settings.button_text_size | default: 14 }}px;
+                  }
+                }
+
                 {%- assign button_alpha = block.settings.color_accent | color_extract: 'alpha' -%}
                 {% unless button_alpha == 0.0 %}
                   .slideshow__slide--{{ block.id }} .btn {
@@ -137,6 +148,18 @@
                     }
                   {% endif %}
                 {% endunless %}
+
+                {% if block.settings.button_transparent %}
+                  .slideshow__slide--{{ block.id }} .hero__link .btn {
+                    background: transparent !important;
+                    border: 1px solid currentColor !important;
+                  }
+                  .slideshow__slide--{{ block.id }} .hero__link .btn:before,
+                  .slideshow__slide--{{ block.id }} .hero__link .btn:after {
+                    background: transparent !important;
+                    border: none !important;
+                  }
+                {% endif %}
 
                 {% if block.settings.overlay_opacity > 0 %}
                   .slideshow__slide--{{ block.id }} .hero__image-wrapper:after {
@@ -493,6 +516,32 @@
           "type": "text",
           "id": "link_text_2",
           "label": "t:sections.slideshow.blocks.slide.settings.link_text_2.label"
+        },
+        {
+          "type": "range",
+          "id": "button_text_size",
+          "label": "t:sections.slideshow.blocks.slide.settings.button_text_size.label",
+          "default": 14,
+          "min": 10,
+          "max": 30,
+          "step": 1,
+          "unit": "px"
+        },
+        {
+          "type": "checkbox",
+          "id": "button_transparent",
+          "label": "t:sections.slideshow.blocks.slide.settings.button_transparent.label",
+          "default": false
+        },
+        {
+          "type": "range",
+          "id": "button_border_radius",
+          "label": "t:sections.slideshow.blocks.slide.settings.button_border_radius.label",
+          "default": 0,
+          "min": 0,
+          "max": 50,
+          "step": 1,
+          "unit": "px"
         },
         {
           "type": "color",
