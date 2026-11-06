@@ -900,6 +900,9 @@
           "label": "Unschärfe des transparenten Headers",
           "info": "Steuert die Unschärfe, wenn der Header über einem Bild liegt."
         },
+        "header_icon_color": {
+          "label": "Farbe der Header-Symbole"
+        },
         "header_announcement_bar": "Ankündigungsleiste",
         "announcement_compact": {
           "label": "Kompaktes Design verwenden"

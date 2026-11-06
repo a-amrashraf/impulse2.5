@@ -71,6 +71,16 @@
     }
   {% endif %}
 
+  .site-header .header-item--icons .site-nav__link,
+  .site-header .header-item--icons .site-nav__link:hover {
+    color: {{ section.settings.header_icon_color }};
+  }
+
+  .site-header .header-item--icons .site-nav__link .icon {
+    color: {{ section.settings.header_icon_color }};
+    stroke: {{ section.settings.header_icon_color }};
+  }
+
   {%- if settings.color_header == settings.color_body_bg or settings.color_body_bg contains settings.color_header -%}
     .site-header {
       box-shadow: 0 0 1px rgba(0,0,0,0.2);
@@ -298,6 +308,12 @@ ul.mobile-nav a[href*="on-sale"] {color: red !important;}
       "max": 20,
       "step": 1,
       "unit": "px"
+    },
+    {
+      "type": "color",
+      "id": "header_icon_color",
+      "label": "t:sections.header.settings.header_icon_color.label",
+      "default": "#000000"
     },
     {
       "type": "header",
