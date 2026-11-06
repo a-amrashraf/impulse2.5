@@ -896,9 +896,9 @@
           "label": "Intestazione sovrapposta alla collezione",
           "info": "(se l'immagine della collezione è abilitata)"
         },
-        "transparent_header_opacity": {
-          "label": "Opacità della sovrapposizione dell'intestazione trasparente",
-          "info": "Controlla l'opacità del gradiente scuro quando l'intestazione si sovrappone a un'immagine."
+        "transparent_header_blur": {
+          "label": "Sfocatura dell'intestazione trasparente",
+          "info": "Controlla l'intensità della sfocatura quando l'intestazione si sovrappone a un'immagine."
         },
         "header_announcement_bar": "Barra degli annunci",
         "announcement_compact": {

@@ -65,7 +65,9 @@
 
   {% if overlay_header %}
     .header-wrapper--sticky {
-      background: linear-gradient(180deg, rgba(0, 0, 0, {{ section.settings.transparent_header_opacity | divided_by: 100.0 }}) 0%, transparent);
+      background: transparent;
+      -webkit-backdrop-filter: blur({{ section.settings.transparent_header_blur }}px);
+      backdrop-filter: blur({{ section.settings.transparent_header_blur }}px);
     }
   {% endif %}
 
@@ -288,14 +290,14 @@ ul.mobile-nav a[href*="on-sale"] {color: red !important;}
     },
     {
       "type": "range",
-      "id": "transparent_header_opacity",
-      "label": "t:sections.header.settings.transparent_header_opacity.label",
-      "info": "t:sections.header.settings.transparent_header_opacity.info",
-      "default": 30,
+      "id": "transparent_header_blur",
+      "label": "t:sections.header.settings.transparent_header_blur.label",
+      "info": "t:sections.header.settings.transparent_header_blur.info",
+      "default": 8,
       "min": 0,
-      "max": 100,
+      "max": 20,
       "step": 1,
-      "unit": "%"
+      "unit": "px"
     },
     {
       "type": "header",
