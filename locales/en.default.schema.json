@@ -2476,6 +2476,9 @@
             "top_subheading": {
               "label": "Subheading"
             },
+            "top_subheading_size": {
+              "label": "Subheading size"
+            },
             "title": {
               "label": "Heading"
             },
@@ -2484,6 +2487,9 @@
             },
             "subheading": {
               "label": "Text"
+            },
+            "subheading_size": {
+              "label": "Text size"
             },
             "link": {
               "label": "Slide link"
@@ -2511,6 +2517,15 @@
                 },
                 "vertical-center_horizontal-right": {
                   "label": "Center right"
+                },
+                "vertical-top_horizontal-left": {
+                  "label": "Top left"
+                },
+                "vertical-top_horizontal-center": {
+                  "label": "Top center"
+                },
+                "vertical-top_horizontal-right": {
+                  "label": "Top right"
                 },
                 "vertical-bottom_horizontal-left": {
                   "label": "Bottom left"
