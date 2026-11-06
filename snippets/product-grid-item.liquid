@@ -100,8 +100,9 @@ Arguments
 
     <div class="grid__item-image-wrapper" data-original="{{ preview_image | img_url: '600x' }}">
       <div class="grid-product__image-mask">
-        <div class="impulse-mobile-media">
-        <div class="impulse-mobile-slider">
+      <a href="{{ product.url | within: collection }}" class="grid-product__image-link" aria-label="{{ product.title | escape }}">
+      <div class="impulse-mobile-media">
+      <div class="impulse-mobile-slider">
           <div class="impulse-mobile-slide impulse-mobile-slide--first">
         {%- if fixed_aspect_ratio -%}
           <div
@@ -225,6 +226,7 @@ Arguments
           {%- endif -%}
         {%- endif -%}
         </div>
+        </a>
         <div class="grid-product__image-overlay">
           {%- if has_custom_label -%}
             <div class="grid-product__tag grid-product__tag--custom">

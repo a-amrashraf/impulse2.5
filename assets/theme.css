@@ -4867,6 +4867,10 @@ svg.icon-cart circle{
   position:relative;
 }
 
+.grid-product__image-link{
+  display:block;
+}
+
 .image-wrap .animate-me,.image-wrap svg{
     opacity:0;
   }
