@@ -39,12 +39,13 @@
             "title_size": 40,
             "subheading": "NEW DROP",
             "subheading_size": 52,
-            "link": "",
+            "link": "shopify://collections/buckle-bag",
             "link_text": "BUCKLE BAG",
-            "link_2": "shopify://collections/buckle-bag",
+            "link_2": "",
             "link_text_2": "",
             "button_text_size": 10,
             "button_transparent": false,
+            "button_arrow": false,
             "button_border_radius": 4,
             "color_accent": "rgba(0,0,0,0)",
             "text_align": "vertical-bottom horizontal-left",
@@ -158,6 +159,7 @@
             "link_text_2": "",
             "button_text_size": 14,
             "button_transparent": false,
+            "button_arrow": false,
             "button_border_radius": 0,
             "color_accent": "rgba(0,0,0,0)",
             "text_align": "vertical-bottom horizontal-center",
@@ -621,7 +623,8 @@
         "text_size": 20,
         "text_spacing": false,
         "direction": "left",
-        "speed": 110
+        "speed": 110,
+        "scrolling_text_width": 100
       }
     }
   },
