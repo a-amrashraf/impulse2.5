@@ -88,6 +88,7 @@
     stroke: {{ section.settings.header_icon_color }};
   }
 
+<<<<<<< HEAD
   .site-header {
     margin-left: auto;
     margin-right: auto;
@@ -120,6 +121,8 @@
     backdrop-filter: blur({{ section.settings.transparent_header_blur }}px);
   }
 
+=======
+>>>>>>> parent of 0092324 (width)
   {%- if settings.color_header == settings.color_body_bg or settings.color_body_bg contains settings.color_header -%}
     .site-header {
       box-shadow: 0 0 1px rgba(0,0,0,0.2);
@@ -353,17 +356,6 @@ ul.mobile-nav a[href*="on-sale"] {color: red !important;}
       "id": "header_icon_color",
       "label": "t:sections.header.settings.header_icon_color.label",
       "default": "#000000"
-    },
-    {
-      "type": "range",
-      "id": "header_width",
-      "label": "t:sections.header.settings.header_width.label",
-      "info": "t:sections.header.settings.header_width.info",
-      "default": 100,
-      "min": 50,
-      "max": 100,
-      "step": 1,
-      "unit": "%"
     },
     {
       "type": "header",

@@ -1,12 +1,6 @@
 {% render 'scrolling-text', section: section %}
 
 <style>
-.scrolling-text--{{ section.id }} {
-  margin-left: auto;
-  margin-right: auto;
-  width: {{ section.settings.scrolling_text_width | default: 100 }}%;
-}
-
 .scrolling-text--sections--19811384131815__scrolling_text_BmWKG3 span {font-size: 8px;}
 .scrolling-text {background-color: black; color: white;}
 @media only screen and (max-width: 768px) {.scrolling-text {padding: 0 !important; border-bottom: 1.5px solid #ffffff; }}
@@ -76,16 +70,6 @@
       "max": 300,
       "step": 10,
       "unit": "s"
-    },
-    {
-      "type": "range",
-      "id": "scrolling_text_width",
-      "label": "Scrolling text width",
-      "default": 100,
-      "min": 50,
-      "max": 100,
-      "step": 1,
-      "unit": "%"
     }
   ],
   "blocks": [

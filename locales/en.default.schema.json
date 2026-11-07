@@ -903,17 +903,9 @@
         "header_icon_color": {
           "label": "Header icon color"
         },
-        "header_width": {
-          "label": "Header width",
-          "info": "Controls the width of the header background."
-        },
         "header_announcement_bar": "Announcement bar",
         "announcement_compact": {
           "label": "Use compact style"
-        },
-        "announcement_width": {
-          "label": "Announcement bar width",
-          "info": "Controls the width of the announcement bar background."
         },
         "announcement_above_header": {
           "label": "Always show above header"
@@ -1251,9 +1243,6 @@
               "label": "Slow"
             }
           }
-        },
-        "scrolling_text_width": {
-          "label": "Scrolling text width"
         }
       },
       "presets": {
