@@ -2509,6 +2509,9 @@
             "button_transparent": {
               "label": "Transparent button"
             },
+            "button_arrow": {
+              "label": "Show arrow beside button text"
+            },
             "button_border_radius": {
               "label": "Button corner radius"
             },
