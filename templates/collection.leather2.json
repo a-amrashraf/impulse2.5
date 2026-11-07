@@ -62,10 +62,9 @@
         },
         "collection_wB7ytJ": {
           "type": "collection",
-          "disabled": true,
           "settings": {
             "collection": "swan-bag",
-            "custom_image": "shopify://shop_images/v1_try.png",
+            "custom_image": "shopify://shop_images/kk.png",
             "custom_title": "SWAN"
           }
         },
