@@ -63,6 +63,24 @@
     }
   {% endunless %}
 
+  {% if overlay_header %}
+    .header-wrapper--sticky .site-header:not(.site-header--stuck) {
+      background: transparent;
+      -webkit-backdrop-filter: blur({{ section.settings.transparent_header_blur }}px);
+      backdrop-filter: blur({{ section.settings.transparent_header_blur }}px);
+    }
+  {% endif %}
+
+  .site-header .header-item--icons .site-nav__link,
+  .site-header .header-item--icons .site-nav__link:hover,
+  .site-header .header-item--icons .site-nav__link .icon,
+  .site-header .js-drawer-open-nav,
+  .site-header .js-drawer-open-nav:hover,
+  .site-header .js-drawer-open-nav .icon {
+    color: {{ section.settings.header_icon_color }};
+    stroke: {{ section.settings.header_icon_color }};
+  }
+
   {%- if settings.color_header == settings.color_body_bg or settings.color_body_bg contains settings.color_header -%}
     .site-header {
       box-shadow: 0 0 1px rgba(0,0,0,0.2);
@@ -279,6 +297,23 @@ ul.mobile-nav a[href*="on-sale"] {color: red !important;}
       "label": "t:sections.header.settings.sticky_collection.label",
       "info": "t:sections.header.settings.sticky_collection.info",
       "default": true
+    },
+    {
+      "type": "range",
+      "id": "transparent_header_blur",
+      "label": "t:sections.header.settings.transparent_header_blur.label",
+      "info": "t:sections.header.settings.transparent_header_blur.info",
+      "default": 8,
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "px"
+    },
+    {
+      "type": "color",
+      "id": "header_icon_color",
+      "label": "t:sections.header.settings.header_icon_color.label",
+      "default": "#000000"
     },
     {
       "type": "header",
