@@ -1,4 +1,10 @@
 <style>
+  .announcement-bar {
+    margin-left: auto;
+    margin-right: auto;
+    width: {{ section.settings.announcement_width | default: 100 }}%;
+  }
+
   {%- if settings.color_announcement == settings.color_body_bg -%}
     .announcement-bar {
       border-bottom: 1px solid;
@@ -16,6 +22,17 @@
       "type": "checkbox",
       "id": "announcement_compact",
       "label": "t:sections.header.settings.announcement_compact.label"
+    },
+    {
+      "type": "range",
+      "id": "announcement_width",
+      "label": "t:sections.header.settings.announcement_width.label",
+      "info": "t:sections.header.settings.announcement_width.info",
+      "default": 100,
+      "min": 50,
+      "max": 100,
+      "step": 1,
+      "unit": "%"
     }
   ],
   "blocks": [
@@ -55,4 +72,3 @@
   }
 }
 {% endschema %}
-
