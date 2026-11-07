@@ -101,12 +101,28 @@
             "custom_title": "Hobo"
           }
         },
+        "collection_ckxeap": {
+          "type": "collection",
+          "settings": {
+            "collection": "buckle-bag",
+            "custom_image": "shopify://shop_images/IMG_7369_JPG_f3e62270-0653-4657-a3f8-30c7f997cd91.png",
+            "custom_title": "BUCKLE"
+          }
+        },
         "collection_mhAF9a": {
           "type": "collection",
           "settings": {
             "collection": "baguette-bag",
             "custom_image": "shopify://shop_images/Baguette_-removebg-preview.png",
             "custom_title": "Baguette"
+          }
+        },
+        "collection_t8aFTV": {
+          "type": "collection",
+          "settings": {
+            "collection": "swan-bag",
+            "custom_image": "shopify://shop_images/ssds.png",
+            "custom_title": "SWAN"
           }
         },
         "collection_8iziXb": {
@@ -180,56 +196,15 @@
             "custom_image": "shopify://shop_images/Token-removebg-preview.png",
             "custom_title": "Token"
           }
-        },
-        "collection_w3PXwG": {
-          "type": "collection",
-          "disabled": true,
-          "settings": {
-            "collection": "origin-tote-bag",
-            "custom_image": "shopify://shop_images/unnamed_2_d2c61514-2401-4b20-9f26-3ae6f1ce1a7e.jpg",
-            "custom_title": "TOTE"
-          }
-        },
-        "collection_GMYY3E": {
-          "type": "collection",
-          "disabled": true,
-          "settings": {
-            "collection": "radioset-bag",
-            "custom_image": "shopify://shop_images/Radioset-removebg-preview.png",
-            "custom_title": "Radio"
-          }
-        },
-        "collection_8REyeR": {
-          "type": "collection",
-          "disabled": true,
-          "settings": {
-            "collection": "dragon-bag",
-            "custom_image": "shopify://shop_images/Dragon-removebg-preview.png",
-            "custom_title": "Dragon"
-          }
-        },
-        "collection_xkWWj8": {
-          "type": "collection",
-          "disabled": true,
-          "settings": {
-            "collection": "vernis-bag",
-            "custom_title": "Vernis"
-          }
-        },
-        "collection_FJPC43": {
-          "type": "collection",
-          "disabled": true,
-          "settings": {
-            "collection": "switch-bag",
-            "custom_title": "Switch"
-          }
         }
       },
       "block_order": [
         "collection_zwgbEz",
         "collection_cJxxLY",
         "collection_aaTNH8",
+        "collection_ckxeap",
         "collection_mhAF9a",
+        "collection_t8aFTV",
         "collection_8iziXb",
         "collection_tFfBPB",
         "collection_Ecfbbc",
@@ -238,12 +213,7 @@
         "collection_7H6CLW",
         "collection_bePz6z",
         "collection_ync7zj",
-        "collection_xgazQm",
-        "collection_w3PXwG",
-        "collection_GMYY3E",
-        "collection_8REyeR",
-        "collection_xkWWj8",
-        "collection_FJPC43"
+        "collection_xgazQm"
       ],
       "name": "Collection Navigation",
       "settings": {
