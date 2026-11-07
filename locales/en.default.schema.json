@@ -896,13 +896,6 @@
           "label": "Overlay header over collection",
           "info": "(if collection image is enabled)"
         },
-        "transparent_header_blur": {
-          "label": "Transparent header blur",
-          "info": "Controls the blur strength when the header overlays an image."
-        },
-        "header_icon_color": {
-          "label": "Header icon color"
-        },
         "header_announcement_bar": "Announcement bar",
         "announcement_compact": {
           "label": "Use compact style"

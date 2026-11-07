@@ -896,13 +896,6 @@
           "label": "En-tête superposé sur la collection",
           "info": "(si l'image de la collection est activée)"
         },
-        "transparent_header_blur": {
-          "label": "Flou de l'en-tête transparent",
-          "info": "Contrôle l'intensité du flou lorsque l'en-tête se superpose à une image."
-        },
-        "header_icon_color": {
-          "label": "Couleur des icônes de l'en-tête"
-        },
         "header_announcement_bar": "Barre d'annonces",
         "announcement_compact": {
           "label": "Utiliser le style compact"

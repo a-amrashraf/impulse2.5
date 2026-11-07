@@ -63,68 +63,6 @@
     }
   {% endunless %}
 
-  {% if overlay_header %}
-    .header-wrapper--sticky .site-header:not(.site-header--stuck) {
-      background: transparent;
-      -webkit-backdrop-filter: blur({{ section.settings.transparent_header_blur }}px);
-      backdrop-filter: blur({{ section.settings.transparent_header_blur }}px);
-    }
-  {% endif %}
-
-  .site-header .header-item--icons .site-nav__link,
-  .site-header .header-item--icons .site-nav__link:hover {
-    color: {{ section.settings.header_icon_color }};
-  }
-
-  .site-header .header-item--icons .site-nav__link .icon {
-    color: {{ section.settings.header_icon_color }};
-    stroke: {{ section.settings.header_icon_color }};
-  }
-
-  .site-header .js-drawer-open-nav,
-  .site-header .js-drawer-open-nav:hover,
-  .site-header .js-drawer-open-nav .icon {
-    color: {{ section.settings.header_icon_color }};
-    stroke: {{ section.settings.header_icon_color }};
-  }
-
-<<<<<<< HEAD
-
-  .site-header {
-    margin-left: auto;
-    margin-right: auto;
-    width: {{ section.settings.header_width | default: 100 }}%;
-  }
-
-  .shopify-section-group-header-group:has(#HeaderWrapper.header-wrapper--sticky) {
-    left: 0;
-    position: absolute;
-    right: 0;
-    top: 0;
-    z-index: 28;
-  }
-
-  .shopify-section-group-header-group:has(#HeaderWrapper.header-wrapper--sticky) .header-sticky-wrapper,
-  .shopify-section-group-header-group:has(#HeaderWrapper.header-wrapper--sticky) #HeaderWrapper.header-wrapper--sticky {
-    position: relative;
-  }
-
-  .shopify-section-group-header-group:has(#HeaderWrapper.header-wrapper--sticky) #HeaderWrapper.header-wrapper--sticky {
-    left: auto;
-    right: auto;
-    top: auto;
-  }
-
-  .shopify-section-group-header-group:has(#HeaderWrapper.header-wrapper--sticky) .announcement-bar,
-  .shopify-section-group-header-group:has(#HeaderWrapper.header-wrapper--sticky) .scrolling-text {
-    background: transparent !important;
-    -webkit-backdrop-filter: blur({{ section.settings.transparent_header_blur }}px);
-    backdrop-filter: blur({{ section.settings.transparent_header_blur }}px);
-  }
-
-=======
->>>>>>> parent of 0092324 (width)
-
   {%- if settings.color_header == settings.color_body_bg or settings.color_body_bg contains settings.color_header -%}
     .site-header {
       box-shadow: 0 0 1px rgba(0,0,0,0.2);
@@ -341,23 +279,6 @@ ul.mobile-nav a[href*="on-sale"] {color: red !important;}
       "label": "t:sections.header.settings.sticky_collection.label",
       "info": "t:sections.header.settings.sticky_collection.info",
       "default": true
-    },
-    {
-      "type": "range",
-      "id": "transparent_header_blur",
-      "label": "t:sections.header.settings.transparent_header_blur.label",
-      "info": "t:sections.header.settings.transparent_header_blur.info",
-      "default": 8,
-      "min": 0,
-      "max": 20,
-      "step": 1,
-      "unit": "px"
-    },
-    {
-      "type": "color",
-      "id": "header_icon_color",
-      "label": "t:sections.header.settings.header_icon_color.label",
-      "default": "#000000"
     },
     {
       "type": "header",

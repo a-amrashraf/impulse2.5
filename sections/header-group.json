@@ -133,8 +133,6 @@
         "header_style": "sticky",
         "sticky_index": true,
         "sticky_collection": true,
-        "transparent_header_blur": 3,
-        "header_icon_color": "#000000",
         "toolbar_menu": "",
         "toolbar_social": false,
         "show_locale_selector": true,

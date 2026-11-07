@@ -5881,7 +5881,7 @@ form+.footer__social{
 
 .header-wrapper--sticky{
   background:none;
-  background:transparent;
+  background:linear-gradient(180deg, rgba(0,0,0,.3) 0%,transparent);
   left:0;
   position:absolute;
   right:0;

@@ -896,13 +896,6 @@
           "label": "Cabecera superpuesta sobre la colección",
           "info": "(si la imagen de la colección está activada)"
         },
-        "transparent_header_blur": {
-          "label": "Desenfoque de la cabecera transparente",
-          "info": "Controla la intensidad del desenfoque cuando la cabecera se superpone a una imagen."
-        },
-        "header_icon_color": {
-          "label": "Color de los iconos de la cabecera"
-        },
         "header_announcement_bar": "Barra de anuncios",
         "announcement_compact": {
           "label": "Utilizar el estilo compacto"
