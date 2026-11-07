@@ -119,20 +119,19 @@
                 .slideshow__slide--{{ block.id }} .hero__link .btn {
                   border-radius: {{ block.settings.button_border_radius | default: 0 }}px;
                   font-size: {{ block.settings.button_text_size | default: 14 | times: 0.9 }}px;
-                  padding: 8px 14px;
+                  padding: 4px 10px;
                 }
 
                 @media only screen and (min-width: 769px) {
                   .slideshow__slide--{{ block.id }} .hero__link .btn {
                     font-size: {{ block.settings.button_text_size | default: 14 }}px;
-                    padding: 10px 18px;
+                    padding: 6px 12px;
                   }
                 }
 
-                .slideshow__slide--{{ block.id }} .hero__link .icon--arrow-right {
-                  height: auto;
-                  margin-left: 8px;
-                  width: 18px;
+                .slideshow__slide--{{ block.id }} .hero__link .button-arrow {
+                  display: inline-block;
+                  margin-left: 6px;
                 }
 
                 {%- assign button_alpha = block.settings.color_accent | color_extract: 'alpha' -%}
@@ -300,7 +299,7 @@
                                 <a href="{{ block.settings.link }}" class="btn{% if block.settings.color_accent contains 'rgba(0,0,0,0)' %} btn--inverse{% endif %}">
                                   {{ block.settings.link_text }}
                                   {%- if block.settings.button_arrow -%}
-                                    <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon--arrow-right" viewBox="0 0 50 15"><path d="M0 5.38v4.25h35V15l15-7.5L35 0v5.38Z"/></svg>
+                                    <span class="button-arrow" aria-hidden="true">&gt;</span>
                                   {%- endif -%}
                                 </a>
                               {%- endif -%}
@@ -308,7 +307,7 @@
                                 <a href="{{ block.settings.link_2 }}" class="btn{% if block.settings.color_accent contains 'rgba(0,0,0,0)' %} btn--inverse{% endif %}">
                                   {{ block.settings.link_text_2 }}
                                   {%- if block.settings.button_arrow -%}
-                                    <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon--arrow-right" viewBox="0 0 50 15"><path d="M0 5.38v4.25h35V15l15-7.5L35 0v5.38Z"/></svg>
+                                    <span class="button-arrow" aria-hidden="true">&gt;</span>
                                   {%- endif -%}
                                 </a>
                               {%- endif -%}
