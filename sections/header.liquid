@@ -94,6 +94,21 @@
     width: {{ section.settings.header_width | default: 100 }}%;
   }
 
+  .shopify-section-group-header-group:has(#HeaderWrapper.header-wrapper--sticky) {
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 28;
+  }
+
+  .shopify-section-group-header-group:has(#HeaderWrapper.header-wrapper--sticky) .announcement-bar,
+  .shopify-section-group-header-group:has(#HeaderWrapper.header-wrapper--sticky) .scrolling-text {
+    background: transparent !important;
+    -webkit-backdrop-filter: blur({{ section.settings.transparent_header_blur }}px);
+    backdrop-filter: blur({{ section.settings.transparent_header_blur }}px);
+  }
+
   {%- if settings.color_header == settings.color_body_bg or settings.color_body_bg contains settings.color_header -%}
     .site-header {
       box-shadow: 0 0 1px rgba(0,0,0,0.2);
