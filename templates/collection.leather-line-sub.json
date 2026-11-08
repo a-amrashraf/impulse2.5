@@ -85,14 +85,6 @@
             "custom_title": "EXCLUSIVE"
           }
         },
-        "collection_cJxxLY": {
-          "type": "collection",
-          "settings": {
-            "collection": "scrunch-bag",
-            "custom_image": "shopify://shop_images/Scrunch-removebg-preview.png",
-            "custom_title": "Scrunch"
-          }
-        },
         "collection_aaTNH8": {
           "type": "collection",
           "settings": {
@@ -133,6 +125,38 @@
             "custom_title": "Bat"
           }
         },
+        "collection_GgQt9d": {
+          "type": "collection",
+          "settings": {
+            "collection": "miss-mess-bag",
+            "custom_image": "shopify://shop_images/IMG_6952_JPG.jpg",
+            "custom_title": "MISSMESS"
+          }
+        },
+        "collection_bePz6z": {
+          "type": "collection",
+          "settings": {
+            "collection": "muse-bag",
+            "custom_image": "shopify://shop_images/IMG_6951_JPG.jpg",
+            "custom_title": "MUSE"
+          }
+        },
+        "collection_cJxxLY": {
+          "type": "collection",
+          "settings": {
+            "collection": "scrunch-bag",
+            "custom_image": "shopify://shop_images/Scrunch-removebg-preview.png",
+            "custom_title": "Scrunch"
+          }
+        },
+        "collection_R3LNTX": {
+          "type": "collection",
+          "settings": {
+            "collection": "bowler-bag",
+            "custom_image": "shopify://shop_images/Bowler-removebg-preview.png",
+            "custom_title": "BOWLER"
+          }
+        },
         "collection_tFfBPB": {
           "type": "collection",
           "settings": {
@@ -149,20 +173,12 @@
             "custom_title": "BARQUE"
           }
         },
-        "collection_GgQt9d": {
+        "collection_ync7zj": {
           "type": "collection",
           "settings": {
-            "collection": "miss-mess-bag",
-            "custom_image": "shopify://shop_images/IMG_6952_JPG.jpg",
-            "custom_title": "MISSMESS"
-          }
-        },
-        "collection_R3LNTX": {
-          "type": "collection",
-          "settings": {
-            "collection": "bowler-bag",
-            "custom_image": "shopify://shop_images/Bowler-removebg-preview.png",
-            "custom_title": "BOWLER"
+            "collection": "halo-bag",
+            "custom_image": "shopify://shop_images/Halo-removebg-preview.png",
+            "custom_title": "Halo"
           }
         },
         "collection_7H6CLW": {
@@ -171,22 +187,6 @@
             "collection": "croco-bag",
             "custom_image": "shopify://shop_images/Croco-removebg-preview.png",
             "custom_title": "Croco"
-          }
-        },
-        "collection_bePz6z": {
-          "type": "collection",
-          "settings": {
-            "collection": "muse-bag",
-            "custom_image": "shopify://shop_images/IMG_6951_JPG.jpg",
-            "custom_title": "MUSE"
-          }
-        },
-        "collection_ync7zj": {
-          "type": "collection",
-          "settings": {
-            "collection": "halo-bag",
-            "custom_image": "shopify://shop_images/Halo-removebg-preview.png",
-            "custom_title": "Halo"
           }
         },
         "collection_xgazQm": {
@@ -200,19 +200,19 @@
       },
       "block_order": [
         "collection_zwgbEz",
-        "collection_cJxxLY",
         "collection_aaTNH8",
         "collection_ckxeap",
         "collection_mhAF9a",
         "collection_t8aFTV",
         "collection_8iziXb",
+        "collection_GgQt9d",
+        "collection_bePz6z",
+        "collection_cJxxLY",
+        "collection_R3LNTX",
         "collection_tFfBPB",
         "collection_Ecfbbc",
-        "collection_GgQt9d",
-        "collection_R3LNTX",
-        "collection_7H6CLW",
-        "collection_bePz6z",
         "collection_ync7zj",
+        "collection_7H6CLW",
         "collection_xgazQm"
       ],
       "name": "Collection Navigation",
