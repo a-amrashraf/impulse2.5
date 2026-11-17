@@ -82,6 +82,7 @@
         "announcement-0",
         "announcement-1"
       ],
+      "disabled": true,
       "settings": {
         "announcement_compact": true,
         "announcement_width": 100
