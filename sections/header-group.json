@@ -139,7 +139,7 @@
         "sticky_index": true,
         "sticky_collection": true,
         "transparent_header_blur": 2,
-        "header_icon_color": "#000000",
+        "header_icon_color": "#FFFFFF",
         "toolbar_menu": "",
         "toolbar_social": false,
         "show_locale_selector": true,
