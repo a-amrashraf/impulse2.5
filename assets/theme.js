@@ -4620,6 +4620,20 @@ document.addEventListener('DOMContentLoaded', function() {
         config.wrapperOverlayed = wrapper.classList.contains(config.overlayedClass);
         stickyHeaderCheck();
       }
+
+      document.querySelectorAll('.site-header__logo .logo--inverted img').forEach(function(invertedLogo) {
+        var showPrimaryLogo = function() {
+          var logoContainer = invertedLogo.closest('.site-header__logo');
+          if (logoContainer) {
+            logoContainer.classList.add('logo-inverted-error');
+          }
+        };
+
+        invertedLogo.addEventListener('error', showPrimaryLogo);
+        if (invertedLogo.complete && invertedLogo.naturalWidth === 0) {
+          showPrimaryLogo();
+        }
+      });
   
       theme.settings.overlayHeader = (siteHeader.dataset.overlay === 'true');
       // Disable overlay header if on collection template with no collection image
