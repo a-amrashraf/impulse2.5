@@ -25,6 +25,11 @@
   if template_name contains 'collection' and collection.image and section.settings.sticky_collection
     assign overlay_header = true
   endif
+
+  assign header_color = section.settings.other_pages_header_color
+  if template_name == 'index'
+    assign header_color = section.settings.homepage_header_color
+  endif
 -%}
 
 {%- render 'drawer-menu',
@@ -79,6 +84,10 @@
   .site-header .js-drawer-open-nav .icon {
     color: {{ section.settings.header_icon_color }};
     stroke: {{ section.settings.header_icon_color }};
+  }
+
+  .header-wrapper {
+    --colorNav: {{ header_color }};
   }
 
   {%- if settings.color_header == settings.color_body_bg or settings.color_body_bg contains settings.color_header -%}
@@ -314,6 +323,18 @@ ul.mobile-nav a[href*="on-sale"] {color: red !important;}
       "id": "header_icon_color",
       "label": "t:sections.header.settings.header_icon_color.label",
       "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "homepage_header_color",
+      "label": "Homepage header color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "other_pages_header_color",
+      "label": "Other pages header color",
+      "default": "#ffffff"
     },
     {
       "type": "header",
