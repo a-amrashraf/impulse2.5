@@ -88,6 +88,21 @@
 
   .header-wrapper {
     --colorNav: {{ header_color }};
+    --colorNavText: {{ header_color }};
+  }
+
+  .is-light .site-nav__link,
+  .is-light .site-nav__link:hover,
+  .is-light .header-logo a,
+  .is-light .header-logo a:hover,
+  .is-light .site-header__logo a,
+  .is-light .site-header__logo a:hover {
+    color: {{ header_color }};
+  }
+
+  .is-light .site-nav__item:not(.site-nav--has-dropdown) .site-nav__link--underline:after,
+  .is-light .site-nav--has-dropdown .site-nav__link--underline:after {
+    border-bottom-color: {{ header_color }};
   }
 
   {%- if settings.color_header == settings.color_body_bg or settings.color_body_bg contains settings.color_header -%}
@@ -327,13 +342,13 @@ ul.mobile-nav a[href*="on-sale"] {color: red !important;}
     {
       "type": "color",
       "id": "homepage_header_color",
-      "label": "Homepage header color",
+      "label": "Homepage header text color",
       "default": "#ffffff"
     },
     {
       "type": "color",
       "id": "other_pages_header_color",
-      "label": "Other pages header color",
+      "label": "Other pages header text color",
       "default": "#ffffff"
     },
     {
