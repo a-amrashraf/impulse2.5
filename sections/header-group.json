@@ -136,7 +136,7 @@
         "mega_menu_images": true,
         "main_menu_alignment": "center-drawer",
         "header_style": "sticky",
-        "sticky_index": true,
+        "sticky_index": false,
         "sticky_collection": true,
         "transparent_header_blur": 0,
         "header_icon_color": "#000000",
