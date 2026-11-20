@@ -137,7 +137,7 @@
         "main_menu_alignment": "center-drawer",
         "header_style": "sticky",
         "sticky_index": false,
-        "sticky_collection": false,
+        "sticky_collection": true,
         "transparent_header_blur": 0,
         "header_icon_color": "#000000",
         "toolbar_menu": "",
