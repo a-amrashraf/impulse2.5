@@ -48,7 +48,6 @@
         "text_6JGHjb",
         "text_qcWTHj"
       ],
-      "disabled": true,
       "custom_css": [
         ".scrolling-text--sections--19811384131815__scrolling_text_BmWKG3 span {font-size: 8px;}",
         "@media only screen and (max-width: 768px) {.scrolling-text {padding: 0 !important; border-bottom: 1.5px solid #ffffff; }}"
@@ -92,6 +91,7 @@
         "announcement-0",
         "announcement-1"
       ],
+      "disabled": true,
       "settings": {
         "announcement_background_color": "",
         "announcement_text_color": "",
