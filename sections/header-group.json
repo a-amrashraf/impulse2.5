@@ -55,7 +55,7 @@
       ],
       "name": "t:sections.marquee.presets.scrolling_text.name",
       "settings": {
-        "text": "LIMITED TIME FREE SHIPPING!",
+        "text": "",
         "separator": "",
         "link": "shopify://collections/exclusive-edition",
         "text_size": 10,
