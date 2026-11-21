@@ -50,7 +50,6 @@
       ],
       "custom_css": [
         ".scrolling-text--sections--19811384131815__scrolling_text_BmWKG3 span {font-size: 8px;}",
-        ".scrolling-text {background-color: black; color: white;}",
         "@media only screen and (max-width: 768px) {.scrolling-text {padding: 0 !important; border-bottom: 1.5px solid #ffffff; }}"
       ],
       "name": "t:sections.marquee.presets.scrolling_text.name",
@@ -62,7 +61,9 @@
         "text_spacing": true,
         "direction": "left",
         "speed": 100,
-        "scrolling_text_width": 100
+        "scrolling_text_width": 100,
+        "text_color": "#ffffff",
+        "background_color": "#000000"
       }
     },
     "announcement": {
