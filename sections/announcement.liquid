@@ -3,6 +3,8 @@
     margin-left: auto;
     margin-right: auto;
     width: {{ section.settings.announcement_width | default: 100 }}%;
+    --colorAnnouncement: {{ section.settings.announcement_background_color | default: settings.color_announcement | default: '#1c1d1d' }};
+    --colorAnnouncementText: {{ section.settings.announcement_text_color | default: settings.color_announcement_text | default: '#ffffff' }};
   }
 
   {%- if settings.color_announcement == settings.color_body_bg -%}
@@ -18,6 +20,16 @@
 {
   "name": "t:sections.header.settings.header_announcement_bar",
   "settings": [
+    {
+      "type": "color",
+      "id": "announcement_background_color",
+      "label": "Background color"
+    },
+    {
+      "type": "color",
+      "id": "announcement_text_color",
+      "label": "Text color"
+    },
     {
       "type": "checkbox",
       "id": "announcement_compact",
