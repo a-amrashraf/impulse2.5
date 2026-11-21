@@ -40,7 +40,7 @@
 {% assign scrolling_text_items = scrolling_text_items | split: '|||' %}
 
 {% if section.settings.link != blank %}
-  <a href="{{ section.settings.link }}">
+  <a class="scrolling-text-link--{{ section.id }}" href="{{ section.settings.link }}">
 {% endif %}
 <div class="scrolling-text scrolling-text--{{ section.id }}">
   <div

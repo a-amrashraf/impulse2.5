@@ -8,9 +8,14 @@
 }
 
 .scrolling-text--sections--19811384131815__scrolling_text_BmWKG3 span {font-size: 8px;}
-.scrolling-text {
-  background-color: {{ section.settings.background_color | default: '#000000' }};
-  color: {{ section.settings.text_color | default: '#ffffff' }};
+.scrolling-text--{{ section.id }} {
+  background-color: {{ section.settings.background_color | default: '#000000' }} !important;
+  color: {{ section.settings.text_color | default: '#ffffff' }} !important;
+}
+.scrolling-text-link--{{ section.id }},
+.scrolling-text--{{ section.id }} .scrolling-text__inner,
+.scrolling-text--{{ section.id }} span {
+  color: {{ section.settings.text_color | default: '#ffffff' }} !important;
 }
 @media only screen and (max-width: 768px) {.scrolling-text {padding: 0 !important; border-bottom: 1.5px solid #ffffff; }}
 </style>
