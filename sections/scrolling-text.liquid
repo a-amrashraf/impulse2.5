@@ -8,7 +8,10 @@
 }
 
 .scrolling-text--sections--19811384131815__scrolling_text_BmWKG3 span {font-size: 8px;}
-.scrolling-text {background-color: black; color: white;}
+.scrolling-text {
+  background-color: {{ section.settings.background_color | default: '#000000' }};
+  color: {{ section.settings.text_color | default: '#ffffff' }};
+}
 @media only screen and (max-width: 768px) {.scrolling-text {padding: 0 !important; border-bottom: 1.5px solid #ffffff; }}
 </style>
 
@@ -29,6 +32,18 @@
       "id": "separator",
       "label": "Separator",
       "default": "•"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Scrolling text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Scrolling text background color",
+      "default": "#000000"
     },
     {
       "type": "url",
