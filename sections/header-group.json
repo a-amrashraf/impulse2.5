@@ -56,14 +56,14 @@
       "settings": {
         "text": "",
         "separator": "",
+        "text_color": "#000000",
+        "background_color": "#FFFFFF",
         "link": "shopify://collections/exclusive-edition",
         "text_size": 10,
         "text_spacing": true,
         "direction": "left",
         "speed": 100,
-        "scrolling_text_width": 100,
-        "text_color": "#ffffff",
-        "background_color": "#000000"
+        "scrolling_text_width": 100
       }
     },
     "announcement": {
@@ -71,15 +71,15 @@
       "blocks": {
         "announcement-0": {
           "type": "announcement",
-          "disabled": true,
           "settings": {
             "text": "",
-            "link_text": "LIMITED-TIME DEAL",
-            "link": "shopify://collections/on-sale"
+            "link_text": "🔗 EXCLUSIVE. LIMITED. NEVER REPEATED",
+            "link": "shopify://collections/exclusive-edition"
           }
         },
         "announcement-1": {
           "type": "announcement",
+          "disabled": true,
           "settings": {
             "text": "",
             "link_text": "EXCLUSIVE DROP IS OUT NOW!",
@@ -104,6 +104,8 @@
       "settings": {
         "text": "⚡ ON SALE ITEMS — CLICK HERE!",
         "separator": "•",
+        "text_color": "#ffffff",
+        "background_color": "#000000",
         "link": "shopify://collections/on-sale",
         "text_size": 20,
         "text_spacing": false,
