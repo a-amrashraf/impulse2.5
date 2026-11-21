@@ -16,6 +16,7 @@
       "blocks": {
         "text_BwCRij": {
           "type": "text",
+          "disabled": true,
           "settings": {
             "text": "FREE SHIPPING ON ORDERS L.E 2000+"
           }
@@ -33,14 +34,20 @@
           "settings": {
             "text": "Extra 5% Off When Paying With Card"
           }
+        },
+        "text_qcWTHj": {
+          "type": "text",
+          "settings": {
+            "text": "EXCLUSIVE. LIMITED. NEVER REPEATED"
+          }
         }
       },
       "block_order": [
         "text_BwCRij",
         "text_9dPppf",
-        "text_6JGHjb"
+        "text_6JGHjb",
+        "text_qcWTHj"
       ],
-      "disabled": true,
       "custom_css": [
         ".scrolling-text--sections--19811384131815__scrolling_text_BmWKG3 span {font-size: 8px;}",
         ".scrolling-text {background-color: black; color: white;}",
@@ -50,11 +57,11 @@
       "settings": {
         "text": "LIMITED TIME FREE SHIPPING!",
         "separator": "",
-        "link": "",
+        "link": "shopify://collections/exclusive-edition",
         "text_size": 10,
         "text_spacing": true,
         "direction": "left",
-        "speed": 150,
+        "speed": 100,
         "scrolling_text_width": 100
       }
     },
