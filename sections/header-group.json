@@ -48,6 +48,7 @@
         "text_6JGHjb",
         "text_qcWTHj"
       ],
+      "disabled": true,
       "custom_css": [
         ".scrolling-text--sections--19811384131815__scrolling_text_BmWKG3 span {font-size: 8px;}",
         "@media only screen and (max-width: 768px) {.scrolling-text {padding: 0 !important; border-bottom: 1.5px solid #ffffff; }}"
@@ -57,7 +58,7 @@
         "text": "",
         "separator": "",
         "text_color": "#000000",
-        "background_color": "#FFFFFF",
+        "background_color": "#ffffff",
         "link": "shopify://collections/exclusive-edition",
         "text_size": 10,
         "text_spacing": true,
@@ -91,8 +92,9 @@
         "announcement-0",
         "announcement-1"
       ],
-      "disabled": true,
       "settings": {
+        "announcement_background_color": "",
+        "announcement_text_color": "",
         "announcement_compact": true,
         "announcement_width": 100
       }
