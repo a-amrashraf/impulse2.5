@@ -9,7 +9,7 @@
  */
 {
   "current": {
-    "color_body_bg": "#ffffff",
+    "color_body_bg": "#FFFFFF",
     "color_body_text": "#0f0f0f",
     "color_price": "#0f0f0f",
     "color_savings_text": "#000000",
@@ -20,7 +20,7 @@
     "color_large_image_bg": "#0f0f0f",
     "color_header": "#ffffff",
     "color_header_text": "#321004",
-    "color_announcement": "#9B0000",
+    "color_announcement": "#000000",
     "color_footer": "#0f0f0f",
     "color_footer_text": "#ffffff",
     "color_drawer_background": "#0f0f0f",
